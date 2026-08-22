@@ -1,0 +1,5919 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<title>生活中不缺少美 - Bài 9 · HSK 4</title>
+
+<style>
+
+/* ================================================= */
+/* ================= CƠ BẢN ======================== */
+/* ================================================= */
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f3f8f4;
+    color: #333;
+}
+
+.lesson-page {
+    width: 90%;
+    max-width: 1000px;
+    margin: 30px auto;
+}
+
+.back-link {
+    display: inline-block;
+    margin-bottom: 20px;
+    color: #5b8f72;
+    text-decoration: none;
+}
+
+.lesson-title {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.lesson-title h1 {
+    margin-bottom: 8px;
+}
+
+.lesson-title p {
+    color: #777;
+}
+
+
+/* ================================================= */
+/* ================= STATUS ======================== */
+/* ================================================= */
+
+.lesson-status {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 15px;
+}
+
+.status-dot {
+    display: inline-block;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    margin-right: 7px;
+    vertical-align: middle;
+    background: white;
+    border: 1px solid #ddd;
+}
+
+.status-dot.learning {
+    background: #f3a847;
+    border: none;
+}
+
+.status-dot.completed {
+    background: #63b87b;
+    border: none;
+}
+
+
+/* ================================================= */
+/* ================= 3 TAB ========================= */
+/* ================================================= */
+
+.tabs {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 25px;
+}
+
+.tab-button {
+    border: none;
+    padding: 12px 30px;
+    border-radius: 20px;
+    background: white;
+    color: #555;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.tab-button:hover {
+    background: #e8f3eb;
+}
+
+.tab-button.active {
+    background: #8fc7a5;
+    color: white;
+}
+
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+
+/* ================================================= */
+/* ================= CARD ========================== */
+/* ================================================= */
+
+.content-card {
+    background: white;
+    border-radius: 25px;
+    padding: 35px;
+    box-shadow:
+        0 8px 25px rgba(0,0,0,0.06);
+}
+
+
+/* ================================================= */
+/* ================= AUDIO ========================= */
+/* ================================================= */
+
+.audio-section {
+    text-align: center;
+    margin-bottom: 25px;
+    padding-bottom: 20px;
+    border-bottom: 1px dashed #dce9df;
+}
+
+.vinyl {
+    width: 120px;
+    height: 120px;
+    margin: 0 auto 20px;
+    border-radius: 50%;
+
+    background:
+        repeating-radial-gradient(
+            circle,
+            #222 0px,
+            #222 3px,
+            #333 4px,
+            #222 6px
+        );
+
+    border: 8px solid #111;
+    position: relative;
+}
+
+.vinyl::before {
+    content: "";
+    position: absolute;
+    width: 35px;
+    height: 35px;
+    background: #e7a5a5;
+    border-radius: 50%;
+    top: 50%;
+    left: 50%;
+    transform:
+        translate(-50%, -50%);
+}
+
+.vinyl.playing {
+    animation:
+        rotateVinyl 2s linear infinite;
+}
+
+@keyframes rotateVinyl {
+
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+
+}
+
+.audio-button {
+    border: none;
+    background: #8fc7a5;
+    color: white;
+    padding: 10px 25px;
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+.audio-button:hover {
+    background: #76b58f;
+}
+
+.audio-progress-wrap {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 15px;
+    max-width: 350px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.audio-progress-wrap span {
+    font-size: 13px;
+    color: #777;
+    min-width: 32px;
+}
+
+.audio-progress {
+    flex: 1;
+    -webkit-appearance: none;
+    appearance: none;
+    height: 5px;
+    border-radius: 5px;
+    background: #dce9df;
+    outline: none;
+    cursor: pointer;
+}
+
+.audio-progress::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: #8fc7a5;
+    cursor: pointer;
+}
+
+.audio-progress::-moz-range-thumb {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: #8fc7a5;
+    border: none;
+    cursor: pointer;
+}
+
+
+/* ================================================= */
+/* ================= READING ======================= */
+/* ================================================= */
+
+.reading-block {
+    margin-bottom: 40px;
+}
+
+.reading-heading {
+    color: #5b8f72;
+    font-size: 20px;
+    margin-bottom: 15px;
+}
+
+.reading-text {
+    font-size: 24px;
+    line-height: 2.4;
+    text-align: left;
+}
+
+.word {
+    cursor: pointer;
+    padding: 4px 6px;
+    border-radius: 7px;
+    transition: 0.2s;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 5px;
+}
+
+.word:hover {
+    background: #e0f2e5;
+}
+
+
+/* ================================================= */
+/* ============ READING LAYOUT (3/4 + 1/4) ========= */
+/* ================================================= */
+
+.reading-layout {
+    display: flex;
+    align-items: flex-start;
+    position: relative;
+}
+
+.reading-main {
+    flex: 0 0 74%;
+    max-width: 74%;
+    min-width: 0;
+}
+
+.reading-divider {
+    flex: 0 0 1px;
+    width: 1px;
+    align-self: stretch;
+    background: #e3e3e3;
+    margin: 0 20px;
+}
+
+.reading-sidebar {
+    flex: 1;
+    min-width: 0;
+    position: relative;
+    align-self: stretch;
+    padding-top: 4px;
+}
+
+.connector-svg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+    overflow: visible;
+}
+
+.pin-empty {
+    color: #999;
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+.pin-card {
+    position: relative;
+    background: #fffdf5;
+    border: 1px solid #ece6cf;
+    border-radius: 8px;
+    padding: 8px 26px 8px 10px;
+    margin-bottom: 12px;
+    font-size: 14px;
+    line-height: 1.5;
+    cursor: pointer;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    word-break: break-word;
+}
+
+.pin-card:hover {
+    border-color: #d8cfa0;
+}
+
+.pin-pinyin {
+    font-style: italic;
+    color: #5b8f72;
+}
+
+.pin-pos {
+    color: #888;
+    margin: 0 4px;
+}
+
+.pin-meaning {
+    color: #333;
+    font-weight: bold;
+}
+
+.pin-remove {
+    position: absolute;
+    right: 6px;
+    top: 6px;
+    width: 18px;
+    height: 18px;
+    line-height: 16px;
+    border: none;
+    border-radius: 50%;
+    background: #f2dede;
+    color: #c75c5c;
+    font-size: 13px;
+    cursor: pointer;
+    padding: 0;
+}
+
+.pin-remove:hover {
+    background: #e9bcbc;
+}
+
+.pin-word {
+    background: #82b7e8;
+    margin-top: 10px;
+}
+
+.pin-word:hover {
+    background: #6ba3d9;
+}
+
+.pin-word.pinned {
+    background: #4f8ecb;
+}
+
+@media (max-width: 760px) {
+
+    .reading-layout {
+        flex-direction: column;
+    }
+
+    .reading-main,
+    .reading-sidebar {
+        max-width: 100%;
+        flex: 1 1 100%;
+    }
+
+    .reading-divider {
+        display: none;
+    }
+
+    .connector-svg {
+        display: none;
+    }
+
+    .reading-sidebar {
+        margin-top: 20px;
+        padding-top: 15px;
+        border-top: 1px dashed #e3e3e3;
+    }
+
+}
+
+
+/* ================================================= */
+/* ================= WORD POPUP ==================== */
+/* ================================================= */
+
+.word-popup {
+    display: none;
+
+    position: fixed;
+
+    width: 350px;
+    max-width: 90%;
+
+    background: white;
+
+    padding: 30px;
+
+    border-radius: 22px;
+
+    box-shadow:
+        0 15px 50px rgba(0,0,0,0.25);
+
+    left: 50%;
+    top: 50%;
+
+    transform:
+        translate(-50%, -50%);
+
+    z-index: 1000;
+
+    text-align: center;
+}
+
+.word-popup.show {
+    display: block;
+}
+
+.word-popup h2 {
+    font-size: 42px;
+    margin: 5px 0 10px;
+}
+
+.word-popup p {
+    margin: 8px 0;
+}
+
+#popupPinyin {
+    color: #5b8f72;
+    font-size: 21px;
+}
+
+#popupHanViet {
+    color: #888;
+}
+
+#popupPOS {
+    color: #555;
+}
+
+#popupMeaning {
+    font-size: 20px;
+}
+
+.close-popup {
+    position: absolute;
+    right: 15px;
+    top: 10px;
+
+    border: none;
+    background: none;
+
+    font-size: 25px;
+    cursor: pointer;
+    color: #888;
+}
+
+
+/* ================================================= */
+/* ============= NÚT LƯU TỪ ======================== */
+/* ================================================= */
+
+.save-word {
+    display: block;
+
+    width: 100%;
+
+    margin: 20px auto 8px;
+
+    padding: 12px 18px;
+
+    border: none;
+
+    border-radius: 12px;
+
+    background: #8fc7a5;
+
+    color: white;
+
+    font-size: 16px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+.save-word:hover {
+    background: #76b58f;
+    transform: translateY(-1px);
+}
+
+.save-word.saved {
+    background: #63b87b;
+}
+
+
+/* ================================================= */
+/* ===== POPUP HIGHLIGHT TOOLBAR =================== */
+/* ================================================= */
+
+.highlight-title {
+    margin-top: 20px;
+    margin-bottom: 10px;
+
+    font-size: 14px;
+    color: #777;
+}
+
+.highlight-tools {
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+
+    gap: 8px;
+
+    flex-wrap: wrap;
+}
+
+.color-btn {
+    width: 30px;
+    height: 30px;
+
+    border-radius: 50%;
+
+    border: 3px solid white;
+
+    box-shadow:
+        0 0 0 1px #ccc;
+
+    cursor: pointer;
+
+    transition: 0.15s;
+}
+
+.color-btn:hover {
+    transform: scale(1.1);
+}
+
+.color-btn.active-color {
+    box-shadow:
+        0 0 0 2px #555;
+    transform: scale(1.08);
+}
+
+.green {
+    background: #8fc7a5;
+}
+
+.blue {
+    background: #82b7e8;
+}
+
+.gray {
+    background: #aaa;
+}
+
+.yellow {
+    background: #f4d66d;
+}
+
+.orange {
+    background: #efa45d;
+}
+
+.purple {
+    background: #ad8ed6;
+}
+
+.underline-btn {
+    margin-left: 8px;
+
+    width: 32px;
+    height: 32px;
+
+    border: none;
+
+    border-radius: 8px;
+
+    background: #f1f1f1;
+
+    cursor: pointer;
+
+    font-weight: bold;
+
+    text-decoration: underline;
+}
+
+.underline-btn.active {
+    background: #d5eadb;
+    color: #4f8063;
+}
+
+
+/* ================================================= */
+/* ============== HIGHLIGHT 6 MÀU ================== */
+/* ================================================= */
+
+.highlight-green {
+    background: #b8e2c4 !important;
+}
+
+.highlight-blue {
+    background: #b9d9f4 !important;
+}
+
+.highlight-gray {
+    background: #d0d0d0 !important;
+}
+
+.highlight-yellow {
+    background: #f8e58b !important;
+}
+
+.highlight-orange {
+    background: #f5bd80 !important;
+}
+
+.highlight-purple {
+    background: #d0b8ed !important;
+}
+
+
+/* ================================================= */
+/* ================ SAVED WORDS ==================== */
+/* ================================================= */
+
+.saved-section {
+    margin-top: 35px;
+    padding-top: 25px;
+
+    border-top: 1px solid #e5e5e5;
+}
+
+.saved-toggle {
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    border: none;
+
+    background: #edf7f0;
+
+    color: #4f8063;
+
+    padding: 14px 18px;
+
+    border-radius: 14px;
+
+    cursor: pointer;
+
+    font-size: 16px;
+
+    font-weight: bold;
+
+    transition: 0.2s;
+}
+
+.saved-toggle:hover {
+    background: #dceee1;
+}
+
+.saved-arrow {
+    transition: 0.2s;
+}
+
+.saved-toggle.open .saved-arrow {
+    transform: rotate(180deg);
+}
+
+.saved-list {
+    display: none;
+
+    margin-top: 12px;
+
+    flex-direction: column;
+
+    gap: 8px;
+}
+
+.saved-list.show {
+    display: flex;
+}
+
+.saved-word-item {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    background: #f7fbf8;
+
+    border: 1px solid #e1eee4;
+
+    padding: 11px 14px;
+
+    border-radius: 12px;
+
+    color: #4f8063;
+
+    transition: 0.2s;
+}
+
+.saved-word-item:hover {
+    background: #edf7f0;
+}
+
+.saved-word-main {
+    flex: 1;
+
+    cursor: pointer;
+
+    font-size: 17px;
+
+    font-weight: 500;
+}
+
+.remove-saved {
+    width: 28px;
+    height: 28px;
+
+    border: none;
+
+    border-radius: 50%;
+
+    background: #f2dede;
+
+    color: #c75c5c;
+
+    cursor: pointer;
+
+    font-size: 17px;
+
+    line-height: 28px;
+
+    padding: 0;
+}
+
+.remove-saved:hover {
+    background: #e9bcbc;
+    color: #a94444;
+}
+
+.no-saved {
+    color: #999;
+    font-size: 14px;
+
+    padding: 10px;
+}
+
+
+/* ================================================= */
+/* ================= STUDY ========================= */
+/* ================================================= */
+
+.study-card {
+    text-align: center;
+
+    min-height: 650px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: center;
+}
+
+.study-progress {
+    color: #777;
+    margin-bottom: 20px;
+}
+
+.chinese-word {
+    font-size: 60px;
+    margin-bottom: 10px;
+}
+
+.pinyin {
+    font-size: 25px;
+    color: #5b8f72;
+}
+
+.hanviet {
+    margin-top: 10px;
+    color: #777;
+}
+
+.meaning {
+    font-size: 22px;
+    margin: 15px 0;
+}
+
+.example-box {
+    margin-top: 25px;
+
+    padding: 20px;
+
+    background: #f3f8f4;
+
+    border-radius: 18px;
+
+    text-align: left;
+}
+
+.example-box h3 {
+    margin-top: 0;
+}
+
+.example-box p {
+    font-family: Arial, sans-serif;
+}
+
+
+/* ================================================= */
+/* ================= GHI CHÚ ======================= */
+/* ================================================= */
+
+.note-title {
+    text-align: left;
+
+    margin-top: 25px;
+    margin-bottom: 8px;
+
+    font-size: 15px;
+    font-weight: bold;
+
+    color: #555;
+}
+
+.note-input,
+.sentence-input {
+    width: 100%;
+
+    margin-top: 8px;
+
+    padding: 15px;
+
+    border: 2px solid #dce9df;
+
+    border-radius: 15px;
+
+    resize: vertical;
+
+    font-size: 16px;
+
+    font-family: Arial, sans-serif;
+
+    line-height: 1.6;
+
+    outline: none;
+}
+
+.note-input {
+    min-height: 90px;
+}
+
+.sentence-input {
+    min-height: 100px;
+}
+
+.note-input:focus,
+.sentence-input:focus {
+    border-color: #8fc7a5;
+}
+
+
+/* ================================================= */
+/* ================= NEXT BUTTON =================== */
+/* ================================================= */
+
+.next-button {
+    margin-top: 20px;
+
+    padding: 12px 30px;
+
+    border: none;
+
+    border-radius: 20px;
+
+    background: #8fc7a5;
+
+    color: white;
+
+    cursor: pointer;
+}
+
+.next-button:hover {
+    background: #76b58f;
+}
+
+
+/* ================================================= */
+/* ================= REVIEW ======================== */
+/* ================================================= */
+
+.review-menu {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.game-button {
+    padding: 25px;
+
+    border: none;
+
+    border-radius: 20px;
+
+    background: #f3f8f4;
+
+    font-size: 20px;
+
+    cursor: pointer;
+}
+
+.game-button:hover {
+    background: #dfeee3;
+}
+
+
+/* ================================================= */
+/* ================= GAME ========================== */
+/* ================================================= */
+
+.game-screen {
+    display: none;
+}
+
+.game-screen.active {
+    display: block;
+}
+
+.game-header {
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    margin-bottom: 25px;
+}
+
+.timer {
+    font-size: 22px;
+
+    font-weight: bold;
+
+    color: #5b8f72;
+}
+
+.match-board {
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 30px;
+}
+
+.match-column {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 15px;
+}
+
+.match-card {
+    padding: 22px;
+
+    border-radius: 18px;
+
+    background: #f4f8f5;
+
+    border: 2px solid transparent;
+
+    cursor: pointer;
+
+    font-size: 20px;
+
+    text-align: center;
+
+    transition: 0.2s;
+}
+
+.match-card:hover {
+    transform: translateY(-2px);
+
+    background: #e6f2e9;
+}
+
+.match-card.selected {
+    border-color: #8fc7a5;
+
+    background: #e4f2e8;
+}
+
+.match-card.wrong {
+    border-color: #e76f6f;
+
+    background: #ffe5e5;
+}
+
+.match-card.hidden {
+    visibility: hidden;
+}
+
+.game-message {
+    text-align: center;
+
+    min-height: 30px;
+
+    margin-top: 20px;
+
+    font-weight: bold;
+}
+
+.sentence-game {
+    text-align: center;
+}
+
+.sentence-game-word {
+    font-size: 55px;
+
+    margin: 25px 0;
+}
+
+.sentence-game-input {
+    width: 100%;
+
+    min-height: 100px;
+
+    padding: 15px;
+
+    border: 2px solid #dce9df;
+
+    border-radius: 15px;
+
+    font-size: 18px;
+
+    font-family: Arial, sans-serif;
+}
+
+.sentence-game-top {
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+}
+
+.question-timer {
+    background: #f3f8f4;
+
+    padding: 8px 15px;
+
+    border-radius: 15px;
+
+    color: #5b8f72;
+
+    font-weight: bold;
+}
+
+.correct-message {
+    color: #55a66c;
+
+    margin-top: 15px;
+}
+
+.incorrect-message {
+    color: #d9534f;
+
+    margin-top: 15px;
+}
+
+.back-game {
+    margin-top: 20px;
+
+    border: none;
+
+    background: none;
+
+    color: #5b8f72;
+
+    cursor: pointer;
+}
+
+
+/* ================================================= */
+/* ================= MODAL ========================= */
+/* ================================================= */
+
+.finish-modal {
+    display: none;
+
+    position: fixed;
+
+    inset: 0;
+
+    background: rgba(0,0,0,0.35);
+
+    z-index: 2000;
+
+    align-items: center;
+
+    justify-content: center;
+}
+
+.finish-modal.show {
+    display: flex;
+}
+
+.finish-box {
+    background: white;
+
+    width: 400px;
+
+    max-width: 90%;
+
+    padding: 35px;
+
+    border-radius: 25px;
+
+    text-align: center;
+}
+
+.finish-box h2 {
+    margin-top: 0;
+}
+
+.finish-buttons {
+    display: flex;
+
+    justify-content: center;
+
+    gap: 12px;
+
+    margin-top: 25px;
+}
+
+.modal-btn {
+    border: none;
+
+    padding: 12px 22px;
+
+    border-radius: 20px;
+
+    cursor: pointer;
+}
+
+.ok-btn {
+    background: #8fc7a5;
+
+    color: white;
+}
+
+.repeat-btn {
+    background: #f1f5f2;
+
+    color: #555;
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<div class="lesson-page">
+
+
+<a href="reading.html" class="back-link">
+    ← Quay lại danh sách bài
+</a>
+
+
+<div class="lesson-title">
+
+    <h1>生活中不缺少美</h1>
+
+    <p>Bài 9 · HSK 4</p>
+
+</div>
+
+
+<div class="lesson-status">
+
+    <span
+        id="statusDot"
+        class="status-dot">
+    </span>
+
+    <span id="statusText">
+        Chưa bắt đầu
+    </span>
+
+</div>
+
+
+<!-- ================================================= -->
+<!-- ================= 3 TAB ========================= -->
+<!-- ================================================= -->
+
+<div class="tabs">
+
+    <button
+        class="tab-button active"
+        onclick="openTab('reading', this)">
+        📖 Đọc bài
+    </button>
+
+    <button
+        class="tab-button"
+        onclick="openTab('study', this)">
+        📚 Học bài
+    </button>
+
+    <button
+        class="tab-button"
+        onclick="openTab('review', this)">
+        🧠 Ôn tập
+    </button>
+
+</div>
+
+
+<!-- ================================================= -->
+<!-- ================= ĐỌC BÀI ======================= -->
+<!-- ================================================= -->
+
+<section
+    id="reading"
+    class="tab-content active">
+
+<div class="content-card">
+
+
+<div class="reading-layout" id="readingLayout">
+
+<svg id="connectorSvg" class="connector-svg"></svg>
+
+<div class="reading-main">
+
+
+<!-- ================================================= -->
+<!-- ================= BÀI ĐỌC 1 ==================== -->
+<!-- ================================================= -->
+
+<div class="reading-block">
+
+    <h3 class="reading-heading">
+        📖 Bài đọc 1
+    </h3>
+
+    <div class="audio-section">
+
+        <div
+            class="vinyl"
+            id="vinyl1">
+        </div>
+
+        <button
+            class="audio-button"
+            id="audioButton1"
+            onclick="toggleAudio('1')">
+            ▶ Phát bài nghe
+        </button>
+
+        <div class="audio-progress-wrap">
+
+            <span id="audioCurrentTime1">0:00</span>
+
+            <input
+                type="range"
+                id="audioProgress1"
+                class="audio-progress"
+                value="0"
+                min="0"
+                max="100"
+                step="0.1">
+
+            <span id="audioDuration1">0:00</span>
+
+        </div>
+
+        <audio id="audio1" src="audio/HSK4 - quyển thượng - Bài 8.4.mp3"></audio>
+
+    </div>
+
+    <div class="reading-text">
+
+        <span class="word" data-word="草绿了" onclick="showWord('草绿了', this)">草绿了</span>，
+        <span class="word" data-word="那是" onclick="showWord('那是', this)">那是</span>
+        <span class="word" data-word="生命" onclick="showWord('生命', this)">生命</span>
+        <span class="word" data-word="的" onclick="showWord('的', this)">的</span>
+        <span class="word" data-word="颜色" onclick="showWord('颜色', this)">颜色</span>；
+        <span class="word" data-word="花开了" onclick="showWord('花开了', this)">花开了</span>，
+        <span class="word" data-word="那是" onclick="showWord('那是', this)">那是</span>
+        <span class="word" data-word="大自然" onclick="showWord('大自然', this)">大自然</span>
+        <span class="word" data-word="的" onclick="showWord('的', this)">的</span>
+        <span class="word" data-word="礼物" onclick="showWord('礼物', this)">礼物</span>。
+        <span class="word" data-word="生活中" onclick="showWord('生活中', this)">生活中</span>
+        <span class="word" data-word="不缺少" onclick="showWord('不缺少', this)">不缺少</span>
+        <span class="word" data-word="美" onclick="showWord('美', this)">美</span>，
+        <span class="word" data-word="缺少" onclick="showWord('缺少', this)">缺少</span>
+        <span class="word" data-word="的" onclick="showWord('的', this)">的</span>
+        <span class="word" data-word="是" onclick="showWord('是', this)">是</span>
+        <span class="word" data-word="发现" onclick="showWord('发现', this)">发现</span>
+        <span class="word" data-word="美" onclick="showWord('美', this)">美</span>
+        <span class="word" data-word="的" onclick="showWord('的', this)">的</span>
+        <span class="word" data-word="眼睛" onclick="showWord('眼睛', this)">眼睛</span>。
+        <span class="word" data-word="只要" onclick="showWord('只要', this)">只要</span>
+        <span class="word" data-word="有心" onclick="showWord('有心', this)">有心</span>，
+        <span class="word" data-word="生活中" onclick="showWord('生活中', this)">生活中</span>
+        <span class="word" data-word="的" onclick="showWord('的', this)">的</span>
+        <span class="word" data-word="美" onclick="showWord('美', this)">美</span>
+        <span class="word" data-word="到处" onclick="showWord('到处', this)">到处</span>
+        <span class="word" data-word="都是" onclick="showWord('都是', this)">都是</span>。
+        <span class="word" data-word="生活" onclick="showWord('生活', this)">生活</span>
+        <span class="word" data-word="的" onclick="showWord('的', this)">的</span>
+        <span class="word" data-word="态度" onclick="showWord('态度', this)">态度</span>
+        <span class="word" data-word="要" onclick="showWord('要', this)">要</span>
+        <span class="word" data-word="自己" onclick="showWord('自己', this)">自己</span>
+        <span class="word" data-word="选择" onclick="showWord('选择', this)">选择</span>，
+        <span class="word" data-word="因此" onclick="showWord('因此', this)">因此</span>，
+        <span class="word" data-word="遇到" onclick="showWord('遇到', this)">遇到</span>
+        <span class="word" data-word="烦恼" onclick="showWord('烦恼', this)">烦恼</span>
+        <span class="word" data-word="时" onclick="showWord('时', this)">时</span>，
+        <span class="word" data-word="你" onclick="showWord('你', this)">你</span>
+        <span class="word" data-word="应该" onclick="showWord('应该', this)">应该</span>
+        <span class="word" data-word="想" onclick="showWord('想', this)">想</span>
+        <span class="word" data-word="一些" onclick="showWord('一些', this)">一些</span>
+        <span class="word" data-word="办法" onclick="showWord('办法', this)">办法</span>
+        <span class="word" data-word="让" onclick="showWord('让', this)">让</span>
+        <span class="word" data-word="自己" onclick="showWord('自己', this)">自己</span>
+        <span class="word" data-word="从" onclick="showWord('从', this)">从</span>
+        <span class="word" data-word="不高兴" onclick="showWord('不高兴', this)">不高兴</span>
+        <span class="word" data-word="的" onclick="showWord('的', this)">的</span>
+        <span class="word" data-word="心情" onclick="showWord('心情', this)">心情</span>
+        <span class="word" data-word="中" onclick="showWord('中', this)">中</span>
+        <span class="word" data-word="走出来" onclick="showWord('走出来', this)">走出来</span>。
+        <span class="word" data-word="窗外" onclick="showWord('窗外', this)">窗外</span>
+        <span class="word" data-word="是" onclick="showWord('是', this)">是</span>
+        <span class="word" data-word="什么样子" onclick="showWord('什么样子', this)">什么样子</span>，
+        <span class="word" data-word="我们" onclick="showWord('我们', this)">我们</span>
+        <span class="word" data-word="无法" onclick="showWord('无法', this)">无法</span>
+        <span class="word" data-word="改变" onclick="showWord('改变', this)">改变</span>，
+        <span class="word" data-word="但" onclick="showWord('但', this)">但</span>
+        <span class="word" data-word="我们" onclick="showWord('我们', this)">我们</span>
+        <span class="word" data-word="可以" onclick="showWord('可以', this)">可以</span>
+        <span class="word" data-word="选择" onclick="showWord('选择', this)">选择</span>
+        <span class="word" data-word="站" onclick="showWord('站', this)">站</span>
+        <span class="word" data-word="在哪个" onclick="showWord('在哪个', this)">在哪个</span>
+        <span class="word" data-word="窗户" onclick="showWord('窗户', this)">窗户</span>
+        <span class="word" data-word="前" onclick="showWord('前', this)">前</span>。
+        <span class="word" data-word="选择" onclick="showWord('选择', this)">选择</span>
+        <span class="word" data-word="一个" onclick="showWord('一个', this)">一个</span>
+        <span class="word" data-word="能够" onclick="showWord('能够', this)">能够</span>
+        <span class="word" data-word="带给" onclick="showWord('带给', this)">带给</span>
+        <span class="word" data-word="我们" onclick="showWord('我们', this)">我们</span>
+        <span class="word" data-word="快乐" onclick="showWord('快乐', this)">快乐</span>
+        <span class="word" data-word="的" onclick="showWord('的', this)">的</span>
+        <span class="word" data-word="窗户" onclick="showWord('窗户', this)">窗户</span>，
+        <span class="word" data-word="这样" onclick="showWord('这样', this)">这样</span>
+        <span class="word" data-word="才能" onclick="showWord('才能', this)">才能</span>
+        <span class="word" data-word="选对" onclick="showWord('选对', this)">选对</span>
+        <span class="word" data-word="心情" onclick="showWord('心情', this)">心情</span>，
+        <span class="word" data-word="选对" onclick="showWord('选对', this)">选对</span>
+        <span class="word" data-word="生活" onclick="showWord('生活', this)">生活</span>
+        <span class="word" data-word="的" onclick="showWord('的', this)">的</span>
+        <span class="word" data-word="态度" onclick="showWord('态度', this)">态度</span>。
+        
+    </div>
+
+</div>
+
+
+<!-- ================================================= -->
+<!-- ================= BÀI ĐỌC 2 ==================== -->
+<!-- ================================================= -->
+
+<div class="reading-block">
+
+    <h3 class="reading-heading">
+        📖 Bài đọc 2
+    </h3>
+
+    <div class="audio-section">
+
+        <div
+            class="vinyl"
+            id="vinyl2">
+        </div>
+
+        <button
+            class="audio-button"
+            id="audioButton2"
+            onclick="toggleAudio('2')">
+            ▶ Phát bài nghe
+        </button>
+
+        <div class="audio-progress-wrap">
+
+            <span id="audioCurrentTime2">0:00</span>
+
+            <input
+                type="range"
+                id="audioProgress2"
+                class="audio-progress"
+                value="0"
+                min="0"
+                max="100"
+                step="0.1">
+
+            <span id="audioDuration2">0:00</span>
+
+        </div>
+
+        <audio id="audio2" src="audio/HSK4 - quyển thượng - Bài 8.5.mp3"></audio>
+
+    </div>
+
+    <div class="reading-text">
+
+        <span class="word" data-word="科学研究" onclick="showWord('科学研究', this)">科学研究</span>
+        <span class="word" data-word="证明" onclick="showWord('证明', this)">证明</span>，
+        <span class="word" data-word="女孩子" onclick="showWord('女孩子', this)">女孩子</span>
+        <span class="word" data-word="对" onclick="showWord('对', this)">对</span>
+        <span class="word" data-word="衣服" onclick="showWord('衣服', this)">衣服</span>
+        <span class="word" data-word="颜色" onclick="showWord('颜色', this)">颜色</span>
+        <span class="word" data-word="的" onclick="showWord('的', this)">的</span>
+        <span class="word" data-word="选择" onclick="showWord('选择', this)">选择</span>
+        <span class="word" data-word="往往" onclick="showWord('往往', this)">往往</span>
+        <span class="word" data-word="与" onclick="showWord('与', this)">与</span>
+        <span class="word" data-word="她们" onclick="showWord('她们', this)">她们</span>
+        <span class="word" data-word="的" onclick="showWord('的', this)">的</span>
+        <span class="word" data-word="性格" onclick="showWord('性格', this)">性格</span>
+        <span class="word" data-word="有关" onclick="showWord('有关', this)">有关</span>。
+        
+        <span class="word" data-word="喜欢" onclick="showWord('喜欢', this)">喜欢</span>
+        <span class="word" data-word="穿" onclick="showWord('穿', this)">穿</span>
+        <span class="word" data-word="白色" onclick="showWord('白色', this)">白色</span>
+        <span class="word" data-word="衣服" onclick="showWord('衣服', this)">衣服</span>
+        <span class="word" data-word="的" onclick="showWord('的', this)">的</span>
+        <span class="word" data-word="女孩子" onclick="showWord('女孩子', this)">女孩子</span>
+        <span class="word" data-word="性格" onclick="showWord('性格', this)">性格</span>
+        <span class="word" data-word="比较" onclick="showWord('比较', this)">比较</span>
+        <span class="word" data-word="阳光" onclick="showWord('阳光', this)">阳光</span>，
+        <span class="word" data-word="生活态度" onclick="showWord('生活态度', this)">生活态度</span>
+        <span class="word" data-word="积极向上" onclick="showWord('积极向上', this)">积极向上</span>
+        <span class="word" data-word="是" onclick="showWord('是', this)">是</span>
+        <span class="word" data-word="她们" onclick="showWord('她们', this)">她们</span>
+        <span class="word" data-word="的" onclick="showWord('的', this)">的</span>
+        <span class="word" data-word="共同" onclick="showWord('共同', this)">共同</span>
+        <span class="word" data-word="特点" onclick="showWord('特点', this)">特点</span>；
+        
+        <span class="word" data-word="而" onclick="showWord('而', this)">而</span>
+        <span class="word" data-word="喜欢" onclick="showWord('喜欢', this)">喜欢</span>
+        <span class="word" data-word="穿" onclick="showWord('穿', this)">穿</span>
+        <span class="word" data-word="红色" onclick="showWord('红色', this)">红色</span>
+        <span class="word" data-word="衣服" onclick="showWord('衣服', this)">衣服</span>
+        <span class="word" data-word="的" onclick="showWord('的', this)">的</span>
+        <span class="word" data-word="女孩子" onclick="showWord('女孩子', this)">女孩子</span>
+        <span class="word" data-word="性格" onclick="showWord('性格', this)">性格</span>
+        <span class="word" data-word="比较" onclick="showWord('比较', this)">比较</span>
+        <span class="word" data-word="浪漫" onclick="showWord('浪漫', this)">浪漫</span>。
+        
+        <span class="word" data-word="颜色" onclick="showWord('颜色', this)">颜色</span>
+        <span class="word" data-word="也" onclick="showWord('也', this)">也</span>
+        <span class="word" data-word="会" onclick="showWord('会', this)">会</span>
+        <span class="word" data-word="影响" onclick="showWord('影响', this)">影响</span>
+        <span class="word" data-word="人" onclick="showWord('人', this)">人</span>
+        <span class="word" data-word="的" onclick="showWord('的', this)">的</span>
+        <span class="word" data-word="心情" onclick="showWord('心情', this)">心情</span>，
+        <span class="word" data-word="不同" onclick="showWord('不同', this)">不同</span>
+        <span class="word" data-word="的" onclick="showWord('的', this)">的</span>
+        <span class="word" data-word="颜色" onclick="showWord('颜色', this)">颜色</span>
+        <span class="word" data-word="会" onclick="showWord('会', this)">会</span>
+        <span class="word" data-word="给" onclick="showWord('给', this)">给</span>
+        <span class="word" data-word="我们" onclick="showWord('我们', this)">我们</span>
+        <span class="word" data-word="带来" onclick="showWord('带来', this)">带来</span>
+        <span class="word" data-word="不同" onclick="showWord('不同', this)">不同</span>
+        <span class="word" data-word="的" onclick="showWord('的', this)">的</span>
+        <span class="word" data-word="感情" onclick="showWord('感情', this)">感情</span>
+        <span class="word" data-word="变化" onclick="showWord('变化', this)">变化</span>。
+        
+        <span class="word" data-word="红色" onclick="showWord('红色', this)">红色</span>
+        <span class="word" data-word="让" onclick="showWord('让', this)">让</span>
+        <span class="word" data-word="人" onclick="showWord('人', this)">人</span>
+        <span class="word" data-word="变得" onclick="showWord('变得', this)">变得</span>
+        <span class="word" data-word="热情" onclick="showWord('热情', this)">热情</span>；
+        
+        <span class="word" data-word="黄色" onclick="showWord('黄色', this)">黄色</span>
+        <span class="word" data-word="和" onclick="showWord('和', this)">和</span>
+        <span class="word" data-word="白色" onclick="showWord('白色', this)">白色</span>
+        <span class="word" data-word="让" onclick="showWord('让', this)">让</span>
+        <span class="word" data-word="人" onclick="showWord('人', this)">人</span>
+        <span class="word" data-word="心情愉快" onclick="showWord('心情愉快', this)">心情愉快</span>；
+        
+        <span class="word" data-word="黑色" onclick="showWord('黑色', this)">黑色</span>
+        <span class="word" data-word="却" onclick="showWord('却', this)">却</span>
+        <span class="word" data-word="容易" onclick="showWord('容易', this)">容易</span>
+        <span class="word" data-word="让" onclick="showWord('让', this)">让</span>
+        <span class="word" data-word="人" onclick="showWord('人', this)">人</span>
+        <span class="word" data-word="感到" onclick="showWord('感到', this)">感到</span>
+        <span class="word" data-word="伤心" onclick="showWord('伤心', this)">伤心</span>；
+        
+        <span class="word" data-word="人们" onclick="showWord('人们', this)">人们</span>
+        <span class="word" data-word="在" onclick="showWord('在', this)">在</span>
+        <span class="word" data-word="看到" onclick="showWord('看到', this)">看到</span>
+        <span class="word" data-word="蓝色" onclick="showWord('蓝色', this)">蓝色</span>
+        <span class="word" data-word="时" onclick="showWord('时', this)">时</span>
+        <span class="word" data-word="会" onclick="showWord('会', this)">会</span>
+        <span class="word" data-word="觉得" onclick="showWord('觉得', this)">觉得</span>
+        <span class="word" data-word="很" onclick="showWord('很', this)">很</span>
+        <span class="word" data-word="舒服" onclick="showWord('舒服', this)">舒服</span>，
+        <span class="word" data-word="变得" onclick="showWord('变得', this)">变得</span>
+        <span class="word" data-word="安静" onclick="showWord('安静', this)">安静</span>
+        <span class="word" data-word="下来" onclick="showWord('下来', this)">下来</span>；
+        
+        <span class="word" data-word="绿色" onclick="showWord('绿色', this)">绿色</span>
+        <span class="word" data-word="让" onclick="showWord('让', this)">让</span>
+        <span class="word" data-word="我们" onclick="showWord('我们', this)">我们</span>
+        <span class="word" data-word="的" onclick="showWord('的', this)">的</span>
+        <span class="word" data-word="眼睛" onclick="showWord('眼睛', this)">眼睛</span>
+        <span class="word" data-word="得到" onclick="showWord('得到', this)">得到</span>
+        <span class="word" data-word="休息" onclick="showWord('休息', this)">休息</span>。
+        
+    </div>
+
+</div>
+
+
+</div>
+<!-- END .reading-main -->
+
+<div class="reading-divider"></div>
+
+<div class="reading-sidebar" id="readingSidebar">
+    <div class="pin-empty">Chưa có từ nào được ghim.</div>
+</div>
+
+</div>
+<!-- END .reading-layout -->
+
+
+<!-- ================================================= -->
+<!-- ========== TỪ VỰNG ĐÃ LƯU ====================== -->
+<!-- ================================================= -->
+
+<div class="saved-section">
+
+    <button
+        id="savedToggle"
+        class="saved-toggle"
+        onclick="toggleSavedList()">
+
+        <span>
+            📚 Từ vựng đã lưu
+        </span>
+
+        <span
+            id="savedArrow"
+            class="saved-arrow">
+            ▼
+        </span>
+
+    </button>
+
+    <div
+        id="savedList"
+        class="saved-list">
+    </div>
+
+</div>
+
+
+<!-- ================================================= -->
+<!-- ================= POPUP ========================== -->
+<!-- ================================================= -->
+
+<div
+    id="wordPopup"
+    class="word-popup">
+
+    <button
+        class="close-popup"
+        onclick="closeWord()">
+        ×
+    </button>
+
+    <h2 id="popupWord">
+        你好
+    </h2>
+
+    <p id="popupPinyin">
+        nǐ hǎo
+    </p>
+
+    <p id="popupHanViet">
+        nhĩ hảo
+    </p>
+
+    <p>
+        <strong id="popupPOS">
+            词语
+        </strong>
+    </p>
+
+    <p id="popupMeaning">
+        Nghĩa của từ
+    </p>
+
+
+    <button
+        id="saveWordButton"
+        class="save-word"
+        onclick="saveCurrentWord()">
+
+        ♡ Lưu từ
+
+    </button>
+
+    <button
+        id="pinWordButton"
+        class="save-word pin-word"
+        onclick="togglePinWord()">
+
+        📌 Hiện từ
+
+    </button>
+
+
+    <div class="highlight-title">
+        🎨 Đánh dấu từ
+    </div>
+
+
+    <div class="highlight-tools">
+
+        <button
+            class="color-btn green"
+            onclick="toggleHighlight('green')">
+        </button>
+
+        <button
+            class="color-btn blue"
+            onclick="toggleHighlight('blue')">
+        </button>
+
+        <button
+            class="color-btn gray"
+            onclick="toggleHighlight('gray')">
+        </button>
+
+        <button
+            class="color-btn yellow"
+            onclick="toggleHighlight('yellow')">
+        </button>
+
+        <button
+            class="color-btn orange"
+            onclick="toggleHighlight('orange')">
+        </button>
+
+        <button
+            class="color-btn purple"
+            onclick="toggleHighlight('purple')">
+        </button>
+
+        <button
+            id="underlineButton"
+            class="underline-btn"
+            onclick="toggleUnderline()">
+            U
+        </button>
+
+    </div>
+
+</div>
+
+
+</div>
+
+</section>
+
+
+<!-- ================================================= -->
+<!-- ================= HỌC BÀI ======================= -->
+<!-- ================================================= -->
+
+<section
+    id="study"
+    class="tab-content">
+
+<div class="content-card study-card">
+
+
+<div
+    id="studyProgress"
+    class="study-progress">
+</div>
+
+
+<div
+    id="studyWord"
+    class="chinese-word">
+</div>
+
+
+<div
+    id="studyPinyin"
+    class="pinyin">
+</div>
+
+
+<div
+    id="studyHanviet"
+    class="hanviet">
+</div>
+
+
+<div>
+
+    <strong>
+        Part of speech:
+    </strong>
+
+    <span id="studyPOS"></span>
+
+</div>
+
+
+<div
+    id="studyMeaning"
+    class="meaning">
+</div>
+
+
+<div class="example-box">
+
+    <h3>
+        📌 Ví dụ & cách dùng
+    </h3>
+
+    <p id="studyExampleChinese">
+    </p>
+
+    <p id="studyExampleVietnamese">
+    </p>
+
+    <p id="studyUsage">
+    </p>
+
+</div>
+
+
+<!-- ================================================= -->
+<!-- ================= GHI CHÚ ======================= -->
+<!-- ================================================= -->
+
+<div class="note-title">
+    📝 Ghi chú cá nhân
+</div>
+
+<textarea
+    id="studyNote"
+    class="note-input"
+    placeholder="Viết ghi chú của bạn về từ này...">
+</textarea>
+
+
+<!-- ================================================= -->
+<!-- ================= ĐẶT CÂU ======================= -->
+<!-- ================================================= -->
+
+<div class="note-title">
+    ✏️ Tự đặt câu
+</div>
+
+<textarea
+    id="studySentence"
+    class="sentence-input"
+    placeholder="Hãy tự đặt một câu với từ này...">
+</textarea>
+
+
+<button
+    class="next-button"
+    onclick="completeStudyWord()">
+
+    Hoàn thành từ này →
+
+</button>
+
+
+</div>
+
+</section>
+
+
+<!-- ================================================= -->
+<!-- ================= ÔN TẬP ======================== -->
+<!-- ================================================= -->
+
+<section
+    id="review"
+    class="tab-content">
+
+
+<div
+    id="reviewMenu"
+    class="content-card">
+
+    <h2>
+        🧠 Ôn tập
+    </h2>
+
+    <p>
+        Ôn lại những từ bạn đã lưu.
+    </p>
+
+    <div class="review-menu">
+
+        <button
+            class="game-button"
+            onclick="startQuickMatch()">
+            ⚡ Quick Match
+        </button>
+
+        <button
+            class="game-button"
+            onclick="startSentenceGame()">
+            ✏️ Đặt câu
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- QUICK MATCH -->
+
+<div
+    id="quickMatch"
+    class="content-card game-screen">
+
+    <div class="game-header">
+
+        <h2>
+            ⚡ Quick Match
+        </h2>
+
+        <div
+            id="matchTimer"
+            class="timer">
+            60s
+        </div>
+
+    </div>
+
+    <p>
+        Ghép từ tiếng Trung với nghĩa tiếng Việt.
+    </p>
+
+    <div class="match-board">
+
+        <div
+            id="chineseColumn"
+            class="match-column">
+        </div>
+
+        <div
+            id="vietnameseColumn"
+            class="match-column">
+        </div>
+
+    </div>
+
+    <div
+        id="matchMessage"
+        class="game-message">
+    </div>
+
+    <button
+        class="back-game"
+        onclick="backToReviewMenu()">
+        ← Quay lại
+    </button>
+
+</div>
+
+
+<!-- ĐẶT CÂU -->
+
+<div
+    id="sentenceGame"
+    class="content-card game-screen">
+
+    <div class="sentence-game-top">
+
+        <h2>
+            ✏️ Đặt câu
+        </h2>
+
+        <div
+            id="questionTimer"
+            class="question-timer">
+            0s
+        </div>
+
+    </div>
+
+    <p>
+        Hãy nhập đúng câu mà bạn đã đặt ở phần Học bài.
+    </p>
+
+    <div
+        id="sentenceProgress">
+    </div>
+
+    <div
+        id="sentenceGameWord"
+        class="sentence-game-word">
+    </div>
+
+    <textarea
+        id="sentenceGameInput"
+        class="sentence-game-input"
+        placeholder="Nhập câu của bạn...">
+    </textarea>
+
+    <div
+        id="sentenceMessage"
+        class="game-message">
+    </div>
+
+    <button
+        class="next-button"
+        onclick="checkSentence()">
+        Kiểm tra
+    </button>
+
+    <button
+        class="back-game"
+        onclick="backToReviewMenu()">
+        ← Quay lại
+    </button>
+
+</div>
+
+
+</section>
+
+</div>
+
+
+<!-- ================================================= -->
+<!-- ================= FINISH MODAL ================== -->
+<!-- ================================================= -->
+
+<div
+    id="finishModal"
+    class="finish-modal">
+
+    <div class="finish-box">
+
+        <h2>
+            🎉 Bạn đã học hết từ vựng!
+        </h2>
+
+        <p>
+            Bạn đã hoàn thành toàn bộ các từ đã lưu.
+        </p>
+
+        <div class="finish-buttons">
+
+            <button
+                class="modal-btn ok-btn"
+                onclick="finishStudy()">
+                OK
+            </button>
+
+            <button
+                class="modal-btn repeat-btn"
+                onclick="repeatStudy()">
+                Học lại từ vựng
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+/* ================================================= */
+/* ================= DỮ LIỆU ======================== */
+/* ================================================= */
+
+const vocabulary = {
+
+    "草绿了": {
+        pinyin: "cǎo lǜ le",
+        hanviet: "thảo lục liễu",
+        pos: "短语 / cụm từ",
+        meaning: "Cỏ đã xanh rồi",
+        exampleChinese: "春天来了，草绿了。",
+        exampleVietnamese: "→ Mùa xuân đến, cỏ đã xanh rồi.",
+        usage: "Dùng để miêu tả cỏ bắt đầu chuyển sang màu xanh."
+    },
+
+    "那是": {
+        pinyin: "nà shì",
+        hanviet: "na thị",
+        pos: "短语 / cụm từ",
+        meaning: "Đó là",
+        exampleChinese: "那是我的书。",
+        exampleVietnamese: "→ Đó là sách của tôi.",
+        usage: "Dùng để chỉ và giới thiệu một sự vật."
+    },
+
+    "生命": {
+        pinyin: "shēngmìng",
+        hanviet: "sinh mệnh",
+        pos: "名词 / danh từ",
+        meaning: "Sinh mệnh, sự sống",
+        exampleChinese: "我们应该珍惜生命。",
+        exampleVietnamese: "→ Chúng ta nên trân trọng sự sống.",
+        usage: "生命 chỉ sự sống hoặc cuộc đời của con người, động vật, thực vật."
+    },
+
+    "的": {
+        pinyin: "de",
+        hanviet: "đích",
+        pos: "助词 / trợ từ",
+        meaning: "Trợ từ kết cấu",
+        exampleChinese: "我的书。",
+        exampleVietnamese: "→ Sách của tôi.",
+        usage: "Dùng để biểu thị quan hệ sở hữu hoặc định ngữ."
+    },
+
+    "颜色": {
+        pinyin: "yánsè",
+        hanviet: "nhan sắc",
+        pos: "名词 / danh từ",
+        meaning: "Màu sắc",
+        exampleChinese: "你喜欢什么颜色？",
+        exampleVietnamese: "→ Bạn thích màu gì?",
+        usage: "Dùng để nói về màu sắc."
+    },
+
+    "花开了": {
+        pinyin: "huā kāi le",
+        hanviet: "hoa khai liễu",
+        pos: "短语 / cụm từ",
+        meaning: "Hoa đã nở",
+        exampleChinese: "春天到了，花开了。",
+        exampleVietnamese: "→ Mùa xuân đến, hoa đã nở.",
+        usage: "Miêu tả hoa bắt đầu nở."
+    },
+
+    "大自然": {
+        pinyin: "dà zìrán",
+        hanviet: "đại tự nhiên",
+        pos: "名词 / danh từ",
+        meaning: "Thiên nhiên",
+        exampleChinese: "我们应该保护大自然。",
+        exampleVietnamese: "→ Chúng ta nên bảo vệ thiên nhiên.",
+        usage: "Chỉ thế giới tự nhiên."
+    },
+
+    "礼物": {
+        pinyin: "lǐwù",
+        hanviet: "lễ vật",
+        pos: "名词 / danh từ",
+        meaning: "Quà, món quà",
+        exampleChinese: "这是给你的礼物。",
+        exampleVietnamese: "→ Đây là món quà dành cho bạn.",
+        usage: "Chỉ vật được tặng cho người khác."
+    },
+
+    "生活中": {
+        pinyin: "shēnghuó zhōng",
+        hanviet: "sinh hoạt trung",
+        pos: "短语 / cụm từ",
+        meaning: "Trong cuộc sống",
+        exampleChinese: "生活中有很多美好的事情。",
+        exampleVietnamese: "→ Trong cuộc sống có rất nhiều điều tốt đẹp.",
+        usage: "Dùng để chỉ phạm vi trong cuộc sống."
+    },
+
+    "不缺少": {
+        pinyin: "bù quēshǎo",
+        hanviet: "bất khuyết thiểu",
+        pos: "动词 / động từ",
+        meaning: "Không thiếu",
+        exampleChinese: "生活中不缺少机会。",
+        exampleVietnamese: "→ Trong cuộc sống không thiếu cơ hội.",
+        usage: "表示没有缺少某种事物."
+    },
+
+    "美": {
+        pinyin: "měi",
+        hanviet: "mỹ",
+        pos: "形容词 / tính từ",
+        meaning: "Đẹp, cái đẹp",
+        exampleChinese: "这个地方很美。",
+        exampleVietnamese: "→ Nơi này rất đẹp.",
+        usage: "Có thể chỉ vẻ đẹp hoặc điều đẹp đẽ."
+    },
+
+    "缺少": {
+        pinyin: "quēshǎo",
+        hanviet: "khuyết thiểu",
+        pos: "动词 / động từ",
+        meaning: "Thiếu",
+        exampleChinese: "我缺少经验。",
+        exampleVietnamese: "→ Tôi thiếu kinh nghiệm.",
+        usage: "Dùng khi một người hoặc sự vật không có đủ thứ cần thiết."
+    },
+
+    "是": {
+        pinyin: "shì",
+        hanviet: "thị",
+        pos: "动词 / động từ",
+        meaning: "Là",
+        exampleChinese: "我是学生。",
+        exampleVietnamese: "→ Tôi là học sinh.",
+        usage: "Dùng để biểu thị quan hệ 'là'."
+    },
+
+    "发现": {
+        pinyin: "fāxiàn",
+        hanviet: "phát hiện",
+        pos: "动词 / động từ",
+        meaning: "Phát hiện, nhận ra",
+        exampleChinese: "我发现他变了。",
+        exampleVietnamese: "→ Tôi nhận ra anh ấy đã thay đổi.",
+        usage: "Dùng khi nhận ra hoặc tìm thấy điều trước đó chưa biết."
+    },
+
+    "眼睛": {
+        pinyin: "yǎnjing",
+        hanviet: "nhãn tinh",
+        pos: "名词 / danh từ",
+        meaning: "Mắt",
+        exampleChinese: "我的眼睛有点儿累。",
+        exampleVietnamese: "→ Mắt tôi hơi mỏi.",
+        usage: "Chỉ cơ quan dùng để nhìn."
+    },
+
+    "只要": {
+        pinyin: "zhǐyào",
+        hanviet: "chỉ yếu",
+        pos: "连词 / liên từ",
+        meaning: "Chỉ cần",
+        exampleChinese: "只要努力，就能成功。",
+        exampleVietnamese: "→ Chỉ cần cố gắng thì có thể thành công.",
+        usage: "Thường dùng trong cấu trúc 只要……就……."
+    },
+
+    "有心": {
+        pinyin: "yǒu xīn",
+        hanviet: "hữu tâm",
+        pos: "形容词 / tính từ",
+        meaning: "Có lòng, để tâm",
+        exampleChinese: "只要有心，就能发现美。",
+        exampleVietnamese: "→ Chỉ cần để tâm thì có thể phát hiện ra cái đẹp.",
+        usage: "Chỉ việc có lòng hoặc chú ý đến một điều gì đó."
+    },
+
+    "到处": {
+        pinyin: "dàochù",
+        hanviet: "đáo xứ",
+        pos: "副词 / phó từ",
+        meaning: "Khắp nơi",
+        exampleChinese: "这里到处都是花。",
+        exampleVietnamese: "→ Ở đây đâu đâu cũng có hoa.",
+        usage: "Chỉ mọi nơi."
+    },
+
+    "都是": {
+        pinyin: "dōu shì",
+        hanviet: "đô thị",
+        pos: "短语 / cụm từ",
+        meaning: "Đều là, đều có",
+        exampleChinese: "这里都是学生。",
+        exampleVietnamese: "→ Ở đây đều là học sinh.",
+        usage: "表示全部属于某种情况."
+    },
+
+    "生活": {
+        pinyin: "shēnghuó",
+        hanviet: "sinh hoạt",
+        pos: "名词 / động từ",
+        meaning: "Cuộc sống; sinh sống",
+        exampleChinese: "我很喜欢现在的生活。",
+        exampleVietnamese: "→ Tôi rất thích cuộc sống hiện tại.",
+        usage: "Có thể làm danh từ hoặc động từ."
+    },
+
+    "态度": {
+        pinyin: "tàidù",
+        hanviet: "thái độ",
+        pos: "名词 / danh từ",
+        meaning: "Thái độ",
+        exampleChinese: "他的工作态度很好。",
+        exampleVietnamese: "→ Thái độ làm việc của anh ấy rất tốt.",
+        usage: "Chỉ cách một người nhìn nhận hoặc đối xử với một việc."
+    },
+
+    "要": {
+        pinyin: "yào",
+        hanviet: "yếu",
+        pos: "动词 / năng động từ",
+        meaning: "Cần, phải, muốn",
+        exampleChinese: "我要努力学习。",
+        exampleVietnamese: "→ Tôi phải chăm chỉ học tập.",
+        usage: "Tùy ngữ cảnh có thể biểu thị nhu cầu, ý muốn hoặc sự cần thiết."
+    },
+
+    "自己": {
+        pinyin: "zìjǐ",
+        hanviet: "tự kỷ",
+        pos: "代词 / đại từ",
+        meaning: "Bản thân, chính mình",
+        exampleChinese: "自己的事情自己做。",
+        exampleVietnamese: "→ Việc của mình thì tự mình làm.",
+        usage: "Dùng để chỉ chính người đó."
+    },
+
+    "选择": {
+        pinyin: "xuǎnzé",
+        hanviet: "tuyển trạch",
+        pos: "动词 / danh từ",
+        meaning: "Lựa chọn",
+        exampleChinese: "你可以自己选择。",
+        exampleVietnamese: "→ Bạn có thể tự lựa chọn.",
+        usage: "Dùng khi chọn một hoặc nhiều phương án."
+    },
+
+    "因此": {
+        pinyin: "yīncǐ",
+        hanviet: "nhân thử",
+        pos: "连词 / liên từ",
+        meaning: "Vì vậy, do đó",
+        exampleChinese: "天气不好，因此我们没有出去。",
+        exampleVietnamese: "→ Thời tiết không tốt, vì vậy chúng tôi không ra ngoài.",
+        usage: "Dùng để nối nguyên nhân với kết quả."
+    },
+
+    "遇到": {
+        pinyin: "yùdào",
+        hanviet: "ngộ đáo",
+        pos: "动词 / động từ",
+        meaning: "Gặp, gặp phải",
+        exampleChinese: "遇到问题时不要着急。",
+        exampleVietnamese: "→ Khi gặp vấn đề đừng lo lắng.",
+        usage: "Thường dùng với vấn đề, khó khăn hoặc người."
+    },
+
+    "烦恼": {
+        pinyin: "fánnǎo",
+        hanviet: "phiền não",
+        pos: "名词 / 动词",
+        meaning: "Phiền não, buồn phiền",
+        exampleChinese: "不要为小事烦恼。",
+        exampleVietnamese: "→ Đừng phiền não vì những chuyện nhỏ.",
+        usage: "Chỉ cảm giác lo lắng hoặc không vui."
+    },
+
+    "时": {
+        pinyin: "shí",
+        hanviet: "thời",
+        pos: "名词 / hậu tố",
+        meaning: "Khi, lúc",
+        exampleChinese: "小时候我很喜欢画画。",
+        exampleVietnamese: "→ Khi còn nhỏ tôi rất thích vẽ.",
+        usage: "Thường xuất hiện trong các cụm như ……时, ……时候."
+    },
+
+    "你": {
+        pinyin: "nǐ",
+        hanviet: "nhĩ",
+        pos: "代词 / đại từ",
+        meaning: "Bạn, cậu",
+        exampleChinese: "你应该休息一下。",
+        exampleVietnamese: "→ Bạn nên nghỉ ngơi một chút.",
+        usage: "Dùng để chỉ người đang giao tiếp."
+    },
+
+    "应该": {
+        pinyin: "yīnggāi",
+        hanviet: "ưng cai",
+        pos: "能愿动词 / động từ năng nguyện",
+        meaning: "Nên, cần phải",
+        exampleChinese: "你应该早点儿睡觉。",
+        exampleVietnamese: "→ Bạn nên đi ngủ sớm.",
+        usage: "Dùng để đưa ra lời khuyên hoặc điều nên làm."
+    },
+
+    "想": {
+        pinyin: "xiǎng",
+        hanviet: "tưởng",
+        pos: "动词 / động từ",
+        meaning: "Nghĩ, muốn",
+        exampleChinese: "我想办法解决问题。",
+        exampleVietnamese: "→ Tôi nghĩ cách giải quyết vấn đề.",
+        usage: "Có thể mang nghĩa nghĩ, suy nghĩ hoặc muốn."
+    },
+
+    "一些": {
+        pinyin: "yìxiē",
+        hanviet: "nhất ta",
+        pos: "数量词 / lượng từ",
+        meaning: "Một vài, một ít",
+        exampleChinese: "我想买一些水果。",
+        exampleVietnamese: "→ Tôi muốn mua một ít hoa quả.",
+        usage: "Chỉ một lượng không xác định nhưng không lớn."
+    },
+
+    "办法": {
+        pinyin: "bànfǎ",
+        hanviet: "biện pháp",
+        pos: "名词 / danh từ",
+        meaning: "Cách, biện pháp",
+        exampleChinese: "我有一个办法。",
+        exampleVietnamese: "→ Tôi có một cách.",
+        usage: "Chỉ phương pháp giải quyết vấn đề."
+    },
+
+    "让": {
+        pinyin: "ràng",
+        hanviet: "nhượng",
+        pos: "动词 / động từ",
+        meaning: "Khiến, để, cho",
+        exampleChinese: "这件事让我很开心。",
+        exampleVietnamese: "→ Chuyện này khiến tôi rất vui.",
+        usage: "让 + người + động từ/tính từ: khiến ai đó làm gì hoặc ở trạng thái nào."
+    },
+
+    "从": {
+        pinyin: "cóng",
+        hanviet: "tòng",
+        pos: "介词 / giới từ",
+        meaning: "Từ",
+        exampleChinese: "我从北京回来。",
+        exampleVietnamese: "→ Tôi trở về từ Bắc Kinh.",
+        usage: "Chỉ điểm bắt đầu về thời gian hoặc địa điểm."
+    },
+
+    "不高兴": {
+        pinyin: "bù gāoxìng",
+        hanviet: "bất cao hứng",
+        pos: "形容词 / tính từ",
+        meaning: "Không vui",
+        exampleChinese: "今天我有点儿不高兴。",
+        exampleVietnamese: "→ Hôm nay tôi hơi không vui.",
+        usage: "Miêu tả trạng thái không vui."
+    },
+
+    "心情": {
+        pinyin: "xīnqíng",
+        hanviet: "tâm tình",
+        pos: "名词 / danh từ",
+        meaning: "Tâm trạng",
+        exampleChinese: "今天我的心情很好。",
+        exampleVietnamese: "→ Hôm nay tâm trạng của tôi rất tốt.",
+        usage: "Chỉ trạng thái cảm xúc của một người."
+    },
+
+    "中": {
+        pinyin: "zhōng",
+        hanviet: "trung",
+        pos: "方位词 / từ phương vị",
+        meaning: "Trong",
+        exampleChinese: "生活中有很多美。",
+        exampleVietnamese: "→ Trong cuộc sống có rất nhiều cái đẹp.",
+        usage: "Đặt sau danh từ để chỉ phạm vi."
+    },
+
+    "走出来": {
+        pinyin: "zǒu chūlái",
+        hanviet: "tẩu xuất lai",
+        pos: "离合/趋向短语 / cụm động từ",
+        meaning: "Bước ra; thoát ra",
+        exampleChinese: "他终于从烦恼中走出来了。",
+        exampleVietnamese: "→ Cuối cùng anh ấy cũng thoát khỏi phiền muộn.",
+        usage: "Trong bài mang nghĩa thoát ra khỏi trạng thái cảm xúc tiêu cực."
+    },
+
+    "窗外": {
+        pinyin: "chuāngwài",
+        hanviet: "song ngoại",
+        pos: "名词 / danh từ",
+        meaning: "Ngoài cửa sổ",
+        exampleChinese: "我喜欢看看窗外。",
+        exampleVietnamese: "→ Tôi thích nhìn ra ngoài cửa sổ.",
+        usage: "Chỉ khu vực bên ngoài cửa sổ."
+    },
+
+    "什么样子": {
+        pinyin: "shénme yàngzi",
+        hanviet: "thập ma dạng tử",
+        pos: "短语 / cụm từ",
+        meaning: "Như thế nào, có dáng vẻ ra sao",
+        exampleChinese: "这个地方是什么样子？",
+        exampleVietnamese: "→ Nơi này trông như thế nào?",
+        usage: "Dùng để hỏi về hình dáng hoặc trạng thái."
+    },
+
+    "我们": {
+        pinyin: "wǒmen",
+        hanviet: "ngã môn",
+        pos: "代词 / đại từ",
+        meaning: "Chúng tôi, chúng ta",
+        exampleChinese: "我们一起学习。",
+        exampleVietnamese: "→ Chúng ta cùng học.",
+        usage: "Đại từ ngôi thứ nhất số nhiều."
+    },
+
+    "无法": {
+        pinyin: "wúfǎ",
+        hanviet: "vô pháp",
+        pos: "副词 / phó từ",
+        meaning: "Không thể, không có cách nào",
+        exampleChinese: "我无法改变过去。",
+        exampleVietnamese: "→ Tôi không thể thay đổi quá khứ.",
+        usage: "Nhấn mạnh không có khả năng hoặc phương pháp để làm gì."
+    },
+
+    "改变": {
+        pinyin: "gǎibiàn",
+        hanviet: "cải biến",
+        pos: "动词 / động từ",
+        meaning: "Thay đổi",
+        exampleChinese: "我们无法改变天气。",
+        exampleVietnamese: "→ Chúng ta không thể thay đổi thời tiết.",
+        usage: "Dùng khi làm cho sự vật hoặc tình trạng trở nên khác đi."
+    },
+
+    "但": {
+        pinyin: "dàn",
+        hanviet: "đãn",
+        pos: "连词 / liên từ",
+        meaning: "Nhưng",
+        exampleChinese: "我很累，但我还要学习。",
+        exampleVietnamese: "→ Tôi rất mệt nhưng vẫn phải học.",
+        usage: "Dùng để biểu thị sự chuyển ý hoặc đối lập."
+    },
+
+    "可以": {
+        pinyin: "kěyǐ",
+        hanviet: "khả dĩ",
+        pos: "能愿动词 / động từ năng nguyện",
+        meaning: "Có thể",
+        exampleChinese: "你可以自己选择。",
+        exampleVietnamese: "→ Bạn có thể tự lựa chọn.",
+        usage: "Biểu thị khả năng hoặc cho phép."
+    },
+
+    "站": {
+        pinyin: "zhàn",
+        hanviet: "trạm",
+        pos: "动词 / động từ",
+        meaning: "Đứng",
+        exampleChinese: "请站在这里。",
+        exampleVietnamese: "→ Hãy đứng ở đây.",
+        usage: "Chỉ hành động đứng."
+    },
+
+    "在哪个": {
+        pinyin: "zài nǎge",
+        hanviet: "tại nả cá",
+        pos: "短语 / cụm từ",
+        meaning: "Ở cái nào, ở đâu",
+        exampleChinese: "你想站在哪个窗户前？",
+        exampleVietnamese: "→ Bạn muốn đứng trước cửa sổ nào?",
+        usage: "Dùng để hỏi vị trí lựa chọn."
+    },
+
+    "窗户": {
+        pinyin: "chuānghu",
+        hanviet: "song hộ",
+        pos: "名词 / danh từ",
+        meaning: "Cửa sổ",
+        exampleChinese: "请打开窗户。",
+        exampleVietnamese: "→ Hãy mở cửa sổ.",
+        usage: "Chỉ cửa sổ."
+    },
+
+    "前": {
+        pinyin: "qián",
+        hanviet: "tiền",
+        pos: "方位词 / từ phương vị",
+        meaning: "Phía trước",
+        exampleChinese: "学校前面有一家书店。",
+        exampleVietnamese: "→ Phía trước trường có một hiệu sách.",
+        usage: "Chỉ vị trí phía trước."
+    },
+
+    "一个": {
+        pinyin: "yí ge",
+        hanviet: "nhất cá",
+        pos: "数量词 / lượng từ",
+        meaning: "Một cái, một",
+        exampleChinese: "我有一个想法。",
+        exampleVietnamese: "→ Tôi có một ý tưởng.",
+        usage: "Chỉ số lượng một."
+    },
+
+    "能够": {
+        pinyin: "nénggòu",
+        hanviet: "năng cấu",
+        pos: "能愿动词 / động từ năng nguyện",
+        meaning: "Có thể, có khả năng",
+        exampleChinese: "我希望能够成功。",
+        exampleVietnamese: "→ Tôi hy vọng có thể thành công.",
+        usage: "Biểu thị khả năng làm được một việc."
+    },
+
+    "带给": {
+        pinyin: "dàigěi",
+        hanviet: "đái cấp",
+        pos: "动词 / động từ",
+        meaning: "Mang lại",
+        exampleChinese: "音乐带给我快乐。",
+        exampleVietnamese: "→ Âm nhạc mang lại niềm vui cho tôi.",
+        usage: "带给 + người + điều gì: mang điều gì đến cho ai."
+    },
+
+    "快乐": {
+        pinyin: "kuàilè",
+        hanviet: "khoái lạc",
+        pos: "形容词 / tính từ",
+        meaning: "Vui vẻ, niềm vui",
+        exampleChinese: "希望你每天都快乐。",
+        exampleVietnamese: "→ Hy vọng mỗi ngày bạn đều vui vẻ.",
+        usage: "Miêu tả trạng thái vui vẻ, hạnh phúc."
+    },
+
+    "这样": {
+        pinyin: "zhèyàng",
+        hanviet: "giá dạng",
+        pos: "代词 / đại từ",
+        meaning: "Như vậy, như thế này",
+        exampleChinese: "这样做比较好。",
+        exampleVietnamese: "→ Làm như vậy thì tốt hơn.",
+        usage: "Dùng để chỉ cách thức hoặc tình trạng vừa được nói đến."
+    },
+
+    "才能": {
+        pinyin: "cáinéng",
+        hanviet: "tài năng",
+        pos: "副词 / phó từ",
+        meaning: "Mới có thể, chỉ khi... mới...",
+        exampleChinese: "努力学习才能进步。",
+        exampleVietnamese: "→ Chỉ khi chăm chỉ học mới có thể tiến bộ.",
+        usage: "Nhấn mạnh điều kiện cần thiết để đạt được kết quả."
+    },
+
+    "选对": {
+        pinyin: "xuǎn duì",
+        hanviet: "tuyển đối",
+        pos: "动词短语 / cụm động từ",
+        meaning: "Chọn đúng",
+        exampleChinese: "你要选对方法。",
+        exampleVietnamese: "→ Bạn phải chọn đúng phương pháp.",
+        usage: "选择 + 对: lựa chọn chính xác."
+    },
+
+
+    /* ================= BÀI 2 ================= */
+
+    "科学研究": {
+        pinyin: "kēxué yánjiū",
+        hanviet: "khoa học nghiên cứu",
+        pos: "名词 / danh từ",
+        meaning: "Nghiên cứu khoa học",
+        exampleChinese: "科学研究需要时间。",
+        exampleVietnamese: "→ Nghiên cứu khoa học cần thời gian.",
+        usage: "Chỉ hoạt động nghiên cứu trong lĩnh vực khoa học."
+    },
+
+    "证明": {
+        pinyin: "zhèngmíng",
+        hanviet: "chứng minh",
+        pos: "动词 / động từ",
+        meaning: "Chứng minh",
+        exampleChinese: "事实证明他是对的。",
+        exampleVietnamese: "→ Sự thật chứng minh anh ấy đúng.",
+        usage: "Dùng để đưa ra bằng chứng xác nhận một điều."
+    },
+
+    "女孩子": {
+        pinyin: "nǚháizi",
+        hanviet: "nữ hài tử",
+        pos: "名词 / danh từ",
+        meaning: "Cô gái, bé gái",
+        exampleChinese: "那个女孩子很可爱。",
+        exampleVietnamese: "→ Cô gái đó rất đáng yêu.",
+        usage: "Cách gọi một cô gái hoặc bé gái."
+    },
+
+    "对": {
+        pinyin: "duì",
+        hanviet: "đối",
+        pos: "介词 / giới từ",
+        meaning: "Đối với",
+        exampleChinese: "我对中国文化很感兴趣。",
+        exampleVietnamese: "→ Tôi rất hứng thú với văn hóa Trung Quốc.",
+        usage: "对 + đối tượng: đối với ai/cái gì."
+    },
+
+    "衣服": {
+        pinyin: "yīfu",
+        hanviet: "y phục",
+        pos: "名词 / danh từ",
+        meaning: "Quần áo",
+        exampleChinese: "这件衣服很好看。",
+        exampleVietnamese: "→ Bộ quần áo này rất đẹp.",
+        usage: "Chỉ quần áo nói chung."
+    },
+
+    "往往": {
+        pinyin: "wǎngwǎng",
+        hanviet: "vãng vãng",
+        pos: "副词 / phó từ",
+        meaning: "Thường thường, thường có xu hướng",
+        exampleChinese: "周末这里往往很热闹。",
+        exampleVietnamese: "→ Cuối tuần nơi này thường rất náo nhiệt.",
+        usage: "Chỉ một tình huống thường xuyên xảy ra."
+    },
+
+    "与": {
+        pinyin: "yǔ",
+        hanviet: "dữ",
+        pos: "介词 / giới từ",
+        meaning: "Với, cùng với",
+        exampleChinese: "这件事与我无关。",
+        exampleVietnamese: "→ Việc này không liên quan đến tôi.",
+        usage: "Cách dùng tương tự 和, nhưng trang trọng hơn."
+    },
+
+    "她们": {
+        pinyin: "tāmen",
+        hanviet: "tha môn",
+        pos: "代词 / đại từ",
+        meaning: "Họ, các cô ấy",
+        exampleChinese: "她们都是我的朋友。",
+        exampleVietnamese: "→ Họ đều là bạn của tôi.",
+        usage: "Đại từ ngôi thứ ba số nhiều dùng cho nữ."
+    },
+
+    "性格": {
+        pinyin: "xìnggé",
+        hanviet: "tính cách",
+        pos: "名词 / danh từ",
+        meaning: "Tính cách",
+        exampleChinese: "她的性格很开朗。",
+        exampleVietnamese: "→ Tính cách của cô ấy rất cởi mở.",
+        usage: "Chỉ đặc điểm tâm lý và cách hành xử của một người."
+    },
+
+    "有关": {
+        pinyin: "yǒuguān",
+        hanviet: "hữu quan",
+        pos: "动词 / tính từ",
+        meaning: "Có liên quan đến",
+        exampleChinese: "这件事与工作有关。",
+        exampleVietnamese: "→ Việc này có liên quan đến công việc.",
+        usage: "A 与 B 有关 = A có liên quan đến B."
+    },
+
+    "喜欢": {
+        pinyin: "xǐhuan",
+        hanviet: "hỉ hoan",
+        pos: "动词 / động từ",
+        meaning: "Thích",
+        exampleChinese: "我喜欢学习中文。",
+        exampleVietnamese: "→ Tôi thích học tiếng Trung.",
+        usage: "Biểu thị yêu thích một người hoặc sự vật."
+    },
+
+    "穿": {
+        pinyin: "chuān",
+        hanviet: "xuyên",
+        pos: "动词 / động từ",
+        meaning: "Mặc, đi",
+        exampleChinese: "她喜欢穿白色衣服。",
+        exampleVietnamese: "→ Cô ấy thích mặc quần áo màu trắng.",
+        usage: "Dùng cho việc mặc quần áo, đi giày."
+    },
+
+    "白色": {
+        pinyin: "báisè",
+        hanviet: "bạch sắc",
+        pos: "名词 / danh từ",
+        meaning: "Màu trắng",
+        exampleChinese: "我喜欢白色。",
+        exampleVietnamese: "→ Tôi thích màu trắng.",
+        usage: "Chỉ màu trắng."
+    },
+
+    "比较": {
+        pinyin: "bǐjiào",
+        hanviet: "tỷ giảo",
+        pos: "副词 / phó từ",
+        meaning: "Khá, tương đối",
+        exampleChinese: "今天比较冷。",
+        exampleVietnamese: "→ Hôm nay khá lạnh.",
+        usage: "Đặt trước tính từ để biểu thị mức độ tương đối."
+    },
+
+    "阳光": {
+        pinyin: "yángguāng",
+        hanviet: "dương quang",
+        pos: "名词 / 形容词",
+        meaning: "Ánh nắng; tích cực, tươi sáng",
+        exampleChinese: "她是一个很阳光的人。",
+        exampleVietnamese: "→ Cô ấy là một người rất tích cực, tươi sáng.",
+        usage: "Trong bài dùng để miêu tả tính cách tích cực, vui vẻ."
+    },
+
+    "生活态度": {
+        pinyin: "shēnghuó tàidù",
+        hanviet: "sinh hoạt thái độ",
+        pos: "名词 / danh từ",
+        meaning: "Thái độ đối với cuộc sống",
+        exampleChinese: "他的生活态度很积极。",
+        exampleVietnamese: "→ Thái độ sống của anh ấy rất tích cực.",
+        usage: "Chỉ cách một người nhìn nhận và đối diện với cuộc sống."
+    },
+
+    "积极向上": {
+        pinyin: "jījí xiàngshàng",
+        hanviet: "tích cực hướng thượng",
+        pos: "形容词 / tính từ",
+        meaning: "Tích cực, hướng lên",
+        exampleChinese: "她的生活态度积极向上。",
+        exampleVietnamese: "→ Thái độ sống của cô ấy rất tích cực.",
+        usage: "Miêu tả tinh thần tích cực, luôn hướng tới điều tốt đẹp."
+    },
+
+    "共同": {
+        pinyin: "gòngtóng",
+        hanviet: "cộng đồng",
+        pos: "形容词 / tính từ",
+        meaning: "Chung, cùng",
+        exampleChinese: "我们有共同的目标。",
+        exampleVietnamese: "→ Chúng ta có mục tiêu chung.",
+        usage: "Chỉ điều được nhiều người cùng có."
+    },
+
+    "特点": {
+        pinyin: "tèdiǎn",
+        hanviet: "đặc điểm",
+        pos: "名词 / danh từ",
+        meaning: "Đặc điểm",
+        exampleChinese: "这是这个城市的特点。",
+        exampleVietnamese: "→ Đây là đặc điểm của thành phố này.",
+        usage: "Chỉ đặc điểm nổi bật của người hoặc sự vật."
+    },
+
+    "而": {
+        pinyin: "ér",
+        hanviet: "nhi",
+        pos: "连词 / liên từ",
+        meaning: "Mà, còn, trong khi",
+        exampleChinese: "他喜欢红色，而我喜欢蓝色。",
+        exampleVietnamese: "→ Anh ấy thích màu đỏ, còn tôi thích màu xanh.",
+        usage: "Dùng để nối hai vế có sự đối lập hoặc khác biệt."
+    },
+
+    "红色": {
+        pinyin: "hóngsè",
+        hanviet: "hồng sắc",
+        pos: "名词 / danh từ",
+        meaning: "Màu đỏ",
+        exampleChinese: "红色让我觉得很热情。",
+        exampleVietnamese: "→ Màu đỏ khiến tôi cảm thấy rất nhiệt tình.",
+        usage: "Chỉ màu đỏ."
+    },
+
+    "浪漫": {
+        pinyin: "làngmàn",
+        hanviet: "lãng mạn",
+        pos: "形容词 / tính từ",
+        meaning: "Lãng mạn",
+        exampleChinese: "她喜欢浪漫的爱情故事。",
+        exampleVietnamese: "→ Cô ấy thích những câu chuyện tình yêu lãng mạn.",
+        usage: "Miêu tả cảm xúc hoặc phong cách giàu tình cảm."
+    },
+
+    "也": {
+        pinyin: "yě",
+        hanviet: "dã",
+        pos: "副词 / phó từ",
+        meaning: "Cũng",
+        exampleChinese: "我也喜欢这个颜色。",
+        exampleVietnamese: "→ Tôi cũng thích màu này.",
+        usage: "Biểu thị sự giống hoặc bổ sung."
+    },
+
+    "会": {
+        pinyin: "huì",
+        hanviet: "hội",
+        pos: "能愿动词 / động từ năng nguyện",
+        meaning: "Sẽ, có thể",
+        exampleChinese: "明天会下雨。",
+        exampleVietnamese: "→ Ngày mai sẽ mưa.",
+        usage: "Có thể biểu thị khả năng hoặc sự việc sẽ xảy ra."
+    },
+
+    "影响": {
+        pinyin: "yǐngxiǎng",
+        hanviet: "ảnh hưởng",
+        pos: "动词 / danh từ",
+        meaning: "Ảnh hưởng",
+        exampleChinese: "天气会影响心情。",
+        exampleVietnamese: "→ Thời tiết sẽ ảnh hưởng đến tâm trạng.",
+        usage: "Chỉ tác động làm thay đổi người hoặc sự vật."
+    },
+
+    "人": {
+        pinyin: "rén",
+        hanviet: "nhân",
+        pos: "名词 / danh từ",
+        meaning: "Người",
+        exampleChinese: "人需要朋友。",
+        exampleVietnamese: "→ Con người cần bạn bè.",
+        usage: "Chỉ con người."
+    },
+
+    "不同": {
+        pinyin: "bùtóng",
+        hanviet: "bất đồng",
+        pos: "形容词 / tính từ",
+        meaning: "Khác nhau",
+        exampleChinese: "每个人都有不同的想法。",
+        exampleVietnamese: "→ Mỗi người đều có suy nghĩ khác nhau.",
+        usage: "Dùng để biểu thị sự không giống nhau."
+    },
+
+    "给": {
+        pinyin: "gěi",
+        hanviet: "cấp",
+        pos: "介词 / 动词",
+        meaning: "Cho, đến, với",
+        exampleChinese: "给我一点儿时间。",
+        exampleVietnamese: "→ Cho tôi một chút thời gian.",
+        usage: "Có thể dùng như động từ 'cho' hoặc giới từ."
+    },
+
+    "带来": {
+        pinyin: "dàilái",
+        hanviet: "đái lai",
+        pos: "动词 / động từ",
+        meaning: "Mang lại",
+        exampleChinese: "运动给我们带来健康。",
+        exampleVietnamese: "→ Vận động mang lại sức khỏe cho chúng ta.",
+        usage: "Chỉ việc đem một điều gì đó đến cho người khác."
+    },
+
+    "感情": {
+        pinyin: "gǎnqíng",
+        hanviet: "cảm tình",
+        pos: "名词 / danh từ",
+        meaning: "Tình cảm, cảm xúc",
+        exampleChinese: "他们之间有很深的感情。",
+        exampleVietnamese: "→ Giữa họ có tình cảm rất sâu sắc.",
+        usage: "Chỉ tình cảm hoặc cảm xúc."
+    },
+
+    "变化": {
+        pinyin: "biànhuà",
+        hanviet: "biến hóa",
+        pos: "名词 / 动词",
+        meaning: "Sự thay đổi, thay đổi",
+        exampleChinese: "这里发生了很大的变化。",
+        exampleVietnamese: "→ Nơi này đã có những thay đổi rất lớn.",
+        usage: "Chỉ sự vật trở nên khác trước."
+    },
+
+    "黄色": {
+        pinyin: "huángsè",
+        hanviet: "hoàng sắc",
+        pos: "名词 / danh từ",
+        meaning: "Màu vàng",
+        exampleChinese: "黄色让人心情愉快。",
+        exampleVietnamese: "→ Màu vàng khiến người ta vui vẻ.",
+        usage: "Chỉ màu vàng."
+    },
+
+    "和": {
+        pinyin: "hé",
+        hanviet: "hòa",
+        pos: "连词 / liên từ",
+        meaning: "Và, với",
+        exampleChinese: "我喜欢红色和白色。",
+        exampleVietnamese: "→ Tôi thích màu đỏ và màu trắng.",
+        usage: "Dùng để nối hai danh từ hoặc thành phần ngang hàng."
+    },
+
+    "心情愉快": {
+        pinyin: "xīnqíng yúkuài",
+        hanviet: "tâm tình du khoái",
+        pos: "形容词短语 / cụm tính từ",
+        meaning: "Tâm trạng vui vẻ",
+        exampleChinese: "保持心情愉快很重要。",
+        exampleVietnamese: "→ Giữ tâm trạng vui vẻ rất quan trọng.",
+        usage: "Miêu tả trạng thái tinh thần vui vẻ, thoải mái."
+    },
+
+    "黑色": {
+        pinyin: "hēisè",
+        hanviet: "hắc sắc",
+        pos: "名词 / danh từ",
+        meaning: "Màu đen",
+        exampleChinese: "他喜欢穿黑色衣服。",
+        exampleVietnamese: "→ Anh ấy thích mặc quần áo màu đen.",
+        usage: "Chỉ màu đen."
+    },
+
+    "却": {
+        pinyin: "què",
+        hanviet: "khước",
+        pos: "副词 / phó từ",
+        meaning: "Lại, nhưng lại",
+        exampleChinese: "天气很冷，他却没有穿外套。",
+        exampleVietnamese: "→ Thời tiết rất lạnh nhưng anh ấy lại không mặc áo khoác.",
+        usage: "Nhấn mạnh sự trái ngược với điều được dự đoán."
+    },
+
+    "容易": {
+        pinyin: "róngyì",
+        hanviet: "dung dị",
+        pos: "形容词 / tính từ",
+        meaning: "Dễ, dễ dàng",
+        exampleChinese: "晚上喝咖啡容易睡不着。",
+        exampleVietnamese: "→ Uống cà phê buổi tối dễ mất ngủ.",
+        usage: "Chỉ khả năng một việc dễ xảy ra."
+    },
+
+    "感到": {
+        pinyin: "gǎndào",
+        hanviet: "cảm đáo",
+        pos: "动词 / động từ",
+        meaning: "Cảm thấy",
+        exampleChinese: "我感到很开心。",
+        exampleVietnamese: "→ Tôi cảm thấy rất vui.",
+        usage: "Dùng để biểu thị cảm nhận hoặc cảm xúc."
+    },
+
+    "伤心": {
+        pinyin: "shāngxīn",
+        hanviet: "thương tâm",
+        pos: "形容词 / tính từ",
+        meaning: "Buồn, đau lòng",
+        exampleChinese: "听到这个消息，她很伤心。",
+        exampleVietnamese: "→ Nghe tin này, cô ấy rất buồn.",
+        usage: "Miêu tả trạng thái buồn hoặc đau lòng."
+    },
+
+    "人们": {
+        pinyin: "rénmen",
+        hanviet: "nhân môn",
+        pos: "代词 / danh từ",
+        meaning: "Mọi người, người ta",
+        exampleChinese: "人们喜欢美好的生活。",
+        exampleVietnamese: "→ Mọi người thích cuộc sống tốt đẹp.",
+        usage: "Chỉ con người nói chung."
+    },
+
+    "在": {
+        pinyin: "zài",
+        hanviet: "tại",
+        pos: "介词 / 动词",
+        meaning: "Ở, tại, đang",
+        exampleChinese: "我在家学习。",
+        exampleVietnamese: "→ Tôi học ở nhà.",
+        usage: "Có thể chỉ địa điểm hoặc dùng trong cấu trúc đang làm gì."
+    },
+
+    "看到": {
+        pinyin: "kàndào",
+        hanviet: "khán đáo",
+        pos: "动词 / động từ",
+        meaning: "Nhìn thấy",
+        exampleChinese: "我看到了一只小鸟。",
+        exampleVietnamese: "→ Tôi nhìn thấy một con chim nhỏ.",
+        usage: "Chỉ việc dùng mắt nhìn thấy một sự vật."
+    },
+
+    "蓝色": {
+        pinyin: "lánsè",
+        hanviet: "lam sắc",
+        pos: "名词 / danh từ",
+        meaning: "Màu xanh lam",
+        exampleChinese: "我喜欢蓝色。",
+        exampleVietnamese: "→ Tôi thích màu xanh lam.",
+        usage: "Chỉ màu xanh lam."
+    },
+
+    "觉得": {
+        pinyin: "juéde",
+        hanviet: "giác đắc",
+        pos: "动词 / động từ",
+        meaning: "Cảm thấy, cho rằng",
+        exampleChinese: "我觉得这个办法很好。",
+        exampleVietnamese: "→ Tôi cảm thấy cách này rất tốt.",
+        usage: "Dùng để nói cảm nhận hoặc ý kiến cá nhân."
+    },
+
+    "很": {
+        pinyin: "hěn",
+        hanviet: "ngận",
+        pos: "副词 / phó từ",
+        meaning: "Rất",
+        exampleChinese: "今天很舒服。",
+        exampleVietnamese: "→ Hôm nay rất dễ chịu.",
+        usage: "Dùng để biểu thị mức độ, thường đứng trước tính từ."
+    },
+
+    "舒服": {
+        pinyin: "shūfu",
+        hanviet: "thư phục",
+        pos: "形容词 / tính từ",
+        meaning: "Thoải mái, dễ chịu",
+        exampleChinese: "这里很舒服。",
+        exampleVietnamese: "→ Ở đây rất thoải mái.",
+        usage: "Miêu tả cảm giác dễ chịu về thể chất hoặc tinh thần."
+    },
+
+    "安静": {
+        pinyin: "ānjìng",
+        hanviet: "an tĩnh",
+        pos: "形容词 / tính từ",
+        meaning: "Yên tĩnh",
+        exampleChinese: "这里很安静。",
+        exampleVietnamese: "→ Ở đây rất yên tĩnh.",
+        usage: "Miêu tả nơi không có nhiều tiếng động hoặc trạng thái bình tĩnh."
+    },
+
+    "下来": {
+        pinyin: "xiàlái",
+        hanviet: "hạ lai",
+        pos: "趋向补语 / bổ ngữ xu hướng",
+        meaning: "Xuống, trở nên ổn định",
+        exampleChinese: "安静下来。",
+        exampleVietnamese: "→ Trở nên yên tĩnh lại.",
+        usage: "Trong 安静下来 biểu thị trạng thái trở nên yên tĩnh."
+    },
+
+    "绿色": {
+        pinyin: "lǜsè",
+        hanviet: "lục sắc",
+        pos: "名词 / danh từ",
+        meaning: "Màu xanh lá",
+        exampleChinese: "绿色让人感觉很舒服。",
+        exampleVietnamese: "→ Màu xanh lá khiến người ta cảm thấy rất dễ chịu.",
+        usage: "Chỉ màu xanh lá."
+    },
+
+    "得到": {
+        pinyin: "dédào",
+        hanviet: "đắc đáo",
+        pos: "动词 / động từ",
+        meaning: "Nhận được, đạt được",
+        exampleChinese: "我们得到了很多帮助。",
+        exampleVietnamese: "→ Chúng tôi đã nhận được rất nhiều sự giúp đỡ.",
+        usage: "Chỉ việc nhận hoặc đạt được một điều gì."
+    },
+
+    "休息": {
+        pinyin: "xiūxi",
+        hanviet: "hưu tức",
+        pos: "动词 / động từ",
+        meaning: "Nghỉ ngơi",
+        exampleChinese: "你应该好好休息。",
+        exampleVietnamese: "→ Bạn nên nghỉ ngơi thật tốt.",
+        usage: "Chỉ hành động nghỉ ngơi để phục hồi sức lực."
+    }
+
+};
+
+
+/* ================================================= */
+/* ================= BIẾN ========================== */
+/* ================================================= */
+
+let currentWord = "";
+
+let currentWordElement = null;
+
+let studyWords = [];
+
+let studyIndex = 0;
+
+let currentHighlight = {};
+
+let currentUnderline = {};
+
+let matchPairs = [];
+
+let selectedChinese = null;
+
+let selectedVietnamese = null;
+
+let matchTimerInterval = null;
+
+let matchTime = 60;
+
+let sentenceWords = [];
+
+let sentenceIndex = 0;
+
+let questionStartTime = null;
+
+let questionTimerInterval = null;
+
+
+/* ================================================= */
+/* ================= LOCAL STORAGE ================= */
+/* ================================================= */
+
+function getSavedWords() {
+
+    return JSON.parse(
+        localStorage.getItem("lesson9SavedWords")
+    ) || [];
+
+}
+
+
+function setSavedWords(words) {
+
+    localStorage.setItem(
+        "lesson9SavedWords",
+        JSON.stringify(words)
+    );
+
+}
+
+
+function getSentences() {
+
+    return JSON.parse(
+        localStorage.getItem("lesson9Sentences")
+    ) || {};
+
+}
+
+
+function setSentences(data) {
+
+    localStorage.setItem(
+        "lesson9Sentences",
+        JSON.stringify(data)
+    );
+
+}
+
+
+/* ================================================= */
+/* ========== LƯU HIGHLIGHT / UNDERLINE ============ */
+/* ================================================= */
+
+function getHighlights() {
+
+    return JSON.parse(
+        localStorage.getItem("lesson9Highlights")
+    ) || {};
+
+}
+
+
+function setHighlights(data) {
+
+    localStorage.setItem(
+        "lesson9Highlights",
+        JSON.stringify(data)
+    );
+
+}
+
+
+function getUnderlines() {
+
+    return JSON.parse(
+        localStorage.getItem("lesson9Underlines")
+    ) || {};
+
+}
+
+
+function setUnderlines(data) {
+
+    localStorage.setItem(
+        "lesson9Underlines",
+        JSON.stringify(data)
+    );
+
+}
+
+
+/* ================================================= */
+/* ============== TỪ ĐƯỢC GHIM (SIDEBAR) =========== */
+/* ================================================= */
+
+function getPinnedWords() {
+
+    return JSON.parse(
+        localStorage.getItem("lesson9PinnedWords")
+    ) || [];
+
+}
+
+
+function setPinnedWords(words) {
+
+    localStorage.setItem(
+        "lesson9PinnedWords",
+        JSON.stringify(words)
+    );
+
+}
+
+function getPinnedPositions() {
+
+    return JSON.parse(
+        localStorage.getItem("lesson9PinnedPositions")
+    ) || {};
+
+}
+
+
+function setPinnedPositions(data) {
+
+    localStorage.setItem(
+        "lesson9PinnedPositions",
+        JSON.stringify(data)
+    );
+
+}
+
+
+/* ================================================= */
+/* ================= GHI CHÚ ======================= */
+/* ================================================= */
+
+function getNotes() {
+
+    return JSON.parse(
+        localStorage.getItem("lesson9Notes")
+    ) || {};
+
+}
+
+
+function setNotes(data) {
+
+    localStorage.setItem(
+        "lesson9Notes",
+        JSON.stringify(data)
+    );
+
+}
+
+
+/* ================================================= */
+/* ================= POPUP ========================== */
+/* ================================================= */
+
+function showWord(word, element = null) {
+
+    currentWord = word;
+
+    currentWordElement =
+        element && element.classList.contains("word")
+            ? element
+            : null;
+
+    const data = vocabulary[word];
+
+    if (!data) return;
+
+    document.getElementById("popupWord").textContent =
+        word;
+
+    document.getElementById("popupPinyin").textContent =
+        data.pinyin;
+
+    document.getElementById("popupHanViet").textContent =
+        data.hanviet;
+
+    document.getElementById("popupPOS").textContent =
+        data.pos;
+
+    document.getElementById("popupMeaning").textContent =
+        data.meaning;
+
+    document.getElementById("wordPopup")
+        .classList.add("show");
+
+    updateSaveButton();
+
+    updatePinButton();
+
+    updateUnderlineButton();
+
+    updateColorButtons();
+
+}
+
+
+/* ================================================= */
+/* ============ CLICK RA NGOÀI POPUP =============== */
+/* ================================================= */
+
+document.addEventListener(
+    "click",
+    function(event) {
+
+        const popup =
+            document.getElementById("wordPopup");
+
+        const clickedWord =
+            event.target.closest(".word");
+
+        if (
+            popup.classList.contains("show") &&
+            !popup.contains(event.target) &&
+            !clickedWord
+        ) {
+
+            closeWord();
+
+        }
+
+    }
+);
+
+
+function closeWord() {
+
+    document
+        .getElementById("wordPopup")
+        .classList.remove("show");
+
+}
+
+
+/* ================================================= */
+/* ================= LƯU / HỦY LƯU ================= */
+/* ================================================= */
+
+function saveCurrentWord() {
+
+    if (!currentWord) return;
+
+    let savedWords = getSavedWords();
+
+    const index =
+        savedWords.indexOf(currentWord);
+
+    if (index === -1) {
+
+        savedWords.push(currentWord);
+
+        setSavedWords(savedWords);
+
+        updateSaveButton();
+
+        updateSavedList();
+
+        updateStatus("learning");
+
+    } else {
+
+        savedWords.splice(index, 1);
+
+        setSavedWords(savedWords);
+
+        updateSaveButton();
+
+        updateSavedList();
+
+        updateStatus(
+            savedWords.length > 0
+                ? "learning"
+                : "new"
+        );
+
+    }
+
+}
+
+
+/* ================================================= */
+/* ============ UPDATE NÚT LƯU ===================== */
+/* ================================================= */
+
+function updateSaveButton() {
+
+    const button =
+        document.getElementById(
+            "saveWordButton"
+        );
+
+    if (!button || !currentWord) return;
+
+    const saved =
+        getSavedWords().includes(
+            currentWord
+        );
+
+    if (saved) {
+
+        button.textContent =
+            "✓ Đã lưu";
+
+        button.classList.add(
+            "saved"
+        );
+
+    } else {
+
+        button.textContent =
+            "♡ Lưu từ";
+
+        button.classList.remove(
+            "saved"
+        );
+
+    }
+
+}
+
+
+/* ================================================= */
+/* ============ NÚT HIỆN TỪ (GHIM SIDEBAR) ========= */
+/* ================================================= */
+
+function togglePinWord() {
+
+    if (!currentWord) return;
+
+    let pinned = getPinnedWords();
+    let positions = getPinnedPositions();
+
+    const index =
+        pinned.indexOf(currentWord);
+
+    if (index === -1) {
+
+        pinned.push(currentWord);
+
+        if (currentWordElement && currentWordElement.dataset.wordId) {
+            positions[currentWord] = currentWordElement.dataset.wordId;
+        }
+
+    } else {
+
+        pinned.splice(index, 1);
+        delete positions[currentWord];
+
+    }
+
+    setPinnedWords(pinned);
+    setPinnedPositions(positions);
+
+    updatePinButton();
+    renderPinnedSidebar();
+
+}
+
+
+function updatePinButton() {
+
+    const button =
+        document.getElementById(
+            "pinWordButton"
+        );
+
+    if (!button || !currentWord) return;
+
+    const pinned =
+        getPinnedWords().includes(
+            currentWord
+        );
+
+    if (pinned) {
+
+        button.textContent =
+            "📌 Đã hiện";
+
+        button.classList.add(
+            "pinned"
+        );
+
+    } else {
+
+        button.textContent =
+            "📌 Hiện từ";
+
+        button.classList.remove(
+            "pinned"
+        );
+
+    }
+
+}
+
+
+/* ================================================= */
+/* ========== RÚT GỌN TỪ LOẠI / NGHĨA ============== */
+/* ================================================= */
+
+function shortPOS(posStr) {
+
+    if (!posStr) return "?";
+
+    const first =
+        posStr.split("/")[0].trim();
+
+    const map = [
+        [["名词", "danh từ"], "n"],
+        [["形容词", "tính từ"], "a"],
+        [["副词", "phó từ"], "adv"],
+        [["连词", "liên từ"], "conj"],
+        [["介词", "giới từ"], "prep"],
+        [["代词", "đại từ"], "pron"],
+        [["助词", "trợ từ"], "part"],
+        [["数量词", "lượng từ"], "num"],
+        [["方位词", "từ phương vị"], "suf"],
+        [["趋向补语", "bổ ngữ"], "compl"],
+        [["动词短语", "短语", "cụm từ", "cụm động từ"], "phr"],
+        [["能愿动词", "động từ năng nguyện"], "aux"],
+        [["动词", "động từ"], "v"]
+    ];
+
+    for (const [keys, abbr] of map) {
+
+        for (const k of keys) {
+
+            if (first.includes(k)) return abbr;
+
+        }
+
+    }
+
+    for (const [keys, abbr] of map) {
+
+        for (const k of keys) {
+
+            if (posStr.includes(k)) return abbr;
+
+        }
+
+    }
+
+    return "?";
+
+}
+
+
+function shortMeaning(meaningStr) {
+
+    if (!meaningStr) return "";
+
+    return meaningStr
+        .split(/[,;]/)[0]
+        .trim();
+
+}
+
+
+/* ================================================= */
+/* ================ SAVED LIST ===================== */
+/* ================================================= */
+
+function toggleSavedList() {
+
+    const list =
+        document.getElementById(
+            "savedList"
+        );
+
+    const button =
+        document.getElementById(
+            "savedToggle"
+        );
+
+    list.classList.toggle("show");
+
+    button.classList.toggle("open");
+
+}
+
+
+function updateSavedList() {
+
+    const list =
+        document.getElementById(
+            "savedList"
+        );
+
+    const savedWords =
+        getSavedWords();
+
+    list.innerHTML = "";
+
+    if (savedWords.length === 0) {
+
+        list.innerHTML =
+            '<div class="no-saved">' +
+            'Chưa có từ nào được lưu.' +
+            '</div>';
+
+        return;
+
+    }
+
+
+    savedWords.forEach(function(word) {
+
+        const item =
+            document.createElement("div");
+
+        item.className =
+            "saved-word-item";
+
+
+        const main =
+            document.createElement("div");
+
+        main.className =
+            "saved-word-main";
+
+        main.textContent =
+            word;
+
+        main.onclick =
+            function() {
+
+                showWord(word);
+
+            };
+
+
+        const removeButton =
+            document.createElement("button");
+
+        removeButton.className =
+            "remove-saved";
+
+        removeButton.textContent =
+            "×";
+
+        removeButton.title =
+            "Xóa khỏi danh sách đã lưu";
+
+
+        removeButton.onclick =
+            function(event) {
+
+                event.stopPropagation();
+
+                removeSavedWord(word);
+
+            };
+
+
+        item.appendChild(main);
+
+        item.appendChild(removeButton);
+
+        list.appendChild(item);
+
+    });
+
+}
+
+
+/* ================================================= */
+/* ============== XÓA TỪ ĐÃ LƯU ==================== */
+/* ================================================= */
+
+function removeSavedWord(word) {
+
+    let savedWords =
+        getSavedWords();
+
+    savedWords =
+        savedWords.filter(
+            item => item !== word
+        );
+
+    setSavedWords(savedWords);
+
+    updateSavedList();
+
+    if (currentWord === word) {
+
+        updateSaveButton();
+
+    }
+
+    updateStatus(
+        savedWords.length > 0
+            ? "learning"
+            : "new"
+    );
+
+}
+
+
+/* ================================================= */
+/* ============ SIDEBAR TỪ ĐƯỢC GHIM =============== */
+/* ================================================= */
+
+function renderPinnedSidebar() {
+
+    const sidebar =
+        document.getElementById(
+            "readingSidebar"
+        );
+
+    if (!sidebar) return;
+
+    const pinned =
+        getPinnedWords();
+
+    sidebar.innerHTML = "";
+
+    if (pinned.length === 0) {
+
+        sidebar.innerHTML =
+            '<div class="pin-empty">' +
+            'Chưa có từ nào được ghim.' +
+            '</div>';
+
+        updateConnectorLines();
+
+        return;
+
+    }
+
+
+    pinned.forEach(function(word) {
+
+        const data =
+            vocabulary[word];
+
+        if (!data) return;
+
+
+        const card =
+            document.createElement("div");
+
+        card.className =
+            "pin-card";
+
+        card.dataset.word =
+            word;
+
+        card.onclick =
+            function() {
+
+                showWord(word);
+
+            };
+
+
+        const posShort =
+            shortPOS(data.pos);
+
+        const meaningShort =
+            shortMeaning(data.meaning);
+
+
+        const removeButton =
+            document.createElement("button");
+
+        removeButton.className =
+            "pin-remove";
+
+        removeButton.title =
+            "Bỏ ghim";
+
+        removeButton.textContent =
+            "×";
+
+        removeButton.onclick =
+            function(event) {
+
+                event.stopPropagation();
+
+                removePinnedWord(word);
+
+            };
+
+
+        const pinyinSpan =
+            document.createElement("span");
+
+        pinyinSpan.className =
+            "pin-pinyin";
+
+        pinyinSpan.textContent =
+            "/" + data.pinyin + "/";
+
+
+        const posSpan =
+            document.createElement("span");
+
+        posSpan.className =
+            "pin-pos";
+
+        posSpan.textContent =
+            "(" + posShort + ")";
+
+
+        const meaningSpan =
+            document.createElement("span");
+
+        meaningSpan.className =
+            "pin-meaning";
+
+        meaningSpan.textContent =
+            meaningShort;
+
+
+        card.appendChild(removeButton);
+
+        card.appendChild(pinyinSpan);
+
+        card.appendChild(
+            document.createTextNode(" ")
+        );
+
+        card.appendChild(posSpan);
+
+        card.appendChild(
+            document.createTextNode(" ")
+        );
+
+        card.appendChild(meaningSpan);
+
+
+        sidebar.appendChild(card);
+
+    });
+
+
+    updateConnectorLines();
+
+}
+
+
+function removePinnedWord(word) {
+
+    let pinned =
+        getPinnedWords().filter(
+            w => w !== word
+        );
+
+    setPinnedWords(pinned);
+
+    if (currentWord === word) {
+
+        updatePinButton();
+
+    }
+
+    renderPinnedSidebar();
+
+}
+
+
+/* ================================================= */
+/* ========== ĐƯỜNG NỐI TỪ ↔ THẺ GHIM ============== */
+/* ================================================= */
+
+function updateConnectorLines() {
+
+    const container = document.getElementById("readingLayout");
+    const svg = document.getElementById("connectorSvg");
+    const sidebar = document.getElementById("readingSidebar");
+
+    if (!container || !svg || !sidebar) return;
+
+    const containerRect = container.getBoundingClientRect();
+    const w = container.clientWidth;
+    const h = container.clientHeight;
+
+    svg.setAttribute("width", w);
+    svg.setAttribute("height", h);
+    svg.setAttribute("viewBox", "0 0 " + w + " " + h);
+    svg.innerHTML = "";
+
+    const pinned = getPinnedWords();
+    const positions = getPinnedPositions();
+
+    if (!pinned.length) return;
+
+    /* =====================================================
+       1. Lấy đúng vị trí của từng từ được ghim
+       ===================================================== */
+
+    const entries = [];
+
+    document
+        .querySelectorAll("#reading .reading-text")
+        .forEach(function(textBlock) {
+
+            textBlock.querySelectorAll(".word").forEach(function(el) {
+
+                const r = el.getBoundingClientRect();
+
+                entries.push({
+                    el: el,
+                    word: el.dataset.word,
+                    id: el.dataset.wordId,
+                    textBlock: textBlock,
+                    rect: r,
+                    centerX: r.left + r.width / 2,
+                    centerY: r.top + r.height / 2
+                });
+
+            });
+        });
+
+    const items = pinned.map(function(word) {
+
+        const card = document.querySelector(
+            '.pin-card[data-word="' + CSS.escape(word) + '"]'
+        );
+
+        if (!card) return null;
+
+        const wantedId = positions[word];
+
+        let source = wantedId
+            ? entries.find(function(entry) {
+                return entry.id === wantedId;
+            })
+            : null;
+
+        /* Từ được ghim từ phiên bản cũ chưa có ID riêng. */
+        if (!source) {
+            source = entries.find(function(entry) {
+                return entry.word === word;
+            });
+        }
+
+        if (!source) return null;
+
+        return {
+            word: word,
+            card: card,
+            source: source
+        };
+
+    }).filter(Boolean);
+
+    if (!items.length) return;
+
+    /* =====================================================
+       2. Xác định các dòng THỰC TẾ trong từng đoạn text
+       ===================================================== */
+
+    function getLines(textBlock) {
+
+        const lines = [];
+
+        textBlock.querySelectorAll(".word").forEach(function(el) {
+
+            const r = el.getBoundingClientRect();
+            const cy = r.top + r.height / 2;
+
+            let line = lines.find(function(existing) {
+                return Math.abs(existing.centerY - cy) < 10;
+            });
+
+            if (!line) {
+                line = {
+                    top: r.top,
+                    bottom: r.bottom,
+                    centerY: cy,
+                    words: []
+                };
+                lines.push(line);
+            }
+
+            line.words.push(el);
+            line.top = Math.min(line.top, r.top);
+            line.bottom = Math.max(line.bottom, r.bottom);
+            line.centerY =
+                (line.top + line.bottom) / 2;
+        });
+
+        lines.sort(function(a, b) {
+            return a.centerY - b.centerY;
+        });
+
+        return lines;
+    }
+
+    const lineCache = new Map();
+
+    items.forEach(function(item) {
+
+        if (!lineCache.has(item.source.textBlock)) {
+            lineCache.set(
+                item.source.textBlock,
+                getLines(item.source.textBlock)
+            );
+        }
+
+        const lines = lineCache.get(item.source.textBlock);
+
+        item.line = lines.reduce(function(best, line) {
+            if (!best) return line;
+
+            return Math.abs(line.centerY - item.source.centerY) <
+                   Math.abs(best.centerY - item.source.centerY)
+                ? line
+                : best;
+        }, null);
+    });
+
+    /* =====================================================
+       3. Đặt note đúng NGANG với dòng chứa từ.
+
+       Sidebar phải cao bằng reading-layout. Không dùng
+       sidebar.clientHeight để clamp vì trước đây sidebar
+       chỉ cao bằng nội dung card -> tất cả card bị đẩy lên đầu.
+       ===================================================== */
+
+    const sidebarRect = sidebar.getBoundingClientRect();
+
+    const groups = [];
+
+    items.forEach(function(item) {
+
+        let group = groups.find(function(g) {
+            return g.line === item.line;
+        });
+
+        if (!group) {
+            group = {
+                line: item.line,
+                items: []
+            };
+            groups.push(group);
+        }
+
+        group.items.push(item);
+    });
+
+    /* =====================================================
+       3. Xếp note theo đúng thứ tự đọc và tuyệt đối không chồng.
+
+       - Nhóm cùng một dòng: trái -> phải.
+       - Note trong cùng dòng: xếp từ trên -> dưới theo thứ tự
+         của từ từ trái sang phải.
+       - Các dòng khác nhau: nhóm phía trên luôn đứng trước nhóm
+         phía dưới.
+       - Nếu hai nhóm có chiều cao lớn, nhóm phía dưới sẽ được
+         đẩy xuống vừa đủ để không đè lên nhóm phía trên.
+       ===================================================== */
+
+    groups.sort(function(a, b) {
+        return a.line.centerY - b.line.centerY;
+    });
+
+    const groupGap = 12;
+    const cardGap = 10;
+    const layoutHeight = container.clientHeight;
+
+    /* Tính chiều cao thực tế của từng nhóm. */
+    groups.forEach(function(group) {
+
+        group.items.sort(function(a, b) {
+            return a.source.centerX - b.source.centerX;
+        });
+
+        group.height =
+            group.items.reduce(function(sum, item) {
+                return sum + item.card.offsetHeight;
+            }, 0) +
+            cardGap * Math.max(0, group.items.length - 1);
+
+        group.desiredTop =
+            group.line.centerY - sidebarRect.top -
+            group.height / 2;
+    });
+
+    /*
+     * Đặt từ trên xuống dưới. Mỗi nhóm cố bám sát dòng của nó,
+     * nhưng không bao giờ được chồng lên nhóm trước.
+     */
+    let previousBottom = 4;
+
+    groups.forEach(function(group) {
+
+        let top = Math.max(
+            4,
+            group.desiredTop
+        );
+
+        if (top < previousBottom + groupGap) {
+            top = previousBottom + groupGap;
+        }
+
+        group.top = top;
+        group.bottom = top + group.height;
+
+        previousBottom = group.bottom;
+    });
+
+    /*
+     * Nếu đẩy xuống quá thấp, dịch cả cụm lên một lượng vừa đủ,
+     * nhưng vẫn giữ khoảng cách giữa các note.
+     */
+    const bottomLimit = Math.max(4, layoutHeight - 4);
+    const overflow =
+        previousBottom - bottomLimit;
+
+    if (overflow > 0) {
+
+        groups.forEach(function(group) {
+            group.top -= overflow;
+        });
+
+        /* Không để note đầu tiên vượt khỏi vùng layout. */
+        const firstTop =
+            groups.length
+                ? groups[0].top
+                : 4;
+
+        if (firstTop < 4) {
+            const correction = 4 - firstTop;
+
+            groups.forEach(function(group) {
+                group.top += correction;
+            });
+        }
+    }
+
+    groups.forEach(function(group) {
+
+        let top = group.top;
+
+        group.items.forEach(function(item) {
+
+            item.card.style.position = "absolute";
+            item.card.style.left = "0";
+            item.card.style.right = "0";
+            item.card.style.marginBottom = "0";
+            item.card.style.top = top + "px";
+
+            const cardRect =
+                item.card.getBoundingClientRect();
+
+            item.cardCenterY =
+                cardRect.top + cardRect.height / 2;
+
+            top += cardRect.height + cardGap;
+        });
+    });
+
+    /* =====================================================
+       4. Vẽ đường đúng theo nét đỏ trong ảnh:
+
+          từ
+           │  <- chỉ đi dọc từ mép trên/dưới của từ
+           └──────────────  <- đi ngang NGAY TRONG KHOẢNG
+                              TRỐNG giữa hai dòng
+                         │
+                         └──── note
+
+       Tuyệt đối không chọn một Y nằm giữa thân dòng.
+       ===================================================== */
+
+    const textBlocks = Array.from(
+        document.querySelectorAll("#reading .reading-text")
+    );
+
+    items.forEach(function(item) {
+
+        const source = item.source;
+        const line = item.line;
+
+        if (!line) return;
+
+        const wordRect = source.el.getBoundingClientRect();
+        const textRect = source.textBlock.getBoundingClientRect();
+        const lines = lineCache.get(source.textBlock) || [];
+        const index = lines.indexOf(line);
+
+        const nextLine = lines[index + 1] || null;
+        const prevLine = lines[index - 1] || null;
+
+        const nextGap = nextLine
+            ? nextLine.top - line.bottom
+            : -1;
+
+        const prevGap = prevLine
+            ? line.top - prevLine.bottom
+            : -1;
+
+        /*
+         * Ưu tiên khoảng trống ngay BÊN DƯỚI dòng.
+         * Nếu không có (dòng cuối), dùng khoảng trống bên trên.
+         * RouteY luôn nằm giữa hai dòng, không bao giờ nằm
+         * trong vùng chữ hoặc vùng audio.
+         */
+        let routeYViewport;
+        let goDown;
+
+        if (nextLine && nextGap > 2) {
+            goDown = true;
+            routeYViewport =
+                line.bottom + nextGap / 2;
+        } else if (prevLine && prevGap > 2) {
+            goDown = false;
+            routeYViewport =
+                line.top - prevGap / 2;
+        } else {
+            /* Trường hợp cực hiếm: hai dòng sát nhau. */
+            goDown = true;
+            routeYViewport = line.bottom + 2;
+        }
+
+        /* Không cho route thoát khỏi chính textBlock. */
+        routeYViewport = Math.max(
+            textRect.top + 1,
+            Math.min(
+                routeYViewport,
+                textRect.bottom - 1
+            )
+        );
+
+        const sourceX =
+            source.centerX - containerRect.left;
+
+        const sourceY = goDown
+            ? wordRect.bottom - containerRect.top
+            : wordRect.top - containerRect.top;
+
+        const routeY =
+            routeYViewport - containerRect.top;
+
+        /*
+         * Đường ngang chỉ chạy trong phần text.
+         * Sau khi tới mép phải text, mới đi vào vùng divider/sidebar.
+         */
+        const textRight =
+            textRect.right - containerRect.left;
+
+        /* Điểm dọc nằm trong khoảng divider, không đè text. */
+        const verticalX =
+            textRight + 8;
+
+        const cardRect = item.card.getBoundingClientRect();
+
+        const cardLeft =
+            cardRect.left - containerRect.left;
+
+        const cardCenterY =
+            item.cardCenterY - containerRect.top;
+
+        /*
+         * Route chính:
+         * 1. center-top/bottom của chữ
+         * 2. xuống/lên đúng vào khe giữa dòng
+         * 3. ngang tới divider
+         * 4. dọc tới đúng tâm note
+         * 5. ngang vào note
+         */
+        const points = [
+            sourceX + "," + sourceY,
+            sourceX + "," + routeY,
+            verticalX + "," + routeY,
+            verticalX + "," + cardCenterY,
+            cardLeft + "," + cardCenterY
+        ].join(" ");
+
+        const polyline = document.createElementNS(
+            "http://www.w3.org/2000/svg",
+            "polyline"
+        );
+
+        polyline.setAttribute("points", points);
+        polyline.setAttribute("fill", "none");
+        polyline.setAttribute("stroke", "#b8cdbf");
+        polyline.setAttribute("stroke-width", "1.2");
+        polyline.setAttribute("stroke-dasharray", "4,4");
+        polyline.setAttribute("stroke-linecap", "round");
+        polyline.setAttribute("stroke-linejoin", "round");
+
+        svg.appendChild(polyline);
+    });
+}
+
+
+/* ================================================= */
+/* ================= HIGHLIGHT ====================== */
+/* ================================================= */
+
+function toggleHighlight(color) {
+
+    if (!currentWord || !currentWordElement) return;
+
+    const elementId = currentWordElement.dataset.wordId;
+    if (!elementId) return;
+
+    const oldColor = currentHighlight[elementId];
+
+    if (oldColor === color) {
+
+        currentWordElement.classList.remove(
+            "highlight-green",
+            "highlight-blue",
+            "highlight-gray",
+            "highlight-yellow",
+            "highlight-orange",
+            "highlight-purple"
+        );
+
+        currentHighlight[elementId] = null;
+
+        setHighlights(currentHighlight);
+        updateColorButtons();
+        return;
+    }
+
+    currentWordElement.classList.remove(
+        "highlight-green",
+        "highlight-blue",
+        "highlight-gray",
+        "highlight-yellow",
+        "highlight-orange",
+        "highlight-purple"
+    );
+
+    currentWordElement.classList.add(
+        "highlight-" + color
+    );
+
+    currentHighlight[elementId] = color;
+
+    setHighlights(currentHighlight);
+    updateColorButtons();
+}
+
+/* ================================================= */
+/* ============ UPDATE 6 MÀU ======================= */
+/* ================================================= */
+
+function updateColorButtons() {
+
+    document
+        .querySelectorAll(".color-btn")
+        .forEach(function(button) {
+
+            button.classList.remove(
+                "active-color"
+            );
+
+        });
+
+
+    const color =
+        currentWordElement
+            ? currentHighlight[currentWordElement.dataset.wordId]
+            : null;
+
+    if (!color) return;
+
+
+    const button =
+        document.querySelector(
+            ".color-btn." + color
+        );
+
+    if (button) {
+
+        button.classList.add(
+            "active-color"
+        );
+
+    }
+
+}
+
+
+/* ================================================= */
+/* ================= UNDERLINE ====================== */
+/* ================================================= */
+
+function toggleUnderline() {
+
+    if (!currentWord || !currentWordElement) return;
+
+    const elementId = currentWordElement.dataset.wordId;
+    if (!elementId) return;
+
+    const alreadyUnderlined =
+        currentUnderline[elementId];
+
+    if (alreadyUnderlined) {
+
+        currentWordElement.style.textDecoration = "none";
+        currentWordElement.style.textDecorationThickness = "";
+        currentWordElement.style.textUnderlineOffset = "";
+
+    } else {
+
+        currentWordElement.style.textDecoration = "underline";
+        currentWordElement.style.textDecorationThickness = "1px";
+        currentWordElement.style.textUnderlineOffset = "5px";
+    }
+
+    currentUnderline[elementId] = !alreadyUnderlined;
+
+    setUnderlines(currentUnderline);
+    updateUnderlineButton();
+}
+
+function updateUnderlineButton() {
+
+    const button =
+        document.getElementById("underlineButton");
+
+    if (!button) return;
+
+    const isUnderlined =
+        currentWordElement
+            ? !!currentUnderline[currentWordElement.dataset.wordId]
+            : false;
+
+    if (isUnderlined) {
+        button.classList.add("active");
+    } else {
+        button.classList.remove("active");
+    }
+}
+
+/* ================================================= */
+/* ========== ÁP DỤNG LẠI HIGHLIGHT/UNDERLINE ====== */
+/* ================================================= */
+
+function applySavedHighlights() {
+
+    const highlights = getHighlights();
+
+    document
+        .querySelectorAll("#reading .reading-main .word")
+        .forEach(function(el) {
+
+            const id = el.dataset.wordId;
+            if (!id) return;
+
+            const color = highlights[id];
+            if (!color) return;
+
+            el.classList.add("highlight-" + color);
+        });
+
+    const underlines = getUnderlines();
+
+    document
+        .querySelectorAll("#reading .reading-main .word")
+        .forEach(function(el) {
+
+            const id = el.dataset.wordId;
+            if (!id || !underlines[id]) return;
+
+            el.style.textDecoration = "underline";
+            el.style.textDecorationThickness = "1px";
+            el.style.textUnderlineOffset = "5px";
+        });
+}
+
+/* ================================================= */
+/* ================= TAB ============================ */
+/* ================================================= */
+
+function openTab(tabName, button) {
+
+    document
+        .querySelectorAll(".tab-content")
+        .forEach(function(content) {
+
+            content.classList.remove(
+                "active"
+            );
+
+        });
+
+
+    document
+        .querySelectorAll(".tab-button")
+        .forEach(function(btn) {
+
+            btn.classList.remove(
+                "active"
+            );
+
+        });
+
+
+    document
+        .getElementById(tabName)
+        .classList.add("active");
+
+
+    button.classList.add("active");
+
+
+    updateStatus("learning");
+
+
+    if (tabName === "study") {
+
+        prepareStudy();
+
+    }
+
+
+    if (tabName === "reading") {
+
+        setTimeout(
+            updateConnectorLines,
+            50
+        );
+
+    }
+
+}
+
+
+/* ================================================= */
+/* ================= AUDIO (2 PLAYER) =============== */
+/* ================================================= */
+
+const audioPlayers = {};
+
+function formatTime(seconds) {
+
+    if (isNaN(seconds) || seconds < 0) return "0:00";
+
+    const m = Math.floor(seconds / 60);
+    const s = Math.floor(seconds % 60);
+
+    return m + ":" + (s < 10 ? "0" : "") + s;
+
+}
+
+function setupAudioPlayer(id) {
+
+    const audioEl =
+        document.getElementById("audio" + id);
+
+    const vinylEl =
+        document.getElementById("vinyl" + id);
+
+    const audioButtonEl =
+        document.getElementById("audioButton" + id);
+
+    const progressBarEl =
+        document.getElementById("audioProgress" + id);
+
+    const currentTimeEl =
+        document.getElementById("audioCurrentTime" + id);
+
+    const durationEl =
+        document.getElementById("audioDuration" + id);
+
+
+    audioPlayers[id] = {
+        audioEl: audioEl,
+        vinylEl: vinylEl,
+        audioButtonEl: audioButtonEl,
+        progressBarEl: progressBarEl
+    };
+
+
+    audioEl.addEventListener(
+        "loadedmetadata",
+        function() {
+
+            progressBarEl.max =
+                audioEl.duration;
+
+            durationEl.textContent =
+                formatTime(audioEl.duration);
+
+        }
+    );
+
+
+    audioEl.addEventListener(
+        "timeupdate",
+        function() {
+
+            progressBarEl.value =
+                audioEl.currentTime;
+
+            currentTimeEl.textContent =
+                formatTime(audioEl.currentTime);
+
+        }
+    );
+
+
+    progressBarEl.addEventListener(
+        "input",
+        function() {
+
+            audioEl.currentTime =
+                progressBarEl.value;
+
+        }
+    );
+
+
+    audioEl.addEventListener(
+        "play",
+        function() {
+
+            vinylEl.classList.add(
+                "playing"
+            );
+
+            audioButtonEl.textContent =
+                "⏸ Tạm dừng";
+
+        }
+    );
+
+
+    audioEl.addEventListener(
+        "pause",
+        function() {
+
+            vinylEl.classList.remove(
+                "playing"
+            );
+
+            audioButtonEl.textContent =
+                "▶ Phát bài nghe";
+
+        }
+    );
+
+
+    audioEl.addEventListener(
+        "ended",
+        function() {
+
+            vinylEl.classList.remove(
+                "playing"
+            );
+
+            audioButtonEl.textContent =
+                "▶ Phát bài nghe";
+
+            progressBarEl.value = 0;
+
+            currentTimeEl.textContent =
+                "0:00";
+
+        }
+    );
+
+}
+
+
+function pauseOtherAudios(exceptId) {
+
+    Object.keys(audioPlayers).forEach(
+        function(id) {
+
+            if (id !== exceptId) {
+
+                const player =
+                    audioPlayers[id];
+
+                if (!player.audioEl.paused) {
+
+                    player.audioEl.pause();
+
+                }
+
+            }
+
+        }
+    );
+
+}
+
+
+function toggleAudio(id) {
+
+    const player =
+        audioPlayers[id];
+
+    if (!player) return;
+
+    const audioEl =
+        player.audioEl;
+
+    const vinylEl =
+        player.vinylEl;
+
+    const audioButtonEl =
+        player.audioButtonEl;
+
+
+    if (audioEl.paused) {
+
+        pauseOtherAudios(id);
+
+        const playPromise =
+            audioEl.play();
+
+        if (playPromise !== undefined) {
+
+            playPromise
+                .catch(function(err) {
+
+                    console.error(
+                        "Không phát được audio:",
+                        err
+                    );
+
+                    vinylEl.classList.remove(
+                        "playing"
+                    );
+
+                });
+
+        }
+
+    } else {
+
+        audioEl.pause();
+
+    }
+
+}
+
+
+setupAudioPlayer("1");
+setupAudioPlayer("2");
+
+
+/* ================================================= */
+/* ================= STUDY ========================= */
+/* ================================================= */
+
+function prepareStudy() {
+
+    studyWords =
+        getSavedWords();
+
+
+    if (studyWords.length === 0) {
+
+        document.getElementById(
+            "studyProgress"
+        ).textContent =
+            "Bạn chưa lưu từ vựng nào.";
+
+        document.getElementById(
+            "studyWord"
+        ).textContent = "";
+
+        document.getElementById(
+            "studyPinyin"
+        ).textContent = "";
+
+        document.getElementById(
+            "studyHanviet"
+        ).textContent = "";
+
+        document.getElementById(
+            "studyPOS"
+        ).textContent = "";
+
+        document.getElementById(
+            "studyMeaning"
+        ).textContent = "";
+
+        return;
+
+    }
+
+
+    if (
+        studyIndex >= studyWords.length
+    ) {
+
+        studyIndex = 0;
+
+    }
+
+
+    showStudyWord();
+
+}
+
+
+function showStudyWord() {
+
+    const word =
+        studyWords[studyIndex];
+
+    const data =
+        vocabulary[word];
+
+
+    document.getElementById(
+        "studyProgress"
+    ).textContent =
+        "Từ " +
+        (studyIndex + 1) +
+        " / " +
+        studyWords.length;
+
+
+    document.getElementById(
+        "studyWord"
+    ).textContent =
+        word;
+
+
+    document.getElementById(
+        "studyPinyin"
+    ).textContent =
+        data.pinyin;
+
+
+    document.getElementById(
+        "studyHanviet"
+    ).textContent =
+        data.hanviet;
+
+
+    document.getElementById(
+        "studyPOS"
+    ).textContent =
+        data.pos;
+
+
+    document.getElementById(
+        "studyMeaning"
+    ).textContent =
+        data.meaning;
+
+
+    document.getElementById(
+        "studyExampleChinese"
+    ).textContent =
+        data.exampleChinese;
+
+
+    document.getElementById(
+        "studyExampleVietnamese"
+    ).textContent =
+        data.exampleVietnamese;
+
+
+    document.getElementById(
+        "studyUsage"
+    ).textContent =
+        data.usage;
+
+
+    /* ================= GHI CHÚ ================= */
+
+    const notes =
+        getNotes();
+
+    document.getElementById(
+        "studyNote"
+    ).value =
+        notes[word] || "";
+
+
+    /* ================= ĐẶT CÂU ================= */
+
+    const sentences =
+        getSentences();
+
+
+    document.getElementById(
+        "studySentence"
+    ).value =
+        sentences[word] || "";
+
+
+    updateStatus("learning");
+
+
+}
+
+
+/* ================================================= */
+/* ========== HOÀN THÀNH 1 TỪ ====================== */
+/* ================================================= */
+
+function completeStudyWord() {
+
+    const word =
+        studyWords[studyIndex];
+
+
+    const noteInput =
+        document.getElementById(
+            "studyNote"
+        );
+
+
+    const sentenceInput =
+        document.getElementById(
+            "studySentence"
+        );
+
+
+    const note =
+        noteInput.value.trim();
+
+
+    const sentence =
+        sentenceInput.value.trim();
+
+
+    if (sentence === "") {
+
+        alert(
+            "Hãy tự đặt một câu trước khi sang từ tiếp theo nhé!"
+        );
+
+        sentenceInput.focus();
+
+        return;
+
+    }
+
+
+    /* ================= LƯU GHI CHÚ ================= */
+
+    const notes =
+        getNotes();
+
+    notes[word] =
+        note;
+
+    setNotes(notes);
+
+
+    /* ================= LƯU CÂU ================= */
+
+    const sentences =
+        getSentences();
+
+    sentences[word] =
+        sentence;
+
+    setSentences(sentences);
+
+
+    studyIndex++;
+
+
+    if (
+        studyIndex >=
+        studyWords.length
+    ) {
+
+        document
+            .getElementById(
+                "finishModal"
+            )
+            .classList.add("show");
+
+        return;
+
+    }
+
+
+    showStudyWord();
+
+}
+
+
+/* ================================================= */
+/* ================= HỌC LẠI ======================== */
+/* ================================================= */
+
+function repeatStudy() {
+
+    document
+        .getElementById(
+            "finishModal"
+        )
+        .classList.remove("show");
+
+
+    studyIndex = 0;
+
+
+    localStorage.removeItem(
+        "lesson9Sentences"
+    );
+
+    localStorage.removeItem(
+        "lesson9Notes"
+    );
+
+
+    prepareStudy();
+
+}
+
+
+/* ================================================= */
+/* ================= OK ============================= */
+/* ================================================= */
+
+function finishStudy() {
+
+    document
+        .getElementById(
+            "finishModal"
+        )
+        .classList.remove("show");
+
+
+    updateStatus("learning");
+
+
+    alert(
+        "✓ Bạn đã học xong toàn bộ từ vựng!"
+    );
+
+}
+
+
+/* ================================================= */
+/* ================= STATUS ========================= */
+/* ================================================= */
+
+function updateStatus(status) {
+
+    const dot =
+        document.getElementById(
+            "statusDot"
+        );
+
+    const text =
+        document.getElementById(
+            "statusText"
+        );
+
+
+    dot.className =
+        "status-dot";
+
+
+    if (status === "learning") {
+
+        dot.classList.add(
+            "learning"
+        );
+
+        text.textContent =
+            "Đang học";
+
+    }
+
+
+    if (status === "completed") {
+
+        dot.classList.add(
+            "completed"
+        );
+
+        text.textContent =
+            "Đã hoàn thành ✓";
+
+    }
+
+
+    if (status === "new") {
+
+        text.textContent =
+            "Chưa bắt đầu";
+
+    }
+
+}
+
+
+/* ================================================= */
+/* ================= QUICK MATCH ==================== */
+/* ================================================= */
+
+function startQuickMatch() {
+
+    const saved =
+        getSavedWords();
+
+
+    if (saved.length < 3) {
+
+        alert(
+            "Bạn cần lưu ít nhất 3 từ để chơi Quick Match."
+        );
+
+        return;
+
+    }
+
+
+    document
+        .getElementById(
+            "reviewMenu"
+        )
+        .style.display = "none";
+
+
+    document
+        .getElementById(
+            "quickMatch"
+        )
+        .classList.add("active");
+
+
+    matchTime = 60;
+
+
+    document.getElementById(
+        "matchTimer"
+    ).textContent =
+        "60s";
+
+
+    createMatchRound();
+
+
+    clearInterval(
+        matchTimerInterval
+    );
+
+
+    matchTimerInterval =
+        setInterval(function() {
+
+            matchTime--;
+
+
+            document.getElementById(
+                "matchTimer"
+            ).textContent =
+                matchTime + "s";
+
+
+            if (matchTime <= 0) {
+
+                clearInterval(
+                    matchTimerInterval
+                );
+
+
+                alert(
+                    "⏰ Hết giờ!"
+                );
+
+
+                backToReviewMenu();
+
+            }
+
+        }, 1000);
+
+}
+
+
+/* ================================================= */
+/* ========== TẠO 3 CẶP MATCH ====================== */
+/* ================================================= */
+
+function createMatchRound() {
+
+    const saved =
+        getSavedWords();
+
+
+    const shuffled =
+        [...saved]
+        .sort(
+            () => Math.random() - 0.5
+        );
+
+
+    matchPairs =
+        shuffled.slice(0, 3);
+
+
+    selectedChinese = null;
+
+    selectedVietnamese = null;
+
+
+    const chineseColumn =
+        document.getElementById(
+            "chineseColumn"
+        );
+
+
+    const vietnameseColumn =
+        document.getElementById(
+            "vietnameseColumn"
+        );
+
+
+    chineseColumn.innerHTML = "";
+
+    vietnameseColumn.innerHTML = "";
+
+
+    matchPairs.forEach(function(word) {
+
+        const card =
+            document.createElement("div");
+
+
+        card.className =
+            "match-card";
+
+
+        card.textContent =
+            word;
+
+
+        card.dataset.word =
+            word;
+
+
+        card.onclick =
+            function() {
+
+                selectChinese(card);
+
+            };
+
+
+        chineseColumn.appendChild(card);
+
+    });
+
+
+    const vietnamese =
+        matchPairs
+        .map(
+            word =>
+                vocabulary[word].meaning
+        )
+        .sort(
+            () => Math.random() - 0.5
+        );
+
+
+    vietnamese.forEach(function(meaning) {
+
+        const card =
+            document.createElement("div");
+
+
+        card.className =
+            "match-card";
+
+
+        card.textContent =
+            meaning;
+
+
+        const matchedWord =
+            matchPairs.find(
+                word =>
+                    vocabulary[word].meaning ===
+                    meaning
+            );
+
+
+        card.dataset.word =
+            matchedWord;
+
+
+        card.onclick =
+            function() {
+
+                selectVietnamese(card);
+
+            };
+
+
+        vietnameseColumn.appendChild(
+            card
+        );
+
+    });
+
+}
+
+
+/* ================================================= */
+/* ============= SELECT CHINESE ==================== */
+/* ================================================= */
+
+function selectChinese(card) {
+
+    document
+        .querySelectorAll(
+            "#chineseColumn .match-card"
+        )
+        .forEach(function(c) {
+
+            c.classList.remove(
+                "selected"
+            );
+
+        });
+
+
+    card.classList.add(
+        "selected"
+    );
+
+
+    selectedChinese = card;
+
+
+    checkMatch();
+
+}
+
+
+/* ================================================= */
+/* =========== SELECT VIETNAMESE =================== */
+/* ================================================= */
+
+function selectVietnamese(card) {
+
+    document
+        .querySelectorAll(
+            "#vietnameseColumn .match-card"
+        )
+        .forEach(function(c) {
+
+            c.classList.remove(
+                "selected"
+            );
+
+        });
+
+
+    card.classList.add(
+        "selected"
+    );
+
+
+    selectedVietnamese = card;
+
+
+    checkMatch();
+
+}
+
+
+/* ================================================= */
+/* ================= CHECK MATCH ==================== */
+/* ================================================= */
+
+function checkMatch() {
+
+    if (
+        !selectedChinese ||
+        !selectedVietnamese
+    ) {
+
+        return;
+
+    }
+
+
+    if (
+        selectedChinese.dataset.word ===
+        selectedVietnamese.dataset.word
+    ) {
+
+        selectedChinese.classList.add(
+            "hidden"
+        );
+
+        selectedVietnamese.classList.add(
+            "hidden"
+        );
+
+
+        selectedChinese = null;
+
+        selectedVietnamese = null;
+
+
+        document.getElementById(
+            "matchMessage"
+        ).textContent =
+            "✓ Correct!";
+
+
+        setTimeout(function() {
+
+            createMatchRound();
+
+        }, 350);
+
+
+    } else {
+
+        selectedChinese.classList.add(
+            "wrong"
+        );
+
+        selectedVietnamese.classList.add(
+            "wrong"
+        );
+
+
+        document.getElementById(
+            "matchMessage"
+        ).textContent =
+            "✗ Sai rồi, thử lại nhé!";
+
+
+        const wrongChinese =
+            selectedChinese;
+
+
+        const wrongVietnamese =
+            selectedVietnamese;
+
+
+        setTimeout(function() {
+
+            wrongChinese.classList.remove(
+                "wrong",
+                "selected"
+            );
+
+
+            wrongVietnamese.classList.remove(
+                "wrong",
+                "selected"
+            );
+
+        }, 700);
+
+
+        selectedChinese = null;
+
+        selectedVietnamese = null;
+
+    }
+
+}
+
+
+/* ================================================= */
+/* ================= ĐẶT CÂU ======================= */
+/* ================================================= */
+
+function startSentenceGame() {
+
+    const saved =
+        getSavedWords();
+
+
+    if (saved.length === 0) {
+
+        alert(
+            "Bạn chưa có từ vựng nào để ôn tập."
+        );
+
+        return;
+
+    }
+
+
+    const sentences =
+        getSentences();
+
+
+    const allHaveSentences =
+        saved.every(
+            word =>
+                sentences[word] &&
+                sentences[word].trim() !== ""
+        );
+
+
+    if (!allHaveSentences) {
+
+        alert(
+            "Bạn cần hoàn thành phần Học bài trước."
+        );
+
+        return;
+
+    }
+
+
+    document
+        .getElementById(
+            "reviewMenu"
+        )
+        .style.display = "none";
+
+
+    document
+        .getElementById(
+            "sentenceGame"
+        )
+        .classList.add("active");
+
+
+    sentenceWords =
+        [...saved]
+        .sort(
+            () => Math.random() - 0.5
+        );
+
+
+    sentenceIndex = 0;
+
+
+    showSentenceQuestion();
+
+}
+
+
+/* ================================================= */
+/* ========== HIỆN CÂU HỎI ========================= */
+/* ================================================= */
+
+function showSentenceQuestion() {
+
+    if (
+        sentenceIndex >=
+        sentenceWords.length
+    ) {
+
+        finishSentenceGame();
+
+        return;
+
+    }
+
+
+    const word =
+        sentenceWords[sentenceIndex];
+
+
+    document.getElementById(
+        "sentenceProgress"
+    ).textContent =
+        "Từ " +
+        (sentenceIndex + 1) +
+        " / " +
+        sentenceWords.length;
+
+
+    document.getElementById(
+        "sentenceGameWord"
+    ).textContent =
+        word;
+
+
+    document.getElementById(
+        "sentenceGameInput"
+    ).value = "";
+
+
+    document.getElementById(
+        "sentenceMessage"
+    ).textContent = "";
+
+
+    startQuestionTimer();
+
+}
+
+
+/* ================================================= */
+/* ============= TIMER TỪNG CÂU ==================== */
+/* ================================================= */
+
+function startQuestionTimer() {
+
+    clearInterval(
+        questionTimerInterval
+    );
+
+
+    questionStartTime =
+        Date.now();
+
+
+    document.getElementById(
+        "questionTimer"
+    ).textContent =
+        "0s";
+
+
+    questionTimerInterval =
+        setInterval(function() {
+
+            const seconds =
+                Math.floor(
+                    (
+                        Date.now() -
+                        questionStartTime
+                    ) / 1000
+                );
+
+
+            document.getElementById(
+                "questionTimer"
+            ).textContent =
+                seconds + "s";
+
+
+        }, 1000);
+
+}
+
+
+/* ================================================= */
+/* ================= CHECK SENTENCE ================ */
+/* ================================================= */
+
+function checkSentence() {
+
+    const word =
+        sentenceWords[sentenceIndex];
+
+
+    const correctSentence =
+        getSentences()[word];
+
+
+    const input =
+        document
+            .getElementById(
+                "sentenceGameInput"
+            )
+            .value;
+
+
+    if (
+        input ===
+        correctSentence
+    ) {
+
+        clearInterval(
+            questionTimerInterval
+        );
+
+
+        document.getElementById(
+            "sentenceMessage"
+        ).textContent =
+            "✓ Correct!";
+
+
+        document.getElementById(
+            "sentenceMessage"
+        ).className =
+            "game-message correct-message";
+
+
+        setTimeout(function() {
+
+            sentenceIndex++;
+
+            showSentenceQuestion();
+
+        }, 600);
+
+
+    } else {
+
+        document.getElementById(
+            "sentenceMessage"
+        ).textContent =
+            "✗ Incorrect! Hãy nhập lại chính xác câu đã đặt.";
+
+
+        document.getElementById(
+            "sentenceMessage"
+        ).className =
+            "game-message incorrect-message";
+
+
+        document.getElementById(
+            "sentenceGameInput"
+        ).value = "";
+
+
+        document.getElementById(
+            "sentenceGameInput"
+        ).focus();
+
+    }
+
+}
+
+
+/* ================================================= */
+/* ============ HOÀN THÀNH GAME ĐẶT CÂU ============ */
+/* ================================================= */
+
+function finishSentenceGame() {
+
+    clearInterval(
+        questionTimerInterval
+    );
+
+
+    alert(
+        "🎉 Bạn đã hoàn thành game Đặt câu!"
+    );
+
+
+    updateStatus("completed");
+
+
+    localStorage.setItem(
+        "lesson9Completed",
+        "true"
+    );
+
+
+    backToReviewMenu();
+
+}
+
+
+/* ================================================= */
+/* ================= BACK REVIEW =================== */
+/* ================================================= */
+
+function backToReviewMenu() {
+
+    clearInterval(
+        matchTimerInterval
+    );
+
+
+    clearInterval(
+        questionTimerInterval
+    );
+
+
+    document
+        .getElementById(
+            "quickMatch"
+        )
+        .classList.remove("active");
+
+
+    document
+        .getElementById(
+            "sentenceGame"
+        )
+        .classList.remove("active");
+
+
+    document
+        .getElementById(
+            "reviewMenu"
+        )
+        .style.display = "block";
+
+
+}
+
+
+/* ================================================= */
+/* ================= LOAD =========================== */
+/* ================================================= */
+
+currentHighlight = getHighlights();
+
+currentUnderline = getUnderlines();
+
+// Gán ID riêng cho từng vị trí của từ trong bài đọc.
+// Vì vậy hai từ giống nhau ở hai câu khác nhau vẫn là hai vị trí độc lập.
+document
+    .querySelectorAll("#reading .reading-main .word")
+    .forEach(function(el, index) {
+        el.dataset.wordId = "lesson9-word-" + (index + 1);
+    });
+
+updateSavedList();
+
+applySavedHighlights();
+
+renderPinnedSidebar();
+
+
+if (
+    localStorage.getItem(
+        "lesson9Completed"
+    ) === "true"
+) {
+
+    updateStatus("completed");
+
+} else if (
+    getSavedWords().length > 0
+) {
+
+    updateStatus("learning");
+
+} else {
+
+    updateStatus("new");
+
+}
+
+</script>
+
+
+</body>
+
+</html>

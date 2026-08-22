@@ -1,0 +1,180 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, "Microsoft YaHei", sans-serif;
+    background: #f3f8f1;
+    color: #4d4642;
+}
+
+.container {
+    max-width: 1200px;
+    margin: auto;
+    padding: 70px 50px;
+}
+
+/* ===== HEADER ===== */
+
+header {
+    margin-bottom: 55px;
+}
+
+.small-title {
+    font-size: 16px;
+    color: #9b918c;
+    margin-bottom: 12px;
+    letter-spacing: 2px;
+}
+
+h1 {
+    font-size: 52px;
+    font-weight: 600;
+    margin-bottom: 15px;
+}
+
+.subtitle {
+    font-size: 17px;
+    color: #918782;
+}
+
+
+/* ===== CARDS ===== */
+
+.learning-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 25px;
+}
+
+.learning-card {
+    background: #fffdfb;
+    border-radius: 25px;
+    padding: 35px;
+    min-height: 300px;
+
+    display: flex;
+    flex-direction: column;
+
+    box-shadow: 0 8px 30px rgba(80, 70, 60, 0.06);
+
+    transition: all 0.25s ease;
+}
+
+.learning-card:hover {
+    transform: translateY(-7px);
+    box-shadow: 0 15px 35px rgba(80, 70, 60, 0.10);
+}
+
+
+/* ===== ICON ===== */
+
+.card-icon {
+    font-size: 45px;
+    margin-bottom: 30px;
+}
+
+.learning-card h2 {
+    font-size: 25px;
+    margin-bottom: 12px;
+}
+
+.learning-card p {
+    font-size: 15px;
+    line-height: 1.7;
+    color: #918782;
+
+    margin-bottom: auto;
+}
+
+
+/* ===== BUTTON ===== */
+
+.learning-card button {
+    margin-top: 30px;
+
+    width: fit-content;
+
+    border: none;
+    background: #e8d8d0;
+    color: #594e49;
+
+    padding: 11px 18px;
+    border-radius: 20px;
+
+    font-size: 14px;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+.learning-card button:hover {
+    background: #d9c5bb;
+}
+
+
+/* ===== MOBILE ===== */
+
+@media (max-width: 800px) {
+
+    .container {
+        padding: 40px 25px;
+    }
+
+    h1 {
+        font-size: 38px;
+    }
+
+    .learning-grid {
+        grid-template-columns: 1fr;
+    }
+
+}.back-link {
+    display: inline-block;
+    margin-bottom: 20px;
+    color: #888;
+    text-decoration: none;
+}
+
+.hsk-level {
+    margin-top: 30px;
+}
+
+.lesson-list {
+    list-style: none;
+    padding: 0;
+}
+
+.lesson-list li {
+    margin-bottom: 10px;
+}
+
+.lesson-list li a {
+    display: block;
+    padding: 15px 20px;
+    background: white;
+    border-radius: 10px;
+    text-decoration: none;
+    color: #333;
+}
+
+.lesson-list li a:hover {
+    background: #f0f0f0;
+}.button {
+    display: inline-block;
+    background-color: #4a7856;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 20px;
+    text-decoration: none;
+    font-weight: 500;
+    border: none;
+    cursor: pointer;
+}
+
+.button:hover {
+    background-color: #3d6448;
+}
