@@ -1,0 +1,4683 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<title>幸福 - Bài 11 · HSK 4</title>
+
+<style>
+
+/* ================================================= */
+/* ================= CƠ BẢN ======================== */
+/* ================================================= */
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f3f8f4;
+    color: #333;
+}
+
+.lesson-page {
+    width: 90%;
+    max-width: 1000px;
+    margin: 30px auto;
+}
+
+.back-link {
+    display: inline-block;
+    margin-bottom: 20px;
+    color: #5b8f72;
+    text-decoration: none;
+}
+
+.lesson-title {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.lesson-title h1 {
+    margin-bottom: 8px;
+}
+
+.lesson-title p {
+    color: #777;
+}
+
+
+/* ================================================= */
+/* ================= STATUS ======================== */
+/* ================================================= */
+
+.lesson-status {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 15px;
+}
+
+.status-dot {
+    display: inline-block;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    margin-right: 7px;
+    vertical-align: middle;
+    background: white;
+    border: 1px solid #ddd;
+}
+
+.status-dot.learning {
+    background: #f3a847;
+    border: none;
+}
+
+.status-dot.completed {
+    background: #63b87b;
+    border: none;
+}
+
+
+/* ================================================= */
+/* ================= 3 TAB ========================= */
+/* ================================================= */
+
+.tabs {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 25px;
+}
+
+.tab-button {
+    border: none;
+    padding: 12px 30px;
+    border-radius: 20px;
+    background: white;
+    color: #555;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.tab-button:hover {
+    background: #e8f3eb;
+}
+
+.tab-button.active {
+    background: #8fc7a5;
+    color: white;
+}
+
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+
+/* ================================================= */
+/* ================= CARD ========================== */
+/* ================================================= */
+
+.content-card {
+    background: white;
+    border-radius: 25px;
+    padding: 35px;
+    box-shadow:
+        0 8px 25px rgba(0,0,0,0.06);
+}
+
+
+/* ================================================= */
+/* ================= AUDIO ========================= */
+/* ================================================= */
+
+.audio-section {
+    text-align: center;
+    margin-bottom: 25px;
+    padding-bottom: 20px;
+    border-bottom: 1px dashed #dce9df;
+}
+
+.vinyl {
+    width: 120px;
+    height: 120px;
+    margin: 0 auto 20px;
+    border-radius: 50%;
+
+    background:
+        repeating-radial-gradient(
+            circle,
+            #222 0px,
+            #222 3px,
+            #333 4px,
+            #222 6px
+        );
+
+    border: 8px solid #111;
+    position: relative;
+}
+
+.vinyl::before {
+    content: "";
+    position: absolute;
+    width: 35px;
+    height: 35px;
+    background: #e7a5a5;
+    border-radius: 50%;
+    top: 50%;
+    left: 50%;
+    transform:
+        translate(-50%, -50%);
+}
+
+.vinyl.playing {
+    animation:
+        rotateVinyl 2s linear infinite;
+}
+
+@keyframes rotateVinyl {
+
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+
+}
+
+.audio-button {
+    border: none;
+    background: #8fc7a5;
+    color: white;
+    padding: 10px 25px;
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+.audio-button:hover {
+    background: #76b58f;
+}
+
+.audio-progress-wrap {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 15px;
+    max-width: 350px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.audio-progress-wrap span {
+    font-size: 13px;
+    color: #777;
+    min-width: 32px;
+}
+
+.audio-progress {
+    flex: 1;
+    -webkit-appearance: none;
+    appearance: none;
+    height: 5px;
+    border-radius: 5px;
+    background: #dce9df;
+    outline: none;
+    cursor: pointer;
+}
+
+.audio-progress::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: #8fc7a5;
+    cursor: pointer;
+}
+
+.audio-progress::-moz-range-thumb {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: #8fc7a5;
+    border: none;
+    cursor: pointer;
+}
+
+
+/* ================================================= */
+/* ================= READING ======================= */
+/* ================================================= */
+
+.reading-block {
+    margin-bottom: 40px;
+}
+
+.reading-heading {
+    color: #5b8f72;
+    font-size: 20px;
+    margin-bottom: 15px;
+}
+
+.reading-text {
+    font-size: 24px;
+    line-height: 2.4;
+    text-align: left;
+}
+
+.word {
+    cursor: pointer;
+    padding: 4px 6px;
+    border-radius: 7px;
+    transition: 0.2s;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 5px;
+}
+
+.word:hover {
+    background: #e0f2e5;
+}
+
+
+/* ================================================= */
+/* ============ READING LAYOUT (3/4 + 1/4) ========= */
+/* ================================================= */
+
+.reading-layout {
+    display: flex;
+    align-items: flex-start;
+    position: relative;
+}
+
+.reading-main {
+    flex: 0 0 74%;
+    max-width: 74%;
+    min-width: 0;
+}
+
+.reading-divider {
+    flex: 0 0 1px;
+    width: 1px;
+    align-self: stretch;
+    background: #e3e3e3;
+    margin: 0 20px;
+}
+
+.reading-sidebar {
+    flex: 1;
+    min-width: 0;
+    position: relative;
+    align-self: stretch;
+    padding-top: 4px;
+}
+
+.connector-svg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+    overflow: visible;
+}
+
+.pin-empty {
+    color: #999;
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+.pin-card {
+    position: relative;
+    background: #fffdf5;
+    border: 1px solid #ece6cf;
+    border-radius: 8px;
+    padding: 8px 26px 8px 10px;
+    margin-bottom: 12px;
+    font-size: 14px;
+    line-height: 1.5;
+    cursor: pointer;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    word-break: break-word;
+}
+
+.pin-card:hover {
+    border-color: #d8cfa0;
+}
+
+.pin-pinyin {
+    font-style: italic;
+    color: #5b8f72;
+}
+
+.pin-pos {
+    color: #888;
+    margin: 0 4px;
+}
+
+.pin-meaning {
+    color: #333;
+    font-weight: bold;
+}
+
+.pin-remove {
+    position: absolute;
+    right: 6px;
+    top: 6px;
+    width: 18px;
+    height: 18px;
+    line-height: 16px;
+    border: none;
+    border-radius: 50%;
+    background: #f2dede;
+    color: #c75c5c;
+    font-size: 13px;
+    cursor: pointer;
+    padding: 0;
+}
+
+.pin-remove:hover {
+    background: #e9bcbc;
+}
+
+.pin-word {
+    background: #82b7e8;
+    margin-top: 10px;
+}
+
+.pin-word:hover {
+    background: #6ba3d9;
+}
+
+.pin-word.pinned {
+    background: #4f8ecb;
+}
+
+@media (max-width: 760px) {
+
+    .reading-layout {
+        flex-direction: column;
+    }
+
+    .reading-main,
+    .reading-sidebar {
+        max-width: 100%;
+        flex: 1 1 100%;
+    }
+
+    .reading-divider {
+        display: none;
+    }
+
+    .connector-svg {
+        display: none;
+    }
+
+    .reading-sidebar {
+        margin-top: 20px;
+        padding-top: 15px;
+        border-top: 1px dashed #e3e3e3;
+    }
+
+}
+
+
+/* ================================================= */
+/* ================= WORD POPUP ==================== */
+/* ================================================= */
+
+.word-popup {
+    display: none;
+
+    position: fixed;
+
+    width: 350px;
+    max-width: 90%;
+
+    background: white;
+
+    padding: 30px;
+
+    border-radius: 22px;
+
+    box-shadow:
+        0 15px 50px rgba(0,0,0,0.25);
+
+    left: 50%;
+    top: 50%;
+
+    transform:
+        translate(-50%, -50%);
+
+    z-index: 1000;
+
+    text-align: center;
+}
+
+.word-popup.show {
+    display: block;
+}
+
+.word-popup h2 {
+    font-size: 42px;
+    margin: 5px 0 10px;
+}
+
+.word-popup p {
+    margin: 8px 0;
+}
+
+#popupPinyin {
+    color: #5b8f72;
+    font-size: 21px;
+}
+
+#popupHanViet {
+    color: #888;
+}
+
+#popupPOS {
+    color: #555;
+}
+
+#popupMeaning {
+    font-size: 20px;
+}
+
+.close-popup {
+    position: absolute;
+    right: 15px;
+    top: 10px;
+
+    border: none;
+    background: none;
+
+    font-size: 25px;
+    cursor: pointer;
+    color: #888;
+}
+
+
+/* ================================================= */
+/* ============= NÚT LƯU TỪ ======================== */
+/* ================================================= */
+
+.save-word {
+    display: block;
+
+    width: 100%;
+
+    margin: 20px auto 8px;
+
+    padding: 12px 18px;
+
+    border: none;
+
+    border-radius: 12px;
+
+    background: #8fc7a5;
+
+    color: white;
+
+    font-size: 16px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+.save-word:hover {
+    background: #76b58f;
+    transform: translateY(-1px);
+}
+
+.save-word.saved {
+    background: #63b87b;
+}
+
+
+/* ================================================= */
+/* ===== POPUP HIGHLIGHT TOOLBAR =================== */
+/* ================================================= */
+
+.highlight-title {
+    margin-top: 20px;
+    margin-bottom: 10px;
+
+    font-size: 14px;
+    color: #777;
+}
+
+.highlight-tools {
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+
+    gap: 8px;
+
+    flex-wrap: wrap;
+}
+
+.color-btn {
+    width: 30px;
+    height: 30px;
+
+    border-radius: 50%;
+
+    border: 3px solid white;
+
+    box-shadow:
+        0 0 0 1px #ccc;
+
+    cursor: pointer;
+
+    transition: 0.15s;
+}
+
+.color-btn:hover {
+    transform: scale(1.1);
+}
+
+.color-btn.active-color {
+    box-shadow:
+        0 0 0 2px #555;
+    transform: scale(1.08);
+}
+
+.green {
+    background: #8fc7a5;
+}
+
+.blue {
+    background: #82b7e8;
+}
+
+.gray {
+    background: #aaa;
+}
+
+.yellow {
+    background: #f4d66d;
+}
+
+.orange {
+    background: #efa45d;
+}
+
+.purple {
+    background: #ad8ed6;
+}
+
+.underline-btn {
+    margin-left: 8px;
+
+    width: 32px;
+    height: 32px;
+
+    border: none;
+
+    border-radius: 8px;
+
+    background: #f1f1f1;
+
+    cursor: pointer;
+
+    font-weight: bold;
+
+    text-decoration: underline;
+}
+
+.underline-btn.active {
+    background: #d5eadb;
+    color: #4f8063;
+}
+
+
+/* ================================================= */
+/* ============== HIGHLIGHT 6 MÀU ================== */
+/* ================================================= */
+
+.highlight-green {
+    background: #b8e2c4 !important;
+}
+
+.highlight-blue {
+    background: #b9d9f4 !important;
+}
+
+.highlight-gray {
+    background: #d0d0d0 !important;
+}
+
+.highlight-yellow {
+    background: #f8e58b !important;
+}
+
+.highlight-orange {
+    background: #f5bd80 !important;
+}
+
+.highlight-purple {
+    background: #d0b8ed !important;
+}
+
+
+/* ================================================= */
+/* ================ SAVED WORDS ==================== */
+/* ================================================= */
+
+.saved-section {
+    margin-top: 35px;
+    padding-top: 25px;
+
+    border-top: 1px solid #e5e5e5;
+}
+
+.saved-toggle {
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    border: none;
+
+    background: #edf7f0;
+
+    color: #4f8063;
+
+    padding: 14px 18px;
+
+    border-radius: 14px;
+
+    cursor: pointer;
+
+    font-size: 16px;
+
+    font-weight: bold;
+
+    transition: 0.2s;
+}
+
+.saved-toggle:hover {
+    background: #dceee1;
+}
+
+.saved-arrow {
+    transition: 0.2s;
+}
+
+.saved-toggle.open .saved-arrow {
+    transform: rotate(180deg);
+}
+
+.saved-list {
+    display: none;
+
+    margin-top: 12px;
+
+    flex-direction: column;
+
+    gap: 8px;
+}
+
+.saved-list.show {
+    display: flex;
+}
+
+.saved-word-item {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    background: #f7fbf8;
+
+    border: 1px solid #e1eee4;
+
+    padding: 11px 14px;
+
+    border-radius: 12px;
+
+    color: #4f8063;
+
+    transition: 0.2s;
+}
+
+.saved-word-item:hover {
+    background: #edf7f0;
+}
+
+.saved-word-main {
+    flex: 1;
+
+    cursor: pointer;
+
+    font-size: 17px;
+
+    font-weight: 500;
+}
+
+.remove-saved {
+    width: 28px;
+    height: 28px;
+
+    border: none;
+
+    border-radius: 50%;
+
+    background: #f2dede;
+
+    color: #c75c5c;
+
+    cursor: pointer;
+
+    font-size: 17px;
+
+    line-height: 28px;
+
+    padding: 0;
+}
+
+.remove-saved:hover {
+    background: #e9bcbc;
+    color: #a94444;
+}
+
+.no-saved {
+    color: #999;
+    font-size: 14px;
+
+    padding: 10px;
+}
+
+
+/* ================================================= */
+/* ================= STUDY ========================= */
+/* ================================================= */
+
+.study-card {
+    text-align: center;
+
+    min-height: 650px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: center;
+}
+
+.study-progress {
+    color: #777;
+    margin-bottom: 20px;
+}
+
+.chinese-word {
+    font-size: 60px;
+    margin-bottom: 10px;
+}
+
+.pinyin {
+    font-size: 25px;
+    color: #5b8f72;
+}
+
+.hanviet {
+    margin-top: 10px;
+    color: #777;
+}
+
+.meaning {
+    font-size: 22px;
+    margin: 15px 0;
+}
+
+.example-box {
+    margin-top: 25px;
+
+    padding: 20px;
+
+    background: #f3f8f4;
+
+    border-radius: 18px;
+
+    text-align: left;
+}
+
+.example-box h3 {
+    margin-top: 0;
+}
+
+.example-box p {
+    font-family: Arial, sans-serif;
+}
+
+
+/* ================================================= */
+/* ================= GHI CHÚ ======================= */
+/* ================================================= */
+
+.note-title {
+    text-align: left;
+
+    margin-top: 25px;
+    margin-bottom: 8px;
+
+    font-size: 15px;
+    font-weight: bold;
+
+    color: #555;
+}
+
+.note-input,
+.sentence-input {
+    width: 100%;
+
+    margin-top: 8px;
+
+    padding: 15px;
+
+    border: 2px solid #dce9df;
+
+    border-radius: 15px;
+
+    resize: vertical;
+
+    font-size: 16px;
+
+    font-family: Arial, sans-serif;
+
+    line-height: 1.6;
+
+    outline: none;
+}
+
+.note-input {
+    min-height: 90px;
+}
+
+.sentence-input {
+    min-height: 100px;
+}
+
+.note-input:focus,
+.sentence-input:focus {
+    border-color: #8fc7a5;
+}
+
+
+/* ================================================= */
+/* ================= NEXT BUTTON =================== */
+/* ================================================= */
+
+.next-button {
+    margin-top: 20px;
+
+    padding: 12px 30px;
+
+    border: none;
+
+    border-radius: 20px;
+
+    background: #8fc7a5;
+
+    color: white;
+
+    cursor: pointer;
+}
+
+.next-button:hover {
+    background: #76b58f;
+}
+
+
+/* ================================================= */
+/* ================= REVIEW ======================== */
+/* ================================================= */
+
+.review-menu {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.game-button {
+    padding: 25px;
+
+    border: none;
+
+    border-radius: 20px;
+
+    background: #f3f8f4;
+
+    font-size: 20px;
+
+    cursor: pointer;
+}
+
+.game-button:hover {
+    background: #dfeee3;
+}
+
+
+/* ================================================= */
+/* ================= GAME ========================== */
+/* ================================================= */
+
+.game-screen {
+    display: none;
+}
+
+.game-screen.active {
+    display: block;
+}
+
+.game-header {
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    margin-bottom: 25px;
+}
+
+.timer {
+    font-size: 22px;
+
+    font-weight: bold;
+
+    color: #5b8f72;
+}
+
+.match-board {
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 30px;
+}
+
+.match-column {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 15px;
+}
+
+.match-card {
+    padding: 22px;
+
+    border-radius: 18px;
+
+    background: #f4f8f5;
+
+    border: 2px solid transparent;
+
+    cursor: pointer;
+
+    font-size: 20px;
+
+    text-align: center;
+
+    transition: 0.2s;
+}
+
+.match-card:hover {
+    transform: translateY(-2px);
+
+    background: #e6f2e9;
+}
+
+.match-card.selected {
+    border-color: #8fc7a5;
+
+    background: #e4f2e8;
+}
+
+.match-card.wrong {
+    border-color: #e76f6f;
+
+    background: #ffe5e5;
+}
+
+.match-card.hidden {
+    visibility: hidden;
+}
+
+.game-message {
+    text-align: center;
+
+    min-height: 30px;
+
+    margin-top: 20px;
+
+    font-weight: bold;
+}
+
+.sentence-game {
+    text-align: center;
+}
+
+.sentence-game-word {
+    font-size: 55px;
+
+    margin: 25px 0;
+}
+
+.sentence-game-input {
+    width: 100%;
+
+    min-height: 100px;
+
+    padding: 15px;
+
+    border: 2px solid #dce9df;
+
+    border-radius: 15px;
+
+    font-size: 18px;
+
+    font-family: Arial, sans-serif;
+}
+
+.sentence-game-top {
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+}
+
+.question-timer {
+    background: #f3f8f4;
+
+    padding: 8px 15px;
+
+    border-radius: 15px;
+
+    color: #5b8f72;
+
+    font-weight: bold;
+}
+
+.correct-message {
+    color: #55a66c;
+
+    margin-top: 15px;
+}
+
+.incorrect-message {
+    color: #d9534f;
+
+    margin-top: 15px;
+}
+
+.back-game {
+    margin-top: 20px;
+
+    border: none;
+
+    background: none;
+
+    color: #5b8f72;
+
+    cursor: pointer;
+}
+
+
+/* ================================================= */
+/* ================= MODAL ========================= */
+/* ================================================= */
+
+.finish-modal {
+    display: none;
+
+    position: fixed;
+
+    inset: 0;
+
+    background: rgba(0,0,0,0.35);
+
+    z-index: 2000;
+
+    align-items: center;
+
+    justify-content: center;
+}
+
+.finish-modal.show {
+    display: flex;
+}
+
+.finish-box {
+    background: white;
+
+    width: 400px;
+
+    max-width: 90%;
+
+    padding: 35px;
+
+    border-radius: 25px;
+
+    text-align: center;
+}
+
+.finish-box h2 {
+    margin-top: 0;
+}
+
+.finish-buttons {
+    display: flex;
+
+    justify-content: center;
+
+    gap: 12px;
+
+    margin-top: 25px;
+}
+
+.modal-btn {
+    border: none;
+
+    padding: 12px 22px;
+
+    border-radius: 20px;
+
+    cursor: pointer;
+}
+
+.ok-btn {
+    background: #8fc7a5;
+
+    color: white;
+}
+
+.repeat-btn {
+    background: #f1f5f2;
+
+    color: #555;
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<div class="lesson-page">
+
+
+<a href="reading.html" class="back-link">
+    ← Quay lại danh sách bài
+</a>
+
+
+<div class="lesson-title">
+
+    <h1>幸福</h1>
+    <p>Bài 11 · HSK 4</p>
+
+</div>
+
+
+<div class="lesson-status">
+
+    <span
+        id="statusDot"
+        class="status-dot">
+    </span>
+
+    <span id="statusText">
+        Chưa bắt đầu
+    </span>
+
+</div>
+
+
+<!-- ================================================= -->
+<!-- ================= 3 TAB ========================= -->
+<!-- ================================================= -->
+
+<div class="tabs">
+
+    <button
+        class="tab-button active"
+        onclick="openTab('reading', this)">
+        📖 Đọc bài
+    </button>
+
+    <button
+        class="tab-button"
+        onclick="openTab('study', this)">
+        📚 Học bài
+    </button>
+
+    <button
+        class="tab-button"
+        onclick="openTab('review', this)">
+        🧠 Ôn tập
+    </button>
+
+</div>
+
+
+<!-- ================================================= -->
+<!-- ================= ĐỌC BÀI ======================= -->
+<!-- ================================================= -->
+
+<section
+    id="reading"
+    class="tab-content active">
+
+<div class="content-card">
+
+
+<div class="reading-layout" id="readingLayout">
+
+<svg id="connectorSvg" class="connector-svg"></svg>
+
+<div class="reading-main">
+
+
+<!-- ================================================= -->
+<!-- ================= BÀI ĐỌC 1 + 2 ==================== -->
+
+<!-- ================================================= -->
+<!-- ================= BÀI ĐỌC 1 ==================== -->
+<!-- ================================================= -->
+
+<div class="reading-block">
+
+    <h3 class="reading-heading">
+        📖 Bài đọc 1
+    </h3>
+
+    <div class="audio-section">
+
+        <div class="vinyl" id="vinyl1"></div>
+
+        <button class="audio-button" id="audioButton1" onclick="toggleAudio('1')">
+            ▶ Phát bài nghe
+        </button>
+
+        <div class="audio-progress-wrap">
+            <span id="audioCurrentTime1">0:00</span>
+            <input type="range" id="audioProgress1" class="audio-progress" value="0" min="0" max="100" step="0.1">
+            <span id="audioDuration1">0:00</span>
+        </div>
+
+        <audio id="audio1" src="audio/HSK4 - quyển thượng - Bài 11.4.mp3"></audio>
+
+    </div>
+
+    <div class="reading-text" id="readingText1" data-raw-text="根据调查，阅读能力好的人，不但容易找到工作，而且工资也比较高。怎么才能有效提高自己的阅读能力呢？做读书笔记就是其中一种好方法。读书笔记有很多种，最简单的就是把自己喜欢或者觉得有用的词语和句子记下来。另外，在看完一篇文章或一本书之后，还可以把它的主要内容和自己的想法写下来。然而，你不能完全相信书本上的内容，要有自己的看法和判断。坚持做读书笔记，对提高阅读能力有很大帮助。"></div>
+
+</div>
+
+
+<!-- ================================================= -->
+<!-- ================= BÀI ĐỌC 2 ==================== -->
+<!-- ================================================= -->
+
+<div class="reading-block">
+
+    <h3 class="reading-heading">
+        📖 Bài đọc 2
+    </h3>
+
+    <div class="audio-section">
+
+        <div class="vinyl" id="vinyl2"></div>
+
+        <button class="audio-button" id="audioButton2" onclick="toggleAudio('2')">
+            ▶ Phát bài nghe
+        </button>
+
+        <div class="audio-progress-wrap">
+            <span id="audioCurrentTime2">0:00</span>
+            <input type="range" id="audioProgress2" class="audio-progress" value="0" min="0" max="100" step="0.1">
+            <span id="audioDuration2">0:00</span>
+        </div>
+
+        <audio id="audio2" src="audio/HSK4 - quyển thượng - Bài 11.5.mp3"></audio>
+
+    </div>
+
+    <div class="reading-text" id="readingText2" data-raw-text="“读书好 (hǎo)，读好 (hǎo) 书，好 (hào) 读书”。虽然这句话只用了三个相同的汉字，但是不同的顺序却表示了不同的意思。首先，“读书好”说的是读书有很多好处；其次，每个人的时间都是有限的，不可能把世界上每一本书都读完，所以要读好的书；最后，“好读书”就是要养成阅读的习惯，使读书真正成为自己的兴趣爱好。阅读有许多好处，它能丰富你的知识，让你找到解决问题的办法；同时，它还会丰富你的情感，使你的生活更精彩。所以，让阅读成为你的习惯吧！"></div>
+
+</div>
+
+
+</div>
+<!-- END .reading-main -->
+
+<div class="reading-divider"></div>
+
+<div class="reading-sidebar" id="readingSidebar">
+    <div class="pin-empty">Chưa có từ nào được ghim.</div>
+</div>
+
+</div>
+<!-- END .reading-layout -->
+
+
+<!-- ================================================= -->
+<!-- ========== TỪ VỰNG ĐÃ LƯU ====================== -->
+<!-- ================================================= -->
+
+<div class="saved-section">
+
+    <button
+        id="savedToggle"
+        class="saved-toggle"
+        onclick="toggleSavedList()">
+
+        <span>
+            📚 Từ vựng đã lưu
+        </span>
+
+        <span
+            id="savedArrow"
+            class="saved-arrow">
+            ▼
+        </span>
+
+    </button>
+
+    <div
+        id="savedList"
+        class="saved-list">
+    </div>
+
+</div>
+
+
+<!-- ================================================= -->
+<!-- ================= POPUP ========================== -->
+<!-- ================================================= -->
+
+<div
+    id="wordPopup"
+    class="word-popup">
+
+    <button
+        class="close-popup"
+        onclick="closeWord()">
+        ×
+    </button>
+
+    <h2 id="popupWord">
+        你好
+    </h2>
+
+    <p id="popupPinyin">
+        nǐ hǎo
+    </p>
+
+    <p id="popupHanViet">
+        nhĩ hảo
+    </p>
+
+    <p>
+        <strong id="popupPOS">
+            词语
+        </strong>
+    </p>
+
+    <p id="popupMeaning">
+        Nghĩa của từ
+    </p>
+
+
+    <button
+        id="saveWordButton"
+        class="save-word"
+        onclick="saveCurrentWord()">
+
+        ♡ Lưu từ
+
+    </button>
+
+    <button
+        id="pinWordButton"
+        class="save-word pin-word"
+        onclick="togglePinWord()">
+
+        📌 Hiện từ
+
+    </button>
+
+
+    <div class="highlight-title">
+        🎨 Đánh dấu từ
+    </div>
+
+
+    <div class="highlight-tools">
+
+        <button
+            class="color-btn green"
+            onclick="toggleHighlight('green')">
+        </button>
+
+        <button
+            class="color-btn blue"
+            onclick="toggleHighlight('blue')">
+        </button>
+
+        <button
+            class="color-btn gray"
+            onclick="toggleHighlight('gray')">
+        </button>
+
+        <button
+            class="color-btn yellow"
+            onclick="toggleHighlight('yellow')">
+        </button>
+
+        <button
+            class="color-btn orange"
+            onclick="toggleHighlight('orange')">
+        </button>
+
+        <button
+            class="color-btn purple"
+            onclick="toggleHighlight('purple')">
+        </button>
+
+        <button
+            id="underlineButton"
+            class="underline-btn"
+            onclick="toggleUnderline()">
+            U
+        </button>
+
+    </div>
+
+</div>
+
+
+</div>
+
+</section>
+
+
+<!-- ================================================= -->
+<!-- ================= HỌC BÀI ======================= -->
+<!-- ================================================= -->
+
+<section
+    id="study"
+    class="tab-content">
+
+<div class="content-card study-card">
+
+
+<div
+    id="studyProgress"
+    class="study-progress">
+</div>
+
+
+<div
+    id="studyWord"
+    class="chinese-word">
+</div>
+
+
+<div
+    id="studyPinyin"
+    class="pinyin">
+</div>
+
+
+<div
+    id="studyHanviet"
+    class="hanviet">
+</div>
+
+
+<div>
+
+    <strong>
+        Part of speech:
+    </strong>
+
+    <span id="studyPOS"></span>
+
+</div>
+
+
+<div
+    id="studyMeaning"
+    class="meaning">
+</div>
+
+
+<div class="example-box">
+
+    <h3>
+        📌 Ví dụ & cách dùng
+    </h3>
+
+    <p id="studyExampleChinese">
+    </p>
+
+    <p id="studyExampleVietnamese">
+    </p>
+
+    <p id="studyUsage">
+    </p>
+
+</div>
+
+
+<!-- ================================================= -->
+<!-- ================= GHI CHÚ ======================= -->
+<!-- ================================================= -->
+
+<div class="note-title">
+    📝 Ghi chú cá nhân
+</div>
+
+<textarea
+    id="studyNote"
+    class="note-input"
+    placeholder="Viết ghi chú của bạn về từ này...">
+</textarea>
+
+
+<!-- ================================================= -->
+<!-- ================= ĐẶT CÂU ======================= -->
+<!-- ================================================= -->
+
+<div class="note-title">
+    ✏️ Tự đặt câu
+</div>
+
+<textarea
+    id="studySentence"
+    class="sentence-input"
+    placeholder="Hãy tự đặt một câu với từ này...">
+</textarea>
+
+
+<button
+    class="next-button"
+    onclick="completeStudyWord()">
+
+    Hoàn thành từ này →
+
+</button>
+
+
+</div>
+
+</section>
+
+
+<!-- ================================================= -->
+<!-- ================= ÔN TẬP ======================== -->
+<!-- ================================================= -->
+
+<section
+    id="review"
+    class="tab-content">
+
+
+<div
+    id="reviewMenu"
+    class="content-card">
+
+    <h2>
+        🧠 Ôn tập
+    </h2>
+
+    <p>
+        Ôn lại những từ bạn đã lưu.
+    </p>
+
+    <div class="review-menu">
+
+        <button
+            class="game-button"
+            onclick="startQuickMatch()">
+            ⚡ Quick Match
+        </button>
+
+        <button
+            class="game-button"
+            onclick="startSentenceGame()">
+            ✏️ Đặt câu
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- QUICK MATCH -->
+
+<div
+    id="quickMatch"
+    class="content-card game-screen">
+
+    <div class="game-header">
+
+        <h2>
+            ⚡ Quick Match
+        </h2>
+
+        <div
+            id="matchTimer"
+            class="timer">
+            60s
+        </div>
+
+    </div>
+
+    <p>
+        Ghép từ tiếng Trung với nghĩa tiếng Việt.
+    </p>
+
+    <div class="match-board">
+
+        <div
+            id="chineseColumn"
+            class="match-column">
+        </div>
+
+        <div
+            id="vietnameseColumn"
+            class="match-column">
+        </div>
+
+    </div>
+
+    <div
+        id="matchMessage"
+        class="game-message">
+    </div>
+
+    <button
+        class="back-game"
+        onclick="backToReviewMenu()">
+        ← Quay lại
+    </button>
+
+</div>
+
+
+<!-- ĐẶT CÂU -->
+
+<div
+    id="sentenceGame"
+    class="content-card game-screen">
+
+    <div class="sentence-game-top">
+
+        <h2>
+            ✏️ Đặt câu
+        </h2>
+
+        <div
+            id="questionTimer"
+            class="question-timer">
+            0s
+        </div>
+
+    </div>
+
+    <p>
+        Hãy nhập đúng câu mà bạn đã đặt ở phần Học bài.
+    </p>
+
+    <div
+        id="sentenceProgress">
+    </div>
+
+    <div
+        id="sentenceGameWord"
+        class="sentence-game-word">
+    </div>
+
+    <textarea
+        id="sentenceGameInput"
+        class="sentence-game-input"
+        placeholder="Nhập câu của bạn...">
+    </textarea>
+
+    <div
+        id="sentenceMessage"
+        class="game-message">
+    </div>
+
+    <button
+        class="next-button"
+        onclick="checkSentence()">
+        Kiểm tra
+    </button>
+
+    <button
+        class="back-game"
+        onclick="backToReviewMenu()">
+        ← Quay lại
+    </button>
+
+</div>
+
+
+</section>
+
+</div>
+
+
+<!-- ================================================= -->
+<!-- ================= FINISH MODAL ================== -->
+<!-- ================================================= -->
+
+<div
+    id="finishModal"
+    class="finish-modal">
+
+    <div class="finish-box">
+
+        <h2>
+            🎉 Bạn đã học hết từ vựng!
+        </h2>
+
+        <p>
+            Bạn đã hoàn thành toàn bộ các từ đã lưu.
+        </p>
+
+        <div class="finish-buttons">
+
+            <button
+                class="modal-btn ok-btn"
+                onclick="finishStudy()">
+                OK
+            </button>
+
+            <button
+                class="modal-btn repeat-btn"
+                onclick="repeatStudy()">
+                Học lại từ vựng
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+/* ================================================= */
+/* ================= DỮ LIỆU ======================== */
+/* ================================================= */
+
+const vocabulary = {};
+
+
+/* ================================================= */
+/* ================= BIẾN ========================== */
+/* ================================================= */
+
+let currentWord = "";
+
+let currentWordElement = null;
+
+let studyWords = [];
+
+let studyIndex = 0;
+
+let currentHighlight = {};
+
+let currentUnderline = {};
+
+let matchPairs = [];
+
+let selectedChinese = null;
+
+let selectedVietnamese = null;
+
+let matchTimerInterval = null;
+
+let matchTime = 60;
+
+let sentenceWords = [];
+
+let sentenceIndex = 0;
+
+let questionStartTime = null;
+
+let questionTimerInterval = null;
+
+
+/* ================================================= */
+/* ================= LOCAL STORAGE ================= */
+/* ================================================= */
+
+function getSavedWords() {
+
+    return JSON.parse(
+        localStorage.getItem("lesson11SavedWords")
+    ) || [];
+
+}
+
+
+function setSavedWords(words) {
+
+    localStorage.setItem(
+        "lesson11SavedWords",
+        JSON.stringify(words)
+    );
+
+}
+
+
+function getSentences() {
+
+    return JSON.parse(
+        localStorage.getItem("lesson11Sentences")
+    ) || {};
+
+}
+
+
+function setSentences(data) {
+
+    localStorage.setItem(
+        "lesson11Sentences",
+        JSON.stringify(data)
+    );
+
+}
+
+
+/* ================================================= */
+/* ========== LƯU HIGHLIGHT / UNDERLINE ============ */
+/* ================================================= */
+
+function getHighlights() {
+
+    return JSON.parse(
+        localStorage.getItem("lesson11Highlights")
+    ) || {};
+
+}
+
+
+function setHighlights(data) {
+
+    localStorage.setItem(
+        "lesson11Highlights",
+        JSON.stringify(data)
+    );
+
+}
+
+
+function getUnderlines() {
+
+    return JSON.parse(
+        localStorage.getItem("lesson11Underlines")
+    ) || {};
+
+}
+
+
+function setUnderlines(data) {
+
+    localStorage.setItem(
+        "lesson11Underlines",
+        JSON.stringify(data)
+    );
+
+}
+
+
+/* ================================================= */
+/* ============== TỪ ĐƯỢC GHIM (SIDEBAR) =========== */
+/* ================================================= */
+
+function getPinnedWords() {
+
+    return JSON.parse(
+        localStorage.getItem("lesson11PinnedWords")
+    ) || [];
+
+}
+
+
+function setPinnedWords(words) {
+
+    localStorage.setItem(
+        "lesson11PinnedWords",
+        JSON.stringify(words)
+    );
+
+}
+
+function getPinnedPositions() {
+
+    return JSON.parse(
+        localStorage.getItem("lesson11PinnedPositions")
+    ) || {};
+
+}
+
+
+function setPinnedPositions(data) {
+
+    localStorage.setItem(
+        "lesson11PinnedPositions",
+        JSON.stringify(data)
+    );
+
+}
+
+
+/* ================================================= */
+/* ================= GHI CHÚ ======================= */
+/* ================================================= */
+
+function getNotes() {
+
+    return JSON.parse(
+        localStorage.getItem("lesson11Notes")
+    ) || {};
+
+}
+
+
+function setNotes(data) {
+
+    localStorage.setItem(
+        "lesson11Notes",
+        JSON.stringify(data)
+    );
+
+}
+
+
+/* ================================================= */
+/* ================= POPUP ========================== */
+/* ================================================= */
+
+function showWord(word, element = null) {
+
+    currentWord = word;
+
+    currentWordElement =
+        element && element.classList.contains("word")
+            ? element
+            : null;
+
+    const data = vocabulary[word];
+
+    if (!data) return;
+
+    document.getElementById("popupWord").textContent =
+        word;
+
+    document.getElementById("popupPinyin").textContent =
+        data.pinyin;
+
+    document.getElementById("popupHanViet").textContent =
+        data.hanviet;
+
+    document.getElementById("popupPOS").textContent =
+        data.pos;
+
+    document.getElementById("popupMeaning").textContent =
+        data.meaning;
+
+    document.getElementById("wordPopup")
+        .classList.add("show");
+
+    updateSaveButton();
+
+    updatePinButton();
+
+    updateUnderlineButton();
+
+    updateColorButtons();
+
+}
+
+
+/* ================================================= */
+/* ============ CLICK RA NGOÀI POPUP =============== */
+/* ================================================= */
+
+document.addEventListener(
+    "click",
+    function(event) {
+
+        const popup =
+            document.getElementById("wordPopup");
+
+        const clickedWord =
+            event.target.closest(".word");
+
+        if (
+            popup.classList.contains("show") &&
+            !popup.contains(event.target) &&
+            !clickedWord
+        ) {
+
+            closeWord();
+
+        }
+
+    }
+);
+
+
+function closeWord() {
+
+    document
+        .getElementById("wordPopup")
+        .classList.remove("show");
+
+}
+
+
+/* ================================================= */
+/* ================= LƯU / HỦY LƯU ================= */
+/* ================================================= */
+
+function saveCurrentWord() {
+
+    if (!currentWord) return;
+
+    let savedWords = getSavedWords();
+
+    const index =
+        savedWords.indexOf(currentWord);
+
+    if (index === -1) {
+
+        savedWords.push(currentWord);
+
+        setSavedWords(savedWords);
+
+        updateSaveButton();
+
+        updateSavedList();
+
+        updateStatus("learning");
+
+    } else {
+
+        savedWords.splice(index, 1);
+
+        setSavedWords(savedWords);
+
+        updateSaveButton();
+
+        updateSavedList();
+
+        updateStatus(
+            savedWords.length > 0
+                ? "learning"
+                : "new"
+        );
+
+    }
+
+}
+
+
+/* ================================================= */
+/* ============ UPDATE NÚT LƯU ===================== */
+/* ================================================= */
+
+function updateSaveButton() {
+
+    const button =
+        document.getElementById(
+            "saveWordButton"
+        );
+
+    if (!button || !currentWord) return;
+
+    const saved =
+        getSavedWords().includes(
+            currentWord
+        );
+
+    if (saved) {
+
+        button.textContent =
+            "✓ Đã lưu";
+
+        button.classList.add(
+            "saved"
+        );
+
+    } else {
+
+        button.textContent =
+            "♡ Lưu từ";
+
+        button.classList.remove(
+            "saved"
+        );
+
+    }
+
+}
+
+
+/* ================================================= */
+/* ============ NÚT HIỆN TỪ (GHIM SIDEBAR) ========= */
+/* ================================================= */
+
+function togglePinWord() {
+
+    if (!currentWord) return;
+
+    let pinned = getPinnedWords();
+    let positions = getPinnedPositions();
+
+    const index =
+        pinned.indexOf(currentWord);
+
+    if (index === -1) {
+
+        pinned.push(currentWord);
+
+        if (currentWordElement && currentWordElement.dataset.wordId) {
+            positions[currentWord] = currentWordElement.dataset.wordId;
+        }
+
+    } else {
+
+        pinned.splice(index, 1);
+        delete positions[currentWord];
+
+    }
+
+    setPinnedWords(pinned);
+    setPinnedPositions(positions);
+
+    updatePinButton();
+    renderPinnedSidebar();
+
+}
+
+
+function updatePinButton() {
+
+    const button =
+        document.getElementById(
+            "pinWordButton"
+        );
+
+    if (!button || !currentWord) return;
+
+    const pinned =
+        getPinnedWords().includes(
+            currentWord
+        );
+
+    if (pinned) {
+
+        button.textContent =
+            "📌 Đã hiện";
+
+        button.classList.add(
+            "pinned"
+        );
+
+    } else {
+
+        button.textContent =
+            "📌 Hiện từ";
+
+        button.classList.remove(
+            "pinned"
+        );
+
+    }
+
+}
+
+
+/* ================================================= */
+/* ========== RÚT GỌN TỪ LOẠI / NGHĨA ============== */
+/* ================================================= */
+
+function shortPOS(posStr) {
+
+    if (!posStr) return "?";
+
+    const first =
+        posStr.split("/")[0].trim();
+
+    const map = [
+        [["名词", "danh từ"], "n"],
+        [["形容词", "tính từ"], "a"],
+        [["副词", "phó từ"], "adv"],
+        [["连词", "liên từ"], "conj"],
+        [["介词", "giới từ"], "prep"],
+        [["代词", "đại từ"], "pron"],
+        [["助词", "trợ từ"], "part"],
+        [["数量词", "lượng từ"], "num"],
+        [["方位词", "từ phương vị"], "suf"],
+        [["趋向补语", "bổ ngữ"], "compl"],
+        [["动词短语", "短语", "cụm từ", "cụm động từ"], "phr"],
+        [["能愿动词", "động từ năng nguyện"], "aux"],
+        [["动词", "động từ"], "v"]
+    ];
+
+    for (const [keys, abbr] of map) {
+
+        for (const k of keys) {
+
+            if (first.includes(k)) return abbr;
+
+        }
+
+    }
+
+    for (const [keys, abbr] of map) {
+
+        for (const k of keys) {
+
+            if (posStr.includes(k)) return abbr;
+
+        }
+
+    }
+
+    return "?";
+
+}
+
+
+function shortMeaning(meaningStr) {
+
+    if (!meaningStr) return "";
+
+    return meaningStr
+        .split(/[,;]/)[0]
+        .trim();
+
+}
+
+
+/* ================================================= */
+/* ================ SAVED LIST ===================== */
+/* ================================================= */
+
+function toggleSavedList() {
+
+    const list =
+        document.getElementById(
+            "savedList"
+        );
+
+    const button =
+        document.getElementById(
+            "savedToggle"
+        );
+
+    list.classList.toggle("show");
+
+    button.classList.toggle("open");
+
+}
+
+
+function updateSavedList() {
+
+    const list =
+        document.getElementById(
+            "savedList"
+        );
+
+    const savedWords =
+        getSavedWords();
+
+    list.innerHTML = "";
+
+    if (savedWords.length === 0) {
+
+        list.innerHTML =
+            '<div class="no-saved">' +
+            'Chưa có từ nào được lưu.' +
+            '</div>';
+
+        return;
+
+    }
+
+
+    savedWords.forEach(function(word) {
+
+        const item =
+            document.createElement("div");
+
+        item.className =
+            "saved-word-item";
+
+
+        const main =
+            document.createElement("div");
+
+        main.className =
+            "saved-word-main";
+
+        main.textContent =
+            word;
+
+        main.onclick =
+            function() {
+
+                showWord(word);
+
+            };
+
+
+        const removeButton =
+            document.createElement("button");
+
+        removeButton.className =
+            "remove-saved";
+
+        removeButton.textContent =
+            "×";
+
+        removeButton.title =
+            "Xóa khỏi danh sách đã lưu";
+
+
+        removeButton.onclick =
+            function(event) {
+
+                event.stopPropagation();
+
+                removeSavedWord(word);
+
+            };
+
+
+        item.appendChild(main);
+
+        item.appendChild(removeButton);
+
+        list.appendChild(item);
+
+    });
+
+}
+
+
+/* ================================================= */
+/* ============== XÓA TỪ ĐÃ LƯU ==================== */
+/* ================================================= */
+
+function removeSavedWord(word) {
+
+    let savedWords =
+        getSavedWords();
+
+    savedWords =
+        savedWords.filter(
+            item => item !== word
+        );
+
+    setSavedWords(savedWords);
+
+    updateSavedList();
+
+    if (currentWord === word) {
+
+        updateSaveButton();
+
+    }
+
+    updateStatus(
+        savedWords.length > 0
+            ? "learning"
+            : "new"
+    );
+
+}
+
+
+/* ================================================= */
+/* ============ SIDEBAR TỪ ĐƯỢC GHIM =============== */
+/* ================================================= */
+
+function renderPinnedSidebar() {
+
+    const sidebar =
+        document.getElementById(
+            "readingSidebar"
+        );
+
+    if (!sidebar) return;
+
+    const pinned =
+        getPinnedWords();
+
+    sidebar.innerHTML = "";
+
+    if (pinned.length === 0) {
+
+        sidebar.innerHTML =
+            '<div class="pin-empty">' +
+            'Chưa có từ nào được ghim.' +
+            '</div>';
+
+        updateConnectorLines();
+
+        return;
+
+    }
+
+
+    pinned.forEach(function(word) {
+
+        const data =
+            vocabulary[word];
+
+        if (!data) return;
+
+
+        const card =
+            document.createElement("div");
+
+        card.className =
+            "pin-card";
+
+        card.dataset.word =
+            word;
+
+        card.onclick =
+            function() {
+
+                showWord(word);
+
+            };
+
+
+        const posShort =
+            shortPOS(data.pos);
+
+        const meaningShort =
+            shortMeaning(data.meaning);
+
+
+        const removeButton =
+            document.createElement("button");
+
+        removeButton.className =
+            "pin-remove";
+
+        removeButton.title =
+            "Bỏ ghim";
+
+        removeButton.textContent =
+            "×";
+
+        removeButton.onclick =
+            function(event) {
+
+                event.stopPropagation();
+
+                removePinnedWord(word);
+
+            };
+
+
+        const pinyinSpan =
+            document.createElement("span");
+
+        pinyinSpan.className =
+            "pin-pinyin";
+
+        pinyinSpan.textContent =
+            "/" + data.pinyin + "/";
+
+
+        const posSpan =
+            document.createElement("span");
+
+        posSpan.className =
+            "pin-pos";
+
+        posSpan.textContent =
+            "(" + posShort + ")";
+
+
+        const meaningSpan =
+            document.createElement("span");
+
+        meaningSpan.className =
+            "pin-meaning";
+
+        meaningSpan.textContent =
+            meaningShort;
+
+
+        card.appendChild(removeButton);
+
+        card.appendChild(pinyinSpan);
+
+        card.appendChild(
+            document.createTextNode(" ")
+        );
+
+        card.appendChild(posSpan);
+
+        card.appendChild(
+            document.createTextNode(" ")
+        );
+
+        card.appendChild(meaningSpan);
+
+
+        sidebar.appendChild(card);
+
+    });
+
+
+    updateConnectorLines();
+
+}
+
+
+function removePinnedWord(word) {
+
+    let pinned =
+        getPinnedWords().filter(
+            w => w !== word
+        );
+
+    setPinnedWords(pinned);
+
+    if (currentWord === word) {
+
+        updatePinButton();
+
+    }
+
+    renderPinnedSidebar();
+
+}
+
+
+/* ================================================= */
+/* ========== ĐƯỜNG NỐI TỪ ↔ THẺ GHIM ============== */
+/* ================================================= */
+
+function updateConnectorLines() {
+
+    const container = document.getElementById("readingLayout");
+    const svg = document.getElementById("connectorSvg");
+    const sidebar = document.getElementById("readingSidebar");
+
+    if (!container || !svg || !sidebar) return;
+
+    const containerRect = container.getBoundingClientRect();
+    const w = container.clientWidth;
+    const h = container.clientHeight;
+
+    svg.setAttribute("width", w);
+    svg.setAttribute("height", h);
+    svg.setAttribute("viewBox", "0 0 " + w + " " + h);
+    svg.innerHTML = "";
+
+    const pinned = getPinnedWords();
+    const positions = getPinnedPositions();
+
+    if (!pinned.length) return;
+
+    /* =====================================================
+       1. Lấy đúng vị trí của từng từ được ghim
+       ===================================================== */
+
+    const entries = [];
+
+    document
+        .querySelectorAll("#reading .reading-text")
+        .forEach(function(textBlock) {
+
+            textBlock.querySelectorAll(".word").forEach(function(el) {
+
+                const r = el.getBoundingClientRect();
+
+                entries.push({
+                    el: el,
+                    word: el.dataset.word,
+                    id: el.dataset.wordId,
+                    textBlock: textBlock,
+                    rect: r,
+                    centerX: r.left + r.width / 2,
+                    centerY: r.top + r.height / 2
+                });
+
+            });
+        });
+
+    const items = pinned.map(function(word) {
+
+        const card = document.querySelector(
+            '.pin-card[data-word="' + CSS.escape(word) + '"]'
+        );
+
+        if (!card) return null;
+
+        const wantedId = positions[word];
+
+        let source = wantedId
+            ? entries.find(function(entry) {
+                return entry.id === wantedId;
+            })
+            : null;
+
+        /* Từ được ghim từ phiên bản cũ chưa có ID riêng. */
+        if (!source) {
+            source = entries.find(function(entry) {
+                return entry.word === word;
+            });
+        }
+
+        if (!source) return null;
+
+        return {
+            word: word,
+            card: card,
+            source: source
+        };
+
+    }).filter(Boolean);
+
+    if (!items.length) return;
+
+    /* =====================================================
+       2. Xác định các dòng THỰC TẾ trong từng đoạn text
+       ===================================================== */
+
+    function getLines(textBlock) {
+
+        const lines = [];
+
+        textBlock.querySelectorAll(".word").forEach(function(el) {
+
+            const r = el.getBoundingClientRect();
+            const cy = r.top + r.height / 2;
+
+            let line = lines.find(function(existing) {
+                return Math.abs(existing.centerY - cy) < 10;
+            });
+
+            if (!line) {
+                line = {
+                    top: r.top,
+                    bottom: r.bottom,
+                    centerY: cy,
+                    words: []
+                };
+                lines.push(line);
+            }
+
+            line.words.push(el);
+            line.top = Math.min(line.top, r.top);
+            line.bottom = Math.max(line.bottom, r.bottom);
+            line.centerY =
+                (line.top + line.bottom) / 2;
+        });
+
+        lines.sort(function(a, b) {
+            return a.centerY - b.centerY;
+        });
+
+        return lines;
+    }
+
+    const lineCache = new Map();
+
+    items.forEach(function(item) {
+
+        if (!lineCache.has(item.source.textBlock)) {
+            lineCache.set(
+                item.source.textBlock,
+                getLines(item.source.textBlock)
+            );
+        }
+
+        const lines = lineCache.get(item.source.textBlock);
+
+        item.line = lines.reduce(function(best, line) {
+            if (!best) return line;
+
+            return Math.abs(line.centerY - item.source.centerY) <
+                   Math.abs(best.centerY - item.source.centerY)
+                ? line
+                : best;
+        }, null);
+    });
+
+    /* =====================================================
+       3. Đặt note đúng NGANG với dòng chứa từ.
+
+       Sidebar phải cao bằng reading-layout. Không dùng
+       sidebar.clientHeight để clamp vì trước đây sidebar
+       chỉ cao bằng nội dung card -> tất cả card bị đẩy lên đầu.
+       ===================================================== */
+
+    const sidebarRect = sidebar.getBoundingClientRect();
+
+    const groups = [];
+
+    items.forEach(function(item) {
+
+        let group = groups.find(function(g) {
+            return g.line === item.line;
+        });
+
+        if (!group) {
+            group = {
+                line: item.line,
+                items: []
+            };
+            groups.push(group);
+        }
+
+        group.items.push(item);
+    });
+
+    /* =====================================================
+       3. Xếp note theo đúng thứ tự đọc và tuyệt đối không chồng.
+
+       - Nhóm cùng một dòng: trái -> phải.
+       - Note trong cùng dòng: xếp từ trên -> dưới theo thứ tự
+         của từ từ trái sang phải.
+       - Các dòng khác nhau: nhóm phía trên luôn đứng trước nhóm
+         phía dưới.
+       - Nếu hai nhóm có chiều cao lớn, nhóm phía dưới sẽ được
+         đẩy xuống vừa đủ để không đè lên nhóm phía trên.
+       ===================================================== */
+
+    groups.sort(function(a, b) {
+        return a.line.centerY - b.line.centerY;
+    });
+
+    const groupGap = 12;
+    const cardGap = 10;
+    const layoutHeight = container.clientHeight;
+
+    /* Tính chiều cao thực tế của từng nhóm. */
+    groups.forEach(function(group) {
+
+        group.items.sort(function(a, b) {
+            return a.source.centerX - b.source.centerX;
+        });
+
+        group.height =
+            group.items.reduce(function(sum, item) {
+                return sum + item.card.offsetHeight;
+            }, 0) +
+            cardGap * Math.max(0, group.items.length - 1);
+
+        group.desiredTop =
+            group.line.centerY - sidebarRect.top -
+            group.height / 2;
+    });
+
+    /*
+     * Đặt từ trên xuống dưới. Mỗi nhóm cố bám sát dòng của nó,
+     * nhưng không bao giờ được chồng lên nhóm trước.
+     */
+    let previousBottom = 4;
+
+    groups.forEach(function(group) {
+
+        let top = Math.max(
+            4,
+            group.desiredTop
+        );
+
+        if (top < previousBottom + groupGap) {
+            top = previousBottom + groupGap;
+        }
+
+        group.top = top;
+        group.bottom = top + group.height;
+
+        previousBottom = group.bottom;
+    });
+
+    /*
+     * Nếu đẩy xuống quá thấp, dịch cả cụm lên một lượng vừa đủ,
+     * nhưng vẫn giữ khoảng cách giữa các note.
+     */
+    const bottomLimit = Math.max(4, layoutHeight - 4);
+    const overflow =
+        previousBottom - bottomLimit;
+
+    if (overflow > 0) {
+
+        groups.forEach(function(group) {
+            group.top -= overflow;
+        });
+
+        /* Không để note đầu tiên vượt khỏi vùng layout. */
+        const firstTop =
+            groups.length
+                ? groups[0].top
+                : 4;
+
+        if (firstTop < 4) {
+            const correction = 4 - firstTop;
+
+            groups.forEach(function(group) {
+                group.top += correction;
+            });
+        }
+    }
+
+    groups.forEach(function(group) {
+
+        let top = group.top;
+
+        group.items.forEach(function(item) {
+
+            item.card.style.position = "absolute";
+            item.card.style.left = "0";
+            item.card.style.right = "0";
+            item.card.style.marginBottom = "0";
+            item.card.style.top = top + "px";
+
+            const cardRect =
+                item.card.getBoundingClientRect();
+
+            item.cardCenterY =
+                cardRect.top + cardRect.height / 2;
+
+            top += cardRect.height + cardGap;
+        });
+    });
+
+    /* =====================================================
+       4. Vẽ đường đúng theo nét đỏ trong ảnh:
+
+          từ
+           │  <- chỉ đi dọc từ mép trên/dưới của từ
+           └──────────────  <- đi ngang NGAY TRONG KHOẢNG
+                              TRỐNG giữa hai dòng
+                         │
+                         └──── note
+
+       Tuyệt đối không chọn một Y nằm giữa thân dòng.
+       ===================================================== */
+
+    const textBlocks = Array.from(
+        document.querySelectorAll("#reading .reading-text")
+    );
+
+    items.forEach(function(item) {
+
+        const source = item.source;
+        const line = item.line;
+
+        if (!line) return;
+
+        const wordRect = source.el.getBoundingClientRect();
+        const textRect = source.textBlock.getBoundingClientRect();
+        const lines = lineCache.get(source.textBlock) || [];
+        const index = lines.indexOf(line);
+
+        const nextLine = lines[index + 1] || null;
+        const prevLine = lines[index - 1] || null;
+
+        const nextGap = nextLine
+            ? nextLine.top - line.bottom
+            : -1;
+
+        const prevGap = prevLine
+            ? line.top - prevLine.bottom
+            : -1;
+
+        /*
+         * Ưu tiên khoảng trống ngay BÊN DƯỚI dòng.
+         * Nếu không có (dòng cuối), dùng khoảng trống bên trên.
+         * RouteY luôn nằm giữa hai dòng, không bao giờ nằm
+         * trong vùng chữ hoặc vùng audio.
+         */
+        let routeYViewport;
+        let goDown;
+
+        if (nextLine && nextGap > 2) {
+            goDown = true;
+            routeYViewport =
+                line.bottom + nextGap / 2;
+        } else if (prevLine && prevGap > 2) {
+            goDown = false;
+            routeYViewport =
+                line.top - prevGap / 2;
+        } else {
+            /* Trường hợp cực hiếm: hai dòng sát nhau. */
+            goDown = true;
+            routeYViewport = line.bottom + 2;
+        }
+
+        /* Không cho route thoát khỏi chính textBlock. */
+        routeYViewport = Math.max(
+            textRect.top + 1,
+            Math.min(
+                routeYViewport,
+                textRect.bottom - 1
+            )
+        );
+
+        const sourceX =
+            source.centerX - containerRect.left;
+
+        const sourceY = goDown
+            ? wordRect.bottom - containerRect.top
+            : wordRect.top - containerRect.top;
+
+        const routeY =
+            routeYViewport - containerRect.top;
+
+        /*
+         * Đường ngang chỉ chạy trong phần text.
+         * Sau khi tới mép phải text, mới đi vào vùng divider/sidebar.
+         */
+        const textRight =
+            textRect.right - containerRect.left;
+
+        /* Điểm dọc nằm trong khoảng divider, không đè text. */
+        const verticalX =
+            textRight + 8;
+
+        const cardRect = item.card.getBoundingClientRect();
+
+        const cardLeft =
+            cardRect.left - containerRect.left;
+
+        const cardCenterY =
+            item.cardCenterY - containerRect.top;
+
+        /*
+         * Route chính:
+         * 1. center-top/bottom của chữ
+         * 2. xuống/lên đúng vào khe giữa dòng
+         * 3. ngang tới divider
+         * 4. dọc tới đúng tâm note
+         * 5. ngang vào note
+         */
+        const points = [
+            sourceX + "," + sourceY,
+            sourceX + "," + routeY,
+            verticalX + "," + routeY,
+            verticalX + "," + cardCenterY,
+            cardLeft + "," + cardCenterY
+        ].join(" ");
+
+        const polyline = document.createElementNS(
+            "http://www.w3.org/2000/svg",
+            "polyline"
+        );
+
+        polyline.setAttribute("points", points);
+        polyline.setAttribute("fill", "none");
+        polyline.setAttribute("stroke", "#b8cdbf");
+        polyline.setAttribute("stroke-width", "1.2");
+        polyline.setAttribute("stroke-dasharray", "4,4");
+        polyline.setAttribute("stroke-linecap", "round");
+        polyline.setAttribute("stroke-linejoin", "round");
+
+        svg.appendChild(polyline);
+    });
+}
+
+
+/* ================================================= */
+/* ================= HIGHLIGHT ====================== */
+/* ================================================= */
+
+function toggleHighlight(color) {
+
+    if (!currentWord || !currentWordElement) return;
+
+    const elementId = currentWordElement.dataset.wordId;
+    if (!elementId) return;
+
+    const oldColor = currentHighlight[elementId];
+
+    if (oldColor === color) {
+
+        currentWordElement.classList.remove(
+            "highlight-green",
+            "highlight-blue",
+            "highlight-gray",
+            "highlight-yellow",
+            "highlight-orange",
+            "highlight-purple"
+        );
+
+        currentHighlight[elementId] = null;
+
+        setHighlights(currentHighlight);
+        updateColorButtons();
+        return;
+    }
+
+    currentWordElement.classList.remove(
+        "highlight-green",
+        "highlight-blue",
+        "highlight-gray",
+        "highlight-yellow",
+        "highlight-orange",
+        "highlight-purple"
+    );
+
+    currentWordElement.classList.add(
+        "highlight-" + color
+    );
+
+    currentHighlight[elementId] = color;
+
+    setHighlights(currentHighlight);
+    updateColorButtons();
+}
+
+/* ================================================= */
+/* ============ UPDATE 6 MÀU ======================= */
+/* ================================================= */
+
+function updateColorButtons() {
+
+    document
+        .querySelectorAll(".color-btn")
+        .forEach(function(button) {
+
+            button.classList.remove(
+                "active-color"
+            );
+
+        });
+
+
+    const color =
+        currentWordElement
+            ? currentHighlight[currentWordElement.dataset.wordId]
+            : null;
+
+    if (!color) return;
+
+
+    const button =
+        document.querySelector(
+            ".color-btn." + color
+        );
+
+    if (button) {
+
+        button.classList.add(
+            "active-color"
+        );
+
+    }
+
+}
+
+
+/* ================================================= */
+/* ================= UNDERLINE ====================== */
+/* ================================================= */
+
+function toggleUnderline() {
+
+    if (!currentWord || !currentWordElement) return;
+
+    const elementId = currentWordElement.dataset.wordId;
+    if (!elementId) return;
+
+    const alreadyUnderlined =
+        currentUnderline[elementId];
+
+    if (alreadyUnderlined) {
+
+        currentWordElement.style.textDecoration = "none";
+        currentWordElement.style.textDecorationThickness = "";
+        currentWordElement.style.textUnderlineOffset = "";
+
+    } else {
+
+        currentWordElement.style.textDecoration = "underline";
+        currentWordElement.style.textDecorationThickness = "1px";
+        currentWordElement.style.textUnderlineOffset = "5px";
+    }
+
+    currentUnderline[elementId] = !alreadyUnderlined;
+
+    setUnderlines(currentUnderline);
+    updateUnderlineButton();
+}
+
+function updateUnderlineButton() {
+
+    const button =
+        document.getElementById("underlineButton");
+
+    if (!button) return;
+
+    const isUnderlined =
+        currentWordElement
+            ? !!currentUnderline[currentWordElement.dataset.wordId]
+            : false;
+
+    if (isUnderlined) {
+        button.classList.add("active");
+    } else {
+        button.classList.remove("active");
+    }
+}
+
+/* ================================================= */
+/* ========== ÁP DỤNG LẠI HIGHLIGHT/UNDERLINE ====== */
+/* ================================================= */
+
+function applySavedHighlights() {
+
+    const highlights = getHighlights();
+
+    document
+        .querySelectorAll("#reading .reading-main .word")
+        .forEach(function(el) {
+
+            const id = el.dataset.wordId;
+            if (!id) return;
+
+            const color = highlights[id];
+            if (!color) return;
+
+            el.classList.add("highlight-" + color);
+        });
+
+    const underlines = getUnderlines();
+
+    document
+        .querySelectorAll("#reading .reading-main .word")
+        .forEach(function(el) {
+
+            const id = el.dataset.wordId;
+            if (!id || !underlines[id]) return;
+
+            el.style.textDecoration = "underline";
+            el.style.textDecorationThickness = "1px";
+            el.style.textUnderlineOffset = "5px";
+        });
+}
+
+/* ================================================= */
+/* ================= TAB ============================ */
+/* ================================================= */
+
+function openTab(tabName, button) {
+
+    document
+        .querySelectorAll(".tab-content")
+        .forEach(function(content) {
+
+            content.classList.remove(
+                "active"
+            );
+
+        });
+
+
+    document
+        .querySelectorAll(".tab-button")
+        .forEach(function(btn) {
+
+            btn.classList.remove(
+                "active"
+            );
+
+        });
+
+
+    document
+        .getElementById(tabName)
+        .classList.add("active");
+
+
+    button.classList.add("active");
+
+
+    updateStatus("learning");
+
+
+    if (tabName === "study") {
+
+        prepareStudy();
+
+    }
+
+
+    if (tabName === "reading") {
+
+        setTimeout(
+            updateConnectorLines,
+            50
+        );
+
+    }
+
+}
+
+
+/* ================================================= */
+/* ================= AUDIO (2 PLAYER) =============== */
+/* ================================================= */
+
+const audioPlayers = {};
+
+function formatTime(seconds) {
+
+    if (isNaN(seconds) || seconds < 0) return "0:00";
+
+    const m = Math.floor(seconds / 60);
+    const s = Math.floor(seconds % 60);
+
+    return m + ":" + (s < 10 ? "0" : "") + s;
+
+}
+
+function setupAudioPlayer(id) {
+
+    const audioEl =
+        document.getElementById("audio" + id);
+
+    const vinylEl =
+        document.getElementById("vinyl" + id);
+
+    const audioButtonEl =
+        document.getElementById("audioButton" + id);
+
+    const progressBarEl =
+        document.getElementById("audioProgress" + id);
+
+    const currentTimeEl =
+        document.getElementById("audioCurrentTime" + id);
+
+    const durationEl =
+        document.getElementById("audioDuration" + id);
+
+
+    audioPlayers[id] = {
+        audioEl: audioEl,
+        vinylEl: vinylEl,
+        audioButtonEl: audioButtonEl,
+        progressBarEl: progressBarEl
+    };
+
+
+    audioEl.addEventListener(
+        "loadedmetadata",
+        function() {
+
+            progressBarEl.max =
+                audioEl.duration;
+
+            durationEl.textContent =
+                formatTime(audioEl.duration);
+
+        }
+    );
+
+
+    audioEl.addEventListener(
+        "timeupdate",
+        function() {
+
+            progressBarEl.value =
+                audioEl.currentTime;
+
+            currentTimeEl.textContent =
+                formatTime(audioEl.currentTime);
+
+        }
+    );
+
+
+    progressBarEl.addEventListener(
+        "input",
+        function() {
+
+            audioEl.currentTime =
+                progressBarEl.value;
+
+        }
+    );
+
+
+    audioEl.addEventListener(
+        "play",
+        function() {
+
+            vinylEl.classList.add(
+                "playing"
+            );
+
+            audioButtonEl.textContent =
+                "⏸ Tạm dừng";
+
+        }
+    );
+
+
+    audioEl.addEventListener(
+        "pause",
+        function() {
+
+            vinylEl.classList.remove(
+                "playing"
+            );
+
+            audioButtonEl.textContent =
+                "▶ Phát bài nghe";
+
+        }
+    );
+
+
+    audioEl.addEventListener(
+        "ended",
+        function() {
+
+            vinylEl.classList.remove(
+                "playing"
+            );
+
+            audioButtonEl.textContent =
+                "▶ Phát bài nghe";
+
+            progressBarEl.value = 0;
+
+            currentTimeEl.textContent =
+                "0:00";
+
+        }
+    );
+
+}
+
+
+function pauseOtherAudios(exceptId) {
+
+    Object.keys(audioPlayers).forEach(
+        function(id) {
+
+            if (id !== exceptId) {
+
+                const player =
+                    audioPlayers[id];
+
+                if (!player.audioEl.paused) {
+
+                    player.audioEl.pause();
+
+                }
+
+            }
+
+        }
+    );
+
+}
+
+
+function toggleAudio(id) {
+
+    const player =
+        audioPlayers[id];
+
+    if (!player) return;
+
+    const audioEl =
+        player.audioEl;
+
+    const vinylEl =
+        player.vinylEl;
+
+    const audioButtonEl =
+        player.audioButtonEl;
+
+
+    if (audioEl.paused) {
+
+        pauseOtherAudios(id);
+
+        const playPromise =
+            audioEl.play();
+
+        if (playPromise !== undefined) {
+
+            playPromise
+                .catch(function(err) {
+
+                    console.error(
+                        "Không phát được audio:",
+                        err
+                    );
+
+                    vinylEl.classList.remove(
+                        "playing"
+                    );
+
+                });
+
+        }
+
+    } else {
+
+        audioEl.pause();
+
+    }
+
+}
+
+
+setupAudioPlayer("1");
+setupAudioPlayer("2");
+
+
+/* ================================================= */
+/* ================= STUDY ========================= */
+/* ================================================= */
+
+function prepareStudy() {
+
+    studyWords =
+        getSavedWords();
+
+
+    if (studyWords.length === 0) {
+
+        document.getElementById(
+            "studyProgress"
+        ).textContent =
+            "Bạn chưa lưu từ vựng nào.";
+
+        document.getElementById(
+            "studyWord"
+        ).textContent = "";
+
+        document.getElementById(
+            "studyPinyin"
+        ).textContent = "";
+
+        document.getElementById(
+            "studyHanviet"
+        ).textContent = "";
+
+        document.getElementById(
+            "studyPOS"
+        ).textContent = "";
+
+        document.getElementById(
+            "studyMeaning"
+        ).textContent = "";
+
+        return;
+
+    }
+
+
+    if (
+        studyIndex >= studyWords.length
+    ) {
+
+        studyIndex = 0;
+
+    }
+
+
+    showStudyWord();
+
+}
+
+
+function showStudyWord() {
+
+    const word =
+        studyWords[studyIndex];
+
+    const data =
+        vocabulary[word];
+
+
+    document.getElementById(
+        "studyProgress"
+    ).textContent =
+        "Từ " +
+        (studyIndex + 1) +
+        " / " +
+        studyWords.length;
+
+
+    document.getElementById(
+        "studyWord"
+    ).textContent =
+        word;
+
+
+    document.getElementById(
+        "studyPinyin"
+    ).textContent =
+        data.pinyin;
+
+
+    document.getElementById(
+        "studyHanviet"
+    ).textContent =
+        data.hanviet;
+
+
+    document.getElementById(
+        "studyPOS"
+    ).textContent =
+        data.pos;
+
+
+    document.getElementById(
+        "studyMeaning"
+    ).textContent =
+        data.meaning;
+
+
+    document.getElementById(
+        "studyExampleChinese"
+    ).textContent =
+        data.exampleChinese;
+
+
+    document.getElementById(
+        "studyExampleVietnamese"
+    ).textContent =
+        data.exampleVietnamese;
+
+
+    document.getElementById(
+        "studyUsage"
+    ).textContent =
+        data.usage;
+
+
+    /* ================= GHI CHÚ ================= */
+
+    const notes =
+        getNotes();
+
+    document.getElementById(
+        "studyNote"
+    ).value =
+        notes[word] || "";
+
+
+    /* ================= ĐẶT CÂU ================= */
+
+    const sentences =
+        getSentences();
+
+
+    document.getElementById(
+        "studySentence"
+    ).value =
+        sentences[word] || "";
+
+
+    updateStatus("learning");
+
+
+}
+
+
+/* ================================================= */
+/* ========== HOÀN THÀNH 1 TỪ ====================== */
+/* ================================================= */
+
+function completeStudyWord() {
+
+    const word =
+        studyWords[studyIndex];
+
+
+    const noteInput =
+        document.getElementById(
+            "studyNote"
+        );
+
+
+    const sentenceInput =
+        document.getElementById(
+            "studySentence"
+        );
+
+
+    const note =
+        noteInput.value.trim();
+
+
+    const sentence =
+        sentenceInput.value.trim();
+
+
+    if (sentence === "") {
+
+        alert(
+            "Hãy tự đặt một câu trước khi sang từ tiếp theo nhé!"
+        );
+
+        sentenceInput.focus();
+
+        return;
+
+    }
+
+
+    /* ================= LƯU GHI CHÚ ================= */
+
+    const notes =
+        getNotes();
+
+    notes[word] =
+        note;
+
+    setNotes(notes);
+
+
+    /* ================= LƯU CÂU ================= */
+
+    const sentences =
+        getSentences();
+
+    sentences[word] =
+        sentence;
+
+    setSentences(sentences);
+
+
+    studyIndex++;
+
+
+    if (
+        studyIndex >=
+        studyWords.length
+    ) {
+
+        document
+            .getElementById(
+                "finishModal"
+            )
+            .classList.add("show");
+
+        return;
+
+    }
+
+
+    showStudyWord();
+
+}
+
+
+/* ================================================= */
+/* ================= HỌC LẠI ======================== */
+/* ================================================= */
+
+function repeatStudy() {
+
+    document
+        .getElementById(
+            "finishModal"
+        )
+        .classList.remove("show");
+
+
+    studyIndex = 0;
+
+
+    localStorage.removeItem(
+        "lesson11Sentences"
+    );
+
+    localStorage.removeItem(
+        "lesson11Notes"
+    );
+
+
+    prepareStudy();
+
+}
+
+
+/* ================================================= */
+/* ================= OK ============================= */
+/* ================================================= */
+
+function finishStudy() {
+
+    document
+        .getElementById(
+            "finishModal"
+        )
+        .classList.remove("show");
+
+
+    updateStatus("learning");
+
+
+    alert(
+        "✓ Bạn đã học xong toàn bộ từ vựng!"
+    );
+
+}
+
+
+/* ================================================= */
+/* ================= STATUS ========================= */
+/* ================================================= */
+
+function updateStatus(status) {
+
+    const dot =
+        document.getElementById(
+            "statusDot"
+        );
+
+    const text =
+        document.getElementById(
+            "statusText"
+        );
+
+
+    dot.className =
+        "status-dot";
+
+
+    if (status === "learning") {
+
+        dot.classList.add(
+            "learning"
+        );
+
+        text.textContent =
+            "Đang học";
+
+    }
+
+
+    if (status === "completed") {
+
+        dot.classList.add(
+            "completed"
+        );
+
+        text.textContent =
+            "Đã hoàn thành ✓";
+
+    }
+
+
+    if (status === "new") {
+
+        text.textContent =
+            "Chưa bắt đầu";
+
+    }
+
+}
+
+
+/* ================================================= */
+/* ================= QUICK MATCH ==================== */
+/* ================================================= */
+
+function startQuickMatch() {
+
+    const saved =
+        getSavedWords();
+
+
+    if (saved.length < 3) {
+
+        alert(
+            "Bạn cần lưu ít nhất 3 từ để chơi Quick Match."
+        );
+
+        return;
+
+    }
+
+
+    document
+        .getElementById(
+            "reviewMenu"
+        )
+        .style.display = "none";
+
+
+    document
+        .getElementById(
+            "quickMatch"
+        )
+        .classList.add("active");
+
+
+    matchTime = 60;
+
+
+    document.getElementById(
+        "matchTimer"
+    ).textContent =
+        "60s";
+
+
+    createMatchRound();
+
+
+    clearInterval(
+        matchTimerInterval
+    );
+
+
+    matchTimerInterval =
+        setInterval(function() {
+
+            matchTime--;
+
+
+            document.getElementById(
+                "matchTimer"
+            ).textContent =
+                matchTime + "s";
+
+
+            if (matchTime <= 0) {
+
+                clearInterval(
+                    matchTimerInterval
+                );
+
+
+                alert(
+                    "⏰ Hết giờ!"
+                );
+
+
+                backToReviewMenu();
+
+            }
+
+        }, 1000);
+
+}
+
+
+/* ================================================= */
+/* ========== TẠO 3 CẶP MATCH ====================== */
+/* ================================================= */
+
+function createMatchRound() {
+
+    const saved =
+        getSavedWords();
+
+
+    const shuffled =
+        [...saved]
+        .sort(
+            () => Math.random() - 0.5
+        );
+
+
+    matchPairs =
+        shuffled.slice(0, 3);
+
+
+    selectedChinese = null;
+
+    selectedVietnamese = null;
+
+
+    const chineseColumn =
+        document.getElementById(
+            "chineseColumn"
+        );
+
+
+    const vietnameseColumn =
+        document.getElementById(
+            "vietnameseColumn"
+        );
+
+
+    chineseColumn.innerHTML = "";
+
+    vietnameseColumn.innerHTML = "";
+
+
+    matchPairs.forEach(function(word) {
+
+        const card =
+            document.createElement("div");
+
+
+        card.className =
+            "match-card";
+
+
+        card.textContent =
+            word;
+
+
+        card.dataset.word =
+            word;
+
+
+        card.onclick =
+            function() {
+
+                selectChinese(card);
+
+            };
+
+
+        chineseColumn.appendChild(card);
+
+    });
+
+
+    const vietnamese =
+        matchPairs
+        .map(
+            word =>
+                vocabulary[word].meaning
+        )
+        .sort(
+            () => Math.random() - 0.5
+        );
+
+
+    vietnamese.forEach(function(meaning) {
+
+        const card =
+            document.createElement("div");
+
+
+        card.className =
+            "match-card";
+
+
+        card.textContent =
+            meaning;
+
+
+        const matchedWord =
+            matchPairs.find(
+                word =>
+                    vocabulary[word].meaning ===
+                    meaning
+            );
+
+
+        card.dataset.word =
+            matchedWord;
+
+
+        card.onclick =
+            function() {
+
+                selectVietnamese(card);
+
+            };
+
+
+        vietnameseColumn.appendChild(
+            card
+        );
+
+    });
+
+}
+
+
+/* ================================================= */
+/* ============= SELECT CHINESE ==================== */
+/* ================================================= */
+
+function selectChinese(card) {
+
+    document
+        .querySelectorAll(
+            "#chineseColumn .match-card"
+        )
+        .forEach(function(c) {
+
+            c.classList.remove(
+                "selected"
+            );
+
+        });
+
+
+    card.classList.add(
+        "selected"
+    );
+
+
+    selectedChinese = card;
+
+
+    checkMatch();
+
+}
+
+
+/* ================================================= */
+/* =========== SELECT VIETNAMESE =================== */
+/* ================================================= */
+
+function selectVietnamese(card) {
+
+    document
+        .querySelectorAll(
+            "#vietnameseColumn .match-card"
+        )
+        .forEach(function(c) {
+
+            c.classList.remove(
+                "selected"
+            );
+
+        });
+
+
+    card.classList.add(
+        "selected"
+    );
+
+
+    selectedVietnamese = card;
+
+
+    checkMatch();
+
+}
+
+
+/* ================================================= */
+/* ================= CHECK MATCH ==================== */
+/* ================================================= */
+
+function checkMatch() {
+
+    if (
+        !selectedChinese ||
+        !selectedVietnamese
+    ) {
+
+        return;
+
+    }
+
+
+    if (
+        selectedChinese.dataset.word ===
+        selectedVietnamese.dataset.word
+    ) {
+
+        selectedChinese.classList.add(
+            "hidden"
+        );
+
+        selectedVietnamese.classList.add(
+            "hidden"
+        );
+
+
+        selectedChinese = null;
+
+        selectedVietnamese = null;
+
+
+        document.getElementById(
+            "matchMessage"
+        ).textContent =
+            "✓ Correct!";
+
+
+        setTimeout(function() {
+
+            createMatchRound();
+
+        }, 350);
+
+
+    } else {
+
+        selectedChinese.classList.add(
+            "wrong"
+        );
+
+        selectedVietnamese.classList.add(
+            "wrong"
+        );
+
+
+        document.getElementById(
+            "matchMessage"
+        ).textContent =
+            "✗ Sai rồi, thử lại nhé!";
+
+
+        const wrongChinese =
+            selectedChinese;
+
+
+        const wrongVietnamese =
+            selectedVietnamese;
+
+
+        setTimeout(function() {
+
+            wrongChinese.classList.remove(
+                "wrong",
+                "selected"
+            );
+
+
+            wrongVietnamese.classList.remove(
+                "wrong",
+                "selected"
+            );
+
+        }, 700);
+
+
+        selectedChinese = null;
+
+        selectedVietnamese = null;
+
+    }
+
+}
+
+
+/* ================================================= */
+/* ================= ĐẶT CÂU ======================= */
+/* ================================================= */
+
+function startSentenceGame() {
+
+    const saved =
+        getSavedWords();
+
+
+    if (saved.length === 0) {
+
+        alert(
+            "Bạn chưa có từ vựng nào để ôn tập."
+        );
+
+        return;
+
+    }
+
+
+    const sentences =
+        getSentences();
+
+
+    const allHaveSentences =
+        saved.every(
+            word =>
+                sentences[word] &&
+                sentences[word].trim() !== ""
+        );
+
+
+    if (!allHaveSentences) {
+
+        alert(
+            "Bạn cần hoàn thành phần Học bài trước."
+        );
+
+        return;
+
+    }
+
+
+    document
+        .getElementById(
+            "reviewMenu"
+        )
+        .style.display = "none";
+
+
+    document
+        .getElementById(
+            "sentenceGame"
+        )
+        .classList.add("active");
+
+
+    sentenceWords =
+        [...saved]
+        .sort(
+            () => Math.random() - 0.5
+        );
+
+
+    sentenceIndex = 0;
+
+
+    showSentenceQuestion();
+
+}
+
+
+/* ================================================= */
+/* ========== HIỆN CÂU HỎI ========================= */
+/* ================================================= */
+
+function showSentenceQuestion() {
+
+    if (
+        sentenceIndex >=
+        sentenceWords.length
+    ) {
+
+        finishSentenceGame();
+
+        return;
+
+    }
+
+
+    const word =
+        sentenceWords[sentenceIndex];
+
+
+    document.getElementById(
+        "sentenceProgress"
+    ).textContent =
+        "Từ " +
+        (sentenceIndex + 1) +
+        " / " +
+        sentenceWords.length;
+
+
+    document.getElementById(
+        "sentenceGameWord"
+    ).textContent =
+        word;
+
+
+    document.getElementById(
+        "sentenceGameInput"
+    ).value = "";
+
+
+    document.getElementById(
+        "sentenceMessage"
+    ).textContent = "";
+
+
+    startQuestionTimer();
+
+}
+
+
+/* ================================================= */
+/* ============= TIMER TỪNG CÂU ==================== */
+/* ================================================= */
+
+function startQuestionTimer() {
+
+    clearInterval(
+        questionTimerInterval
+    );
+
+
+    questionStartTime =
+        Date.now();
+
+
+    document.getElementById(
+        "questionTimer"
+    ).textContent =
+        "0s";
+
+
+    questionTimerInterval =
+        setInterval(function() {
+
+            const seconds =
+                Math.floor(
+                    (
+                        Date.now() -
+                        questionStartTime
+                    ) / 1000
+                );
+
+
+            document.getElementById(
+                "questionTimer"
+            ).textContent =
+                seconds + "s";
+
+
+        }, 1000);
+
+}
+
+
+/* ================================================= */
+/* ================= CHECK SENTENCE ================ */
+/* ================================================= */
+
+function checkSentence() {
+
+    const word =
+        sentenceWords[sentenceIndex];
+
+
+    const correctSentence =
+        getSentences()[word];
+
+
+    const input =
+        document
+            .getElementById(
+                "sentenceGameInput"
+            )
+            .value;
+
+
+    if (
+        input ===
+        correctSentence
+    ) {
+
+        clearInterval(
+            questionTimerInterval
+        );
+
+
+        document.getElementById(
+            "sentenceMessage"
+        ).textContent =
+            "✓ Correct!";
+
+
+        document.getElementById(
+            "sentenceMessage"
+        ).className =
+            "game-message correct-message";
+
+
+        setTimeout(function() {
+
+            sentenceIndex++;
+
+            showSentenceQuestion();
+
+        }, 600);
+
+
+    } else {
+
+        document.getElementById(
+            "sentenceMessage"
+        ).textContent =
+            "✗ Incorrect! Hãy nhập lại chính xác câu đã đặt.";
+
+
+        document.getElementById(
+            "sentenceMessage"
+        ).className =
+            "game-message incorrect-message";
+
+
+        document.getElementById(
+            "sentenceGameInput"
+        ).value = "";
+
+
+        document.getElementById(
+            "sentenceGameInput"
+        ).focus();
+
+    }
+
+}
+
+
+/* ================================================= */
+/* ============ HOÀN THÀNH GAME ĐẶT CÂU ============ */
+/* ================================================= */
+
+function finishSentenceGame() {
+
+    clearInterval(
+        questionTimerInterval
+    );
+
+
+    alert(
+        "🎉 Bạn đã hoàn thành game Đặt câu!"
+    );
+
+
+    updateStatus("completed");
+
+
+    localStorage.setItem(
+        "lesson11Completed",
+        "true"
+    );
+
+
+    backToReviewMenu();
+
+}
+
+
+/* ================================================= */
+/* ================= BACK REVIEW =================== */
+/* ================================================= */
+
+function backToReviewMenu() {
+
+    clearInterval(
+        matchTimerInterval
+    );
+
+
+    clearInterval(
+        questionTimerInterval
+    );
+
+
+    document
+        .getElementById(
+            "quickMatch"
+        )
+        .classList.remove("active");
+
+
+    document
+        .getElementById(
+            "sentenceGame"
+        )
+        .classList.remove("active");
+
+
+    document
+        .getElementById(
+            "reviewMenu"
+        )
+        .style.display = "block";
+
+
+}
+
+
+/* ================================================= */
+/* ========== LESSON 10 WORD RENDERER =============== */
+/* ================================================= */
+
+function renderLessonWords() {
+
+    const segmenter =
+        new Intl.Segmenter("zh", { granularity: "word" });
+
+    document
+        .querySelectorAll(".reading-text[data-raw-text]")
+        .forEach(function(container) {
+
+            const text = container.dataset.rawText || "";
+            container.innerHTML = "";
+
+            const segments = segmenter.segment(text);
+
+            for (const part of segments) {
+
+                const value = part.segment;
+
+                if (part.isWordLike) {
+
+                    const span = document.createElement("span");
+                    span.className = "word";
+                    span.dataset.word = value;
+                    span.textContent = value;
+                    span.onclick = function(event) {
+                        event.stopPropagation();
+                        showWord(value, span);
+                    };
+                    container.appendChild(span);
+
+                } else {
+
+                    container.appendChild(
+                        document.createTextNode(value)
+                    );
+                }
+            }
+        });
+}
+
+function ensureLessonVocabulary() {
+
+    document
+        .querySelectorAll("#reading .reading-main .word")
+        .forEach(function(el) {
+
+            const word = el.dataset.word;
+
+            if (!vocabulary[word]) {
+
+                vocabulary[word] = {
+                    pinyin: "—",
+                    hanviet: "—",
+                    pos: "词语 / từ trong bài",
+                    meaning: "Từ trong bài đọc 10",
+                    exampleChinese: word,
+                    exampleVietnamese: "",
+                    usage: "Từ này chưa được bổ sung thông tin từ vựng."
+                };
+            }
+        });
+}
+
+/* ================================================= */
+/* ================= LOAD =========================== */
+/* ================================================= */
+
+renderLessonWords();
+ensureLessonVocabulary();
+
+currentHighlight = getHighlights();
+
+currentUnderline = getUnderlines();
+
+// Gán ID riêng cho từng vị trí của từ trong bài đọc.
+// Vì vậy hai từ giống nhau ở hai câu khác nhau vẫn là hai vị trí độc lập.
+document
+    .querySelectorAll("#reading .reading-main .word")
+    .forEach(function(el, index) {
+        el.dataset.wordId = "lesson11-word-" + (index + 1);
+    });
+
+updateSavedList();
+
+applySavedHighlights();
+
+renderPinnedSidebar();
+
+
+if (
+    localStorage.getItem(
+        "lesson11Completed"
+    ) === "true"
+) {
+
+    updateStatus("completed");
+
+} else if (
+    getSavedWords().length > 0
+) {
+
+    updateStatus("learning");
+
+} else {
+
+    updateStatus("new");
+
+}
+
+</script>
+
+
+</body>
+
+</html>
