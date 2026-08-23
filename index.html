@@ -8,66 +8,540 @@
     <title>homnayhocgimoi.pinkkk</title>
 
     <link rel="stylesheet" href="style.css">
+
+    <!-- Supabase -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabase.js"></script>
+
+    <style>
+
+        /* ========================================= */
+        /* USER AREA */
+        /* ========================================= */
+
+        #user-area {
+            position: fixed;
+            top: 20px;
+            right: 25px;
+            z-index: 1000;
+
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+
+        /* ========================================= */
+        /* USER NAME */
+        /* ========================================= */
+
+        #user-name {
+            color: #2f6f4e;
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+            max-width: 150px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        #user-name:hover {
+            text-decoration: underline;
+        }
+
+
+        /* ========================================= */
+        /* AVATAR */
+        /* ========================================= */
+
+        #user-avatar-btn {
+            width: 48px;
+            height: 48px;
+
+            padding: 0;
+
+            border: 3px solid #d7eadc;
+            border-radius: 50%;
+
+            background: #e8f2eb;
+
+            cursor: pointer;
+
+            overflow: hidden;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            transition: transform 0.2s ease;
+        }
+
+
+        #user-avatar-btn:hover {
+            transform: scale(1.06);
+        }
+
+
+        #user-avatar {
+            width: 100%;
+            height: 100%;
+
+            object-fit: cover;
+
+            display: block;
+        }
+
+
+        /* ========================================= */
+        /* LOGOUT */
+        /* ========================================= */
+
+        #logout-btn {
+            border: none;
+
+            padding: 9px 14px;
+
+            border-radius: 10px;
+
+            background: #eef6f0;
+
+            color: #4d8965;
+
+            font-size: 14px;
+
+            cursor: pointer;
+        }
+
+
+        #logout-btn:hover {
+            background: #dfeee3;
+        }
+
+
+        /* ========================================= */
+        /* MOBILE */
+        /* ========================================= */
+
+        @media (max-width: 600px) {
+
+            #user-area {
+                top: 12px;
+                right: 12px;
+
+                gap: 7px;
+            }
+
+
+            #user-name {
+                max-width: 90px;
+                font-size: 13px;
+            }
+
+
+            #user-avatar-btn {
+                width: 43px;
+                height: 43px;
+            }
+
+
+            #logout-btn {
+                padding: 7px 9px;
+                font-size: 12px;
+            }
+
+        }
+
+    </style>
+
 </head>
+
 
 <body>
 
+
+    <!-- ========================================= -->
+    <!-- USER AREA -->
+    <!-- ========================================= -->
+
+    <div id="user-area">
+
+
+        <!-- USER NAME -->
+
+        <span id="user-name">
+            Đang tải...
+        </span>
+
+
+        <!-- AVATAR -->
+
+        <button
+            id="user-avatar-btn"
+            title="Trang cá nhân"
+        >
+
+            <img
+                id="user-avatar"
+                src=""
+                alt="Avatar"
+            >
+
+        </button>
+
+
+        <!-- LOGOUT -->
+
+        <button
+            id="logout-btn"
+        >
+            Đăng xuất
+        </button>
+
+
+    </div>
+
+
+    <!-- ========================================= -->
+    <!-- MAIN -->
+    <!-- ========================================= -->
+
     <main class="container">
 
-        <header>
-            <p class="small-title">今天学什么？</p>
 
-            <h1>今天想学什么？</h1>
+        <header>
+
+            <p class="small-title">
+                今天学什么？
+            </p>
+
+            <h1>
+                今天想学什么？
+            </h1>
 
             <p class="subtitle">
                 Choose your way to learn Chinese ♡
             </p>
+
         </header>
 
 
+        <!-- ========================================= -->
+        <!-- LEARNING CARDS -->
+        <!-- ========================================= -->
+
         <section class="learning-grid">
 
-            <!-- Bài hát -->
+
+            <!-- BÀI HÁT -->
+
             <div class="learning-card">
-                <div class="card-icon">🎧</div>
 
-                <h2>学中文歌</h2>
+                <div class="card-icon">
+                    🎧
+                </div>
 
-                <p>Học tiếng Trung qua bài hát</p>
+                <h2>
+                    学中文歌
+                </h2>
 
-                <a href="songs.html" class="button">开始学习 →</a>
+                <p>
+                    Học tiếng Trung qua bài hát
+                </p>
+
+                <a
+                    href="songs.html"
+                    class="button"
+                >
+                    开始学习 →
+                </a>
+
             </div>
 
 
-            <!-- Giáo trình -->
+            <!-- GIÁO TRÌNH -->
+
             <div class="learning-card">
-                <div class="card-icon">📖</div>
 
-                <h2>课本阅读</h2>
+                <div class="card-icon">
+                    📖
+                </div>
 
-                <p>Học qua các bài đọc trong giáo trình</p>
+                <h2>
+                    课本阅读
+                </h2>
 
-               <a href="reading.html" class="button">开始学习 →</a>
+                <p>
+                    Học qua các bài đọc trong giáo trình
+                </p>
+
+                <a
+                    href="reading.html"
+                    class="button"
+                >
+                    开始学习 →
+                </a>
+
             </div>
 
 
-            <!-- Truyện -->
+            <!-- TRUYỆN -->
+
             <div class="learning-card">
-                <div class="card-icon">🧚🏻‍♀️</div>
 
-                <h2>故事时间</h2>
+                <div class="card-icon">
+                    🧚🏻‍♀️
+                </div>
 
-                <p>Học qua những câu chuyện nhỏ</p>
+                <h2>
+                    故事时间
+                </h2>
 
-                <a href="story.html" class="button">开始学习 →</a>
+                <p>
+                    Học qua những câu chuyện nhỏ
+                </p>
 
-
+                <a
+                    href="story.html"
+                    class="button"
+                >
+                    开始学习 →
+                </a>
 
             </div>
+
 
         </section>
 
+
     </main>
+
+
+    <!-- ========================================= -->
+    <!-- JAVASCRIPT -->
+    <!-- ========================================= -->
+
+    <script>
+
+
+        // =========================================
+        // DEFAULT AVATAR
+        // =========================================
+
+        function setDefaultAvatar() {
+
+            document.getElementById("user-avatar").src =
+                "data:image/svg+xml;charset=UTF-8," +
+                encodeURIComponent(`
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="100"
+                        height="100"
+                        viewBox="0 0 100 100"
+                    >
+
+                        <circle
+                            cx="50"
+                            cy="50"
+                            r="50"
+                            fill="#e8f2eb"
+                        />
+
+                        <circle
+                            cx="50"
+                            cy="38"
+                            r="17"
+                            fill="#9fc5aa"
+                        />
+
+                        <path
+                            d="M18 90
+                               C20 69 33 60 50 60
+                               C67 60 80 69 82 90"
+                            fill="#9fc5aa"
+                        />
+
+                    </svg>
+                `);
+
+        }
+
+
+        // =========================================
+        // LOAD USER
+        // =========================================
+
+        async function loadUser() {
+
+
+            const {
+                data: { user },
+                error
+            } = await supabaseClient.auth.getUser();
+
+
+            // Không đăng nhập
+
+            if (error || !user) {
+
+                window.location.href =
+                    "login.html";
+
+                return;
+
+            }
+
+
+            // =====================================
+            // LOAD PROFILE
+            // =====================================
+
+            const {
+                data: profile,
+                error: profileError
+            } = await supabaseClient
+                .from("user profiles")
+                .select("nickname, avatar_url")
+                .eq("id", user.id)
+                .maybeSingle();
+
+
+            // =====================================
+            // NICKNAME
+            // =====================================
+
+            if (
+                !profileError &&
+                profile &&
+                profile.nickname
+            ) {
+
+                document.getElementById("user-name")
+                    .textContent =
+                    profile.nickname;
+
+            } else {
+
+                // Nếu chưa có nickname
+
+                document.getElementById("user-name")
+                    .textContent =
+                    "User";
+
+            }
+
+
+            // =====================================
+            // AVATAR
+            // =====================================
+
+            if (
+                !profileError &&
+                profile &&
+                profile.avatar_url
+            ) {
+
+                document.getElementById("user-avatar")
+                    .src =
+                    profile.avatar_url;
+
+            } else {
+
+                setDefaultAvatar();
+
+            }
+
+        }
+
+
+        // =========================================
+        // CLICK USER NAME
+        // =========================================
+
+        document
+            .getElementById("user-name")
+            .addEventListener(
+                "click",
+                function () {
+
+                    window.location.href =
+                        "profile.html";
+
+                }
+            );
+
+
+        // =========================================
+        // CLICK AVATAR
+        // =========================================
+
+        document
+            .getElementById("user-avatar-btn")
+            .addEventListener(
+                "click",
+                function () {
+
+                    window.location.href =
+                        "profile.html";
+
+                }
+            );
+
+
+        // =========================================
+        // LOGOUT
+        // =========================================
+
+        document
+            .getElementById("logout-btn")
+            .addEventListener(
+                "click",
+                async function () {
+
+
+                    const {
+                        error
+                    } =
+                    await supabaseClient
+                        .auth
+                        .signOut();
+
+
+                    if (error) {
+
+                        console.error(
+                            "Logout error:",
+                            error
+                        );
+
+                        alert(
+                            "Đăng xuất thất bại: " +
+                            error.message
+                        );
+
+                        return;
+
+                    }
+
+
+                    window.location.href =
+                        "login.html";
+
+                }
+            );
+
+
+        // =========================================
+        // START
+        // =========================================
+
+        setDefaultAvatar();
+
+        loadUser();
+
+
+    </script>
+
 
 </body>
 

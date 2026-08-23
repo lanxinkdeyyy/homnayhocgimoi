@@ -1,0 +1,1115 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Hồ sơ - Hôm Nay Học Gì?</title>
+
+    <!-- Supabase -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabase.js"></script>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f3f8f4;
+            color: #333;
+        }
+
+        .profile-container {
+            width: 92%;
+            max-width: 850px;
+            margin: 40px auto 70px;
+        }
+
+        /* ============================= */
+        /* BACK */
+        /* ============================= */
+
+        .back-btn {
+            display: inline-block;
+            margin-bottom: 25px;
+            color: #4d8965;
+            text-decoration: none;
+            font-size: 15px;
+        }
+
+        .back-btn:hover {
+            text-decoration: underline;
+        }
+
+        /* ============================= */
+        /* PROFILE HEADER */
+        /* ============================= */
+
+        .profile-header {
+            background: white;
+            border-radius: 20px;
+            padding: 40px 25px;
+            text-align: center;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.06);
+        }
+
+        .avatar-wrapper {
+            position: relative;
+            width: 130px;
+            height: 130px;
+            margin: 0 auto 18px;
+        }
+
+        .avatar {
+            width: 130px;
+            height: 130px;
+            border-radius: 50%;
+            object-fit: cover;
+            background: #e8f2eb;
+            border: 4px solid #d7eadc;
+        }
+
+        .edit-avatar-btn {
+            position: absolute;
+            right: 0;
+            bottom: 3px;
+            width: 38px;
+            height: 38px;
+            border: none;
+            border-radius: 50%;
+            background: #5f9f78;
+            color: white;
+            font-size: 18px;
+            cursor: pointer;
+        }
+
+        .edit-avatar-btn:hover {
+            background: #4d8965;
+        }
+
+        #avatarInput {
+            display: none;
+        }
+
+        /* ============================= */
+        /* NICKNAME */
+        /* ============================= */
+
+        .nickname-area {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+            margin-top: 5px;
+        }
+
+        .nickname {
+            font-size: 24px;
+            font-weight: bold;
+            color: #2f6f4e;
+        }
+
+        .edit-nickname-btn {
+            border: none;
+            background: transparent;
+            color: #5f9f78;
+            font-size: 18px;
+            cursor: pointer;
+        }
+
+        .nickname-edit {
+            display: none;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+            margin-top: 8px;
+        }
+
+        .nickname-input {
+            width: 220px;
+            padding: 10px 12px;
+            border: 1px solid #d8e4da;
+            border-radius: 10px;
+            font-size: 15px;
+            outline: none;
+        }
+
+        .nickname-input:focus {
+            border-color: #6fa987;
+        }
+
+        .save-nickname-btn {
+            border: none;
+            padding: 10px 14px;
+            border-radius: 10px;
+            background: #5f9f78;
+            color: white;
+            cursor: pointer;
+        }
+
+        .save-nickname-btn:hover {
+            background: #4d8965;
+        }
+
+        .user-email {
+            color: #888;
+            font-size: 14px;
+            margin-top: 8px;
+        }
+
+        #profile-message {
+            margin-top: 12px;
+            font-size: 14px;
+        }
+
+        /* ============================= */
+        /* SECTIONS */
+        /* ============================= */
+
+        .profile-section {
+            margin-top: 25px;
+            background: white;
+            border-radius: 20px;
+            padding: 28px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.06);
+        }
+
+        .section-title {
+            margin-top: 0;
+            margin-bottom: 22px;
+            color: #2f6f4e;
+            font-size: 20px;
+        }
+
+        /* ============================= */
+        /* ACCOUNT */
+        /* ============================= */
+
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+            border-bottom: 1px solid #eee;
+            gap: 20px;
+        }
+
+        .info-row:last-child {
+            border-bottom: none;
+        }
+
+        .info-label {
+            color: #777;
+            font-size: 14px;
+        }
+
+        .info-value {
+            font-weight: 500;
+            text-align: right;
+        }
+
+        .change-password-btn {
+            border: none;
+            padding: 8px 13px;
+            border-radius: 9px;
+            background: #eef6f0;
+            color: #4d8965;
+            cursor: pointer;
+            margin-left: 8px;
+        }
+
+        .change-password-btn:hover {
+            background: #dfeee3;
+        }
+
+        /* ============================= */
+        /* PROGRESS */
+        /* ============================= */
+
+        .course {
+            margin-bottom: 25px;
+        }
+
+        .course:last-child {
+            margin-bottom: 0;
+        }
+
+        .course-title {
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #444;
+        }
+
+        .lesson {
+            margin-bottom: 15px;
+        }
+
+        .lesson-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 6px;
+            font-size: 14px;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 9px;
+            background: #e8eee9;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            width: 0%;
+            background: #6fa987;
+            border-radius: 10px;
+        }
+
+        /* ============================= */
+        /* MOBILE */
+        /* ============================= */
+
+        @media (max-width: 600px) {
+
+            .profile-container {
+                width: 94%;
+                margin-top: 25px;
+            }
+
+            .profile-header {
+                padding: 30px 18px;
+            }
+
+            .profile-section {
+                padding: 22px 18px;
+            }
+
+            .info-row {
+                align-items: flex-start;
+                flex-direction: column;
+                gap: 6px;
+            }
+
+            .info-value {
+                text-align: left;
+            }
+
+            .nickname-edit {
+                flex-direction: column;
+            }
+
+            .nickname-input {
+                width: 100%;
+            }
+
+        }
+    </style>
+
+</head>
+
+
+<body>
+
+    <main class="profile-container">
+
+        <!-- QUAY LẠI -->
+
+        <a href="index.html" class="back-btn">
+            ← Quay lại trang học
+        </a>
+
+
+        <!-- ============================= -->
+        <!-- PROFILE HEADER -->
+        <!-- ============================= -->
+
+        <section class="profile-header">
+
+            <div class="avatar-wrapper">
+
+                <img
+                    id="avatar"
+                    class="avatar"
+                    src=""
+                    alt="Avatar"
+                >
+
+                <button
+                    class="edit-avatar-btn"
+                    id="editAvatarBtn"
+                    title="Đổi ảnh đại diện"
+                >
+                    ✎
+                </button>
+
+                <input
+                    type="file"
+                    id="avatarInput"
+                    accept="image/png,image/jpeg,image/webp"
+                >
+
+            </div>
+
+
+            <!-- NICKNAME -->
+
+            <div class="nickname-area">
+
+                <div
+                    class="nickname"
+                    id="nickname"
+                >
+                    Nickname
+                </div>
+
+                <button
+                    class="edit-nickname-btn"
+                    id="editNicknameBtn"
+                    title="Chỉnh sửa nickname"
+                >
+                    ✎
+                </button>
+
+            </div>
+
+
+            <!-- NICKNAME EDIT -->
+
+            <div
+                class="nickname-edit"
+                id="nicknameEdit"
+            >
+
+                <input
+                    type="text"
+                    id="nicknameInput"
+                    class="nickname-input"
+                    placeholder="Nhập nickname"
+                    maxlength="30"
+                >
+
+                <button
+                    id="saveNicknameBtn"
+                    class="save-nickname-btn"
+                >
+                    Lưu
+                </button>
+
+            </div>
+
+
+            <div
+                class="user-email"
+                id="userEmail"
+            >
+                Đang tải...
+            </div>
+
+
+            <div id="profile-message"></div>
+
+        </section>
+
+
+        <!-- ============================= -->
+        <!-- ACCOUNT -->
+        <!-- ============================= -->
+
+        <section class="profile-section">
+
+            <h2 class="section-title">
+                1. Account
+            </h2>
+
+
+            <div class="info-row">
+
+                <div class="info-label">
+                    Email
+                </div>
+
+                <div
+                    class="info-value"
+                    id="accountEmail"
+                >
+                    Đang tải...
+                </div>
+
+            </div>
+
+
+            <div class="info-row">
+
+                <div class="info-label">
+                    Mật khẩu
+                </div>
+
+                <div class="info-value">
+
+                    ••••••••
+
+                    <button
+                        class="change-password-btn"
+                        id="changePasswordBtn"
+                    >
+                        Đổi mật khẩu
+                    </button>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ============================= -->
+        <!-- PROGRESS -->
+        <!-- ============================= -->
+
+        <section class="profile-section">
+
+            <h2 class="section-title">
+                2. Progress
+            </h2>
+
+
+            <!-- HSK 4 -->
+
+            <div class="course">
+
+                <div class="course-title">
+                    📖 HSK 4
+                </div>
+
+
+                <div class="lesson">
+
+                    <div class="lesson-info">
+                        <span>Lesson 7</span>
+                        <span>0%</span>
+                    </div>
+
+                    <div class="progress-bar">
+                        <div class="progress-fill"></div>
+                    </div>
+
+                </div>
+
+
+                <div class="lesson">
+
+                    <div class="lesson-info">
+                        <span>Lesson 8</span>
+                        <span>0%</span>
+                    </div>
+
+                    <div class="progress-bar">
+                        <div class="progress-fill"></div>
+                    </div>
+
+                </div>
+
+
+                <div class="lesson">
+
+                    <div class="lesson-info">
+                        <span>Lesson 10</span>
+                        <span>0%</span>
+                    </div>
+
+                    <div class="progress-bar">
+                        <div class="progress-fill"></div>
+                    </div>
+
+                </div>
+
+
+                <div class="lesson">
+
+                    <div class="lesson-info">
+                        <span>Lesson 11</span>
+                        <span>0%</span>
+                    </div>
+
+                    <div class="progress-bar">
+                        <div class="progress-fill"></div>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- SONGS -->
+
+            <div class="course">
+
+                <div class="course-title">
+                    🎧 Chinese Songs
+                </div>
+
+                <div class="lesson">
+
+                    <div class="lesson-info">
+                        <span>Bài hát</span>
+                        <span>0%</span>
+                    </div>
+
+                    <div class="progress-bar">
+                        <div class="progress-fill"></div>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- STORIES -->
+
+            <div class="course">
+
+                <div class="course-title">
+                    🧚🏻‍♀️ Stories
+                </div>
+
+                <div class="lesson">
+
+                    <div class="lesson-info">
+                        <span>Truyện</span>
+                        <span>0%</span>
+                    </div>
+
+                    <div class="progress-bar">
+                        <div class="progress-fill"></div>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- ============================= -->
+    <!-- JAVASCRIPT -->
+    <!-- ============================= -->
+
+    <script>
+
+        let currentUser = null;
+
+
+        // =============================
+        // HIỂN THỊ THÔNG BÁO
+        // =============================
+
+        function showMessage(text, color = "#4d8965") {
+
+            const message =
+                document.getElementById("profile-message");
+
+            message.textContent = text;
+            message.style.color = color;
+
+        }
+
+
+        // =============================
+        // TẢI PROFILE
+        // =============================
+
+        async function loadProfile() {
+
+            const {
+                data: { user },
+                error
+            } = await supabaseClient.auth.getUser();
+
+
+            if (error || !user) {
+
+                window.location.href = "login.html";
+
+                return;
+
+            }
+
+
+            currentUser = user;
+
+
+            // Email
+
+            document.getElementById("userEmail").textContent =
+                user.email;
+
+            document.getElementById("accountEmail").textContent =
+                user.email;
+
+
+            // Lấy profile từ database
+
+            const { data: profile, error: profileError } =
+                await supabaseClient
+                    .from("user profiles")
+                    .select("nickname, avatar_url")
+                    .eq("id", user.id)
+                    .maybeSingle();
+
+
+            if (profileError) {
+
+                console.error(
+                    "Lỗi lấy profile:",
+                    profileError
+                );
+
+                showMessage(
+                    "Không thể tải thông tin profile.",
+                    "#d9534f"
+                );
+
+                return;
+
+            }
+
+
+            if (profile) {
+
+                // Nickname
+
+                if (profile.nickname) {
+
+                    document.getElementById("nickname").textContent =
+                        profile.nickname;
+
+                    document.getElementById("nicknameInput").value =
+                        profile.nickname;
+
+                }
+
+
+                // Avatar
+
+                if (profile.avatar_url) {
+
+                    document.getElementById("avatar").src =
+                        profile.avatar_url;
+
+                } else {
+
+                    setDefaultAvatar();
+
+                }
+
+            } else {
+
+                setDefaultAvatar();
+
+            }
+
+        }
+
+
+        // =============================
+        // AVATAR MẶC ĐỊNH
+        // =============================
+
+        function setDefaultAvatar() {
+
+            document.getElementById("avatar").src =
+                "data:image/svg+xml;charset=UTF-8," +
+                encodeURIComponent(`
+                    <svg xmlns="http://www.w3.org/2000/svg"
+                         width="130"
+                         height="130"
+                         viewBox="0 0 130 130">
+
+                        <circle
+                            cx="65"
+                            cy="65"
+                            r="65"
+                            fill="#e8f2eb"/>
+
+                        <circle
+                            cx="65"
+                            cy="48"
+                            r="22"
+                            fill="#9fc5aa"/>
+
+                        <path
+                            d="M25 115
+                               C28 88 45 76 65 76
+                               C85 76 102 88 105 115"
+                            fill="#9fc5aa"/>
+
+                    </svg>
+                `);
+
+        }
+
+
+        // =============================
+        // CHỌN AVATAR
+        // =============================
+
+        document
+            .getElementById("editAvatarBtn")
+            .addEventListener(
+                "click",
+                function () {
+
+                    document
+                        .getElementById("avatarInput")
+                        .click();
+
+                }
+            );
+
+
+        // =============================
+        // UPLOAD AVATAR
+        // =============================
+
+        document
+            .getElementById("avatarInput")
+            .addEventListener(
+                "change",
+                async function () {
+
+                    const file = this.files[0];
+
+                    if (!file || !currentUser) {
+                        return;
+                    }
+
+
+                    // Kiểm tra loại file
+
+                    const allowedTypes = [
+                        "image/jpeg",
+                        "image/png",
+                        "image/webp"
+                    ];
+
+
+                    if (!allowedTypes.includes(file.type)) {
+
+                        showMessage(
+                            "Chỉ chấp nhận JPG, PNG hoặc WEBP.",
+                            "#d9534f"
+                        );
+
+                        return;
+
+                    }
+
+
+                    // Giới hạn 5MB
+
+                    if (file.size > 5 * 1024 * 1024) {
+
+                        showMessage(
+                            "Ảnh phải nhỏ hơn 5MB.",
+                            "#d9534f"
+                        );
+
+                        return;
+
+                    }
+
+
+                    showMessage(
+                        "Đang tải ảnh lên..."
+                    );
+
+
+                    /*
+                     * File sẽ được lưu theo:
+                     *
+                     * user-id/avatar-timestamp.ext
+                     *
+                     * Ví dụ:
+                     *
+                     * 1234-xxxx/avatar-123456.jpg
+                     */
+
+                    const fileExtension =
+                        file.name.split(".").pop().toLowerCase();
+
+                    const filePath =
+                        currentUser.id +
+                        "/avatar-" +
+                        Date.now() +
+                        "." +
+                        fileExtension;
+
+
+                    // Upload lên Storage
+
+                    const { error: uploadError } =
+                        await supabaseClient
+                            .storage
+                            .from("avatars")
+                            .upload(
+                                filePath,
+                                file,
+                                {
+                                    cacheControl: "3600",
+                                    upsert: false
+                                }
+                            );
+
+
+                    if (uploadError) {
+
+                        console.error(
+                            "Upload avatar error:",
+                            uploadError
+                        );
+
+                        showMessage(
+                            "Upload ảnh thất bại: " +
+                            uploadError.message,
+                            "#d9534f"
+                        );
+
+                        return;
+
+                    }
+
+
+                    // Lấy Public URL
+
+                    const { data: publicURLData } =
+                        supabaseClient
+                            .storage
+                            .from("avatars")
+                            .getPublicUrl(filePath);
+
+
+                    const avatarURL =
+                        publicURLData.publicUrl;
+
+
+                    // Lưu URL vào database
+
+                    const { error: updateError } =
+                        await supabaseClient
+                            .from("user profiles")
+                            .update({
+                                avatar_url: avatarURL
+                            })
+                            .eq("id", currentUser.id);
+
+
+                    if (updateError) {
+
+                        console.error(
+                            "Database update error:",
+                            updateError
+                        );
+
+                        showMessage(
+                            "Ảnh đã upload nhưng không lưu được profile: " +
+                            updateError.message,
+                            "#d9534f"
+                        );
+
+                        return;
+
+                    }
+
+
+                    // Hiển thị avatar mới
+
+                    document.getElementById("avatar").src =
+                        avatarURL;
+
+
+                    showMessage(
+                        "Đã cập nhật ảnh đại diện ✓"
+                    );
+
+                }
+            );
+
+
+        // =============================
+        // HIỆN Ô SỬA NICKNAME
+        // =============================
+
+        document
+            .getElementById("editNicknameBtn")
+            .addEventListener(
+                "click",
+                function () {
+
+                    const editBox =
+                        document.getElementById("nicknameEdit");
+
+                    if (
+                        editBox.style.display === "flex"
+                    ) {
+
+                        editBox.style.display = "none";
+
+                    } else {
+
+                        editBox.style.display = "flex";
+
+                        document
+                            .getElementById("nicknameInput")
+                            .focus();
+
+                    }
+
+                }
+            );
+
+
+        // =============================
+        // LƯU NICKNAME
+        // =============================
+
+        document
+            .getElementById("saveNicknameBtn")
+            .addEventListener(
+                "click",
+                async function () {
+
+                    if (!currentUser) {
+                        return;
+                    }
+
+
+                    const nickname =
+                        document
+                            .getElementById("nicknameInput")
+                            .value
+                            .trim();
+
+
+                    if (!nickname) {
+
+                        showMessage(
+                            "Nickname không được để trống.",
+                            "#d9534f"
+                        );
+
+                        return;
+
+                    }
+
+
+                    showMessage(
+                        "Đang lưu nickname..."
+                    );
+
+
+                    const { error } =
+                        await supabaseClient
+                            .from("user profiles")
+                            .update({
+                                nickname: nickname
+                            })
+                            .eq("id", currentUser.id);
+
+
+                    if (error) {
+
+                        console.error(
+                            "Nickname update error:",
+                            error
+                        );
+
+                        showMessage(
+                            "Không thể lưu nickname: " +
+                            error.message,
+                            "#d9534f"
+                        );
+
+                        return;
+
+                    }
+
+
+                    document
+                        .getElementById("nickname")
+                        .textContent = nickname;
+
+
+                    document
+                        .getElementById("nicknameEdit")
+                        .style.display = "none";
+
+
+                    showMessage(
+                        "Đã lưu nickname ✓"
+                    );
+
+                }
+            );
+
+
+        // =============================
+        // ĐỔI MẬT KHẨU
+        // =============================
+
+        document
+            .getElementById("changePasswordBtn")
+            .addEventListener(
+                "click",
+                async function () {
+
+                    if (!currentUser || !currentUser.email) {
+                        return;
+                    }
+
+
+                    const { error } =
+                        await supabaseClient
+                            .auth
+                            .resetPasswordForEmail(
+                                currentUser.email
+                            );
+
+
+                    if (error) {
+
+                        alert(
+                            "Không thể gửi email đổi mật khẩu: " +
+                            error.message
+                        );
+
+                        return;
+
+                    }
+
+
+                    alert(
+                        "Đã gửi email đổi mật khẩu. Hãy kiểm tra hộp thư của bạn."
+                    );
+
+                }
+            );
+
+
+        // =============================
+        // KHỞI ĐỘNG
+        // =============================
+
+        loadProfile();
+
+    </script>
+
+</body>
+
+</html>

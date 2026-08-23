@@ -178,3 +178,679 @@ h1 {
 .button:hover {
     background-color: #3d6448;
 }
+
+/* =====================================================================
+   READING JOURNEY — "moon-gate garden" map
+   6 cổng tương ứng 6 cấp HSK; mở cổng dẫn vào một con đường ngoằn ngoèo
+   qua từng bài học (thay cho danh sách liệt kê).
+   ===================================================================== */
+
+:root {
+    --jg-bg: #f3f8f1;
+    --jg-ink: #4d4642;
+    --jg-ink-soft: #8f8681;
+    --jg-jade: #4a7856;
+    --jg-jade-deep: #33553d;
+    --jg-gold: #c99a52;
+    --jg-gold-soft: #ecdcb8;
+    --jg-paper: #fffdfb;
+    --jg-lock: #b9b2ac;
+}
+
+.journey-body {
+    background:
+        radial-gradient(circle at 15% 8%, rgba(201, 154, 82, 0.10), transparent 40%),
+        radial-gradient(circle at 85% 0%, rgba(74, 120, 86, 0.08), transparent 45%),
+        var(--jg-bg);
+}
+
+.journey-container {
+    max-width: 1100px;
+    margin: auto;
+    padding: 60px 30px 100px;
+}
+
+.journey-header {
+    text-align: center;
+    margin: 10px 0 55px;
+}
+
+.journey-eyebrow {
+    font-family: 'Nunito', Arial, sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    color: var(--jg-gold);
+    text-transform: uppercase;
+    margin-bottom: 10px;
+}
+
+.journey-title {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 44px;
+    font-weight: 700;
+    color: var(--jg-jade-deep);
+    margin-bottom: 12px;
+}
+
+.journey-sub {
+    font-family: 'Nunito', Arial, sans-serif;
+    font-size: 16px;
+    color: var(--jg-ink-soft);
+    max-width: 480px;
+    margin: 0 auto;
+}
+
+/* ===== GATES GARDEN ===== */
+
+.gates-garden {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 40px 30px;
+    perspective: 1200px;
+}
+
+.gate {
+    position: relative;
+    border: none;
+    background: none;
+    cursor: pointer;
+    padding: 10px 8px 0;
+    font-family: inherit;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.gate:nth-child(2), .gate:nth-child(5) { transform: translateY(-14px); }
+.gate:nth-child(3), .gate:nth-child(6) { transform: translateY(6px); }
+
+/* the arch is a pure "photo frame" — only the door scene lives inside it */
+.gate-arch {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    border-radius: 50% 50% 12px 12px / 40% 40% 8px 8px;
+    overflow: hidden;
+    background:
+        radial-gradient(circle at 50% 30%, rgba(255,255,255,0.55), transparent 55%),
+        linear-gradient(180deg, var(--jg-jade) 0%, var(--jg-jade-deep) 100%);
+    border: 5px solid var(--jg-gold);
+    box-shadow:
+        0 14px 30px rgba(51, 85, 63, 0.20),
+        inset 0 0 0 3px rgba(255, 255, 255, 0.10);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.gate:hover .gate-arch {
+    transform: translateY(-4px);
+    box-shadow:
+        0 20px 34px rgba(51, 85, 63, 0.26),
+        inset 0 0 0 3px rgba(255, 255, 255, 0.14);
+}
+
+/* caption sits BELOW the arch, always legible, never hidden by the doors */
+.gate-caption {
+    margin-top: 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3px;
+}
+
+.gate-era {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    color: var(--era-color, var(--jg-jade));
+}
+
+.gate-plaque-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.gate-ornament {
+    font-size: 16px;
+    line-height: 1;
+}
+
+.gate-plaque {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 21px;
+    font-weight: 700;
+    color: var(--jg-jade-deep);
+    letter-spacing: 0.5px;
+}
+
+.gate-count {
+    font-family: 'Nunito', Arial, sans-serif;
+    font-size: 12px;
+    color: var(--jg-ink-soft);
+    letter-spacing: 0.3px;
+}
+
+/* decorative extras (lanterns etc.) painted inside the arch, behind the doors */
+.gate-scene {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+}
+
+/* the two door leaves — sized exactly to the arch's own box, meet at the centre */
+.gate-leaf {
+    position: absolute;
+    top: 4px;
+    bottom: 4px;
+    width: calc(50% - 4px);
+    background:
+        repeating-linear-gradient(90deg, rgba(0,0,0,0.06) 0 2px, transparent 2px 18px),
+        linear-gradient(180deg, #6a4a34, #4e3626);
+    border: 2px solid rgba(0,0,0,0.15);
+    transition: transform 0.65s cubic-bezier(.5,-0.2,.5,1.2);
+    z-index: 2;
+    backface-visibility: hidden;
+}
+
+.gate-leaf.left {
+    left: 4px;
+    transform-origin: left center;
+}
+
+.gate-leaf.right {
+    right: 4px;
+    transform-origin: right center;
+}
+
+.gate.open .gate-leaf.left {
+    transform: rotateY(-108deg);
+}
+
+.gate.open .gate-leaf.right {
+    transform: rotateY(108deg);
+}
+
+.gate:focus-visible .gate-arch {
+    outline: 3px solid var(--jg-gold);
+    outline-offset: 4px;
+}
+
+/* ===== JOURNEY / PATH VIEW ===== */
+
+.journey-path {
+    margin-top: 10px;
+}
+
+.path-back {
+    display: inline-block;
+    margin-bottom: 20px;
+    background: none;
+    border: none;
+    font-family: 'Nunito', Arial, sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--jg-jade-deep);
+    cursor: pointer;
+    padding: 8px 4px;
+}
+
+.path-back:hover {
+    text-decoration: underline;
+}
+
+.path-title {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 32px;
+    color: var(--jg-jade-deep);
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.path-canvas {
+    position: relative;
+    width: 100%;
+    max-width: 620px;
+    margin: 0 auto;
+    min-height: 360px;
+}
+
+.path-line {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+}
+
+.path-line path {
+    stroke: var(--jg-gold);
+    stroke-width: 1.4;
+    stroke-linecap: round;
+    stroke-dasharray: 4 3.5;
+}
+
+.path-node {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+    width: 128px;
+    opacity: 0;
+    animation: nodePop 0.55s cubic-bezier(.34,1.56,.64,1) forwards;
+}
+
+@keyframes nodePop {
+    from { opacity: 0; transform: translate(-50%, -50%) scale(0.4); }
+    to   { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+}
+
+.node-stone {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: var(--jg-paper);
+    border: 3px solid var(--jg-jade);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 8px 18px rgba(51, 85, 63, 0.18);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.node-icon {
+    font-size: 20px;
+    line-height: 1;
+}
+
+.node-index {
+    font-family: 'Nunito', Arial, sans-serif;
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--jg-jade-deep);
+    margin-top: 2px;
+}
+
+.node-caption {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 14px;
+    color: var(--jg-ink);
+    text-align: center;
+    line-height: 1.4;
+}
+
+.node-caption em {
+    font-family: 'Nunito', Arial, sans-serif;
+    font-style: normal;
+    font-size: 11px;
+    color: var(--jg-ink-soft);
+}
+
+.path-node:hover .node-stone,
+.path-node:focus-visible .node-stone {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 22px rgba(51, 85, 63, 0.24);
+}
+
+.path-node.finish .node-stone {
+    border-color: var(--jg-gold);
+    background: linear-gradient(180deg, #fffdfb, var(--jg-gold-soft));
+}
+
+.path-node.locked {
+    cursor: not-allowed;
+}
+
+.path-node.locked .node-stone {
+    border-color: var(--jg-lock);
+    background: #f1efec;
+}
+
+.path-node.locked .node-caption {
+    color: var(--jg-ink-soft);
+}
+
+.path-node.locked:hover .node-stone {
+    transform: none;
+    box-shadow: 0 8px 18px rgba(51, 85, 63, 0.10);
+}
+
+/* ===== REDUCED MOTION ===== */
+
+@media (prefers-reduced-motion: reduce) {
+    .gate-arch, .gate-leaf, .node-stone { transition: none; }
+    .path-node { animation: none; opacity: 1; }
+}
+
+/* ===== MOBILE ===== */
+
+@media (max-width: 800px) {
+    .gates-garden {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 28px 18px;
+    }
+    .gate:nth-child(2), .gate:nth-child(3),
+    .gate:nth-child(5), .gate:nth-child(6) {
+        transform: none;
+    }
+    .journey-title { font-size: 32px; }
+    .path-canvas { max-width: 100%; }
+    .node-stone { width: 54px; height: 54px; }
+    .path-node { width: 100px; }
+}
+
+@media (max-width: 480px) {
+    .gates-garden {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 22px 12px;
+    }
+}
+
+/* =====================================================================
+   6 CỔNG — 6 DẤU MỐC VĂN HÓA (cổ trang → tân thời → hiện đại → tương lai)
+   Mỗi cấp HSK mang một "thời đại" riêng, dựng bằng thuần CSS (nhiều lớp
+   gradient/box-shadow mô phỏng đèn lồng, hoa văn, ánh neon, ánh kim...).
+   ===================================================================== */
+
+.gate-lantern {
+    position: absolute;
+    top: 14%;
+    width: 13px;
+    height: 17px;
+    border-radius: 50% 50% 45% 45%;
+    z-index: 1;
+}
+.gate-lantern.left { left: 10%; }
+.gate-lantern.right { right: 10%; }
+.gate-lantern::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: 100%;
+    width: 1px;
+    height: 10px;
+    background: rgba(0,0,0,0.35);
+    transform: translateX(-50%);
+}
+
+/* ---- HSK1 · 水墨古风 (Cổ phong mực nước) ---- */
+.gate--ink {
+    --era-color: #b4483c;
+}
+.gate--ink .gate-arch {
+    background:
+        radial-gradient(ellipse 60% 40% at 25% 15%, rgba(30,30,30,0.16), transparent 70%),
+        radial-gradient(ellipse 50% 30% at 80% 55%, rgba(30,30,30,0.10), transparent 70%),
+        linear-gradient(180deg, #f4eee0 0%, #e2d6bb 55%, #cbbb95 100%);
+    border-color: #2b2b2b;
+}
+.gate--ink .gate-plaque { color: #2b2b2b; }
+.gate--ink .gate-count { color: #6f6455; }
+.gate--ink .gate-leaf {
+    background:
+        linear-gradient(90deg, rgba(0,0,0,0.35) 0 1px, transparent 1px 100%) 0 0/14px 100%,
+        repeating-linear-gradient(90deg, rgba(0,0,0,0.25) 0 2px, transparent 2px 20px),
+        linear-gradient(180deg, #4a4744 0%, #232120 100%);
+    border-color: #141413;
+}
+.gate--ink .gate-leaf.left::after,
+.gate--ink .gate-leaf.right::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 30%, #d8cdb0, #8b7f5c 70%);
+    box-shadow: 0 0 0 2px rgba(0,0,0,0.3);
+    transform: translateY(-50%);
+}
+.gate--ink .gate-leaf.left::after { right: 10px; }
+.gate--ink .gate-leaf.right::after { left: 10px; }
+.gate--ink .gate-arch::after {
+    content: '';
+    position: absolute;
+    left: 12%;
+    top: 8%;
+    width: 34%;
+    height: 55%;
+    background: radial-gradient(ellipse at 40% 20%, rgba(40,40,40,0.28), transparent 60%),
+                radial-gradient(ellipse at 70% 60%, rgba(40,40,40,0.18), transparent 65%);
+    filter: blur(1px);
+}
+
+/* ---- HSK2 · 盛唐华彩 (Thịnh Đường) ---- */
+.gate--tang {
+    --era-color: #ffe2a8;
+}
+.gate--tang .gate-arch {
+    background:
+        linear-gradient(180deg, #7c1f1a 0%, #7c1f1a 14%, transparent 14%),
+        radial-gradient(circle at 50% 15%, rgba(255,215,140,0.35), transparent 55%),
+        linear-gradient(180deg, #b8342a 14%, #7c1f1a 100%);
+    border-color: #e6b64f;
+    border-width: 6px;
+}
+.gate--tang .gate-plaque { color: #fff4de; }
+.gate--tang .gate-count { color: #ffe2a8; }
+.gate--tang .gate-leaf {
+    background:
+        radial-gradient(circle, #f3d38a 2.6px, #a5761f 3px, transparent 3.4px) 9px 9px / 20px 20px,
+        linear-gradient(180deg, #9c2b23, #6c1a15);
+    border-color: #d8a63f;
+}
+.gate--tang .gate-leaf.left::after,
+.gate--tang .gate-leaf.right::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 30%, #ffe8ae, #b8862c 75%);
+    box-shadow: 0 0 0 2px #7c531b, 0 0 6px rgba(255, 220, 150, 0.6);
+    transform: translateY(-50%);
+}
+.gate--tang .gate-leaf.left::after { right: 8px; }
+.gate--tang .gate-leaf.right::after { left: 8px; }
+.gate--tang .gate-lantern {
+    background: radial-gradient(circle at 40% 35%, #ffd27a, #c8451f 75%);
+    box-shadow: 0 0 10px 3px rgba(255, 170, 60, 0.55);
+}
+
+/* ---- HSK3 · 江南雅苑 (Giang Nam) ---- */
+.gate--garden {
+    --era-color: #4a7856;
+}
+.gate--garden .gate-arch {
+    background:
+        radial-gradient(circle at 30% 12%, rgba(255,255,255,0.6), transparent 50%),
+        linear-gradient(180deg, #eef4ea 0%, #d7e6d5 60%, #c2d9c2 100%);
+    border-color: #7fa583;
+}
+.gate--garden .gate-plaque { color: #33553d; }
+.gate--garden .gate-count { color: #5c7a63; }
+.gate--garden .gate-leaf {
+    background:
+        repeating-linear-gradient(45deg, rgba(74,120,86,0.4) 0 1.5px, transparent 1.5px 13px),
+        repeating-linear-gradient(-45deg, rgba(74,120,86,0.4) 0 1.5px, transparent 1.5px 13px),
+        #f9fbf7;
+    border-color: #9db99f;
+}
+.gate--garden .gate-arch::after {
+    content: '';
+    position: absolute;
+    left: 0; right: 0; bottom: 0;
+    height: 16%;
+    background:
+        radial-gradient(circle at 15% 100%, #6f9a6f 30%, transparent 65%),
+        radial-gradient(circle at 85% 100%, #6f9a6f 30%, transparent 65%),
+        radial-gradient(circle at 50% 100%, #7fa87f 25%, transparent 60%);
+}
+
+/* ---- HSK4 · 民国摩登 (Dân quốc / tân thời) ---- */
+.gate--deco {
+    --era-color: #f0d9a0;
+}
+.gate--deco .gate-arch {
+    background: linear-gradient(180deg, #2f5d5a 0%, #1f403d 100%);
+    border-color: #d8b562;
+}
+.gate--deco .gate-arch::before {
+    content: '';
+    position: absolute;
+    top: 6%;
+    left: 50%;
+    width: 78%;
+    height: 32%;
+    transform: translateX(-50%);
+    background: repeating-conic-gradient(from -35deg at 50% 100%,
+        rgba(216,181,98,0.55) 0deg 6deg,
+        transparent 6deg 16deg);
+    border-radius: 50% 50% 0 0;
+    opacity: 0.85;
+}
+.gate--deco .gate-plaque { color: #f5ead0; letter-spacing: 2px; }
+.gate--deco .gate-count { color: #cfe3df; }
+.gate--deco .gate-leaf {
+    background:
+        repeating-linear-gradient(115deg, rgba(216,181,98,0.5) 0 1.5px, transparent 1.5px 12px),
+        linear-gradient(180deg, #274a47, #17302e);
+    border-color: #c7a457;
+}
+.gate--deco .gate-leaf.left::after,
+.gate--deco .gate-leaf.right::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    width: 3px;
+    height: 46px;
+    background: linear-gradient(180deg, transparent, #d8b562, transparent);
+    transform: translateY(-50%);
+}
+.gate--deco .gate-leaf.left::after { right: 4px; }
+.gate--deco .gate-leaf.right::after { left: 4px; }
+
+/* ---- HSK5 · 都市霓虹 (Đô thị hiện đại) ---- */
+.gate--neon {
+    --era-color: #7fe9ff;
+}
+.gate--neon .gate-arch {
+    background:
+        linear-gradient(180deg, rgba(255,60,180,0.10), transparent 40%),
+        repeating-linear-gradient(90deg, rgba(255,255,255,0.03) 0 1px, transparent 1px 26px),
+        linear-gradient(180deg, #16213f 0%, #0c1526 100%);
+    border-color: #4fd1e8;
+    box-shadow:
+        0 14px 30px rgba(15, 20, 40, 0.35),
+        0 0 18px rgba(79, 209, 232, 0.35),
+        inset 0 0 0 3px rgba(255,255,255,0.06);
+}
+.gate--neon .gate-arch::before {
+    content: '灯';
+    position: absolute;
+    top: 12%;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: 'Noto Serif SC', serif;
+    font-size: 12px;
+    font-weight: 700;
+    color: #ff8fd0;
+    padding: 3px 10px;
+    border: 1.5px solid #ff8fd0;
+    border-radius: 4px;
+    text-shadow: 0 0 6px #ff8fd0;
+    box-shadow: 0 0 10px rgba(255, 143, 208, 0.6), inset 0 0 6px rgba(255, 143, 208, 0.4);
+}
+.gate--neon .gate-plaque {
+    color: #d6faff;
+    text-shadow: 0 0 10px rgba(79, 209, 232, 0.75);
+}
+.gate--neon .gate-count { color: #ff8fd0; }
+.gate--neon .gate-leaf {
+    background:
+        repeating-linear-gradient(90deg, rgba(79,209,232,0.25) 0 2px, transparent 2px 18px),
+        linear-gradient(180deg, #101a30, #070c17);
+    border-color: #2c3a5c;
+}
+.gate--neon .gate-leaf.left::after,
+.gate--neon .gate-leaf.right::after {
+    content: '';
+    position: absolute;
+    top: 12%;
+    bottom: 12%;
+    width: 2px;
+    background: linear-gradient(180deg, transparent, #4fd1e8, transparent);
+    box-shadow: 0 0 6px #4fd1e8;
+}
+.gate--neon .gate-leaf.left::after { right: 6px; }
+.gate--neon .gate-leaf.right::after { left: 6px; }
+.gate--neon:hover .gate-arch,
+.gate--neon:focus-visible .gate-arch {
+    box-shadow:
+        0 18px 34px rgba(15, 20, 40, 0.4),
+        0 0 26px rgba(79, 209, 232, 0.5),
+        inset 0 0 0 3px rgba(255,255,255,0.08);
+}
+
+/* ---- HSK6 · 未来幻境 (Tương lai) ---- */
+.gate--future {
+    --era-color: #e6d6ff;
+}
+.gate--future .gate-arch {
+    background:
+        radial-gradient(circle at 30% 15%, rgba(255,255,255,0.25), transparent 50%),
+        linear-gradient(150deg, #241c45 0%, #3a2560 45%, #1c1030 100%);
+    border-image: linear-gradient(135deg, #9be8ff, #d6a9ff, #ffd9a0) 1;
+    border-width: 4px;
+    border-style: solid;
+    box-shadow:
+        0 14px 30px rgba(28, 16, 48, 0.4),
+        0 0 20px rgba(214, 169, 255, 0.35);
+}
+.gate--future .gate-arch::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 46%;
+    height: 70%;
+    transform: translate(-50%, -50%) rotate(-8deg);
+    background:
+        linear-gradient(120deg, rgba(155,232,255,0.75), rgba(214,169,255,0.75) 45%, rgba(255,217,160,0.75) 100%);
+    clip-path: polygon(35% 0%, 65% 0%, 90% 50%, 65% 100%, 35% 100%, 10% 50%);
+    filter: blur(0.3px);
+    box-shadow: 0 0 26px rgba(214, 169, 255, 0.55);
+    opacity: 0.9;
+}
+.gate--future .gate-arch::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(180deg, rgba(255,255,255,0.05) 0 1px, transparent 1px 5px);
+    mix-blend-mode: overlay;
+}
+.gate--future .gate-plaque {
+    background: linear-gradient(90deg, #9be8ff, #d6a9ff, #ffd9a0);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+.gate--future .gate-count { color: #cbb8ec; }
+.gate--future .gate-leaf {
+    background:
+        repeating-linear-gradient(60deg, rgba(214,169,255,0.18) 0 2px, transparent 2px 14px),
+        linear-gradient(180deg, #2a1f4a, #150c28);
+    border-color: #6b4f9c;
+    opacity: 0.55;
+}
+
+@media (max-width: 480px) {
+    .gate-era { font-size: 10px; }
+    .gate--neon .gate-arch::before { font-size: 10px; padding: 2px 7px; }
+}

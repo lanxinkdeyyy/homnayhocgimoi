@@ -2,65 +2,291 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>课本阅读</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@600;700&family=Nunito:wght@500;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
-<body>
-    <main class="container">
-        <a href="index.html" class="back-link">← Quay lại</a>
-        <h1>课本阅读</h1>
-        <p>Chọn level để bắt đầu</p>
+<body class="journey-body">
+    <main class="journey-container">
+        <a href="index.html" class="back-link">← Quay lại trang chủ</a>
 
-        <div class="hsk-level">
-            <h2>HSK 1</h2>
-            <ul class="lesson-list">
-                <li><a href="#">📖 Bài 1: 你好</a></li>
-                <li><a href="#">📖 Bài 2: 谢谢</a></li>
-            </ul>
-        </div>
+        <header class="journey-header">
+            <p class="journey-eyebrow">课本阅读 · 阅读花园</p>
+            <h1 class="journey-title">选择你的旅程</h1>
+            <p class="journey-sub">Mỗi cánh cửa dẫn tới một chặng đường riêng — chọn cấp độ để bước vào.</p>
+        </header>
 
-        <div class="hsk-level">
-            <h2>HSK 2</h2>
-            <ul class="lesson-list">
-                <li><a href="#">📖 Bài 1: 我的家</a></li>
-                <li><a href="#">📖 Bài 2: 天气</a></li>
-            </ul>
-        </div>
+        <!-- ===== GATES VIEW ===== -->
+        <section class="gates-garden" id="gatesView">
+            <button class="gate gate--ink" data-level="hsk1" aria-label="Mở cánh cửa HSK 1 — Cổ phong mực nước">
+                <span class="gate-arch">
+                    <span class="gate-leaf left"></span>
+                    <span class="gate-leaf right"></span>
+                </span>
+                <span class="gate-caption">
+                    <span class="gate-era">水墨古风</span>
+                    <span class="gate-plaque-row">
+                        <span class="gate-ornament">🖌️</span>
+                        <span class="gate-plaque">HSK 1</span>
+                    </span>
+                    <span class="gate-count">2 bài học</span>
+                </span>
+            </button>
 
-        <div class="hsk-level">
-            <h2>HSK 3</h2>
-            <ul class="lesson-list">
-                <li><a href="#">📖 Bài 1: 我的家</a></li>
-                <li><a href="#">📖 Bài 2: 天气</a></li>
-            </ul>
-        </div>
+            <button class="gate gate--tang" data-level="hsk2" aria-label="Mở cánh cửa HSK 2 — Thịnh Đường">
+                <span class="gate-arch">
+                    <span class="gate-scene">
+                        <span class="gate-lantern left"></span>
+                        <span class="gate-lantern right"></span>
+                    </span>
+                    <span class="gate-leaf left"></span>
+                    <span class="gate-leaf right"></span>
+                </span>
+                <span class="gate-caption">
+                    <span class="gate-era">盛唐华彩</span>
+                    <span class="gate-plaque-row">
+                        <span class="gate-ornament">🐉</span>
+                        <span class="gate-plaque">HSK 2</span>
+                    </span>
+                    <span class="gate-count">2 bài học</span>
+                </span>
+            </button>
 
-        <div class="hsk-level">
-            <h2>HSK 4</h2>
-            <ul class="lesson-list">
-                <li><a href="HSK4 - lesson 7.html">📖 Bài 7: 生活中不缺少美</a></li>
-                <li><a href="HSK4 - lesson 8.html">📖 Bài 8: 生活中不缺少美</a></li>
-                <li><a href="HSK4 - lesson 10.html">📖 Bài 10: 幸福的标准</a></li>
-                <li><a href="HSK4 - lesson 11.html">📖 Bài 11: 人生的意义</a></li>
-            </ul>
-        </div>
+            <button class="gate gate--garden" data-level="hsk3" aria-label="Mở cánh cửa HSK 3 — Giang Nam nhã viên">
+                <span class="gate-arch">
+                    <span class="gate-leaf left"></span>
+                    <span class="gate-leaf right"></span>
+                </span>
+                <span class="gate-caption">
+                    <span class="gate-era">江南雅苑</span>
+                    <span class="gate-plaque-row">
+                        <span class="gate-ornament">🪷</span>
+                        <span class="gate-plaque">HSK 3</span>
+                    </span>
+                    <span class="gate-count">2 bài học</span>
+                </span>
+            </button>
 
-        <div class="hsk-level">
-            <h2>HSK 5</h2>
-            <ul class="lesson-list">
-                <li><a href="#">📖 Bài 1: 我的家</a></li>
-                <li><a href="#">📖 Bài 2: 天气</a></li>
-            </ul>
-        </div>
+            <button class="gate gate--deco" data-level="hsk4" aria-label="Mở cánh cửa HSK 4 — Dân quốc tân thời">
+                <span class="gate-arch">
+                    <span class="gate-leaf left"></span>
+                    <span class="gate-leaf right"></span>
+                </span>
+                <span class="gate-caption">
+                    <span class="gate-era">民国摩登</span>
+                    <span class="gate-plaque-row">
+                        <span class="gate-ornament">🎷</span>
+                        <span class="gate-plaque">HSK 4</span>
+                    </span>
+                    <span class="gate-count">4 bài học</span>
+                </span>
+            </button>
 
-        <div class="hsk-level">
-            <h2>HSK 6</h2>
-            <ul class="lesson-list">
-                <li><a href="#">📖 Bài 1: 我的家</a></li>
-                <li><a href="#">📖 Bài 2: 天气</a></li>
-            </ul>
-        </div>
-        
+            <button class="gate gate--neon" data-level="hsk5" aria-label="Mở cánh cửa HSK 5 — Đô thị hiện đại">
+                <span class="gate-arch">
+                    <span class="gate-leaf left"></span>
+                    <span class="gate-leaf right"></span>
+                </span>
+                <span class="gate-caption">
+                    <span class="gate-era">都市霓虹</span>
+                    <span class="gate-plaque-row">
+                        <span class="gate-ornament">🌆</span>
+                        <span class="gate-plaque">HSK 5</span>
+                    </span>
+                    <span class="gate-count">2 bài học</span>
+                </span>
+            </button>
+
+            <button class="gate gate--future" data-level="hsk6" aria-label="Mở cánh cửa HSK 6 — Tương lai huyền ảo">
+                <span class="gate-arch">
+                    <span class="gate-leaf left"></span>
+                    <span class="gate-leaf right"></span>
+                </span>
+                <span class="gate-caption">
+                    <span class="gate-era">未来幻境</span>
+                    <span class="gate-plaque-row">
+                        <span class="gate-ornament">🔮</span>
+                        <span class="gate-plaque">HSK 6</span>
+                    </span>
+                    <span class="gate-count">2 bài học</span>
+                </span>
+            </button>
+        </section>
+
+        <!-- ===== JOURNEY / PATH VIEW ===== -->
+        <section class="journey-path" id="journeyView" hidden>
+            <button class="path-back" id="pathBack">← Chọn cửa khác</button>
+            <h2 class="path-title" id="pathTitle">HSK 1</h2>
+            <div class="path-canvas" id="pathCanvas">
+                <svg class="path-line" id="pathSvg" viewBox="0 0 100 100" preserveAspectRatio="none">
+                    <path id="pathTrail" d="" fill="none" />
+                </svg>
+            </div>
+        </section>
     </main>
+
+    <script>
+        const levels = {
+            hsk1: { title: "HSK 1", lessons: [
+                { label: "Bài 1", title: "你好", href: "#" },
+                { label: "Bài 2", title: "谢谢", href: "#" },
+            ]},
+            hsk2: { title: "HSK 2", lessons: [
+                { label: "Bài 1", title: "我的家", href: "#" },
+                { label: "Bài 2", title: "天气", href: "#" },
+            ]},
+            hsk3: { title: "HSK 3", lessons: [
+                { label: "Bài 1", title: "我的家", href: "#" },
+                { label: "Bài 2", title: "天气", href: "#" },
+            ]},
+            hsk4: { title: "HSK 4", lessons: [
+                { label: "Bài 7",  title: "生活中不缺少美", href: "HSK4 - lesson 7.html" },
+                { label: "Bài 8",  title: "生活中不缺少美", href: "HSK4 - lesson 8.html" },
+                { label: "Bài 10", title: "幸福的标准",     href: "HSK4 - lesson 10.html" },
+                { label: "Bài 11", title: "人生的意义",     href: "HSK4 - lesson 11.html" },
+            ]},
+            hsk5: { title: "HSK 5", lessons: [
+                { label: "Bài 1", title: "我的家", href: "#" },
+                { label: "Bài 2", title: "天气", href: "#" },
+            ]},
+            hsk6: { title: "HSK 6", lessons: [
+                { label: "Bài 1", title: "我的家", href: "#" },
+                { label: "Bài 2", title: "天气", href: "#" },
+            ]},
+        };
+
+        const gatesView = document.getElementById('gatesView');
+        const journeyView = document.getElementById('journeyView');
+        const pathTitle = document.getElementById('pathTitle');
+        const pathCanvas = document.getElementById('pathCanvas');
+        const pathSvg = document.getElementById('pathSvg');
+        const pathTrail = document.getElementById('pathTrail');
+        const pathBack = document.getElementById('pathBack');
+
+        const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+        function xPatternFor(i) {
+            const cycle = [20, 50, 80, 50];
+            return cycle[i % cycle.length];
+        }
+
+        function getNodePositions(count) {
+            const positions = [];
+            const topPad = 10, bottomPad = 10;
+            for (let i = 0; i < count; i++) {
+                const x = xPatternFor(i);
+                const y = count === 1 ? 50 : topPad + (i * (100 - topPad - bottomPad) / (count - 1));
+                positions.push({ x, y });
+            }
+            return positions;
+        }
+
+        function smoothPath(points) {
+            if (points.length < 2) return '';
+            let d = `M ${points[0].x} ${points[0].y}`;
+            for (let i = 0; i < points.length - 1; i++) {
+                const p0 = points[i - 1] || points[i];
+                const p1 = points[i];
+                const p2 = points[i + 1];
+                const p3 = points[i + 2] || p2;
+                const cp1x = p1.x + (p2.x - p0.x) / 6;
+                const cp1y = p1.y + (p2.y - p0.y) / 6;
+                const cp2x = p2.x - (p3.x - p1.x) / 6;
+                const cp2y = p2.y - (p3.y - p1.y) / 6;
+                d += ` C ${cp1x} ${cp1y}, ${cp2x} ${cp2y}, ${p2.x} ${p2.y}`;
+            }
+            return d;
+        }
+
+        function buildJourney(levelKey) {
+            const data = levels[levelKey];
+            if (!data) return;
+
+            pathTitle.textContent = data.title;
+
+            // clear old nodes
+            pathCanvas.querySelectorAll('.path-node').forEach(n => n.remove());
+
+            const count = data.lessons.length;
+            const canvasHeight = Math.max(360, count * 190);
+            pathCanvas.style.height = canvasHeight + 'px';
+
+            const positions = getNodePositions(count);
+            pathTrail.setAttribute('d', smoothPath(positions));
+
+            // draw-in animation for the trail
+            if (!reduceMotion) {
+                const length = pathTrail.getTotalLength();
+                pathTrail.style.strokeDasharray = length;
+                pathTrail.style.strokeDashoffset = length;
+                pathTrail.getBoundingClientRect(); // force reflow
+                pathTrail.style.transition = 'stroke-dashoffset 1.1s ease';
+                requestAnimationFrame(() => {
+                    pathTrail.style.strokeDashoffset = '0';
+                });
+            } else {
+                pathTrail.style.strokeDasharray = 'none';
+                pathTrail.style.strokeDashoffset = '0';
+            }
+
+            data.lessons.forEach((lesson, i) => {
+                const pos = positions[i];
+                const isLocked = lesson.href === '#';
+                const isLast = i === count - 1;
+
+                const node = document.createElement(isLocked ? 'div' : 'a');
+                node.className = 'path-node' + (isLocked ? ' locked' : '') + (isLast ? ' finish' : '');
+                node.style.left = pos.x + '%';
+                node.style.top = pos.y + '%';
+                if (!reduceMotion) {
+                    node.style.animationDelay = (i * 0.18 + 0.35) + 's';
+                } else {
+                    node.style.animation = 'none';
+                    node.style.opacity = '1';
+                }
+                if (!isLocked) node.href = lesson.href;
+
+                node.innerHTML = `
+                    <span class="node-stone">
+                        <span class="node-icon">${isLast ? '🏮' : (isLocked ? '🔒' : '📖')}</span>
+                        <span class="node-index">${lesson.label}</span>
+                    </span>
+                    <span class="node-caption">${lesson.title}${isLocked ? ' <em>· sắp ra mắt</em>' : ''}</span>
+                `;
+
+                pathCanvas.appendChild(node);
+            });
+        }
+
+        document.querySelectorAll('.gate').forEach(gate => {
+            gate.addEventListener('click', () => {
+                if (gate.classList.contains('open')) return;
+                gate.classList.add('open');
+
+                const proceed = () => {
+                    gatesView.hidden = true;
+                    journeyView.hidden = false;
+                    journeyView.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' });
+                    buildJourney(gate.dataset.level);
+                };
+
+                if (reduceMotion) {
+                    proceed();
+                } else {
+                    setTimeout(proceed, 650);
+                }
+            });
+        });
+
+        pathBack.addEventListener('click', () => {
+            journeyView.hidden = true;
+            gatesView.hidden = false;
+            document.querySelectorAll('.gate.open').forEach(g => g.classList.remove('open'));
+            gatesView.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' });
+        });
+    </script>
 </body>
 </html>
