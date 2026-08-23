@@ -407,30 +407,286 @@ body {
     background: #4f8ecb;
 }
 
+/* ================= MOBILE AUDIO BAR ================= */
+
+.mobile-audio-bar {
+    display: none;
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1500;
+    background: rgba(255,255,255,0.98);
+    border-top: 1px solid #dce9df;
+    box-shadow: 0 -5px 18px rgba(0,0,0,0.08);
+    padding: 8px 10px;
+    align-items: center;
+    gap: 8px;
+    font-family: Arial, sans-serif;
+}
+
+.mobile-audio-track {
+    flex: 1;
+    min-width: 0;
+}
+
+.mobile-audio-top {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 4px;
+}
+
+.mobile-audio-lessons {
+    display: flex;
+    flex: 0 0 auto;
+    gap: 3px;
+}
+
+.mobile-audio-lesson {
+    border: 1px solid #dce9df;
+    background: #f3f8f4;
+    color: #4f8063;
+    border-radius: 12px;
+    padding: 4px 8px;
+    font-size: 11px;
+    cursor: pointer;
+}
+
+.mobile-audio-lesson.active {
+    background: #8fc7a5;
+    border-color: #8fc7a5;
+    color: white;
+}
+
+.mobile-audio-play {
+    flex: 0 0 auto;
+    border: none;
+    background: #8fc7a5;
+    color: white;
+    border-radius: 50%;
+    width: 34px;
+    height: 34px;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+.mobile-audio-time {
+    color: #777;
+    font-size: 10px;
+    white-space: nowrap;
+    min-width: 66px;
+    text-align: right;
+}
+
+.mobile-audio-progress {
+    width: 100%;
+    height: 4px;
+    margin: 0;
+    -webkit-appearance: none;
+    appearance: none;
+    background: #dce9df;
+    border-radius: 4px;
+    outline: none;
+    cursor: pointer;
+}
+
+.mobile-audio-progress::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: #8fc7a5;
+    cursor: pointer;
+}
+
+.mobile-audio-progress::-moz-range-thumb {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: #8fc7a5;
+    border: none;
+    cursor: pointer;
+}
+
 @media (max-width: 760px) {
 
-    .reading-layout {
-        flex-direction: column;
+    /* ================= MOBILE: ĐỌC BÀI 74% + NOTE 26% ================= */
+
+    body {
+        padding-bottom: 76px;
     }
 
-    .reading-main,
-    .reading-sidebar {
-        max-width: 100%;
-        flex: 1 1 100%;
+    .lesson-page {
+        width: 96%;
+        margin: 15px auto 25px;
+    }
+
+    .lesson-title {
+        margin-bottom: 15px;
+    }
+
+    .lesson-title h1 {
+        font-size: 24px;
+        margin-bottom: 5px;
+    }
+
+    .lesson-title p {
+        font-size: 13px;
+    }
+
+    .lesson-status {
+        margin-bottom: 12px;
+        font-size: 13px;
+    }
+
+    .tabs {
+        gap: 6px;
+        margin-bottom: 14px;
+    }
+
+    .tab-button {
+        padding: 9px 12px;
+        font-size: 13px;
+    }
+
+    .content-card {
+        border-radius: 16px;
+        padding: 16px;
+    }
+
+    .reading-layout {
+        flex-direction: row;
+        align-items: flex-start;
+    }
+
+    .reading-main {
+        flex: 0 0 74%;
+        max-width: 74%;
+        min-width: 0;
     }
 
     .reading-divider {
-        display: none;
-    }
-
-    .connector-svg {
-        display: none;
+        display: block;
+        flex: 0 0 1px;
+        width: 1px;
+        margin: 0 6px;
+        align-self: stretch;
+        background: #e3e3e3;
     }
 
     .reading-sidebar {
+        flex: 1 1 0;
+        max-width: none;
+        min-width: 0;
+        margin-top: 0;
+        padding-top: 2px;
+        border-top: none;
+        align-self: stretch;
+    }
+
+    .connector-svg {
+        display: block;
+    }
+
+    .reading-block {
+        margin-bottom: 22px;
+    }
+
+    .reading-heading {
+        font-size: 15px;
+        margin-bottom: 8px;
+    }
+
+    .reading-text {
+        font-size: 16px;
+        line-height: 1.8;
+    }
+
+    .word {
+        padding: 2px 2px;
+        border-radius: 4px;
+        text-underline-offset: 3px;
+    }
+
+    .audio-section {
+        margin-bottom: 12px;
+        padding-bottom: 10px;
+    }
+
+    .vinyl {
+        width: 62px;
+        height: 62px;
+        margin-bottom: 8px;
+        border-width: 5px;
+    }
+
+    .vinyl::before {
+        width: 19px;
+        height: 19px;
+    }
+
+    .audio-button,
+    .audio-progress-wrap {
+        display: none;
+    }
+
+    .pin-empty {
+        font-size: 10px;
+        line-height: 1.35;
+    }
+
+    .pin-card {
+        padding: 5px 18px 5px 5px;
+        margin-bottom: 7px;
+        font-size: 9px;
+        line-height: 1.25;
+        border-radius: 6px;
+    }
+
+    .pin-remove {
+        right: 3px;
+        top: 3px;
+        width: 14px;
+        height: 14px;
+        line-height: 12px;
+        font-size: 10px;
+    }
+
+    .pin-word {
+        margin-top: 6px;
+    }
+
+    .mobile-audio-bar {
+        display: flex;
+    }
+
+    .saved-section {
         margin-top: 20px;
-        padding-top: 15px;
-        border-top: 1px dashed #e3e3e3;
+        padding-top: 16px;
+    }
+
+    .saved-toggle {
+        padding: 10px 12px;
+        font-size: 13px;
+        border-radius: 11px;
+    }
+
+    .saved-word-item {
+        padding: 8px 10px;
+        border-radius: 9px;
+    }
+
+    .saved-word-main {
+        font-size: 14px;
+    }
+
+    .remove-saved {
+        width: 24px;
+        height: 24px;
+        line-height: 24px;
+        font-size: 15px;
     }
 
 }
@@ -1834,6 +2090,44 @@ body {
 
 </div>
 
+
+<!-- ================= MOBILE AUDIO CONTROL ================= -->
+
+<div id="mobileAudioBar" class="mobile-audio-bar">
+    <div class="mobile-audio-track">
+        <div class="mobile-audio-top">
+            <div class="mobile-audio-lessons" aria-label="Chọn bài nghe">
+                <button id="mobileAudioLesson1" class="mobile-audio-lesson active" type="button" onclick="selectMobileAudio('1')">
+                    Bài 1
+                </button>
+                <button id="mobileAudioLesson2" class="mobile-audio-lesson" type="button" onclick="selectMobileAudio('2')">
+                    Bài 2
+                </button>
+            </div>
+
+            <button
+                id="mobileAudioPlay"
+                class="mobile-audio-play"
+                type="button"
+                onclick="toggleMobileAudio()"
+                aria-label="Phát hoặc tạm dừng">
+                ▶
+            </button>
+
+            <span id="mobileAudioTime" class="mobile-audio-time">0:00 / 0:00</span>
+        </div>
+
+        <input
+            id="mobileAudioProgress"
+            class="mobile-audio-progress"
+            type="range"
+            value="0"
+            min="0"
+            max="100"
+            step="0.1"
+            aria-label="Thời gian bài nghe">
+    </div>
+</div>
 
 <script>
 
@@ -4603,6 +4897,97 @@ function toggleAudio(id) {
 setupAudioPlayer("1");
 setupAudioPlayer("2");
 
+
+/* ================================================= */
+/* ============== MOBILE AUDIO CONTROL ============== */
+/* ================================================= */
+
+let mobileAudioId = "1";
+
+function getMobileAudioElements() {
+    return {
+        bar: document.getElementById("mobileAudioBar"),
+        lesson1: document.getElementById("mobileAudioLesson1"),
+        lesson2: document.getElementById("mobileAudioLesson2"),
+        play: document.getElementById("mobileAudioPlay"),
+        progress: document.getElementById("mobileAudioProgress"),
+        time: document.getElementById("mobileAudioTime")
+    };
+}
+
+function syncMobileAudioUI() {
+    const ui = getMobileAudioElements();
+    const player = audioPlayers[mobileAudioId];
+
+    if (!ui.bar || !player) return;
+
+    const audioEl = player.audioEl;
+    const duration = isNaN(audioEl.duration) ? 0 : audioEl.duration;
+
+    ui.lesson1.classList.toggle("active", mobileAudioId === "1");
+    ui.lesson2.classList.toggle("active", mobileAudioId === "2");
+    ui.progress.max = duration || 100;
+    ui.progress.value = audioEl.currentTime || 0;
+    ui.time.textContent =
+        formatTime(audioEl.currentTime) + " / " + formatTime(duration);
+    ui.play.textContent = audioEl.paused ? "▶" : "⏸";
+}
+
+function selectMobileAudio(id) {
+    if (!audioPlayers[id]) return;
+
+    mobileAudioId = id;
+    syncMobileAudioUI();
+}
+
+function toggleMobileAudio() {
+    const player = audioPlayers[mobileAudioId];
+    if (!player) return;
+
+    if (player.audioEl.paused) {
+        pauseOtherAudios(mobileAudioId);
+
+        const playPromise = player.audioEl.play();
+
+        if (playPromise !== undefined) {
+            playPromise.catch(function(err) {
+                console.error("Không phát được audio:", err);
+                syncMobileAudioUI();
+            });
+        }
+    } else {
+        player.audioEl.pause();
+    }
+
+    syncMobileAudioUI();
+}
+
+(function setupMobileAudioControl() {
+    const ui = getMobileAudioElements();
+    if (!ui.bar) return;
+
+    ui.progress.addEventListener("input", function() {
+        const player = audioPlayers[mobileAudioId];
+        if (player) {
+            player.audioEl.currentTime = Number(this.value);
+            syncMobileAudioUI();
+        }
+    });
+
+    Object.keys(audioPlayers).forEach(function(id) {
+        const audioEl = audioPlayers[id].audioEl;
+
+        ["loadedmetadata", "timeupdate", "play", "pause", "ended"].forEach(function(eventName) {
+            audioEl.addEventListener(eventName, function() {
+                if (id === mobileAudioId || eventName === "play") {
+                    syncMobileAudioUI();
+                }
+            });
+        });
+    });
+
+    syncMobileAudioUI();
+})();
 
 /* ================================================= */
 /* ================= STUDY ========================= */
