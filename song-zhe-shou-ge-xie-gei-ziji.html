@@ -60,6 +60,84 @@
             color: #7f7772;
             font-size: 12px;
         }
+
+        /* Bản học hoàn chỉnh: luôn ẩn công cụ nhập và căn thời gian. */
+        #songLyricsSetup,
+        .song-sync-adjust {
+            display: none !important;
+        }
+
+        /* Trên điện thoại, đặt thanh tua thành một hàng riêng để không bị co mất. */
+        @media (max-width: 760px) {
+            .song-controls {
+                display: grid;
+                grid-template-columns: 34px minmax(0, 1fr);
+                column-gap: 10px;
+                row-gap: 7px;
+                width: 100%;
+            }
+
+            .song-play-button {
+                grid-column: 1;
+                grid-row: 1;
+            }
+
+            #songTime {
+                display: block !important;
+                grid-column: 2;
+                grid-row: 1;
+                align-self: center;
+                min-width: 0;
+                white-space: nowrap;
+            }
+
+            #songProgress {
+                display: block !important;
+                grid-column: 1 / -1;
+                grid-row: 2;
+                width: 100%;
+                min-width: 100%;
+                height: 18px;
+                margin: 0;
+                padding: 0;
+                cursor: pointer;
+                appearance: none;
+                -webkit-appearance: none;
+                background: transparent;
+            }
+
+            #songProgress::-webkit-slider-runnable-track {
+                height: 4px;
+                border-radius: 999px;
+                background: #3f3b39;
+            }
+
+            #songProgress::-webkit-slider-thumb {
+                width: 14px;
+                height: 14px;
+                margin-top: -5px;
+                border: 0;
+                border-radius: 50%;
+                background: #6f987b;
+                appearance: none;
+                -webkit-appearance: none;
+            }
+
+            #songProgress::-moz-range-track {
+                height: 4px;
+                border: 0;
+                border-radius: 999px;
+                background: #3f3b39;
+            }
+
+            #songProgress::-moz-range-thumb {
+                width: 14px;
+                height: 14px;
+                border: 0;
+                border-radius: 50%;
+                background: #6f987b;
+            }
+        }
     </style>
 </head>
 
