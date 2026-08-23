@@ -2,20 +2,122 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>学中文歌</title>
     <link rel="stylesheet" href="style.css">
 </head>
-<body>
-    <main class="container">
+<body class="songs-page">
+    <main class="songs-container">
         <a href="index.html" class="back-link">← Quay lại</a>
-        <h1>学中文歌</h1>
-        <p>Chọn bài hát để bắt đầu học</p>
 
-        <ul class="lesson-list">
-            <li><a href="#">🎵 月亮代表我的心</a></li>
-            <li><a href="#">🎵 童话</a></li>
-            <li><a href="#">🎵 小幸运</a></li>
-        </ul>
+        <header class="songs-header">
+            <p class="songs-eyebrow">中文旋律 · Học qua âm nhạc</p>
+            <h1>学中文歌</h1>
+            <p>Chọn một chiếc đĩa để bắt đầu học.</p>
+        </header>
+
+        <section class="song-grid" aria-label="Danh sách bài hát">
+            <a
+                class="song-card"
+                href="song-zhe-shou-ge-xie-gei-ziji.html"
+                data-progress-id="1001">
+
+                <span class="song-card-disc">
+                    <img src="zheshougexiegeiziji.jpg" alt="Ảnh bìa 这首歌写给自己">
+                    <span class="song-card-hole"></span>
+                </span>
+
+                <span class="song-card-info">
+                    <strong>这首歌写给自己</strong>
+                    <span>Zhè shǒu gē xiě gěi zìjǐ</span>
+                    <small>小鸭 · Vịt Nhỏ</small>
+                    <em class="song-status" data-status="new">Chưa bắt đầu</em>
+                </span>
+
+                <span class="song-card-play">▶</span>
+            </a>
+
+            <a
+                class="song-card"
+                href="song-hai-di.html"
+                data-progress-id="1002">
+
+                <span class="song-card-disc">
+                    <img src="haidi.jpg" alt="Ảnh bìa 海底">
+                    <span class="song-card-hole"></span>
+                </span>
+
+                <span class="song-card-info">
+                    <strong>海底 · Đáy Biển</strong>
+                    <span>Hǎidǐ</span>
+                    <small>一支榴莲 · Nhất Chi Lựu Liên</small>
+                    <em class="song-status" data-status="new">Chưa bắt đầu</em>
+                </span>
+
+                <span class="song-card-play">▶</span>
+            </a>
+
+            <div class="song-card song-card--locked">
+                <span class="song-card-disc song-card-disc--placeholder">月</span>
+                <span class="song-card-info">
+                    <strong>月亮代表我的心</strong>
+                    <span>Yuèliang dàibiǎo wǒ de xīn</span>
+                    <small>Sắp thêm</small>
+                </span>
+                <span class="song-card-play">＋</span>
+            </div>
+
+            <div class="song-card song-card--locked">
+                <span class="song-card-disc song-card-disc--placeholder">幸</span>
+                <span class="song-card-info">
+                    <strong>小幸运</strong>
+                    <span>Xiǎo xìngyùn</span>
+                    <small>Sắp thêm</small>
+                </span>
+                <span class="song-card-play">＋</span>
+            </div>
+        </section>
     </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabase.js"></script>
+    <script>
+        async function loadSongStatus() {
+            if (!window.LessonProgress) return;
+
+            const cards = Array.from(
+                document.querySelectorAll(".song-card[data-progress-id]")
+            );
+            const ids = cards
+                .map(function(card) {
+                    return Number(card.dataset.progressId);
+                })
+                .filter(Number.isFinite);
+
+            if (!ids.length) return;
+
+            const statuses = await window.LessonProgress
+                .loadLessonStatuses(ids);
+
+            const labels = {
+                new: "Chưa bắt đầu",
+                learning: "Đang học",
+                completed: "Đã hoàn thành ✓"
+            };
+
+            cards.forEach(function(card) {
+                const id = Number(card.dataset.progressId);
+                const status = statuses[id] || "new";
+                const badge = card.querySelector(".song-status");
+
+                if (!badge) return;
+
+                badge.dataset.status = status;
+                badge.textContent = labels[status];
+            });
+        }
+
+        loadSongStatus();
+    </script>
 </body>
 </html>

@@ -8,6 +8,38 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@600;700&family=Nunito:wght@500;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
+    <style>
+        .node-progress {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin-top: 7px;
+            padding: 4px 9px;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.78);
+            color: #777;
+            font-family: "Nunito", sans-serif;
+            font-size: 12px;
+            font-style: normal;
+            font-weight: 700;
+        }
+
+        .node-progress::before {
+            content: "";
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #d2d2d2;
+        }
+
+        .node-progress[data-status="learning"]::before {
+            background: #f3a847;
+        }
+
+        .node-progress[data-status="completed"]::before {
+            background: #63b87b;
+        }
+    </style>
 </head>
 <body class="journey-body">
     <main class="journey-container">
@@ -124,6 +156,8 @@
         </section>
     </main>
 
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabase.js"></script>
     <script>
         const levels = {
             hsk1: { title: "HSK 1", lessons: [
@@ -139,10 +173,10 @@
                 { label: "Bài 2", title: "天气", href: "#" },
             ]},
             hsk4: { title: "HSK 4", lessons: [
-                { label: "Bài 7",  title: "生活中不缺少美", href: "HSK4 - lesson 7.html" },
-                { label: "Bài 8",  title: "生活中不缺少美", href: "HSK4 - lesson 8.html" },
-                { label: "Bài 10", title: "幸福的标准",     href: "HSK4 - lesson 10.html" },
-                { label: "Bài 11", title: "人生的意义",     href: "HSK4 - lesson 11.html" },
+                { number: 7,  label: "Bài 7",  title: "生活中不缺少美", href: "HSK4 - lesson 7.html" },
+                { number: 8,  label: "Bài 8",  title: "生活中不缺少美", href: "HSK4 - lesson 8.html" },
+                { number: 10, label: "Bài 10", title: "幸福的标准",     href: "HSK4 - lesson 10.html" },
+                { number: 11, label: "Bài 11", title: "人生的意义",     href: "HSK4 - lesson 11.html" },
             ]},
             hsk5: { title: "HSK 5", lessons: [
                 { label: "Bài 1", title: "我的家", href: "#" },
@@ -244,16 +278,52 @@
                     node.style.opacity = '1';
                 }
                 if (!isLocked) node.href = lesson.href;
+                if (lesson.number) node.dataset.lessonNumber = lesson.number;
+
+                const progressHtml = lesson.number
+                    ? '<span class="node-progress" data-status="new">Chưa bắt đầu</span>'
+                    : '';
 
                 node.innerHTML = `
                     <span class="node-stone">
                         <span class="node-icon">${isLast ? '🏮' : (isLocked ? '🔒' : '📖')}</span>
                         <span class="node-index">${lesson.label}</span>
                     </span>
-                    <span class="node-caption">${lesson.title}${isLocked ? ' <em>· sắp ra mắt</em>' : ''}</span>
+                    <span class="node-caption">${lesson.title}${isLocked ? ' <em>· sắp ra mắt</em>' : ''}${progressHtml}</span>
                 `;
 
                 pathCanvas.appendChild(node);
+            });
+
+            refreshJourneyProgress(data.lessons);
+        }
+
+        async function refreshJourneyProgress(lessons) {
+            const lessonNumbers = lessons
+                .map(lesson => lesson.number)
+                .filter(Boolean);
+
+            if (!lessonNumbers.length || !window.LessonProgress) return;
+
+            const statuses = await window.LessonProgress
+                .loadLessonStatuses(lessonNumbers);
+
+            const labels = {
+                new: "Chưa bắt đầu",
+                learning: "Đang học",
+                completed: "Đã hoàn thành ✓"
+            };
+
+            lessonNumbers.forEach(number => {
+                const node = pathCanvas.querySelector(
+                    '[data-lesson-number="' + number + '"]'
+                );
+                const badge = node && node.querySelector('.node-progress');
+                if (!badge) return;
+
+                const status = statuses[number] || "new";
+                badge.dataset.status = status;
+                badge.textContent = labels[status];
             });
         }
 

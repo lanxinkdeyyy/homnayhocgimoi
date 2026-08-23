@@ -1,0 +1,1298 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>海底 · Đáy Biển · Học qua bài hát</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .song-lyrics-setup {
+            margin: 12px 0 16px;
+            padding: 12px 14px;
+            border: 1px dashed #b8cdbf;
+            border-radius: 14px;
+            background: rgba(243, 248, 241, 0.8);
+        }
+
+        .song-lyrics-setup summary {
+            cursor: pointer;
+            color: #63816c;
+            font-weight: 700;
+        }
+
+        .song-lyrics-setup textarea {
+            width: 100%;
+            min-height: 150px;
+            margin-top: 12px;
+            padding: 12px;
+            resize: vertical;
+            border: 1px solid #d3dfd4;
+            border-radius: 12px;
+            font: 15px/1.65 Arial, "Microsoft YaHei", sans-serif;
+        }
+
+        .song-lyrics-setup-actions,
+        .song-sync-adjust {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            align-items: center;
+            margin-top: 10px;
+        }
+
+        .song-lyrics-setup button,
+        .song-sync-adjust button {
+            padding: 7px 11px;
+            border: 0;
+            border-radius: 999px;
+            background: #e5efe6;
+            color: #55705e;
+            cursor: pointer;
+            font-weight: 700;
+        }
+
+        #songApplyLyrics {
+            background: #71947b;
+            color: white;
+        }
+
+        #songLyricsImportMessage,
+        #songOffsetLabel {
+            color: #7f7772;
+            font-size: 12px;
+        }
+    </style>
+</head>
+
+<body class="song-study-page">
+    <main class="song-study-container">
+        <a href="songs.html" class="back-link">← Quay lại danh sách bài hát</a>
+
+        <header class="song-study-header">
+            <div>
+                <p class="songs-eyebrow">中文歌曲 · Bài hát 02</p>
+                <h1>海底 · Đáy Biển</h1>
+                <p>Hǎidǐ · 一支榴莲 · Nhất Chi Lựu Liên</p>
+            </div>
+
+            <em id="detailStatus" class="song-status" data-status="learning">Đang học</em>
+        </header>
+
+        <div id="songStudyLayout" class="song-study-layout">
+            <svg id="songConnectorSvg" class="song-connector-svg" viewBox="0 0 1120 1265"></svg>
+
+            <section class="song-main-panel">
+                <div class="song-player-card">
+                    <div id="songRecord" class="song-record">
+                        <img src="haidi.jpg" alt="Ảnh bìa 海底">
+                        <span class="song-record-hole"></span>
+                    </div>
+
+                    <div class="song-player-info">
+                        <h2>海底 · Đáy Biển</h2>
+                        <p>一支榴莲 · Nhất Chi Lựu Liên</p>
+
+                        <div class="song-controls">
+                            <button id="songPlayButton" class="song-play-button" type="button" aria-label="Phát hoặc tạm dừng">▶</button>
+
+                            <span id="songTime" class="song-time">0:40 / 4:15</span>
+
+                            <input id="songProgress" class="song-progress" type="range" min="0" max="255.407896" step="0.1" value="0" aria-label="Thời gian bài hát">
+                        </div>
+
+                        <!--
+                            Đặt file MP3 trong thư mục audio và giữ đúng tên dưới đây.
+                        -->
+                        <audio id="songAudio" preload="metadata" src="audio/song_haidi.mp3">
+                        </audio>
+                    </div>
+                </div>
+
+                <section class="song-lyrics-card">
+                    <h3>🎵 Lời bài hát</h3>
+                    <p class="song-lyrics-help">
+                        Bấm vào một dòng để tua audio · bấm vào một từ để mở thẻ từ.
+                    </p>
+
+                    <details id="songLyricsSetup" class="song-lyrics-setup">
+                        <summary>⚙️ Dán toàn bộ lời bài hát một lần</summary>
+                        <textarea id="songLyricsInput" placeholder="Dán lời vào đây, mỗi câu một dòng. Dòng trống sẽ tự bỏ qua."></textarea>
+                        <div class="song-lyrics-setup-actions">
+                            <button id="songApplyLyrics" type="button">Áp dụng 46 dòng</button>
+                            <button id="songExportLyrics" type="button">Tải HTML hoàn chỉnh</button>
+                            <button id="songClearLyrics" type="button">Xóa lời đã nhập</button>
+                            <span id="songLyricsImportMessage" style="color: rgb(99, 129, 108);">Đã áp dụng đủ 46 dòng và lưu trên máy.</span>
+                        </div>
+                    </details>
+
+                    <div class="song-sync-adjust" aria-label="Hiệu chỉnh thời gian lời bài hát">
+                        <span>Hiệu chỉnh toàn bài:</span>
+                        <button id="songOffsetEarlier" type="button">−0,5 giây</button>
+                        <button id="songOffsetReset" type="button">Đặt lại</button>
+                        <button id="songOffsetLater" type="button">+0,5 giây</button>
+                        <span id="songOffsetLabel">+1,0 giây</span>
+                    </div>
+
+                    <div id="songLyricsScroll" class="song-lyrics-scroll">
+                        <div class="lyric-line" data-line-id="line-01" data-time="22.952">Dòng 01</div>
+                        <div class="lyric-line" data-line-id="line-02" data-time="31.950">Dòng 02</div>
+                        <div class="lyric-line" data-line-id="line-03" data-time="36.955">Dòng 03</div>
+                        <div class="lyric-line" data-line-id="line-04" data-time="40.948">Dòng 04</div>
+                        <div class="lyric-line" data-line-id="line-05" data-time="43.398">Dòng 05</div>
+                        <div class="lyric-line" data-line-id="line-06" data-time="50.145">Dòng 06</div>
+                        <div class="lyric-line" data-line-id="line-07" data-time="53.152">Dòng 07</div>
+                        <div class="lyric-line" data-line-id="line-08" data-time="58.656">Dòng 08</div>
+                        <div class="lyric-line" data-line-id="line-09" data-time="62.151">Dòng 09</div>
+                        <div class="lyric-line" data-line-id="line-10" data-time="67.654">Dòng 10</div>
+                        <div class="lyric-line" data-line-id="line-11" data-time="70.650">Dòng 11</div>
+                        <div class="lyric-line" data-line-id="line-12" data-time="76.153">Dòng 12</div>
+                        <div class="lyric-line" data-line-id="line-13" data-time="79.648">Dòng 13</div>
+                        <div class="lyric-line" data-line-id="line-14" data-time="81.657">Dòng 14</div>
+                        <div class="lyric-line" data-line-id="line-15" data-time="85.405">Dòng 15</div>
+                        <div class="lyric-line" data-line-id="line-16" data-time="88.450">Dòng 16</div>
+                        <div class="lyric-line" data-line-id="line-17" data-time="90.447">Dòng 17</div>
+                        <div class="lyric-line" data-line-id="line-18" data-time="93.955">Dòng 18</div>
+                        <div class="lyric-line" data-line-id="line-19" data-time="98.447">Dòng 19</div>
+                        <div class="lyric-line" data-line-id="line-20" data-time="102.952">Dòng 20</div>
+                        <div class="lyric-line" data-line-id="line-21" data-time="106.201">Dòng 21</div>
+                        <div class="lyric-line" data-line-id="line-22" data-time="142.523">Dòng 22</div>
+                        <div class="lyric-line" data-line-id="line-23" data-time="152.550">Dòng 23</div>
+                        <div class="lyric-line" data-line-id="line-24" data-time="156.556">Dòng 24</div>
+                        <div class="lyric-line" data-line-id="line-25" data-time="161.049">Dòng 25</div>
+                        <div class="lyric-line" data-line-id="line-26" data-time="163.303">Dòng 26</div>
+                        <div class="lyric-line" data-line-id="line-27" data-time="169.548">Dòng 27</div>
+                        <div class="lyric-line" data-line-id="line-28" data-time="172.555">Dòng 28</div>
+                        <div class="lyric-line" data-line-id="line-29" data-time="178.546">Dòng 29</div>
+                        <div class="lyric-line" data-line-id="line-30" data-time="181.553">Dòng 30</div>
+                        <div class="lyric-line" data-line-id="line-31" data-time="184.307">Dòng 31</div>
+                        <div class="lyric-line" data-line-id="line-32" data-time="187.556">Dòng 32</div>
+                        <div class="lyric-line" data-line-id="line-33" data-time="190.297">Dòng 33</div>
+                        <div class="lyric-line" data-line-id="line-34" data-time="192.548">Dòng 34</div>
+                        <div class="lyric-line" data-line-id="line-35" data-time="196.553">Dòng 35</div>
+                        <div class="lyric-line" data-line-id="line-36" data-time="201.047">Dòng 36</div>
+                        <div class="lyric-line" data-line-id="line-37" data-time="205.298">Dòng 37</div>
+                        <div class="lyric-line" data-line-id="line-38" data-time="212.299">Dòng 38</div>
+                        <div class="lyric-line" data-line-id="line-39" data-time="213.552">Dòng 39</div>
+                        <div class="lyric-line" data-line-id="line-40" data-time="218.067">Dòng 40</div>
+                        <div class="lyric-line" data-line-id="line-41" data-time="222.560">Dòng 41</div>
+                        <div class="lyric-line" data-line-id="line-42" data-time="227.065">Dòng 42</div>
+                        <div class="lyric-line" data-line-id="line-43" data-time="231.317">Dòng 43</div>
+                        <div class="lyric-line" data-line-id="line-44" data-time="236.063">Dòng 44</div>
+                        <div class="lyric-line" data-line-id="line-45" data-time="240.138">Dòng 45</div>
+                        <div class="lyric-line" data-line-id="line-46" data-time="245.131">Dòng 46</div>
+                    </div>
+                </section>
+
+                <section class="song-saved-card">
+                    <h3>♡ Từ vựng đã lưu</h3>
+                    <div id="songSavedWords">Chưa có từ nào được lưu.</div>
+                </section>
+            </section>
+
+            <div class="song-layout-divider"></div>
+
+            <aside id="songNoteSidebar" class="song-note-sidebar"><h3>📌 Thẻ ghi chú</h3><div class="song-note-empty">Chưa có từ nào được ghim.</div></aside>
+        </div>
+    </main>
+
+    <div id="songWordPopup" class="song-word-popup">
+        <button id="songPopupClose" class="song-popup-close" type="button">×</button>
+        <h2 id="songPopupWord">了</h2>
+        <p id="songPopupPinyin" class="popup-pinyin">—</p>
+        <p id="songPopupMeta" class="popup-meta">— · 词语 / từ vựng</p>
+        <p id="songPopupMeaning">Chưa bổ sung nghĩa</p>
+
+        <div class="song-popup-actions">
+            <button id="songSaveWord" type="button">♡ Lưu từ</button>
+            <button id="songPinWord" type="button">📌 Hiện từ</button>
+        </div>
+
+        <div class="song-highlight-tools" aria-label="Đánh dấu từ">
+            <button class="song-color-button green" data-color="green" type="button"></button>
+            <button class="song-color-button blue" data-color="blue" type="button"></button>
+            <button class="song-color-button yellow" data-color="yellow" type="button"></button>
+            <button class="song-color-button orange" data-color="orange" type="button"></button>
+            <button class="song-color-button purple" data-color="purple" type="button"></button>
+            <button id="songUnderlineWord" class="song-underline-button" type="button">U</button>
+        </div>
+    </div>
+
+    <script id="songEmbeddedLyrics" type="application/json">[]</script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabase.js"></script>
+    <script>
+        const SONG_PROGRESS_ID = 1002;
+        const STORAGE_PREFIX = "lesson" + SONG_PROGRESS_ID;
+        const LYRIC_TEXT_KEY = STORAGE_PREFIX + "LyricsText";
+        const LYRIC_OFFSET_KEY = STORAGE_PREFIX + "LyricsOffset";
+
+        const songVocabulary = {
+            "散落": {
+                pinyin: "sànluò",
+                hanviet: "[Tán Lạc]",
+                pos: "(v)",
+                meaning: "Rơi rớt, tản mát",
+                exampleChinese: "地上散落着一些树叶。",
+                exampleVietnamese: "→ Trên mặt đất có vài chiếc lá cây rơi rớt.",
+                usage: "Miêu tả vật thể nhỏ rơi rải rác không tập trung, thường dùng cho lá cây, giấy tờ, ánh sáng..."
+            },
+            "躲": {
+                pinyin: "duǒ",
+                hanviet: "[Đuổng]",
+                pos: "(v)",
+                meaning: "Che giấu, trốn tránh",
+                exampleChinese: "他躲在角落里不敢出来。",
+                exampleVietnamese: "→ Anh ấy trốn ở góc tường không dám ra ngoài.",
+                usage: "Chỉ hành động che giấu bản thân hoặc tránh né ai đó."
+            },
+          "铺": {
+            pinyin: "pū",
+            hanviet: "[Phố]",
+            pos: "(v)",
+            meaning: "Trải ra, lát ra",
+            exampleChinese: "工人们正在铺设新的道路。",
+            exampleVietnamese: "→ Công nhân đang trải đường mới.",
+                        usage: "Động từ chỉ hành động trải hoặc lát một bề mặt nào đó, thường dùng trong xây dựng hoặc trang trí."
+                    },
+"月光": {
+    pinyin: "yuèguāng",
+    hanviet: "[Nguyệt Quang]",
+    pos: "(n)",
+    meaning: "Ánh trăng",
+    exampleChinese: "今晚的月光特别明亮。",
+    exampleVietnamese: "→ Ánh trăng tối nay đặc biệt sáng.",
+    usage: "Danh từ chỉ ánh sáng phát ra từ mặt trăng, hay dùng trong văn miêu tả cảnh đêm."
+},
+"穿过": {
+    pinyin: "chuānguò",
+    hanviet: "[Xuyên Quá]",
+    pos: "(v)",
+    meaning: "Xuyên qua, đi qua",
+    exampleChinese: "阳光穿过窗户照进房间。",
+    exampleVietnamese: "→ Ánh nắng xuyên qua cửa sổ chiếu vào phòng.",
+    usage: "Động từ kết quả (穿+过), diễn tả việc di chuyển hoặc xuyên thấu qua một vật/không gian."
+},
+"人群": {
+    pinyin: "rénqún",
+    hanviet: "[Nhân Quần]",
+    pos: "(n)",
+    meaning: "Đám đông",
+    exampleChinese: "他害怕站在人群面前说话。",
+    exampleVietnamese: "→ Anh ấy sợ đứng trước đám đông nói chuyện.",
+    usage: "Danh từ chỉ một nhóm đông người tụ tập ở một nơi."
+},
+"大海": {
+    pinyin: "dàhǎi",
+    hanviet: "[Đại Hải]",
+    pos: "(n)",
+    meaning: "Biển cả",
+    exampleChinese: "他从小就向往大海。",
+    exampleVietnamese: "→ Anh ấy khao khát biển cả từ nhỏ.",
+    usage: "Danh từ chỉ biển rộng lớn, mang sắc thái văn học hơn so với 海."
+},
+"海浪": {
+    pinyin: "hǎilàng",
+    hanviet: "[Hải Lãng]",
+    pos: "(n)",
+    meaning: "Sóng biển",
+    exampleChinese: "海浪一波接一波地拍打着岸边。",
+    exampleVietnamese: "→ Sóng biển từng đợt vỗ vào bờ.",
+    usage: "Danh từ chỉ sóng trên mặt biển, thường đi với động từ 拍打, 冲."
+},
+"试图": {
+    pinyin: "shìtú",
+    hanviet: "[Thí Đồ]",
+    pos: "(v)",
+    meaning: "Cố gắng, mưu toan",
+    exampleChinese: "他试图说服父母同意这个计划。",
+    exampleVietnamese: "→ Anh ấy cố gắng thuyết phục bố mẹ đồng ý kế hoạch này.",
+    usage: "Động từ trang trọng, thường đi kèm một hành động chưa chắc thành công phía sau."
+},
+"清洗": {
+    pinyin: "qīngxǐ",
+    hanviet: "[Thanh Tẩy]",
+    pos: "(v)",
+    meaning: "Rửa sạch, tẩy rửa",
+    exampleChinese: "她仔细地清洗蔬菜。",
+    exampleVietnamese: "→ Cô ấy rửa sạch rau một cách cẩn thận.",
+    usage: "Động từ trang trọng hơn 洗, thường dùng trong ngữ cảnh làm sạch kỹ lưỡng."
+},
+"血迹": {
+    pinyin: "xuèjì",
+    hanviet: "[Huyết Tích]",
+    pos: "(n)",
+    meaning: "Vết máu",
+    exampleChinese: "警察在现场发现了血迹。",
+    exampleVietnamese: "→ Cảnh sát phát hiện vết máu tại hiện trường.",
+    usage: "Danh từ chỉ dấu vết còn lại của máu trên một bề mặt nào đó."
+},
+"妄想": {
+    pinyin: "wàngxiǎng",
+    hanviet: "[Vọng Tưởng]",
+    pos: "(v/n)",
+    meaning: "Ảo tưởng, mơ tưởng hão huyền",
+    exampleChinese: "别妄想一夜之间就能成功。",
+    exampleVietnamese: "→ Đừng ảo tưởng có thể thành công trong một đêm.",
+    usage: "Mang sắc thái phủ định, chỉ suy nghĩ viển vông, không thực tế."
+},
+"温暖": {
+    pinyin: "wēnnuǎn",
+    hanviet: "[Ôn Noãn]",
+    pos: "(a)",
+    meaning: "Ấm áp",
+    exampleChinese: "家人的关心让他感到很温暖。",
+    exampleVietnamese: "→ Sự quan tâm của người thân khiến anh ấy cảm thấy rất ấm áp.",
+    usage: "Vừa dùng cho nhiệt độ vật lý vừa dùng để miêu tả cảm xúc ấm áp trong lòng."
+},
+"深处": {
+    pinyin: "shēnchù",
+    hanviet: "[Thâm Xứ]",
+    pos: "(n)",
+    meaning: "Nơi sâu thẳm",
+    exampleChinese: "这是他内心深处的秘密。",
+    exampleVietnamese: "→ Đây là bí mật sâu thẳm trong lòng anh ấy.",
+    usage: "Thường đi sau danh từ chỉ không gian hoặc nội tâm: 内心深处, 森林深处."
+},
+"指引": {
+    pinyin: "zhǐyǐn",
+    hanviet: "[Chỉ Dẫn]",
+    pos: "(v/n)",
+    meaning: "Chỉ dẫn, dẫn đường",
+    exampleChinese: "灯塔为船只指引方向。",
+    exampleVietnamese: "→ Ngọn hải đăng chỉ dẫn phương hướng cho tàu thuyền.",
+    usage: "Mang sắc thái trang trọng hơn 指导, hay dùng trong văn viết, ẩn dụ."
+},
+"灵魂": {
+    pinyin: "línghún",
+    hanviet: "[Linh Hồn]",
+    pos: "(n)",
+    meaning: "Linh hồn, tâm hồn",
+    exampleChinese: "音乐是他灵魂的寄托。",
+    exampleVietnamese: "→ Âm nhạc là nơi gửi gắm tâm hồn của anh ấy.",
+    usage: "Danh từ trừu tượng, chỉ phần tinh thần bên trong con người."
+},
+"寂静": {
+    pinyin: "jìjìng",
+    hanviet: "[Tịch Tĩnh]",
+    pos: "(a)",
+    meaning: "Tĩnh lặng, vắng lặng",
+    exampleChinese: "深夜的街道一片寂静。",
+    exampleVietnamese: "→ Con phố lúc đêm khuya hoàn toàn tĩnh lặng.",
+    usage: "Miêu tả sự im lặng tuyệt đối, mang sắc thái văn học hơn 安静."
+},
+"吵醒": {
+    pinyin: "chǎoxǐng",
+    hanviet: "[Sao Tỉnh]",
+    pos: "(v)",
+    meaning: "Làm ồn khiến tỉnh giấc",
+    exampleChinese: "隔壁的声音把他吵醒了。",
+    exampleVietnamese: "→ Tiếng ồn bên cạnh làm anh ấy tỉnh giấc.",
+    usage: "Động từ kết quả (吵+醒), diễn tả việc gây tiếng ồn khiến ai đó thức giấc."
+},
+"气息": {
+    pinyin: "qìxī",
+    hanviet: "[Khí Tức]",
+    pos: "(n)",
+    meaning: "Hơi thở, khí vị",
+    exampleChinese: "空气中弥漫着花的气息。",
+    exampleVietnamese: "→ Trong không khí tràn ngập hương thơm của hoa.",
+    usage: "Vừa chỉ nghĩa đen (hơi thở) vừa dùng ẩn dụ chỉ mùi hương, bầu không khí."
+},
+"踩": {
+    pinyin: "cǎi",
+    hanviet: "[Thải]",
+    pos: "(v)",
+    meaning: "Giẫm, đạp",
+    exampleChinese: "小心别踩到地上的水。",
+    exampleVietnamese: "→ Cẩn thận đừng giẫm phải nước trên mặt đất.",
+    usage: "Động từ chỉ hành động đặt chân lên một vật gì đó."
+},
+"骨灰": {
+    pinyin: "gǔhuī",
+    hanviet: "[Cốt Hôi]",
+    pos: "(n)",
+    meaning: "Tro cốt",
+    exampleChinese: "他们把骨灰撒向大海。",
+    exampleVietnamese: "→ Họ rải tro cốt xuống biển cả.",
+    usage: "Danh từ chỉ phần tro còn lại sau khi hỏa táng, thường đi với động từ 撒, 安放."
+},
+"凉薄": {
+    pinyin: "liángbó",
+    hanviet: "[Lương Bạc]",
+    pos: "(a)",
+    meaning: "Lạnh nhạt, bạc bẽo",
+    exampleChinese: "他对朋友的态度变得很凉薄。",
+    exampleVietnamese: "→ Thái độ của anh ấy với bạn bè trở nên rất lạnh nhạt.",
+    usage: "Tính từ mang sắc thái văn học, miêu tả tình cảm thiếu ấm áp, thờ ơ."
+},
+"笑脸": {
+    pinyin: "xiàoliǎn",
+    hanviet: "[Tiếu Kiểm]",
+    pos: "(n)",
+    meaning: "Gương mặt tươi cười",
+    exampleChinese: "服务员总是带着笑脸迎接客人。",
+    exampleVietnamese: "→ Nhân viên phục vụ luôn mang gương mặt tươi cười đón khách.",
+    usage: "Danh từ ghép từ 笑 (cười) + 脸 (mặt), chỉ vẻ mặt vui vẻ."
+},
+"无关": {
+    pinyin: "wúguān",
+    hanviet: "[Vô Quan]",
+    pos: "(v/a)",
+    meaning: "Không liên quan",
+    exampleChinese: "这件事跟我无关。",
+    exampleVietnamese: "→ Việc này không liên quan gì đến tôi.",
+    usage: "Thường dùng dạng 跟/与...无关 (không liên quan đến...)."
+},
+"人间": {
+    pinyin: "rénjiān",
+    hanviet: "[Nhân Gian]",
+    pos: "(n)",
+    meaning: "Nhân gian, cõi đời",
+    exampleChinese: "这幅画描绘了人间的美好。",
+    exampleVietnamese: "→ Bức tranh này khắc họa những điều tốt đẹp của nhân gian.",
+    usage: "Danh từ mang sắc thái văn học, chỉ thế gian, cuộc sống con người."
+},
+"留恋": {
+    pinyin: "liúliàn",
+    hanviet: "[Lưu Luyến]",
+    pos: "(v)",
+    meaning: "Lưu luyến, quyến luyến",
+    exampleChinese: "毕业后，他依然留恋校园生活。",
+    exampleVietnamese: "→ Sau khi tốt nghiệp, anh ấy vẫn lưu luyến cuộc sống ở trường.",
+    usage: "Động từ diễn tả cảm giác không muốn rời xa một nơi/kỷ niệm nào đó."
+},
+"来不及": {
+    pinyin: "láibují",
+    hanviet: "[Lai Bất Cập]",
+    pos: "(v)",
+    meaning: "Không kịp",
+    exampleChinese: "时间太晚了，我们来不及了。",
+    exampleVietnamese: "→ Đã quá muộn rồi, chúng ta không kịp nữa.",
+    usage: "Cụm động từ thông dụng, diễn tả không đủ thời gian để làm việc gì."
+},
+"颤抖": {
+    pinyin: "chàndǒu",
+    hanviet: "[Chiến Đẩu]",
+    pos: "(v)",
+    meaning: "Run rẩy",
+    exampleChinese: "他冷得双手颤抖。",
+    exampleVietnamese: "→ Anh ấy lạnh đến mức đôi tay run rẩy.",
+    usage: "Động từ miêu tả cơ thể rung lên do lạnh, sợ hãi hoặc xúc động."
+},
+"手臂": {
+    pinyin: "shǒubì",
+    hanviet: "[Thủ Tý]",
+    pos: "(n)",
+    meaning: "Cánh tay",
+    exampleChinese: "他的手臂受伤了。",
+    exampleVietnamese: "→ Cánh tay của anh ấy bị thương.",
+    usage: "Danh từ chỉ bộ phận cơ thể từ vai đến cổ tay."
+},
+"打捞": {
+    pinyin: "dǎlāo",
+    hanviet: "[Đả Lao]",
+    pos: "(v)",
+    meaning: "Vớt lên (từ dưới nước)",
+    exampleChinese: "救援队正在河里打捞失踪者。",
+    exampleVietnamese: "→ Đội cứu hộ đang vớt người mất tích dưới sông.",
+    usage: "Động từ chuyên dùng cho việc vớt vật/người từ dưới nước lên."
+},
+"讨厌": {
+    pinyin: "tǎoyàn",
+    hanviet: "[Thảo Yếm]",
+    pos: "(v/a)",
+    meaning: "Ghét, chán ghét",
+    exampleChinese: "我最讨厌下雨天出门。",
+    exampleVietnamese: "→ Tôi ghét nhất là ra ngoài vào ngày mưa.",
+    usage: "Động từ/tính từ rất thông dụng trong khẩu ngữ, diễn tả sự khó chịu."
+},
+"窒息": {
+    pinyin: "zhìxī",
+    hanviet: "[Trất Tức]",
+    pos: "(v)",
+    meaning: "Nghẹt thở, ngạt thở",
+    exampleChinese: "房间里烟太多，让人感到窒息。",
+    exampleVietnamese: "→ Trong phòng quá nhiều khói, khiến người ta cảm thấy nghẹt thở.",
+    usage: "Vừa dùng nghĩa đen (khó thở) vừa dùng ẩn dụ chỉ áp lực tinh thần lớn."
+},
+"抛弃": {
+    pinyin: "pāoqì",
+    hanviet: "[Phao Khí]",
+    pos: "(v)",
+    meaning: "Vứt bỏ, ruồng bỏ",
+    exampleChinese: "他从来没有抛弃过自己的梦想。",
+    exampleVietnamese: "→ Anh ấy chưa bao giờ từ bỏ ước mơ của mình.",
+    usage: "Động từ mang sắc thái mạnh hơn 放弃, thường dùng cho việc bỏ rơi người/vật/lý tưởng."
+}
+
+        };
+
+        const audio = document.getElementById("songAudio");
+        const playButton = document.getElementById("songPlayButton");
+        const progress = document.getElementById("songProgress");
+        const timeLabel = document.getElementById("songTime");
+        const record = document.getElementById("songRecord");
+        const lyricsViewport = document.getElementById("songLyricsScroll");
+        const lyricLines = Array.from(document.querySelectorAll(".lyric-line"));
+        const customPartLengths = {
+            "line-01": [2,1,2,2,1,1], "line-02": [1,1,2],
+            "line-03": [1,1,2,1,1], "line-04": [2,1,1,1,1],
+            "line-05": [2,1,1,2], "line-06": [2,2,2],
+            "line-07": [2,2,1], "line-08": [1,1,1,2,1],
+            "line-09": [1,1,2,1,2], "line-10": [2,2,2],
+            "line-11": [2,1,1,1,1], "line-12": [1,2,2,2,1,2],
+            "line-13": [1,1,1,1,1,2], "line-14": [1,1,2,1,2,2,1,1,2],
+            "line-15": [1,1,1,1,1,1,1,2], "line-16": [1,2,1,1,1],
+            "line-17": [2,2,2], "line-18": [1,1,1,1,1,1,1,1,1,2],
+            "line-19": [2,2,1,1,1,1,1,2], "line-20": [2,2,2],
+            "line-21": [2,1,1,1], "line-22": [2,1,2,2,1,1],
+            "line-23": [1,1,2], "line-24": [2,2],
+            "line-25": [2,2,2], "line-26": [2,2,1],
+            "line-27": [2,2,2], "line-28": [2,1,1,1,1],
+            "line-29": [1,2,2,2,1,2], "line-30": [1,1,1,1,1,2],
+            "line-31": [1,1,2,1,2,2,1,1,2], "line-32": [1,1,1,1,1,1,1,2],
+            "line-33": [1,2,1,1,1], "line-34": [2,2,1,1,2],
+            "line-35": [1,1,1,1,1,1,1,1,1,2], "line-36": [2,2,1,1,1,1,1,2],
+            "line-37": [2,2,2], "line-38": [2,1,1,1],
+            "line-39": [3,3], "line-40": [1,1,1,1,2],
+            "line-41": [3,3], "line-42": [1,2,1,2],
+            "line-43": [3,3], "line-44": [2,1,1,2,1],
+            "line-45": [3,3], "line-46": [1,2,2,2]
+        };
+        const lyricsInput = document.getElementById("songLyricsInput");
+        const lyricsImportMessage = document.getElementById("songLyricsImportMessage");
+        const offsetLabel = document.getElementById("songOffsetLabel");
+
+        let progressSync = null;
+        let currentWordElement = null;
+        let currentWord = "";
+        let activeLineId = "";
+        let lyricOffset = Number(localStorage.getItem(LYRIC_OFFSET_KEY)) || 0;
+
+        function readJson(key, fallback) {
+            try {
+                return JSON.parse(localStorage.getItem(key)) || fallback;
+            } catch (error) {
+                return fallback;
+            }
+        }
+
+        function normalizeLyricText(value) {
+            return value
+                .split(/\r?\n/)
+                .map(function(line) {
+                    return line.trim().replace(/^\*\*(.*?)\*\*$/, "$1").trim();
+                })
+                .filter(Boolean);
+        }
+
+        function renderLineWords(lineElement, text, lineIndex) {
+            lineElement.innerHTML = "";
+
+            const characters = Array.from(text);
+            const lengths = customPartLengths[lineElement.dataset.lineId];
+            let parts = null;
+
+            if (
+                lengths &&
+                lengths.reduce(function(total, length) {
+                    return total + length;
+                }, 0) === characters.length
+            ) {
+                let position = 0;
+                parts = lengths.map(function(length) {
+                    const part = characters.slice(position, position + length).join("");
+                    position += length;
+                    return part;
+                });
+            }
+
+            if (!parts && window.Intl && Intl.Segmenter) {
+                const segmenter = new Intl.Segmenter("zh", { granularity: "word" });
+                parts = Array.from(segmenter.segment(text), function(item) {
+                    return item.segment;
+                });
+            } else if (!parts) {
+                parts = Array.from(text);
+            }
+
+            let wordIndex = 0;
+            parts.forEach(function(part) {
+                if (!part.trim() || /^[\p{P}\p{S}]+$/u.test(part)) {
+                    lineElement.appendChild(document.createTextNode(part));
+                    return;
+                }
+
+                wordIndex += 1;
+                const word = document.createElement("span");
+                word.className = "song-word";
+                word.dataset.word = part;
+                word.dataset.wordId =
+                    "line-" + String(lineIndex + 1).padStart(2, "0") +
+                    "-word-" + String(wordIndex).padStart(2, "0");
+                word.textContent = part;
+                lineElement.appendChild(word);
+            });
+        }
+
+        function applyLyricsToPage(lines) {
+            lyricLines.forEach(function(line, index) {
+                const text = lines[index] ||
+                    "Dòng " + String(index + 1).padStart(2, "0");
+                renderLineWords(line, text, index);
+            });
+
+            currentWordElement = null;
+            currentWord = "";
+            activeLineId = "";
+            applyWordStyles();
+            renderPinnedWords();
+            updateActiveLine();
+        }
+
+        function importLyrics() {
+            const lines = normalizeLyricText(lyricsInput.value);
+
+            if (lines.length !== lyricLines.length) {
+                lyricsImportMessage.textContent =
+                    "Đang có " + lines.length + "/" + lyricLines.length +
+                    " dòng. Hãy kiểm tra lại số dòng.";
+                lyricsImportMessage.style.color = "#b45f5f";
+                return;
+            }
+
+            const normalized = lines.join("\n");
+            localStorage.setItem(LYRIC_TEXT_KEY, normalized);
+            lyricsInput.value = normalized;
+            applyLyricsToPage(lines);
+            lyricsImportMessage.textContent =
+                "Đã áp dụng đủ " + lines.length + " dòng và lưu trên máy.";
+            lyricsImportMessage.style.color = "#63816c";
+            document.getElementById("songLyricsSetup").open = false;
+        }
+
+        function clearImportedLyrics() {
+            localStorage.removeItem(LYRIC_TEXT_KEY);
+            lyricsInput.value = "";
+            applyLyricsToPage([]);
+            lyricsImportMessage.textContent = "Đã xóa lời được nhập trên máy.";
+            lyricsImportMessage.style.color = "#7f7772";
+        }
+
+        function exportLyricsHtml() {
+            const lines = normalizeLyricText(lyricsInput.value);
+            if (lines.length !== lyricLines.length) {
+                lyricsImportMessage.textContent =
+                    "Cần đủ " + lyricLines.length +
+                    " dòng trước khi tải file. Hiện có " + lines.length + ".";
+                lyricsImportMessage.style.color = "#b45f5f";
+                return;
+            }
+
+            localStorage.setItem(LYRIC_TEXT_KEY, lines.join("\n"));
+            applyLyricsToPage(lines);
+
+            const pageCopy = document.documentElement.cloneNode(true);
+            pageCopy.querySelectorAll(".lyric-line").forEach(function(line) {
+                line.classList.remove("active", "past");
+            });
+            pageCopy.querySelectorAll("script").forEach(function(script) {
+                if (script.textContent.includes("Live reload enabled.")) {
+                    script.remove();
+                }
+            });
+            const embeddedCopy = pageCopy.querySelector("#songEmbeddedLyrics");
+            embeddedCopy.textContent = JSON.stringify(lines).replace(/</g, "\\u003c");
+
+            const setupCopy = pageCopy.querySelector("#songLyricsSetup");
+            setupCopy.removeAttribute("open");
+            pageCopy.querySelector("#songLyricsInput").textContent = "";
+            pageCopy.querySelector("#songConnectorSvg").innerHTML = "";
+            pageCopy.querySelector("#songWordPopup").classList.remove("show");
+            pageCopy.querySelector("#songRecord").classList.remove("playing");
+
+            const fileContent = "<!DOCTYPE html>\n" + pageCopy.outerHTML;
+            const file = new Blob([fileContent], { type: "text/html;charset=utf-8" });
+            const downloadUrl = URL.createObjectURL(file);
+            const link = document.createElement("a");
+            link.href = downloadUrl;
+            link.download = "song-hai-di.html";
+            document.body.appendChild(link);
+            link.click();
+            link.remove();
+            URL.revokeObjectURL(downloadUrl);
+
+            lyricsImportMessage.textContent = "Đã tải file HTML có sẵn lời bài hát.";
+            lyricsImportMessage.style.color = "#63816c";
+        }
+
+        function effectiveLineTime(line) {
+            return Number(line.dataset.time) + lyricOffset;
+        }
+
+        function updateOffsetLabel() {
+            offsetLabel.textContent =
+                (lyricOffset > 0 ? "+" : "") +
+                lyricOffset.toFixed(1).replace(".", ",") + " giây";
+        }
+
+        function changeLyricOffset(delta) {
+            lyricOffset = Math.round((lyricOffset + delta) * 10) / 10;
+            localStorage.setItem(LYRIC_OFFSET_KEY, String(lyricOffset));
+            updateOffsetLabel();
+            activeLineId = "";
+            updateActiveLine();
+        }
+
+        document.getElementById("songApplyLyrics")
+            .addEventListener("click", importLyrics);
+
+        document.getElementById("songClearLyrics")
+            .addEventListener("click", clearImportedLyrics);
+
+        document.getElementById("songExportLyrics")
+            .addEventListener("click", exportLyricsHtml);
+
+        document.getElementById("songOffsetEarlier")
+            .addEventListener("click", function() {
+                changeLyricOffset(-0.5);
+            });
+
+        document.getElementById("songOffsetReset")
+            .addEventListener("click", function() {
+                lyricOffset = 0;
+                localStorage.removeItem(LYRIC_OFFSET_KEY);
+                updateOffsetLabel();
+                activeLineId = "";
+                updateActiveLine();
+            });
+
+        document.getElementById("songOffsetLater")
+            .addEventListener("click", function() {
+                changeLyricOffset(0.5);
+            });
+
+        function scheduleCloudSave() {
+            if (progressSync) progressSync.scheduleSave();
+        }
+
+        function getSavedWords() {
+            return readJson(STORAGE_PREFIX + "SavedWords", []);
+        }
+
+        function setSavedWords(words) {
+            localStorage.setItem(
+                STORAGE_PREFIX + "SavedWords",
+                JSON.stringify(words)
+            );
+            scheduleCloudSave();
+        }
+
+        function getPinnedWords() {
+            return readJson(STORAGE_PREFIX + "PinnedWords", []);
+        }
+
+        function setPinnedWords(words) {
+            localStorage.setItem(
+                STORAGE_PREFIX + "PinnedWords",
+                JSON.stringify(words)
+            );
+            scheduleCloudSave();
+        }
+
+        function getHighlights() {
+            return readJson(STORAGE_PREFIX + "Highlights", {});
+        }
+
+        function setHighlights(data) {
+            localStorage.setItem(
+                STORAGE_PREFIX + "Highlights",
+                JSON.stringify(data)
+            );
+            scheduleCloudSave();
+        }
+
+        function getUnderlines() {
+            return readJson(STORAGE_PREFIX + "Underlines", {});
+        }
+
+        function setUnderlines(data) {
+            localStorage.setItem(
+                STORAGE_PREFIX + "Underlines",
+                JSON.stringify(data)
+            );
+            scheduleCloudSave();
+        }
+
+        function formatTime(seconds) {
+            if (!Number.isFinite(seconds)) return "0:00";
+            const minutes = Math.floor(seconds / 60);
+            const rest = Math.floor(seconds % 60).toString().padStart(2, "0");
+            return minutes + ":" + rest;
+        }
+
+        function updatePlayer() {
+            const duration = Number.isFinite(audio.duration) ? audio.duration : 0;
+            progress.max = duration || 189.34;
+            progress.value = audio.currentTime || 0;
+            timeLabel.textContent =
+                formatTime(audio.currentTime) + " / " + formatTime(duration);
+        }
+
+        function updateDetailStatus(status) {
+            const badge = document.getElementById("detailStatus");
+            const labels = {
+                new: "Chưa bắt đầu",
+                learning: "Đang học",
+                completed: "Đã hoàn thành ✓"
+            };
+            badge.dataset.status = status;
+            badge.textContent = labels[status];
+        }
+
+        function markStarted() {
+            localStorage.setItem(STORAGE_PREFIX + "Started", "true");
+            updateDetailStatus("learning");
+            scheduleCloudSave();
+        }
+
+        function markCompleted() {
+            localStorage.setItem(STORAGE_PREFIX + "Started", "true");
+            localStorage.setItem(STORAGE_PREFIX + "Completed", "true");
+            updateDetailStatus("completed");
+            scheduleCloudSave();
+        }
+
+        function findActiveLine(time) {
+            let result = lyricLines[0] || null;
+            lyricLines.forEach(function(line) {
+                if (effectiveLineTime(line) <= time) result = line;
+            });
+            return result;
+        }
+
+        function centerActiveLine(line) {
+            if (!line) return;
+            const viewportRect = lyricsViewport.getBoundingClientRect();
+            const lineRect = line.getBoundingClientRect();
+            const target =
+                lyricsViewport.scrollTop +
+                (lineRect.top - viewportRect.top) -
+                (lyricsViewport.clientHeight / 2) +
+                (lineRect.height / 2);
+            lyricsViewport.scrollTo({
+                top: Math.max(0, target),
+                behavior: "smooth"
+            });
+        }
+
+        function updateActiveLine() {
+            const activeLine = findActiveLine(audio.currentTime || 0);
+            if (!activeLine) return;
+
+            const nextLineId = activeLine.dataset.lineId;
+
+            lyricLines.forEach(function(line) {
+                const isActive = line === activeLine;
+                const isPast = effectiveLineTime(line) < effectiveLineTime(activeLine);
+                line.classList.toggle("active", isActive);
+                line.classList.toggle("past", isPast);
+            });
+
+            document.querySelectorAll(".song-note-card").forEach(function(card) {
+                card.classList.toggle(
+                    "active-line-note",
+                    card.dataset.lineId === nextLineId
+                );
+            });
+
+            if (activeLineId !== nextLineId) {
+                activeLineId = nextLineId;
+                if (!audio.paused) centerActiveLine(activeLine);
+            }
+
+            drawSongConnectors();
+        }
+
+        function toggleAudio() {
+            if (audio.paused) audio.play();
+            else audio.pause();
+        }
+
+        playButton.addEventListener("click", toggleAudio);
+
+        audio.addEventListener("loadedmetadata", updatePlayer);
+        audio.addEventListener("timeupdate", function() {
+            updatePlayer();
+            updateActiveLine();
+        });
+
+        audio.addEventListener("play", function() {
+            playButton.textContent = "❚❚";
+            record.classList.add("playing");
+            markStarted();
+        });
+
+        audio.addEventListener("pause", function() {
+            playButton.textContent = "▶";
+            record.classList.remove("playing");
+        });
+
+        audio.addEventListener("ended", function() {
+            markCompleted();
+            record.classList.remove("playing");
+            playButton.textContent = "▶";
+        });
+
+        progress.addEventListener("input", function() {
+            audio.currentTime = Number(progress.value);
+            updateActiveLine();
+        });
+
+        lyricsViewport.addEventListener("click", function(event) {
+            const wordElement = event.target.closest(".song-word");
+            if (wordElement) {
+                event.stopPropagation();
+                showSongWord(wordElement);
+                return;
+            }
+
+            const line = event.target.closest(".lyric-line");
+            if (line) {
+                audio.currentTime = Math.max(0, effectiveLineTime(line));
+                updateActiveLine();
+            }
+        });
+
+        function wordInfo(word) {
+            return songVocabulary[word] || {
+                pinyin: "—",
+                hanviet: "—",
+                pos: "词语 / từ vựng",
+                meaning: "Chưa bổ sung nghĩa"
+            };
+        }
+
+        function showSongWord(element) {
+            currentWordElement = element;
+            currentWord = element.dataset.word || element.textContent.trim();
+            const info = wordInfo(currentWord);
+
+            document.getElementById("songPopupWord").textContent = currentWord;
+            document.getElementById("songPopupPinyin").textContent = info.pinyin;
+            document.getElementById("songPopupMeta").textContent =
+                info.hanviet + " · " + info.pos;
+            document.getElementById("songPopupMeaning").textContent = info.meaning;
+
+            updatePopupButtons();
+            document.getElementById("songWordPopup").classList.add("show");
+        }
+
+        function closeSongWord() {
+            document.getElementById("songWordPopup").classList.remove("show");
+        }
+
+        document.getElementById("songPopupClose")
+            .addEventListener("click", closeSongWord);
+
+        document.addEventListener("click", function(event) {
+            const popup = document.getElementById("songWordPopup");
+            if (!popup.classList.contains("show")) return;
+            if (popup.contains(event.target) || event.target.closest(".song-word")) return;
+            closeSongWord();
+        });
+
+        function saveCurrentWord() {
+            if (!currentWord) return;
+            const saved = getSavedWords();
+            const index = saved.indexOf(currentWord);
+
+            if (index >= 0) saved.splice(index, 1);
+            else saved.push(currentWord);
+
+            setSavedWords(saved);
+            renderSavedWords();
+            updatePopupButtons();
+        }
+
+        document.getElementById("songSaveWord")
+            .addEventListener("click", saveCurrentWord);
+
+        function togglePinCurrentWord() {
+            if (!currentWordElement) return;
+
+            const id = currentWordElement.dataset.wordId;
+            const line = currentWordElement.closest(".lyric-line");
+            const pinned = getPinnedWords();
+            const index = pinned.findIndex(function(item) {
+                return item.id === id;
+            });
+
+            if (index >= 0) {
+                pinned.splice(index, 1);
+            } else {
+                pinned.push({
+                    id: id,
+                    word: currentWord,
+                    lineId: line.dataset.lineId
+                });
+            }
+
+            setPinnedWords(pinned);
+            renderPinnedWords();
+            updatePopupButtons();
+        }
+
+        document.getElementById("songPinWord")
+            .addEventListener("click", togglePinCurrentWord);
+
+        function updatePopupButtons() {
+            const saveButton = document.getElementById("songSaveWord");
+            const pinButton = document.getElementById("songPinWord");
+            const pinned = getPinnedWords();
+            const wordId = currentWordElement && currentWordElement.dataset.wordId;
+            const isSaved = getSavedWords().includes(currentWord);
+            const isPinned = pinned.some(function(item) {
+                return item.id === wordId;
+            });
+
+            saveButton.classList.toggle("active", isSaved);
+            saveButton.textContent = isSaved ? "♥ Đã lưu" : "♡ Lưu từ";
+            pinButton.classList.toggle("active", isPinned);
+            pinButton.textContent = isPinned ? "📌 Đang hiện" : "📌 Hiện từ";
+        }
+
+        function toggleHighlight(color) {
+            if (!currentWordElement) return;
+            const id = currentWordElement.dataset.wordId;
+            const highlights = getHighlights();
+            highlights[id] = highlights[id] === color ? null : color;
+            setHighlights(highlights);
+            applyWordStyles();
+        }
+
+        document.querySelectorAll(".song-color-button").forEach(function(button) {
+            button.addEventListener("click", function() {
+                toggleHighlight(button.dataset.color);
+            });
+        });
+
+        function toggleUnderline() {
+            if (!currentWordElement) return;
+            const id = currentWordElement.dataset.wordId;
+            const underlines = getUnderlines();
+            underlines[id] = !underlines[id];
+            setUnderlines(underlines);
+            applyWordStyles();
+        }
+
+        document.getElementById("songUnderlineWord")
+            .addEventListener("click", toggleUnderline);
+
+        function applyWordStyles() {
+            const highlights = getHighlights();
+            const underlines = getUnderlines();
+            const colors = ["green", "blue", "yellow", "orange", "purple"];
+
+            document.querySelectorAll(".song-word").forEach(function(element) {
+                colors.forEach(function(color) {
+                    element.classList.remove("highlight-" + color);
+                });
+
+                const id = element.dataset.wordId;
+                if (highlights[id]) {
+                    element.classList.add("highlight-" + highlights[id]);
+                }
+                element.classList.toggle("is-underlined", Boolean(underlines[id]));
+            });
+        }
+
+        function renderSavedWords() {
+            const container = document.getElementById("songSavedWords");
+            const saved = getSavedWords();
+
+            if (!saved.length) {
+                container.textContent = "Chưa có từ nào được lưu.";
+                return;
+            }
+
+            container.innerHTML = "";
+            saved.forEach(function(word) {
+                const chip = document.createElement("span");
+                chip.className = "song-saved-chip";
+                chip.textContent = word;
+                container.appendChild(chip);
+            });
+        }
+
+        function removePinnedWord(id) {
+            const pinned = getPinnedWords().filter(function(item) {
+                return item.id !== id;
+            });
+            setPinnedWords(pinned);
+            renderPinnedWords();
+        }
+
+        function renderPinnedWords() {
+            const sidebar = document.getElementById("songNoteSidebar");
+            const pinned = getPinnedWords();
+            sidebar.innerHTML = "<h3>📌 Thẻ ghi chú</h3>";
+
+            if (!pinned.length) {
+                const empty = document.createElement("div");
+                empty.className = "song-note-empty";
+                empty.textContent = "Chưa có từ nào được ghim.";
+                sidebar.appendChild(empty);
+                drawSongConnectors();
+                return;
+            }
+
+            pinned.forEach(function(item) {
+                const info = wordInfo(item.word);
+                const card = document.createElement("article");
+                card.className = "song-note-card";
+                card.dataset.wordId = item.id;
+                card.dataset.lineId = item.lineId;
+                card.classList.toggle(
+                    "active-line-note",
+                    item.lineId === activeLineId
+                );
+
+                card.innerHTML =
+                    "<strong>" + item.word + "</strong>" +
+                    "<p>/" + info.pinyin + "/ · " + info.pos + "</p>" +
+                    "<p>" + info.meaning + "</p>";
+
+                const remove = document.createElement("button");
+                remove.className = "song-note-remove";
+                remove.type = "button";
+                remove.textContent = "×";
+                remove.addEventListener("click", function() {
+                    removePinnedWord(item.id);
+                });
+
+                card.appendChild(remove);
+                sidebar.appendChild(card);
+            });
+
+            requestAnimationFrame(drawSongConnectors);
+        }
+
+        function drawSongConnectors() {
+            const layout = document.getElementById("songStudyLayout");
+            const svg = document.getElementById("songConnectorSvg");
+            const divider = document.querySelector(".song-layout-divider");
+            if (!layout || !svg || !divider) return;
+
+            const layoutRect = layout.getBoundingClientRect();
+            const dividerRect = divider.getBoundingClientRect();
+            svg.setAttribute("viewBox", "0 0 " + layout.clientWidth + " " + layout.clientHeight);
+            svg.innerHTML = "";
+
+            getPinnedWords().forEach(function(item) {
+                const word = document.querySelector(
+                    '.song-word[data-word-id="' + item.id + '"]'
+                );
+                const card = document.querySelector(
+                    '.song-note-card[data-word-id="' + item.id + '"]'
+                );
+                if (!word || !card) return;
+
+                const wordRect = word.getBoundingClientRect();
+                const cardRect = card.getBoundingClientRect();
+                const startX = wordRect.right - layoutRect.left;
+                const startY = wordRect.top + wordRect.height / 2 - layoutRect.top;
+                const turnX = dividerRect.left + dividerRect.width / 2 - layoutRect.left;
+                const endX = cardRect.left - layoutRect.left;
+                const endY = cardRect.top + cardRect.height / 2 - layoutRect.top;
+                const active = item.lineId === activeLineId;
+
+                const line = document.createElementNS(
+                    "http://www.w3.org/2000/svg",
+                    "polyline"
+                );
+                line.setAttribute(
+                    "points",
+                    [
+                        startX + "," + startY,
+                        turnX + "," + startY,
+                        turnX + "," + endY,
+                        endX + "," + endY
+                    ].join(" ")
+                );
+                line.setAttribute("fill", "none");
+                line.setAttribute("stroke", active ? "#6f987b" : "#b8cdbf");
+                line.setAttribute("stroke-width", active ? "2.2" : "1.2");
+                line.setAttribute("stroke-dasharray", "4,4");
+                line.setAttribute("stroke-linecap", "round");
+                line.setAttribute("stroke-linejoin", "round");
+                svg.appendChild(line);
+            });
+        }
+
+        function restorePageState() {
+            applyWordStyles();
+            renderSavedWords();
+            renderPinnedWords();
+            updateActiveLine();
+
+            if (localStorage.getItem(STORAGE_PREFIX + "Completed") === "true") {
+                updateDetailStatus("completed");
+            } else if (
+                localStorage.getItem(STORAGE_PREFIX + "Started") === "true" ||
+                getSavedWords().length > 0
+            ) {
+                updateDetailStatus("learning");
+            } else {
+                updateDetailStatus("new");
+            }
+        }
+
+        lyricsViewport.addEventListener("scroll", drawSongConnectors);
+        window.addEventListener("resize", drawSongConnectors);
+
+        let embeddedLines = [];
+        try {
+            embeddedLines = JSON.parse(
+                document.getElementById("songEmbeddedLyrics").textContent
+            );
+        } catch (error) {
+            embeddedLines = [];
+        }
+
+        const storedLyrics = localStorage.getItem(LYRIC_TEXT_KEY);
+        const storedLines = storedLyrics ? normalizeLyricText(storedLyrics) : [];
+        const initialLines = embeddedLines.length === lyricLines.length
+            ? embeddedLines
+            : storedLines;
+
+        if (initialLines.length === lyricLines.length) {
+            lyricsInput.value = initialLines.join("\n");
+            applyLyricsToPage(initialLines);
+            lyricsImportMessage.textContent = embeddedLines.length
+                ? "File đang có sẵn đủ 46 dòng lời bài hát."
+                : "Đã tải 46 dòng đã lưu trên máy.";
+        }
+
+        updateOffsetLabel();
+        restorePageState();
+        requestAnimationFrame(function() {
+            audio.pause();
+            audio.currentTime = 0;
+            activeLineId = "";
+
+            lyricLines.forEach(function(line) {
+                line.classList.remove("active", "past");
+            });
+
+            updateActiveLine();
+            lyricsViewport.scrollTop = 0;
+        });
+
+        if (window.LessonProgress) {
+            progressSync = window.LessonProgress.create(SONG_PROGRESS_ID, {
+                onRemoteLoaded: restorePageState
+            });
+        }
+    </script>
+</body>
+</html>

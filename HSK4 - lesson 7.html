@@ -2129,6 +2129,8 @@ body {
     </div>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase.js"></script>
 <script>
 
 /* ================================================= */
@@ -3259,6 +3261,45 @@ let questionTimerInterval = null;
 
 
 /* ================================================= */
+/* ============== SUPABASE USER PROGRESS ============ */
+/* ================================================= */
+
+/* ===== ĐỒNG BỘ TIẾN ĐỘ BÀI 7 ===================== */
+/* ================================================= */
+
+let lessonProgressSync = null;
+
+function queueProgressSync() {
+    if (lessonProgressSync) {
+        lessonProgressSync.scheduleSave();
+    }
+}
+
+function refreshLessonAfterCloudLoad() {
+    currentHighlight = getHighlights();
+    currentUnderline = getUnderlines();
+
+    updateSavedList();
+    applySavedHighlights();
+    renderPinnedSidebar();
+
+    if (localStorage.getItem("lesson7Completed") === "true") {
+        updateStatus("completed");
+    } else if (getSavedWords().length > 0) {
+        updateStatus("learning");
+    } else {
+        updateStatus("new");
+    }
+}
+
+function initSupabaseProgress() {
+    lessonProgressSync = window.LessonProgress.create(7, {
+        onRemoteLoaded: refreshLessonAfterCloudLoad
+    });
+}
+
+
+/* ================================================= */
 /* ================= LOCAL STORAGE ================= */
 /* ================================================= */
 
@@ -3278,6 +3319,8 @@ function setSavedWords(words) {
         JSON.stringify(words)
     );
 
+    queueProgressSync();
+
 }
 
 
@@ -3296,6 +3339,8 @@ function setSentences(data) {
         "lesson7Sentences",
         JSON.stringify(data)
     );
+
+    queueProgressSync();
 
 }
 
@@ -3320,6 +3365,8 @@ function setHighlights(data) {
         JSON.stringify(data)
     );
 
+    queueProgressSync();
+
 }
 
 
@@ -3338,6 +3385,8 @@ function setUnderlines(data) {
         "lesson7Underlines",
         JSON.stringify(data)
     );
+
+    queueProgressSync();
 
 }
 
@@ -3362,6 +3411,8 @@ function setPinnedWords(words) {
         JSON.stringify(words)
     );
 
+    queueProgressSync();
+
 }
 
 function getPinnedPositions() {
@@ -3379,6 +3430,8 @@ function setPinnedPositions(data) {
         "lesson7PinnedPositions",
         JSON.stringify(data)
     );
+
+    queueProgressSync();
 
 }
 
@@ -3402,6 +3455,8 @@ function setNotes(data) {
         "lesson7Notes",
         JSON.stringify(data)
     );
+
+    queueProgressSync();
 
 }
 
@@ -5253,6 +5308,8 @@ function repeatStudy() {
         "lesson7Notes"
     );
 
+    queueProgressSync();
+
 
     prepareStudy();
 
@@ -5986,6 +6043,8 @@ function finishSentenceGame() {
         "true"
     );
 
+    queueProgressSync();
+
 
     backToReviewMenu();
 
@@ -6144,6 +6203,8 @@ if (
     updateStatus("new");
 
 }
+
+initSupabaseProgress();
 
 </script>
 

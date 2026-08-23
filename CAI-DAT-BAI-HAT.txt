@@ -1,0 +1,21 @@
+CÁCH CÀI BÀI HÁT 这首歌写给自己
+
+1. Chép các file sau vào thư mục chính homnayhocgimoi:
+   - songs.html
+   - style.css
+   - supabase.js
+   - song-zhe-shou-ge-xie-gei-ziji.html
+
+2. Giữ ảnh bìa ở thư mục chính với đúng tên:
+   zheshougexiegeiziji.jpg
+
+3. Chép file MP3 chị đã có vào thư mục audio và giữ đúng tên gốc.
+
+4. Mở song-zhe-shou-ge-xie-gei-ziji.html, tìm:
+   data-time=
+
+   Thay số giây bắt đầu và các dòng mẫu bằng nội dung chị có quyền sử dụng.
+   Không xóa class="lyric-line", class="song-word", data-line-id hoặc
+   data-word-id vì hiệu ứng chạy lời và thẻ ghi chú cần các thuộc tính này.
+
+5. Chạy Live Server, vào songs.html và bấm bài hát đầu tiên.
