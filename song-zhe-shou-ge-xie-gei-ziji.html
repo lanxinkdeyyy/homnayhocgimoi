@@ -113,7 +113,7 @@
                         Bấm vào một dòng để tua audio · bấm vào một từ để mở thẻ từ.
                     </p>
 
-                    <details id="songLyricsSetup" class="song-lyrics-setup">
+                    <details id="songLyricsSetup" class="song-lyrics-setup" style="display: none;">
                         <summary>⚙️ Dán toàn bộ lời bài hát một lần</summary>
                         <textarea id="songLyricsInput" placeholder="Dán lời vào đây, mỗi câu một dòng. Dòng trống sẽ tự bỏ qua."></textarea>
                         <div class="song-lyrics-setup-actions">
@@ -124,7 +124,7 @@
                         </div>
                     </details>
 
-                    <div class="song-sync-adjust" aria-label="Hiệu chỉnh thời gian lời bài hát">
+                    <div class="song-sync-adjust" aria-label="Hiệu chỉnh thời gian lời bài hát" style="display: none;">
                         <span>Hiệu chỉnh toàn bài:</span>
                         <button id="songOffsetEarlier" type="button">−0,5 giây</button>
                         <button id="songOffsetReset" type="button">Đặt lại</button>
@@ -219,7 +219,7 @@
     <script id="songEmbeddedLyrics" type="application/json">["这首歌写给自己","写那些快撑不住的情绪","白天总说我没事","夜里却一个人安静哭泣","这首歌写给自己","写那些没人懂的委屈","明明已经很努力","却还是活得小心翼翼","有时候真的很累","累到不想再解释","可我还是在硬撑","假装自己什么事都没事","原来长大以后","最难的不是生活","是没有人知道你其实也想被抱着","这首歌写给自己","谢谢你还没放弃","哪怕生活很难了","你也还在努力前进","这首歌写给自己","如果累了就停一下","没有人规定你一定要永远坚强啊","你总说没关系","其实心里很在意","很多次想放弃了","还是一个人走下去","有些情绪太重","重到不知道怎么说","只能在深夜里慢慢一点点沉默","你不是不想被懂","只是习惯了忍着","就到你自己都忘了怎么快乐","如果今天真的累了就先停下来吧","不是每一次脆弱都代表你输了啊","你已经强过很多","别人不知道的日子","所以别再对自己","那么苛刻了","这首歌写给自己","写给一直认真的你","那些没说出口的痛","其实都值得被听清","这首歌写给自己","希望你能慢慢懂得","先好好爱自己","再去爱这世界了"]</script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="supabase.js"></script>
-    <script>
+    <script id="songAppScript">
         const SONG_PROGRESS_ID = 1001;
         const STORAGE_PREFIX = "lesson" + SONG_PROGRESS_ID;
         const LYRIC_TEXT_KEY = STORAGE_PREFIX + "LyricsText";
@@ -648,6 +648,11 @@
             applyLyricsToPage(lines);
 
             const pageCopy = document.documentElement.cloneNode(true);
+            pageCopy.querySelectorAll(
+                "script:not([src]):not(#songEmbeddedLyrics):not(#songAppScript)"
+            ).forEach(function(script) {
+                script.remove();
+            });
             const embeddedCopy = pageCopy.querySelector("#songEmbeddedLyrics");
             embeddedCopy.textContent = JSON.stringify(lines).replace(/</g, "\\u003c");
 
@@ -1233,44 +1238,5 @@
             });
         }
     </script>
-<!-- Code injected by live-server -->
-<script>
-	// <![CDATA[  <-- For SVG support
-	if ('WebSocket' in window) {
-		(function () {
-			function refreshCSS() {
-				var sheets = [].slice.call(document.getElementsByTagName("link"));
-				var head = document.getElementsByTagName("head")[0];
-				for (var i = 0; i < sheets.length; ++i) {
-					var elem = sheets[i];
-					var parent = elem.parentElement || head;
-					parent.removeChild(elem);
-					var rel = elem.rel;
-					if (elem.href && typeof rel != "string" || rel.length == 0 || rel.toLowerCase() == "stylesheet") {
-						var url = elem.href.replace(/(&|\?)_cacheOverride=\d+/, '');
-						elem.href = url + (url.indexOf('?') >= 0 ? '&' : '?') + '_cacheOverride=' + (new Date().valueOf());
-					}
-					parent.appendChild(elem);
-				}
-			}
-			var protocol = window.location.protocol === 'http:' ? 'ws://' : 'wss://';
-			var address = protocol + window.location.host + window.location.pathname + '/ws';
-			var socket = new WebSocket(address);
-			socket.onmessage = function (msg) {
-				if (msg.data == 'reload') window.location.reload();
-				else if (msg.data == 'refreshcss') refreshCSS();
-			};
-			if (sessionStorage && !sessionStorage.getItem('IsThisFirstTime_Log_From_LiveServer')) {
-				console.log('Live reload enabled.');
-				sessionStorage.setItem('IsThisFirstTime_Log_From_LiveServer', true);
-			}
-		})();
-	}
-	else {
-		console.error('Upgrade your browser. This Browser is NOT supported WebSocket for Live-Reloading.');
-	}
-	// ]]>
-</script>
-
 
 </body></html>

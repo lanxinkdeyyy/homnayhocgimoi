@@ -78,7 +78,7 @@
         </header>
 
         <div id="songStudyLayout" class="song-study-layout">
-            <svg id="songConnectorSvg" class="song-connector-svg" viewBox="0 0 1120 1265"></svg>
+            <svg id="songConnectorSvg" class="song-connector-svg" viewBox="0 0 1120 1286"></svg>
 
             <section class="song-main-panel">
                 <div class="song-player-card">
@@ -94,7 +94,7 @@
                         <div class="song-controls">
                             <button id="songPlayButton" class="song-play-button" type="button" aria-label="Phát hoặc tạm dừng">▶</button>
 
-                            <span id="songTime" class="song-time">0:40 / 4:15</span>
+                            <span id="songTime" class="song-time">0:00 / 4:15</span>
 
                             <input id="songProgress" class="song-progress" type="range" min="0" max="255.407896" step="0.1" value="0" aria-label="Thời gian bài hát">
                         </div>
@@ -113,7 +113,7 @@
                         Bấm vào một dòng để tua audio · bấm vào một từ để mở thẻ từ.
                     </p>
 
-                    <details id="songLyricsSetup" class="song-lyrics-setup">
+                    <details id="songLyricsSetup" class="song-lyrics-setup" style="display: none;">
                         <summary>⚙️ Dán toàn bộ lời bài hát một lần</summary>
                         <textarea id="songLyricsInput" placeholder="Dán lời vào đây, mỗi câu một dòng. Dòng trống sẽ tự bỏ qua."></textarea>
                         <div class="song-lyrics-setup-actions">
@@ -124,7 +124,7 @@
                         </div>
                     </details>
 
-                    <div class="song-sync-adjust" aria-label="Hiệu chỉnh thời gian lời bài hát">
+                    <div class="song-sync-adjust" aria-label="Hiệu chỉnh thời gian lời bài hát" style="display: none;">
                         <span>Hiệu chỉnh toàn bài:</span>
                         <button id="songOffsetEarlier" type="button">−0,5 giây</button>
                         <button id="songOffsetReset" type="button">Đặt lại</button>
@@ -133,64 +133,64 @@
                     </div>
 
                     <div id="songLyricsScroll" class="song-lyrics-scroll">
-                        <div class="lyric-line" data-line-id="line-01" data-time="22.952">Dòng 01</div>
-                        <div class="lyric-line" data-line-id="line-02" data-time="31.950">Dòng 02</div>
-                        <div class="lyric-line" data-line-id="line-03" data-time="36.955">Dòng 03</div>
-                        <div class="lyric-line" data-line-id="line-04" data-time="40.948">Dòng 04</div>
-                        <div class="lyric-line" data-line-id="line-05" data-time="43.398">Dòng 05</div>
-                        <div class="lyric-line" data-line-id="line-06" data-time="50.145">Dòng 06</div>
-                        <div class="lyric-line" data-line-id="line-07" data-time="53.152">Dòng 07</div>
-                        <div class="lyric-line" data-line-id="line-08" data-time="58.656">Dòng 08</div>
-                        <div class="lyric-line" data-line-id="line-09" data-time="62.151">Dòng 09</div>
-                        <div class="lyric-line" data-line-id="line-10" data-time="67.654">Dòng 10</div>
-                        <div class="lyric-line" data-line-id="line-11" data-time="70.650">Dòng 11</div>
-                        <div class="lyric-line" data-line-id="line-12" data-time="76.153">Dòng 12</div>
-                        <div class="lyric-line" data-line-id="line-13" data-time="79.648">Dòng 13</div>
-                        <div class="lyric-line" data-line-id="line-14" data-time="81.657">Dòng 14</div>
-                        <div class="lyric-line" data-line-id="line-15" data-time="85.405">Dòng 15</div>
-                        <div class="lyric-line" data-line-id="line-16" data-time="88.450">Dòng 16</div>
-                        <div class="lyric-line" data-line-id="line-17" data-time="90.447">Dòng 17</div>
-                        <div class="lyric-line" data-line-id="line-18" data-time="93.955">Dòng 18</div>
-                        <div class="lyric-line" data-line-id="line-19" data-time="98.447">Dòng 19</div>
-                        <div class="lyric-line" data-line-id="line-20" data-time="102.952">Dòng 20</div>
-                        <div class="lyric-line" data-line-id="line-21" data-time="106.201">Dòng 21</div>
-                        <div class="lyric-line" data-line-id="line-22" data-time="142.523">Dòng 22</div>
-                        <div class="lyric-line" data-line-id="line-23" data-time="152.550">Dòng 23</div>
-                        <div class="lyric-line" data-line-id="line-24" data-time="156.556">Dòng 24</div>
-                        <div class="lyric-line" data-line-id="line-25" data-time="161.049">Dòng 25</div>
-                        <div class="lyric-line" data-line-id="line-26" data-time="163.303">Dòng 26</div>
-                        <div class="lyric-line" data-line-id="line-27" data-time="169.548">Dòng 27</div>
-                        <div class="lyric-line" data-line-id="line-28" data-time="172.555">Dòng 28</div>
-                        <div class="lyric-line" data-line-id="line-29" data-time="178.546">Dòng 29</div>
-                        <div class="lyric-line" data-line-id="line-30" data-time="181.553">Dòng 30</div>
-                        <div class="lyric-line" data-line-id="line-31" data-time="184.307">Dòng 31</div>
-                        <div class="lyric-line" data-line-id="line-32" data-time="187.556">Dòng 32</div>
-                        <div class="lyric-line" data-line-id="line-33" data-time="190.297">Dòng 33</div>
-                        <div class="lyric-line" data-line-id="line-34" data-time="192.548">Dòng 34</div>
-                        <div class="lyric-line" data-line-id="line-35" data-time="196.553">Dòng 35</div>
-                        <div class="lyric-line" data-line-id="line-36" data-time="201.047">Dòng 36</div>
-                        <div class="lyric-line" data-line-id="line-37" data-time="205.298">Dòng 37</div>
-                        <div class="lyric-line" data-line-id="line-38" data-time="212.299">Dòng 38</div>
-                        <div class="lyric-line" data-line-id="line-39" data-time="213.552">Dòng 39</div>
-                        <div class="lyric-line" data-line-id="line-40" data-time="218.067">Dòng 40</div>
-                        <div class="lyric-line" data-line-id="line-41" data-time="222.560">Dòng 41</div>
-                        <div class="lyric-line" data-line-id="line-42" data-time="227.065">Dòng 42</div>
-                        <div class="lyric-line" data-line-id="line-43" data-time="231.317">Dòng 43</div>
-                        <div class="lyric-line" data-line-id="line-44" data-time="236.063">Dòng 44</div>
-                        <div class="lyric-line" data-line-id="line-45" data-time="240.138">Dòng 45</div>
-                        <div class="lyric-line" data-line-id="line-46" data-time="245.131">Dòng 46</div>
+                        <div class="lyric-line" data-line-id="line-01" data-time="22.952"><span class="song-word highlight-yellow" data-word="散落" data-word-id="line-01-word-01">散落</span><span class="song-word" data-word="的" data-word-id="line-01-word-02">的</span><span class="song-word" data-word="月光" data-word-id="line-01-word-03">月光</span><span class="song-word highlight-yellow" data-word="穿过" data-word-id="line-01-word-04">穿过</span><span class="song-word" data-word="了" data-word-id="line-01-word-05">了</span><span class="song-word" data-word="云" data-word-id="line-01-word-06">云</span></div>
+                        <div class="lyric-line" data-line-id="line-02" data-time="31.950"><span class="song-word highlight-yellow" data-word="躲" data-word-id="line-02-word-01">躲</span><span class="song-word" data-word="着" data-word-id="line-02-word-02">着</span><span class="song-word" data-word="人群" data-word-id="line-02-word-03">人群</span></div>
+                        <div class="lyric-line" data-line-id="line-03" data-time="36.955"><span class="song-word" data-word="铺" data-word-id="line-03-word-01">铺</span><span class="song-word" data-word="成" data-word-id="line-03-word-02">成</span><span class="song-word" data-word="大海" data-word-id="line-03-word-03">大海</span><span class="song-word" data-word="的" data-word-id="line-03-word-04">的</span><span class="song-word" data-word="鳞" data-word-id="line-03-word-05">鳞</span></div>
+                        <div class="lyric-line" data-line-id="line-04" data-time="40.948"><span class="song-word" data-word="海浪" data-word-id="line-04-word-01">海浪</span><span class="song-word" data-word="打" data-word-id="line-04-word-02">打</span><span class="song-word" data-word="湿" data-word-id="line-04-word-03">湿</span><span class="song-word" data-word="白" data-word-id="line-04-word-04">白</span><span class="song-word" data-word="裙" data-word-id="line-04-word-05">裙</span></div>
+                        <div class="lyric-line" data-line-id="line-05" data-time="43.398"><span class="song-word" data-word="试图" data-word-id="line-05-word-01">试图</span><span class="song-word" data-word="推" data-word-id="line-05-word-02">推</span><span class="song-word" data-word="你" data-word-id="line-05-word-03">你</span><span class="song-word" data-word="回去" data-word-id="line-05-word-04">回去</span></div>
+                        <div class="lyric-line" data-line-id="line-06" data-time="50.145"><span class="song-word" data-word="海浪" data-word-id="line-06-word-01">海浪</span><span class="song-word" data-word="清洗" data-word-id="line-06-word-02">清洗</span><span class="song-word" data-word="血迹" data-word-id="line-06-word-03">血迹</span></div>
+                        <div class="lyric-line" data-line-id="line-07" data-time="53.152"><span class="song-word" data-word="妄想" data-word-id="line-07-word-01">妄想</span><span class="song-word" data-word="温暖" data-word-id="line-07-word-02">温暖</span><span class="song-word" data-word="你" data-word-id="line-07-word-03">你</span></div>
+                        <div class="lyric-line" data-line-id="line-08" data-time="58.656"><span class="song-word" data-word="往" data-word-id="line-08-word-01">往</span><span class="song-word" data-word="海" data-word-id="line-08-word-02">海</span><span class="song-word" data-word="的" data-word-id="line-08-word-03">的</span><span class="song-word" data-word="深处" data-word-id="line-08-word-04">深处</span><span class="song-word" data-word="听" data-word-id="line-08-word-05">听</span></div>
+                        <div class="lyric-line" data-line-id="line-09" data-time="62.151"><span class="song-word" data-word="谁" data-word-id="line-09-word-01">谁</span><span class="song-word" data-word="的" data-word-id="line-09-word-02">的</span><span class="song-word" data-word="哀鸣" data-word-id="line-09-word-03">哀鸣</span><span class="song-word" data-word="在" data-word-id="line-09-word-04">在</span><span class="song-word" data-word="指引" data-word-id="line-09-word-05">指引</span></div>
+                        <div class="lyric-line" data-line-id="line-10" data-time="67.654"><span class="song-word" data-word="灵魂" data-word-id="line-10-word-01">灵魂</span><span class="song-word" data-word="没入" data-word-id="line-10-word-02">没入</span><span class="song-word" data-word="寂静" data-word-id="line-10-word-03">寂静</span></div>
+                        <div class="lyric-line" data-line-id="line-11" data-time="70.650"><span class="song-word" data-word="无人" data-word-id="line-11-word-01">无人</span><span class="song-word" data-word="将" data-word-id="line-11-word-02">将</span><span class="song-word" data-word="你" data-word-id="line-11-word-03">你</span><span class="song-word" data-word="吵" data-word-id="line-11-word-04">吵</span><span class="song-word" data-word="醒" data-word-id="line-11-word-05">醒</span></div>
+                        <div class="lyric-line" data-line-id="line-12" data-time="76.153"><span class="song-word" data-word="你" data-word-id="line-12-word-01">你</span><span class="song-word" data-word="喜欢" data-word-id="line-12-word-02">喜欢</span><span class="song-word" data-word="海风" data-word-id="line-12-word-03">海风</span><span class="song-word" data-word="咸咸" data-word-id="line-12-word-04">咸咸</span><span class="song-word" data-word="的" data-word-id="line-12-word-05">的</span><span class="song-word" data-word="气息" data-word-id="line-12-word-06">气息</span></div>
+                        <div class="lyric-line" data-line-id="line-13" data-time="79.648"><span class="song-word" data-word="踩" data-word-id="line-13-word-01">踩</span><span class="song-word" data-word="着" data-word-id="line-13-word-02">着</span><span class="song-word" data-word="湿" data-word-id="line-13-word-03">湿</span><span class="song-word" data-word="湿" data-word-id="line-13-word-04">湿</span><span class="song-word" data-word="的" data-word-id="line-13-word-05">的</span><span class="song-word" data-word="沙砾" data-word-id="line-13-word-06">沙砾</span></div>
+                        <div class="lyric-line" data-line-id="line-14" data-time="81.657"><span class="song-word" data-word="你" data-word-id="line-14-word-01">你</span><span class="song-word" data-word="说" data-word-id="line-14-word-02">说</span><span class="song-word" data-word="人们" data-word-id="line-14-word-03">人们</span><span class="song-word" data-word="的" data-word-id="line-14-word-04">的</span><span class="song-word" data-word="骨灰" data-word-id="line-14-word-05">骨灰</span><span class="song-word" data-word="应该" data-word-id="line-14-word-06">应该</span><span class="song-word" data-word="撒" data-word-id="line-14-word-07">撒</span><span class="song-word" data-word="进" data-word-id="line-14-word-08">进</span><span class="song-word" data-word="海里" data-word-id="line-14-word-09">海里</span></div>
+                        <div class="lyric-line" data-line-id="line-15" data-time="85.405"><span class="song-word" data-word="你" data-word-id="line-15-word-01">你</span><span class="song-word" data-word="问" data-word-id="line-15-word-02">问</span><span class="song-word" data-word="我" data-word-id="line-15-word-03">我</span><span class="song-word" data-word="死" data-word-id="line-15-word-04">死</span><span class="song-word" data-word="后" data-word-id="line-15-word-05">后</span><span class="song-word" data-word="会" data-word-id="line-15-word-06">会</span><span class="song-word" data-word="去" data-word-id="line-15-word-07">去</span><span class="song-word" data-word="哪里" data-word-id="line-15-word-08">哪里</span></div>
+                        <div class="lyric-line" data-line-id="line-16" data-time="88.450"><span class="song-word" data-word="有" data-word-id="line-16-word-01">有</span><span class="song-word" data-word="没有" data-word-id="line-16-word-02">没有</span><span class="song-word" data-word="人" data-word-id="line-16-word-03">人</span><span class="song-word" data-word="爱" data-word-id="line-16-word-04">爱</span><span class="song-word" data-word="你" data-word-id="line-16-word-05">你</span></div>
+                        <div class="lyric-line" data-line-id="line-17" data-time="90.447"><span class="song-word" data-word="世界" data-word-id="line-17-word-01">世界</span><span class="song-word" data-word="能否" data-word-id="line-17-word-02">能否</span><span class="song-word" data-word="不再" data-word-id="line-17-word-03">不再</span></div>
+                        <div class="lyric-line" data-line-id="line-18" data-time="93.955"><span class="song-word" data-word="总" data-word-id="line-18-word-01">总</span><span class="song-word" data-word="爱" data-word-id="line-18-word-02">爱</span><span class="song-word" data-word="对" data-word-id="line-18-word-03">对</span><span class="song-word" data-word="凉" data-word-id="line-18-word-04">凉</span><span class="song-word" data-word="薄" data-word-id="line-18-word-05">薄</span><span class="song-word" data-word="的" data-word-id="line-18-word-06">的</span><span class="song-word" data-word="人" data-word-id="line-18-word-07">人</span><span class="song-word" data-word="扯" data-word-id="line-18-word-08">扯</span><span class="song-word" data-word="着" data-word-id="line-18-word-09">着</span><span class="song-word" data-word="笑脸" data-word-id="line-18-word-10">笑脸</span></div>
+                        <div class="lyric-line" data-line-id="line-19" data-time="98.447"><span class="song-word" data-word="岸上" data-word-id="line-19-word-01">岸上</span><span class="song-word" data-word="人们" data-word-id="line-19-word-02">人们</span><span class="song-word" data-word="脸" data-word-id="line-19-word-03">脸</span><span class="song-word" data-word="上" data-word-id="line-19-word-04">上</span><span class="song-word" data-word="都" data-word-id="line-19-word-05">都</span><span class="song-word" data-word="挂" data-word-id="line-19-word-06">挂</span><span class="song-word" data-word="着" data-word-id="line-19-word-07">着</span><span class="song-word" data-word="无关" data-word-id="line-19-word-08">无关</span></div>
+                        <div class="lyric-line" data-line-id="line-20" data-time="102.952"><span class="song-word" data-word="人间" data-word-id="line-20-word-01">人间</span><span class="song-word" data-word="毫无" data-word-id="line-20-word-02">毫无</span><span class="song-word" data-word="留恋" data-word-id="line-20-word-03">留恋</span></div>
+                        <div class="lyric-line" data-line-id="line-21" data-time="106.201"><span class="song-word" data-word="一切" data-word-id="line-21-word-01">一切</span><span class="song-word" data-word="散" data-word-id="line-21-word-02">散</span><span class="song-word" data-word="为" data-word-id="line-21-word-03">为</span><span class="song-word" data-word="烟" data-word-id="line-21-word-04">烟</span></div>
+                        <div class="lyric-line" data-line-id="line-22" data-time="142.523"><span class="song-word" data-word="散落" data-word-id="line-22-word-01">散落</span><span class="song-word" data-word="的" data-word-id="line-22-word-02">的</span><span class="song-word" data-word="月光" data-word-id="line-22-word-03">月光</span><span class="song-word" data-word="穿过" data-word-id="line-22-word-04">穿过</span><span class="song-word" data-word="了" data-word-id="line-22-word-05">了</span><span class="song-word" data-word="云" data-word-id="line-22-word-06">云</span></div>
+                        <div class="lyric-line" data-line-id="line-23" data-time="152.550"><span class="song-word" data-word="躲" data-word-id="line-23-word-01">躲</span><span class="song-word" data-word="着" data-word-id="line-23-word-02">着</span><span class="song-word" data-word="人群" data-word-id="line-23-word-03">人群</span></div>
+                        <div class="lyric-line" data-line-id="line-24" data-time="156.556"><span class="song-word" data-word="溜进" data-word-id="line-24-word-01">溜进</span><span class="song-word" data-word="海底" data-word-id="line-24-word-02">海底</span></div>
+                        <div class="lyric-line" data-line-id="line-25" data-time="161.049"><span class="song-word" data-word="海浪" data-word-id="line-25-word-01">海浪</span><span class="song-word" data-word="清洗" data-word-id="line-25-word-02">清洗</span><span class="song-word" data-word="血迹" data-word-id="line-25-word-03">血迹</span></div>
+                        <div class="lyric-line" data-line-id="line-26" data-time="163.303"><span class="song-word" data-word="妄想" data-word-id="line-26-word-01">妄想</span><span class="song-word" data-word="温暖" data-word-id="line-26-word-02">温暖</span><span class="song-word" data-word="你" data-word-id="line-26-word-03">你</span></div>
+                        <div class="lyric-line" data-line-id="line-27" data-time="169.548"><span class="song-word" data-word="灵魂" data-word-id="line-27-word-01">灵魂</span><span class="song-word" data-word="没入" data-word-id="line-27-word-02">没入</span><span class="song-word" data-word="寂静" data-word-id="line-27-word-03">寂静</span></div>
+                        <div class="lyric-line" data-line-id="line-28" data-time="172.555"><span class="song-word" data-word="无人" data-word-id="line-28-word-01">无人</span><span class="song-word" data-word="将" data-word-id="line-28-word-02">将</span><span class="song-word" data-word="你" data-word-id="line-28-word-03">你</span><span class="song-word" data-word="吵" data-word-id="line-28-word-04">吵</span><span class="song-word" data-word="醒" data-word-id="line-28-word-05">醒</span></div>
+                        <div class="lyric-line" data-line-id="line-29" data-time="178.546"><span class="song-word" data-word="你" data-word-id="line-29-word-01">你</span><span class="song-word" data-word="喜欢" data-word-id="line-29-word-02">喜欢</span><span class="song-word" data-word="海风" data-word-id="line-29-word-03">海风</span><span class="song-word" data-word="咸咸" data-word-id="line-29-word-04">咸咸</span><span class="song-word" data-word="的" data-word-id="line-29-word-05">的</span><span class="song-word" data-word="气息" data-word-id="line-29-word-06">气息</span></div>
+                        <div class="lyric-line" data-line-id="line-30" data-time="181.553"><span class="song-word" data-word="踩" data-word-id="line-30-word-01">踩</span><span class="song-word" data-word="着" data-word-id="line-30-word-02">着</span><span class="song-word" data-word="湿" data-word-id="line-30-word-03">湿</span><span class="song-word" data-word="湿" data-word-id="line-30-word-04">湿</span><span class="song-word" data-word="的" data-word-id="line-30-word-05">的</span><span class="song-word" data-word="沙砾" data-word-id="line-30-word-06">沙砾</span></div>
+                        <div class="lyric-line" data-line-id="line-31" data-time="184.307"><span class="song-word" data-word="你" data-word-id="line-31-word-01">你</span><span class="song-word" data-word="说" data-word-id="line-31-word-02">说</span><span class="song-word" data-word="人们" data-word-id="line-31-word-03">人们</span><span class="song-word" data-word="的" data-word-id="line-31-word-04">的</span><span class="song-word" data-word="骨灰" data-word-id="line-31-word-05">骨灰</span><span class="song-word" data-word="应该" data-word-id="line-31-word-06">应该</span><span class="song-word" data-word="撒" data-word-id="line-31-word-07">撒</span><span class="song-word" data-word="进" data-word-id="line-31-word-08">进</span><span class="song-word" data-word="海里" data-word-id="line-31-word-09">海里</span></div>
+                        <div class="lyric-line" data-line-id="line-32" data-time="187.556"><span class="song-word" data-word="你" data-word-id="line-32-word-01">你</span><span class="song-word" data-word="问" data-word-id="line-32-word-02">问</span><span class="song-word" data-word="我" data-word-id="line-32-word-03">我</span><span class="song-word" data-word="死" data-word-id="line-32-word-04">死</span><span class="song-word" data-word="后" data-word-id="line-32-word-05">后</span><span class="song-word" data-word="会" data-word-id="line-32-word-06">会</span><span class="song-word" data-word="去" data-word-id="line-32-word-07">去</span><span class="song-word" data-word="哪里" data-word-id="line-32-word-08">哪里</span></div>
+                        <div class="lyric-line" data-line-id="line-33" data-time="190.297"><span class="song-word" data-word="有" data-word-id="line-33-word-01">有</span><span class="song-word" data-word="没有" data-word-id="line-33-word-02">没有</span><span class="song-word" data-word="人" data-word-id="line-33-word-03">人</span><span class="song-word" data-word="爱" data-word-id="line-33-word-04">爱</span><span class="song-word" data-word="你" data-word-id="line-33-word-05">你</span></div>
+                        <div class="lyric-line" data-line-id="line-34" data-time="192.548"><span class="song-word" data-word="世界" data-word-id="line-34-word-01">世界</span><span class="song-word" data-word="已然" data-word-id="line-34-word-02">已然</span><span class="song-word" data-word="将" data-word-id="line-34-word-03">将</span><span class="song-word" data-word="你" data-word-id="line-34-word-04">你</span><span class="song-word" data-word="抛弃" data-word-id="line-34-word-05">抛弃</span></div>
+                        <div class="lyric-line" data-line-id="line-35" data-time="196.553"><span class="song-word" data-word="总" data-word-id="line-35-word-01">总</span><span class="song-word" data-word="爱" data-word-id="line-35-word-02">爱</span><span class="song-word" data-word="对" data-word-id="line-35-word-03">对</span><span class="song-word" data-word="凉" data-word-id="line-35-word-04">凉</span><span class="song-word" data-word="薄" data-word-id="line-35-word-05">薄</span><span class="song-word" data-word="的" data-word-id="line-35-word-06">的</span><span class="song-word" data-word="人" data-word-id="line-35-word-07">人</span><span class="song-word" data-word="扯" data-word-id="line-35-word-08">扯</span><span class="song-word" data-word="着" data-word-id="line-35-word-09">着</span><span class="song-word" data-word="笑脸" data-word-id="line-35-word-10">笑脸</span></div>
+                        <div class="lyric-line" data-line-id="line-36" data-time="201.047"><span class="song-word" data-word="岸上" data-word-id="line-36-word-01">岸上</span><span class="song-word" data-word="人们" data-word-id="line-36-word-02">人们</span><span class="song-word" data-word="脸" data-word-id="line-36-word-03">脸</span><span class="song-word" data-word="上" data-word-id="line-36-word-04">上</span><span class="song-word" data-word="都" data-word-id="line-36-word-05">都</span><span class="song-word" data-word="挂" data-word-id="line-36-word-06">挂</span><span class="song-word" data-word="着" data-word-id="line-36-word-07">着</span><span class="song-word" data-word="无关" data-word-id="line-36-word-08">无关</span></div>
+                        <div class="lyric-line" data-line-id="line-37" data-time="205.298"><span class="song-word" data-word="人间" data-word-id="line-37-word-01">人间</span><span class="song-word" data-word="毫无" data-word-id="line-37-word-02">毫无</span><span class="song-word" data-word="留恋" data-word-id="line-37-word-03">留恋</span></div>
+                        <div class="lyric-line" data-line-id="line-38" data-time="212.299"><span class="song-word" data-word="一切" data-word-id="line-38-word-01">一切</span><span class="song-word" data-word="散" data-word-id="line-38-word-02">散</span><span class="song-word" data-word="为" data-word-id="line-38-word-03">为</span><span class="song-word" data-word="烟" data-word-id="line-38-word-04">烟</span></div>
+                        <div class="lyric-line" data-line-id="line-39" data-time="213.552"><span class="song-word" data-word="来不及" data-word-id="line-39-word-01">来不及</span><span class="song-word" data-word="来不及" data-word-id="line-39-word-02">来不及</span></div>
+                        <div class="lyric-line" data-line-id="line-40" data-time="218.067"><span class="song-word" data-word="你" data-word-id="line-40-word-01">你</span><span class="song-word" data-word="曾" data-word-id="line-40-word-02">曾</span><span class="song-word" data-word="笑" data-word-id="line-40-word-03">笑</span><span class="song-word" data-word="着" data-word-id="line-40-word-04">着</span><span class="song-word" data-word="哭泣" data-word-id="line-40-word-05">哭泣</span></div>
+                        <div class="lyric-line" data-line-id="line-41" data-time="222.560"><span class="song-word" data-word="来不及" data-word-id="line-41-word-01">来不及</span><span class="song-word" data-word="来不及" data-word-id="line-41-word-02">来不及</span></div>
+                        <div class="lyric-line" data-line-id="line-42" data-time="227.065"><span class="song-word" data-word="你" data-word-id="line-42-word-01">你</span><span class="song-word" data-word="颤抖" data-word-id="line-42-word-02">颤抖</span><span class="song-word" data-word="的" data-word-id="line-42-word-03">的</span><span class="song-word" data-word="手臂" data-word-id="line-42-word-04">手臂</span></div>
+                        <div class="lyric-line" data-line-id="line-43" data-time="231.317"><span class="song-word" data-word="来不及" data-word-id="line-43-word-01">来不及</span><span class="song-word" data-word="来不及" data-word-id="line-43-word-02">来不及</span></div>
+                        <div class="lyric-line" data-line-id="line-44" data-time="236.063"><span class="song-word" data-word="无人" data-word-id="line-44-word-01">无人</span><span class="song-word" data-word="将" data-word-id="line-44-word-02">将</span><span class="song-word" data-word="你" data-word-id="line-44-word-03">你</span><span class="song-word" data-word="打捞" data-word-id="line-44-word-04">打捞</span><span class="song-word" data-word="起" data-word-id="line-44-word-05">起</span></div>
+                        <div class="lyric-line" data-line-id="line-45" data-time="240.138"><span class="song-word" data-word="来不及" data-word-id="line-45-word-01">来不及</span><span class="song-word" data-word="来不及" data-word-id="line-45-word-02">来不及</span></div>
+                        <div class="lyric-line" data-line-id="line-46" data-time="245.131"><span class="song-word" data-word="你" data-word-id="line-46-word-01">你</span><span class="song-word" data-word="明明" data-word-id="line-46-word-02">明明</span><span class="song-word" data-word="讨厌" data-word-id="line-46-word-03">讨厌</span><span class="song-word" data-word="窒息" data-word-id="line-46-word-04">窒息</span></div>
                     </div>
                 </section>
 
                 <section class="song-saved-card">
                     <h3>♡ Từ vựng đã lưu</h3>
-                    <div id="songSavedWords">Chưa có từ nào được lưu.</div>
+                    <div id="songSavedWords"><span class="song-saved-chip">穿过</span><span class="song-saved-chip">散落</span></div>
                 </section>
             </section>
 
             <div class="song-layout-divider"></div>
 
-            <aside id="songNoteSidebar" class="song-note-sidebar"><h3>📌 Thẻ ghi chú</h3><div class="song-note-empty">Chưa có từ nào được ghim.</div></aside>
+            <aside id="songNoteSidebar" class="song-note-sidebar"><h3>📌 Thẻ ghi chú</h3><article class="song-note-card active-line-note" data-word-id="line-01-word-04" data-line-id="line-01"><strong>穿过</strong><p>/chuānguò/ · (v)</p><p>Xuyên qua, đi qua</p><button class="song-note-remove" type="button">×</button></article><article class="song-note-card active-line-note" data-word-id="line-01-word-01" data-line-id="line-01"><strong>散落</strong><p>/sànluò/ · (v)</p><p>Rơi rớt, tản mát</p><button class="song-note-remove" type="button">×</button></article></aside>
         </div>
     </main>
 
@@ -216,10 +216,10 @@
         </div>
     </div>
 
-    <script id="songEmbeddedLyrics" type="application/json">[]</script>
+    <script id="songEmbeddedLyrics" type="application/json">["散落的月光穿过了云","躲着人群","铺成大海的鳞","海浪打湿白裙","试图推你回去","海浪清洗血迹","妄想温暖你","往海的深处听","谁的哀鸣在指引","灵魂没入寂静","无人将你吵醒","你喜欢海风咸咸的气息","踩着湿湿的沙砾","你说人们的骨灰应该撒进海里","你问我死后会去哪里","有没有人爱你","世界能否不再","总爱对凉薄的人扯着笑脸","岸上人们脸上都挂着无关","人间毫无留恋","一切散为烟","散落的月光穿过了云","躲着人群","溜进海底","海浪清洗血迹","妄想温暖你","灵魂没入寂静","无人将你吵醒","你喜欢海风咸咸的气息","踩着湿湿的沙砾","你说人们的骨灰应该撒进海里","你问我死后会去哪里","有没有人爱你","世界已然将你抛弃","总爱对凉薄的人扯着笑脸","岸上人们脸上都挂着无关","人间毫无留恋","一切散为烟","来不及来不及","你曾笑着哭泣","来不及来不及","你颤抖的手臂","来不及来不及","无人将你打捞起","来不及来不及","你明明讨厌窒息"]</script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="supabase.js"></script>
-    <script>
+    <script id="songAppScript">
         const SONG_PROGRESS_ID = 1002;
         const STORAGE_PREFIX = "lesson" + SONG_PROGRESS_ID;
         const LYRIC_TEXT_KEY = STORAGE_PREFIX + "LyricsText";
@@ -695,10 +695,10 @@
             pageCopy.querySelectorAll(".lyric-line").forEach(function(line) {
                 line.classList.remove("active", "past");
             });
-            pageCopy.querySelectorAll("script").forEach(function(script) {
-                if (script.textContent.includes("Live reload enabled.")) {
-                    script.remove();
-                }
+            pageCopy.querySelectorAll(
+                "script:not([src]):not(#songEmbeddedLyrics):not(#songAppScript)"
+            ).forEach(function(script) {
+                script.remove();
             });
             const embeddedCopy = pageCopy.querySelector("#songEmbeddedLyrics");
             embeddedCopy.textContent = JSON.stringify(lines).replace(/</g, "\\u003c");
@@ -1294,5 +1294,8 @@
             });
         }
     </script>
-</body>
-</html>
+<!-- Code injected by live-server -->
+
+
+
+</body></html>
