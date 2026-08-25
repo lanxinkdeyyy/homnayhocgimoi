@@ -2139,1091 +2139,433 @@ body {
 
 const vocabulary = {
 
-    "草绿了": {
-        pinyin: "cǎo lǜ le",
-        hanviet: "thảo lục liễu",
-        pos: "短语 / cụm từ",
-        meaning: "Cỏ đã xanh rồi",
-        exampleChinese: "春天来了，草绿了。",
-        exampleVietnamese: "→ Mùa xuân đến, cỏ đã xanh rồi.",
-        usage: "Dùng để miêu tả cỏ bắt đầu chuyển sang màu xanh."
-    },
-
-    "那是": {
-        pinyin: "nà shì",
-        hanviet: "na thị",
-        pos: "短语 / cụm từ",
-        meaning: "Đó là",
-        exampleChinese: "那是我的书。",
-        exampleVietnamese: "→ Đó là sách của tôi.",
-        usage: "Dùng để chỉ và giới thiệu một sự vật."
-    },
-
-    "生命": {
-        pinyin: "shēngmìng",
-        hanviet: "sinh mệnh",
-        pos: "名词 / danh từ",
-        meaning: "Sinh mệnh, sự sống",
-        exampleChinese: "我们应该珍惜生命。",
-        exampleVietnamese: "→ Chúng ta nên trân trọng sự sống.",
-        usage: "生命 chỉ sự sống hoặc cuộc đời của con người, động vật, thực vật."
-    },
-
-    "的": {
-        pinyin: "de",
-        hanviet: "đích",
-        pos: "助词 / trợ từ",
-        meaning: "Trợ từ kết cấu",
-        exampleChinese: "我的书。",
-        exampleVietnamese: "→ Sách của tôi.",
-        usage: "Dùng để biểu thị quan hệ sở hữu hoặc định ngữ."
-    },
-
-    "颜色": {
-        pinyin: "yánsè",
-        hanviet: "nhan sắc",
-        pos: "名词 / danh từ",
-        meaning: "Màu sắc",
-        exampleChinese: "你喜欢什么颜色？",
-        exampleVietnamese: "→ Bạn thích màu gì?",
-        usage: "Dùng để nói về màu sắc."
-    },
-
-    "花开了": {
-        pinyin: "huā kāi le",
-        hanviet: "hoa khai liễu",
-        pos: "短语 / cụm từ",
-        meaning: "Hoa đã nở",
-        exampleChinese: "春天到了，花开了。",
-        exampleVietnamese: "→ Mùa xuân đến, hoa đã nở.",
-        usage: "Miêu tả hoa bắt đầu nở."
-    },
-
-    "大自然": {
-        pinyin: "dà zìrán",
-        hanviet: "đại tự nhiên",
-        pos: "名词 / danh từ",
-        meaning: "Thiên nhiên",
-        exampleChinese: "我们应该保护大自然。",
-        exampleVietnamese: "→ Chúng ta nên bảo vệ thiên nhiên.",
-        usage: "Chỉ thế giới tự nhiên."
-    },
-
-    "礼物": {
-        pinyin: "lǐwù",
-        hanviet: "lễ vật",
-        pos: "名词 / danh từ",
-        meaning: "Quà, món quà",
-        exampleChinese: "这是给你的礼物。",
-        exampleVietnamese: "→ Đây là món quà dành cho bạn.",
-        usage: "Chỉ vật được tặng cho người khác."
-    },
-
-    "生活中": {
-        pinyin: "shēnghuó zhōng",
-        hanviet: "sinh hoạt trung",
-        pos: "短语 / cụm từ",
-        meaning: "Trong cuộc sống",
-        exampleChinese: "生活中有很多美好的事情。",
-        exampleVietnamese: "→ Trong cuộc sống có rất nhiều điều tốt đẹp.",
-        usage: "Dùng để chỉ phạm vi trong cuộc sống."
-    },
-
-    "不缺少": {
-        pinyin: "bù quēshǎo",
-        hanviet: "bất khuyết thiểu",
-        pos: "动词 / động từ",
-        meaning: "Không thiếu",
-        exampleChinese: "生活中不缺少机会。",
-        exampleVietnamese: "→ Trong cuộc sống không thiếu cơ hội.",
-        usage: "表示没有缺少某种事物."
-    },
-
-    "美": {
-        pinyin: "měi",
-        hanviet: "mỹ",
-        pos: "形容词 / tính từ",
-        meaning: "Đẹp, cái đẹp",
-        exampleChinese: "这个地方很美。",
-        exampleVietnamese: "→ Nơi này rất đẹp.",
-        usage: "Có thể chỉ vẻ đẹp hoặc điều đẹp đẽ."
-    },
-
-    "缺少": {
-        pinyin: "quēshǎo",
-        hanviet: "khuyết thiểu",
-        pos: "动词 / động từ",
-        meaning: "Thiếu",
-        exampleChinese: "我缺少经验。",
-        exampleVietnamese: "→ Tôi thiếu kinh nghiệm.",
-        usage: "Dùng khi một người hoặc sự vật không có đủ thứ cần thiết."
-    },
-
-    "是": {
-        pinyin: "shì",
-        hanviet: "thị",
-        pos: "动词 / động từ",
-        meaning: "Là",
-        exampleChinese: "我是学生。",
-        exampleVietnamese: "→ Tôi là học sinh.",
-        usage: "Dùng để biểu thị quan hệ 'là'."
-    },
-
-    "发现": {
-        pinyin: "fāxiàn",
-        hanviet: "phát hiện",
-        pos: "动词 / động từ",
-        meaning: "Phát hiện, nhận ra",
-        exampleChinese: "我发现他变了。",
-        exampleVietnamese: "→ Tôi nhận ra anh ấy đã thay đổi.",
-        usage: "Dùng khi nhận ra hoặc tìm thấy điều trước đó chưa biết."
-    },
-
-    "眼睛": {
-        pinyin: "yǎnjing",
-        hanviet: "nhãn tinh",
-        pos: "名词 / danh từ",
-        meaning: "Mắt",
-        exampleChinese: "我的眼睛有点儿累。",
-        exampleVietnamese: "→ Mắt tôi hơi mỏi.",
-        usage: "Chỉ cơ quan dùng để nhìn."
-    },
-
-    "只要": {
-        pinyin: "zhǐyào",
-        hanviet: "chỉ yếu",
-        pos: "连词 / liên từ",
-        meaning: "Chỉ cần",
-        exampleChinese: "只要努力，就能成功。",
-        exampleVietnamese: "→ Chỉ cần cố gắng thì có thể thành công.",
-        usage: "Thường dùng trong cấu trúc 只要……就……."
-    },
-
-    "有心": {
-        pinyin: "yǒu xīn",
-        hanviet: "hữu tâm",
-        pos: "形容词 / tính từ",
-        meaning: "Có lòng, để tâm",
-        exampleChinese: "只要有心，就能发现美。",
-        exampleVietnamese: "→ Chỉ cần để tâm thì có thể phát hiện ra cái đẹp.",
-        usage: "Chỉ việc có lòng hoặc chú ý đến một điều gì đó."
-    },
-
-    "到处": {
-        pinyin: "dàochù",
-        hanviet: "đáo xứ",
-        pos: "副词 / phó từ",
-        meaning: "Khắp nơi",
-        exampleChinese: "这里到处都是花。",
-        exampleVietnamese: "→ Ở đây đâu đâu cũng có hoa.",
-        usage: "Chỉ mọi nơi."
-    },
-
-    "都是": {
-        pinyin: "dōu shì",
-        hanviet: "đô thị",
-        pos: "短语 / cụm từ",
-        meaning: "Đều là, đều có",
-        exampleChinese: "这里都是学生。",
-        exampleVietnamese: "→ Ở đây đều là học sinh.",
-        usage: "表示全部属于某种情况."
-    },
-
-    "生活": {
-        pinyin: "shēnghuó",
-        hanviet: "sinh hoạt",
-        pos: "名词 / động từ",
-        meaning: "Cuộc sống; sinh sống",
-        exampleChinese: "我很喜欢现在的生活。",
-        exampleVietnamese: "→ Tôi rất thích cuộc sống hiện tại.",
-        usage: "Có thể làm danh từ hoặc động từ."
-    },
-
-    "态度": {
-        pinyin: "tàidù",
-        hanviet: "thái độ",
-        pos: "名词 / danh từ",
-        meaning: "Thái độ",
-        exampleChinese: "他的工作态度很好。",
-        exampleVietnamese: "→ Thái độ làm việc của anh ấy rất tốt.",
-        usage: "Chỉ cách một người nhìn nhận hoặc đối xử với một việc."
-    },
-
-    "要": {
-        pinyin: "yào",
-        hanviet: "yếu",
-        pos: "动词 / năng động từ",
-        meaning: "Cần, phải, muốn",
-        exampleChinese: "我要努力学习。",
-        exampleVietnamese: "→ Tôi phải chăm chỉ học tập.",
-        usage: "Tùy ngữ cảnh có thể biểu thị nhu cầu, ý muốn hoặc sự cần thiết."
-    },
-
-    "自己": {
-        pinyin: "zìjǐ",
-        hanviet: "tự kỷ",
-        pos: "代词 / đại từ",
-        meaning: "Bản thân, chính mình",
-        exampleChinese: "自己的事情自己做。",
-        exampleVietnamese: "→ Việc của mình thì tự mình làm.",
-        usage: "Dùng để chỉ chính người đó."
-    },
-
-    "选择": {
-        pinyin: "xuǎnzé",
-        hanviet: "tuyển trạch",
-        pos: "动词 / danh từ",
-        meaning: "Lựa chọn",
-        exampleChinese: "你可以自己选择。",
-        exampleVietnamese: "→ Bạn có thể tự lựa chọn.",
-        usage: "Dùng khi chọn một hoặc nhiều phương án."
-    },
-
-    "因此": {
-        pinyin: "yīncǐ",
-        hanviet: "nhân thử",
-        pos: "连词 / liên từ",
-        meaning: "Vì vậy, do đó",
-        exampleChinese: "天气不好，因此我们没有出去。",
-        exampleVietnamese: "→ Thời tiết không tốt, vì vậy chúng tôi không ra ngoài.",
-        usage: "Dùng để nối nguyên nhân với kết quả."
-    },
-
-    "遇到": {
-        pinyin: "yùdào",
-        hanviet: "ngộ đáo",
-        pos: "动词 / động từ",
-        meaning: "Gặp, gặp phải",
-        exampleChinese: "遇到问题时不要着急。",
-        exampleVietnamese: "→ Khi gặp vấn đề đừng lo lắng.",
-        usage: "Thường dùng với vấn đề, khó khăn hoặc người."
-    },
-
-    "烦恼": {
-        pinyin: "fánnǎo",
-        hanviet: "phiền não",
-        pos: "名词 / 动词",
-        meaning: "Phiền não, buồn phiền",
-        exampleChinese: "不要为小事烦恼。",
-        exampleVietnamese: "→ Đừng phiền não vì những chuyện nhỏ.",
-        usage: "Chỉ cảm giác lo lắng hoặc không vui."
-    },
-
-    "时": {
-        pinyin: "shí",
-        hanviet: "thời",
-        pos: "名词 / hậu tố",
-        meaning: "Khi, lúc",
-        exampleChinese: "小时候我很喜欢画画。",
-        exampleVietnamese: "→ Khi còn nhỏ tôi rất thích vẽ.",
-        usage: "Thường xuất hiện trong các cụm như ……时, ……时候."
-    },
-
-    "你": {
-        pinyin: "nǐ",
-        hanviet: "nhĩ",
-        pos: "代词 / đại từ",
-        meaning: "Bạn, cậu",
-        exampleChinese: "你应该休息一下。",
-        exampleVietnamese: "→ Bạn nên nghỉ ngơi một chút.",
-        usage: "Dùng để chỉ người đang giao tiếp."
-    },
-
-    "应该": {
-        pinyin: "yīnggāi",
-        hanviet: "ưng cai",
-        pos: "能愿动词 / động từ năng nguyện",
-        meaning: "Nên, cần phải",
-        exampleChinese: "你应该早点儿睡觉。",
-        exampleVietnamese: "→ Bạn nên đi ngủ sớm.",
-        usage: "Dùng để đưa ra lời khuyên hoặc điều nên làm."
-    },
-
-    "想": {
-        pinyin: "xiǎng",
-        hanviet: "tưởng",
-        pos: "动词 / động từ",
-        meaning: "Nghĩ, muốn",
-        exampleChinese: "我想办法解决问题。",
-        exampleVietnamese: "→ Tôi nghĩ cách giải quyết vấn đề.",
-        usage: "Có thể mang nghĩa nghĩ, suy nghĩ hoặc muốn."
-    },
-
-    "一些": {
-        pinyin: "yìxiē",
-        hanviet: "nhất ta",
-        pos: "数量词 / lượng từ",
-        meaning: "Một vài, một ít",
-        exampleChinese: "我想买一些水果。",
-        exampleVietnamese: "→ Tôi muốn mua một ít hoa quả.",
-        usage: "Chỉ một lượng không xác định nhưng không lớn."
-    },
-
-    "办法": {
-        pinyin: "bànfǎ",
-        hanviet: "biện pháp",
-        pos: "名词 / danh từ",
-        meaning: "Cách, biện pháp",
-        exampleChinese: "我有一个办法。",
-        exampleVietnamese: "→ Tôi có một cách.",
-        usage: "Chỉ phương pháp giải quyết vấn đề."
-    },
-
-    "让": {
-        pinyin: "ràng",
-        hanviet: "nhượng",
-        pos: "动词 / động từ",
-        meaning: "Khiến, để, cho",
-        exampleChinese: "这件事让我很开心。",
-        exampleVietnamese: "→ Chuyện này khiến tôi rất vui.",
-        usage: "让 + người + động từ/tính từ: khiến ai đó làm gì hoặc ở trạng thái nào."
-    },
-
-    "从": {
-        pinyin: "cóng",
-        hanviet: "tòng",
-        pos: "介词 / giới từ",
-        meaning: "Từ",
-        exampleChinese: "我从北京回来。",
-        exampleVietnamese: "→ Tôi trở về từ Bắc Kinh.",
-        usage: "Chỉ điểm bắt đầu về thời gian hoặc địa điểm."
-    },
-
-    "不高兴": {
-        pinyin: "bù gāoxìng",
-        hanviet: "bất cao hứng",
-        pos: "形容词 / tính từ",
-        meaning: "Không vui",
-        exampleChinese: "今天我有点儿不高兴。",
-        exampleVietnamese: "→ Hôm nay tôi hơi không vui.",
-        usage: "Miêu tả trạng thái không vui."
-    },
-
-    "心情": {
-        pinyin: "xīnqíng",
-        hanviet: "tâm tình",
-        pos: "名词 / danh từ",
-        meaning: "Tâm trạng",
-        exampleChinese: "今天我的心情很好。",
-        exampleVietnamese: "→ Hôm nay tâm trạng của tôi rất tốt.",
-        usage: "Chỉ trạng thái cảm xúc của một người."
-    },
-
-    "中": {
-        pinyin: "zhōng",
-        hanviet: "trung",
-        pos: "方位词 / từ phương vị",
-        meaning: "Trong",
-        exampleChinese: "生活中有很多美。",
-        exampleVietnamese: "→ Trong cuộc sống có rất nhiều cái đẹp.",
-        usage: "Đặt sau danh từ để chỉ phạm vi."
-    },
-
-    "走出来": {
-        pinyin: "zǒu chūlái",
-        hanviet: "tẩu xuất lai",
-        pos: "离合/趋向短语 / cụm động từ",
-        meaning: "Bước ra; thoát ra",
-        exampleChinese: "他终于从烦恼中走出来了。",
-        exampleVietnamese: "→ Cuối cùng anh ấy cũng thoát khỏi phiền muộn.",
-        usage: "Trong bài mang nghĩa thoát ra khỏi trạng thái cảm xúc tiêu cực."
-    },
-
-    "窗外": {
-        pinyin: "chuāngwài",
-        hanviet: "song ngoại",
-        pos: "名词 / danh từ",
-        meaning: "Ngoài cửa sổ",
-        exampleChinese: "我喜欢看看窗外。",
-        exampleVietnamese: "→ Tôi thích nhìn ra ngoài cửa sổ.",
-        usage: "Chỉ khu vực bên ngoài cửa sổ."
-    },
-
-    "什么样子": {
-        pinyin: "shénme yàngzi",
-        hanviet: "thập ma dạng tử",
-        pos: "短语 / cụm từ",
-        meaning: "Như thế nào, có dáng vẻ ra sao",
-        exampleChinese: "这个地方是什么样子？",
-        exampleVietnamese: "→ Nơi này trông như thế nào?",
-        usage: "Dùng để hỏi về hình dáng hoặc trạng thái."
-    },
-
-    "我们": {
-        pinyin: "wǒmen",
-        hanviet: "ngã môn",
-        pos: "代词 / đại từ",
-        meaning: "Chúng tôi, chúng ta",
-        exampleChinese: "我们一起学习。",
-        exampleVietnamese: "→ Chúng ta cùng học.",
-        usage: "Đại từ ngôi thứ nhất số nhiều."
-    },
-
-    "无法": {
-        pinyin: "wúfǎ",
-        hanviet: "vô pháp",
-        pos: "副词 / phó từ",
-        meaning: "Không thể, không có cách nào",
-        exampleChinese: "我无法改变过去。",
-        exampleVietnamese: "→ Tôi không thể thay đổi quá khứ.",
-        usage: "Nhấn mạnh không có khả năng hoặc phương pháp để làm gì."
-    },
-
-    "改变": {
-        pinyin: "gǎibiàn",
-        hanviet: "cải biến",
-        pos: "动词 / động từ",
-        meaning: "Thay đổi",
-        exampleChinese: "我们无法改变天气。",
-        exampleVietnamese: "→ Chúng ta không thể thay đổi thời tiết.",
-        usage: "Dùng khi làm cho sự vật hoặc tình trạng trở nên khác đi."
-    },
-
-    "但": {
-        pinyin: "dàn",
-        hanviet: "đãn",
-        pos: "连词 / liên từ",
-        meaning: "Nhưng",
-        exampleChinese: "我很累，但我还要学习。",
-        exampleVietnamese: "→ Tôi rất mệt nhưng vẫn phải học.",
-        usage: "Dùng để biểu thị sự chuyển ý hoặc đối lập."
-    },
-
-    "可以": {
-        pinyin: "kěyǐ",
-        hanviet: "khả dĩ",
-        pos: "能愿动词 / động từ năng nguyện",
-        meaning: "Có thể",
-        exampleChinese: "你可以自己选择。",
-        exampleVietnamese: "→ Bạn có thể tự lựa chọn.",
-        usage: "Biểu thị khả năng hoặc cho phép."
-    },
-
-    "站": {
-        pinyin: "zhàn",
-        hanviet: "trạm",
-        pos: "动词 / động từ",
-        meaning: "Đứng",
-        exampleChinese: "请站在这里。",
-        exampleVietnamese: "→ Hãy đứng ở đây.",
-        usage: "Chỉ hành động đứng."
-    },
-
-    "在哪个": {
-        pinyin: "zài nǎge",
-        hanviet: "tại nả cá",
-        pos: "短语 / cụm từ",
-        meaning: "Ở cái nào, ở đâu",
-        exampleChinese: "你想站在哪个窗户前？",
-        exampleVietnamese: "→ Bạn muốn đứng trước cửa sổ nào?",
-        usage: "Dùng để hỏi vị trí lựa chọn."
-    },
-
-    "窗户": {
-        pinyin: "chuānghu",
-        hanviet: "song hộ",
-        pos: "名词 / danh từ",
-        meaning: "Cửa sổ",
-        exampleChinese: "请打开窗户。",
-        exampleVietnamese: "→ Hãy mở cửa sổ.",
-        usage: "Chỉ cửa sổ."
-    },
-
-    "前": {
-        pinyin: "qián",
-        hanviet: "tiền",
-        pos: "方位词 / từ phương vị",
-        meaning: "Phía trước",
-        exampleChinese: "学校前面有一家书店。",
-        exampleVietnamese: "→ Phía trước trường có một hiệu sách.",
-        usage: "Chỉ vị trí phía trước."
-    },
-
-    "一个": {
-        pinyin: "yí ge",
-        hanviet: "nhất cá",
-        pos: "数量词 / lượng từ",
-        meaning: "Một cái, một",
-        exampleChinese: "我有一个想法。",
-        exampleVietnamese: "→ Tôi có một ý tưởng.",
-        usage: "Chỉ số lượng một."
-    },
-
-    "能够": {
-        pinyin: "nénggòu",
-        hanviet: "năng cấu",
-        pos: "能愿动词 / động từ năng nguyện",
-        meaning: "Có thể, có khả năng",
-        exampleChinese: "我希望能够成功。",
-        exampleVietnamese: "→ Tôi hy vọng có thể thành công.",
-        usage: "Biểu thị khả năng làm được một việc."
-    },
-
-    "带给": {
-        pinyin: "dàigěi",
-        hanviet: "đái cấp",
-        pos: "动词 / động từ",
-        meaning: "Mang lại",
-        exampleChinese: "音乐带给我快乐。",
-        exampleVietnamese: "→ Âm nhạc mang lại niềm vui cho tôi.",
-        usage: "带给 + người + điều gì: mang điều gì đến cho ai."
-    },
-
-    "快乐": {
-        pinyin: "kuàilè",
-        hanviet: "khoái lạc",
-        pos: "形容词 / tính từ",
-        meaning: "Vui vẻ, niềm vui",
-        exampleChinese: "希望你每天都快乐。",
-        exampleVietnamese: "→ Hy vọng mỗi ngày bạn đều vui vẻ.",
-        usage: "Miêu tả trạng thái vui vẻ, hạnh phúc."
-    },
-
-    "这样": {
-        pinyin: "zhèyàng",
-        hanviet: "giá dạng",
-        pos: "代词 / đại từ",
-        meaning: "Như vậy, như thế này",
-        exampleChinese: "这样做比较好。",
-        exampleVietnamese: "→ Làm như vậy thì tốt hơn.",
-        usage: "Dùng để chỉ cách thức hoặc tình trạng vừa được nói đến."
-    },
-
-    "才能": {
-        pinyin: "cáinéng",
-        hanviet: "tài năng",
-        pos: "副词 / phó từ",
-        meaning: "Mới có thể, chỉ khi... mới...",
-        exampleChinese: "努力学习才能进步。",
-        exampleVietnamese: "→ Chỉ khi chăm chỉ học mới có thể tiến bộ.",
-        usage: "Nhấn mạnh điều kiện cần thiết để đạt được kết quả."
-    },
-
-    "选对": {
-        pinyin: "xuǎn duì",
-        hanviet: "tuyển đối",
-        pos: "动词短语 / cụm động từ",
-        meaning: "Chọn đúng",
-        exampleChinese: "你要选对方法。",
-        exampleVietnamese: "→ Bạn phải chọn đúng phương pháp.",
-        usage: "选择 + 对: lựa chọn chính xác."
-    },
-
-
-    /* ================= BÀI 2 ================= */
-
-    "科学研究": {
-        pinyin: "kēxué yánjiū",
-        hanviet: "khoa học nghiên cứu",
-        pos: "名词 / danh từ",
-        meaning: "Nghiên cứu khoa học",
-        exampleChinese: "科学研究需要时间。",
-        exampleVietnamese: "→ Nghiên cứu khoa học cần thời gian.",
-        usage: "Chỉ hoạt động nghiên cứu trong lĩnh vực khoa học."
-    },
-
-    "证明": {
-        pinyin: "zhèngmíng",
-        hanviet: "chứng minh",
-        pos: "动词 / động từ",
-        meaning: "Chứng minh",
-        exampleChinese: "事实证明他是对的。",
-        exampleVietnamese: "→ Sự thật chứng minh anh ấy đúng.",
-        usage: "Dùng để đưa ra bằng chứng xác nhận một điều."
-    },
-
-    "女孩子": {
-        pinyin: "nǚháizi",
-        hanviet: "nữ hài tử",
-        pos: "名词 / danh từ",
-        meaning: "Cô gái, bé gái",
-        exampleChinese: "那个女孩子很可爱。",
-        exampleVietnamese: "→ Cô gái đó rất đáng yêu.",
-        usage: "Cách gọi một cô gái hoặc bé gái."
-    },
-
-    "对": {
-        pinyin: "duì",
-        hanviet: "đối",
-        pos: "介词 / giới từ",
-        meaning: "Đối với",
-        exampleChinese: "我对中国文化很感兴趣。",
-        exampleVietnamese: "→ Tôi rất hứng thú với văn hóa Trung Quốc.",
-        usage: "对 + đối tượng: đối với ai/cái gì."
-    },
-
-    "衣服": {
-        pinyin: "yīfu",
-        hanviet: "y phục",
-        pos: "名词 / danh từ",
-        meaning: "Quần áo",
-        exampleChinese: "这件衣服很好看。",
-        exampleVietnamese: "→ Bộ quần áo này rất đẹp.",
-        usage: "Chỉ quần áo nói chung."
-    },
-
-    "往往": {
-        pinyin: "wǎngwǎng",
-        hanviet: "vãng vãng",
-        pos: "副词 / phó từ",
-        meaning: "Thường thường, thường có xu hướng",
-        exampleChinese: "周末这里往往很热闹。",
-        exampleVietnamese: "→ Cuối tuần nơi này thường rất náo nhiệt.",
-        usage: "Chỉ một tình huống thường xuyên xảy ra."
-    },
-
-    "与": {
-        pinyin: "yǔ",
-        hanviet: "dữ",
-        pos: "介词 / giới từ",
-        meaning: "Với, cùng với",
-        exampleChinese: "这件事与我无关。",
-        exampleVietnamese: "→ Việc này không liên quan đến tôi.",
-        usage: "Cách dùng tương tự 和, nhưng trang trọng hơn."
-    },
-
-    "她们": {
-        pinyin: "tāmen",
-        hanviet: "tha môn",
-        pos: "代词 / đại từ",
-        meaning: "Họ, các cô ấy",
-        exampleChinese: "她们都是我的朋友。",
-        exampleVietnamese: "→ Họ đều là bạn của tôi.",
-        usage: "Đại từ ngôi thứ ba số nhiều dùng cho nữ."
-    },
-
-    "性格": {
-        pinyin: "xìnggé",
-        hanviet: "tính cách",
-        pos: "名词 / danh từ",
-        meaning: "Tính cách",
-        exampleChinese: "她的性格很开朗。",
-        exampleVietnamese: "→ Tính cách của cô ấy rất cởi mở.",
-        usage: "Chỉ đặc điểm tâm lý và cách hành xử của một người."
-    },
-
-    "有关": {
-        pinyin: "yǒuguān",
-        hanviet: "hữu quan",
-        pos: "动词 / tính từ",
-        meaning: "Có liên quan đến",
-        exampleChinese: "这件事与工作有关。",
-        exampleVietnamese: "→ Việc này có liên quan đến công việc.",
-        usage: "A 与 B 有关 = A có liên quan đến B."
-    },
-
-    "喜欢": {
-        pinyin: "xǐhuan",
-        hanviet: "hỉ hoan",
-        pos: "动词 / động từ",
-        meaning: "Thích",
-        exampleChinese: "我喜欢学习中文。",
-        exampleVietnamese: "→ Tôi thích học tiếng Trung.",
-        usage: "Biểu thị yêu thích một người hoặc sự vật."
-    },
-
-    "穿": {
-        pinyin: "chuān",
-        hanviet: "xuyên",
-        pos: "动词 / động từ",
-        meaning: "Mặc, đi",
-        exampleChinese: "她喜欢穿白色衣服。",
-        exampleVietnamese: "→ Cô ấy thích mặc quần áo màu trắng.",
-        usage: "Dùng cho việc mặc quần áo, đi giày."
-    },
-
-    "白色": {
-        pinyin: "báisè",
-        hanviet: "bạch sắc",
-        pos: "名词 / danh từ",
-        meaning: "Màu trắng",
-        exampleChinese: "我喜欢白色。",
-        exampleVietnamese: "→ Tôi thích màu trắng.",
-        usage: "Chỉ màu trắng."
-    },
-
-    "比较": {
-        pinyin: "bǐjiào",
-        hanviet: "tỷ giảo",
-        pos: "副词 / phó từ",
-        meaning: "Khá, tương đối",
-        exampleChinese: "今天比较冷。",
-        exampleVietnamese: "→ Hôm nay khá lạnh.",
-        usage: "Đặt trước tính từ để biểu thị mức độ tương đối."
-    },
-
-    "阳光": {
-        pinyin: "yángguāng",
-        hanviet: "dương quang",
-        pos: "名词 / 形容词",
-        meaning: "Ánh nắng; tích cực, tươi sáng",
-        exampleChinese: "她是一个很阳光的人。",
-        exampleVietnamese: "→ Cô ấy là một người rất tích cực, tươi sáng.",
-        usage: "Trong bài dùng để miêu tả tính cách tích cực, vui vẻ."
-    },
-
-    "生活态度": {
-        pinyin: "shēnghuó tàidù",
-        hanviet: "sinh hoạt thái độ",
-        pos: "名词 / danh từ",
-        meaning: "Thái độ đối với cuộc sống",
-        exampleChinese: "他的生活态度很积极。",
-        exampleVietnamese: "→ Thái độ sống của anh ấy rất tích cực.",
-        usage: "Chỉ cách một người nhìn nhận và đối diện với cuộc sống."
-    },
-
-    "积极向上": {
-        pinyin: "jījí xiàngshàng",
-        hanviet: "tích cực hướng thượng",
-        pos: "形容词 / tính từ",
-        meaning: "Tích cực, hướng lên",
-        exampleChinese: "她的生活态度积极向上。",
-        exampleVietnamese: "→ Thái độ sống của cô ấy rất tích cực.",
-        usage: "Miêu tả tinh thần tích cực, luôn hướng tới điều tốt đẹp."
-    },
-
-    "共同": {
-        pinyin: "gòngtóng",
-        hanviet: "cộng đồng",
-        pos: "形容词 / tính từ",
-        meaning: "Chung, cùng",
-        exampleChinese: "我们有共同的目标。",
-        exampleVietnamese: "→ Chúng ta có mục tiêu chung.",
-        usage: "Chỉ điều được nhiều người cùng có."
-    },
-
-    "特点": {
-        pinyin: "tèdiǎn",
-        hanviet: "đặc điểm",
-        pos: "名词 / danh từ",
-        meaning: "Đặc điểm",
-        exampleChinese: "这是这个城市的特点。",
-        exampleVietnamese: "→ Đây là đặc điểm của thành phố này.",
-        usage: "Chỉ đặc điểm nổi bật của người hoặc sự vật."
-    },
-
-    "而": {
-        pinyin: "ér",
-        hanviet: "nhi",
-        pos: "连词 / liên từ",
-        meaning: "Mà, còn, trong khi",
-        exampleChinese: "他喜欢红色，而我喜欢蓝色。",
-        exampleVietnamese: "→ Anh ấy thích màu đỏ, còn tôi thích màu xanh.",
-        usage: "Dùng để nối hai vế có sự đối lập hoặc khác biệt."
-    },
-
-    "红色": {
-        pinyin: "hóngsè",
-        hanviet: "hồng sắc",
-        pos: "名词 / danh từ",
-        meaning: "Màu đỏ",
-        exampleChinese: "红色让我觉得很热情。",
-        exampleVietnamese: "→ Màu đỏ khiến tôi cảm thấy rất nhiệt tình.",
-        usage: "Chỉ màu đỏ."
-    },
-
-    "浪漫": {
-        pinyin: "làngmàn",
-        hanviet: "lãng mạn",
-        pos: "形容词 / tính từ",
-        meaning: "Lãng mạn",
-        exampleChinese: "她喜欢浪漫的爱情故事。",
-        exampleVietnamese: "→ Cô ấy thích những câu chuyện tình yêu lãng mạn.",
-        usage: "Miêu tả cảm xúc hoặc phong cách giàu tình cảm."
-    },
-
-    "也": {
-        pinyin: "yě",
-        hanviet: "dã",
-        pos: "副词 / phó từ",
-        meaning: "Cũng",
-        exampleChinese: "我也喜欢这个颜色。",
-        exampleVietnamese: "→ Tôi cũng thích màu này.",
-        usage: "Biểu thị sự giống hoặc bổ sung."
-    },
-
-    "会": {
-        pinyin: "huì",
-        hanviet: "hội",
-        pos: "能愿动词 / động từ năng nguyện",
-        meaning: "Sẽ, có thể",
-        exampleChinese: "明天会下雨。",
-        exampleVietnamese: "→ Ngày mai sẽ mưa.",
-        usage: "Có thể biểu thị khả năng hoặc sự việc sẽ xảy ra."
-    },
-
-    "影响": {
-        pinyin: "yǐngxiǎng",
-        hanviet: "ảnh hưởng",
-        pos: "动词 / danh từ",
-        meaning: "Ảnh hưởng",
-        exampleChinese: "天气会影响心情。",
-        exampleVietnamese: "→ Thời tiết sẽ ảnh hưởng đến tâm trạng.",
-        usage: "Chỉ tác động làm thay đổi người hoặc sự vật."
-    },
-
-    "人": {
-        pinyin: "rén",
-        hanviet: "nhân",
-        pos: "名词 / danh từ",
-        meaning: "Người",
-        exampleChinese: "人需要朋友。",
-        exampleVietnamese: "→ Con người cần bạn bè.",
-        usage: "Chỉ con người."
-    },
-
-    "不同": {
-        pinyin: "bùtóng",
-        hanviet: "bất đồng",
-        pos: "形容词 / tính từ",
-        meaning: "Khác nhau",
-        exampleChinese: "每个人都有不同的想法。",
-        exampleVietnamese: "→ Mỗi người đều có suy nghĩ khác nhau.",
-        usage: "Dùng để biểu thị sự không giống nhau."
-    },
-
-    "给": {
-        pinyin: "gěi",
-        hanviet: "cấp",
-        pos: "介词 / 动词",
-        meaning: "Cho, đến, với",
-        exampleChinese: "给我一点儿时间。",
-        exampleVietnamese: "→ Cho tôi một chút thời gian.",
-        usage: "Có thể dùng như động từ 'cho' hoặc giới từ."
-    },
-
-    "带来": {
-        pinyin: "dàilái",
-        hanviet: "đái lai",
-        pos: "动词 / động từ",
-        meaning: "Mang lại",
-        exampleChinese: "运动给我们带来健康。",
-        exampleVietnamese: "→ Vận động mang lại sức khỏe cho chúng ta.",
-        usage: "Chỉ việc đem một điều gì đó đến cho người khác."
-    },
-
-    "感情": {
-        pinyin: "gǎnqíng",
-        hanviet: "cảm tình",
-        pos: "名词 / danh từ",
-        meaning: "Tình cảm, cảm xúc",
-        exampleChinese: "他们之间有很深的感情。",
-        exampleVietnamese: "→ Giữa họ có tình cảm rất sâu sắc.",
-        usage: "Chỉ tình cảm hoặc cảm xúc."
-    },
-
-    "变化": {
-        pinyin: "biànhuà",
-        hanviet: "biến hóa",
-        pos: "名词 / 动词",
-        meaning: "Sự thay đổi, thay đổi",
-        exampleChinese: "这里发生了很大的变化。",
-        exampleVietnamese: "→ Nơi này đã có những thay đổi rất lớn.",
-        usage: "Chỉ sự vật trở nên khác trước."
-    },
-
-    "黄色": {
-        pinyin: "huángsè",
-        hanviet: "hoàng sắc",
-        pos: "名词 / danh từ",
-        meaning: "Màu vàng",
-        exampleChinese: "黄色让人心情愉快。",
-        exampleVietnamese: "→ Màu vàng khiến người ta vui vẻ.",
-        usage: "Chỉ màu vàng."
-    },
-
-    "和": {
-        pinyin: "hé",
-        hanviet: "hòa",
-        pos: "连词 / liên từ",
-        meaning: "Và, với",
-        exampleChinese: "我喜欢红色和白色。",
-        exampleVietnamese: "→ Tôi thích màu đỏ và màu trắng.",
-        usage: "Dùng để nối hai danh từ hoặc thành phần ngang hàng."
-    },
-
-    "心情愉快": {
-        pinyin: "xīnqíng yúkuài",
-        hanviet: "tâm tình du khoái",
-        pos: "形容词短语 / cụm tính từ",
-        meaning: "Tâm trạng vui vẻ",
-        exampleChinese: "保持心情愉快很重要。",
-        exampleVietnamese: "→ Giữ tâm trạng vui vẻ rất quan trọng.",
-        usage: "Miêu tả trạng thái tinh thần vui vẻ, thoải mái."
-    },
-
-    "黑色": {
-        pinyin: "hēisè",
-        hanviet: "hắc sắc",
-        pos: "名词 / danh từ",
-        meaning: "Màu đen",
-        exampleChinese: "他喜欢穿黑色衣服。",
-        exampleVietnamese: "→ Anh ấy thích mặc quần áo màu đen.",
-        usage: "Chỉ màu đen."
-    },
-
-    "却": {
-        pinyin: "què",
-        hanviet: "khước",
-        pos: "副词 / phó từ",
-        meaning: "Lại, nhưng lại",
-        exampleChinese: "天气很冷，他却没有穿外套。",
-        exampleVietnamese: "→ Thời tiết rất lạnh nhưng anh ấy lại không mặc áo khoác.",
-        usage: "Nhấn mạnh sự trái ngược với điều được dự đoán."
-    },
-
-    "容易": {
-        pinyin: "róngyì",
-        hanviet: "dung dị",
-        pos: "形容词 / tính từ",
-        meaning: "Dễ, dễ dàng",
-        exampleChinese: "晚上喝咖啡容易睡不着。",
-        exampleVietnamese: "→ Uống cà phê buổi tối dễ mất ngủ.",
-        usage: "Chỉ khả năng một việc dễ xảy ra."
-    },
-
-    "感到": {
-        pinyin: "gǎndào",
-        hanviet: "cảm đáo",
-        pos: "动词 / động từ",
-        meaning: "Cảm thấy",
-        exampleChinese: "我感到很开心。",
-        exampleVietnamese: "→ Tôi cảm thấy rất vui.",
-        usage: "Dùng để biểu thị cảm nhận hoặc cảm xúc."
-    },
-
-    "伤心": {
-        pinyin: "shāngxīn",
-        hanviet: "thương tâm",
-        pos: "形容词 / tính từ",
-        meaning: "Buồn, đau lòng",
-        exampleChinese: "听到这个消息，她很伤心。",
-        exampleVietnamese: "→ Nghe tin này, cô ấy rất buồn.",
-        usage: "Miêu tả trạng thái buồn hoặc đau lòng."
-    },
-
-    "人们": {
-        pinyin: "rénmen",
-        hanviet: "nhân môn",
-        pos: "代词 / danh từ",
-        meaning: "Mọi người, người ta",
-        exampleChinese: "人们喜欢美好的生活。",
-        exampleVietnamese: "→ Mọi người thích cuộc sống tốt đẹp.",
-        usage: "Chỉ con người nói chung."
-    },
-
-    "在": {
-        pinyin: "zài",
-        hanviet: "tại",
-        pos: "介词 / 动词",
-        meaning: "Ở, tại, đang",
-        exampleChinese: "我在家学习。",
-        exampleVietnamese: "→ Tôi học ở nhà.",
-        usage: "Có thể chỉ địa điểm hoặc dùng trong cấu trúc đang làm gì."
-    },
-
-    "看到": {
-        pinyin: "kàndào",
-        hanviet: "khán đáo",
-        pos: "动词 / động từ",
-        meaning: "Nhìn thấy",
-        exampleChinese: "我看到了一只小鸟。",
-        exampleVietnamese: "→ Tôi nhìn thấy một con chim nhỏ.",
-        usage: "Chỉ việc dùng mắt nhìn thấy một sự vật."
-    },
-
-    "蓝色": {
-        pinyin: "lánsè",
-        hanviet: "lam sắc",
-        pos: "名词 / danh từ",
-        meaning: "Màu xanh lam",
-        exampleChinese: "我喜欢蓝色。",
-        exampleVietnamese: "→ Tôi thích màu xanh lam.",
-        usage: "Chỉ màu xanh lam."
-    },
-
-    "觉得": {
-        pinyin: "juéde",
-        hanviet: "giác đắc",
-        pos: "动词 / động từ",
-        meaning: "Cảm thấy, cho rằng",
-        exampleChinese: "我觉得这个办法很好。",
-        exampleVietnamese: "→ Tôi cảm thấy cách này rất tốt.",
-        usage: "Dùng để nói cảm nhận hoặc ý kiến cá nhân."
-    },
-
-    "很": {
-        pinyin: "hěn",
-        hanviet: "ngận",
-        pos: "副词 / phó từ",
-        meaning: "Rất",
-        exampleChinese: "今天很舒服。",
-        exampleVietnamese: "→ Hôm nay rất dễ chịu.",
-        usage: "Dùng để biểu thị mức độ, thường đứng trước tính từ."
-    },
-
-    "舒服": {
-        pinyin: "shūfu",
-        hanviet: "thư phục",
-        pos: "形容词 / tính từ",
-        meaning: "Thoải mái, dễ chịu",
-        exampleChinese: "这里很舒服。",
-        exampleVietnamese: "→ Ở đây rất thoải mái.",
-        usage: "Miêu tả cảm giác dễ chịu về thể chất hoặc tinh thần."
-    },
-
-    "安静": {
-        pinyin: "ānjìng",
-        hanviet: "an tĩnh",
-        pos: "形容词 / tính từ",
-        meaning: "Yên tĩnh",
-        exampleChinese: "这里很安静。",
-        exampleVietnamese: "→ Ở đây rất yên tĩnh.",
-        usage: "Miêu tả nơi không có nhiều tiếng động hoặc trạng thái bình tĩnh."
-    },
-
-    "下来": {
-        pinyin: "xiàlái",
-        hanviet: "hạ lai",
-        pos: "趋向补语 / bổ ngữ xu hướng",
-        meaning: "Xuống, trở nên ổn định",
-        exampleChinese: "安静下来。",
-        exampleVietnamese: "→ Trở nên yên tĩnh lại.",
-        usage: "Trong 安静下来 biểu thị trạng thái trở nên yên tĩnh."
-    },
-
-    "绿色": {
-        pinyin: "lǜsè",
-        hanviet: "lục sắc",
-        pos: "名词 / danh từ",
-        meaning: "Màu xanh lá",
-        exampleChinese: "绿色让人感觉很舒服。",
-        exampleVietnamese: "→ Màu xanh lá khiến người ta cảm thấy rất dễ chịu.",
-        usage: "Chỉ màu xanh lá."
-    },
-
-    "得到": {
-        pinyin: "dédào",
-        hanviet: "đắc đáo",
-        pos: "动词 / động từ",
-        meaning: "Nhận được, đạt được",
-        exampleChinese: "我们得到了很多帮助。",
-        exampleVietnamese: "→ Chúng tôi đã nhận được rất nhiều sự giúp đỡ.",
-        usage: "Chỉ việc nhận hoặc đạt được một điều gì."
-    },
-
-    "休息": {
-        pinyin: "xiūxi",
-        hanviet: "hưu tức",
-        pos: "动词 / động từ",
-        meaning: "Nghỉ ngơi",
-        exampleChinese: "你应该好好休息。",
-        exampleVietnamese: "→ Bạn nên nghỉ ngơi thật tốt.",
-        usage: "Chỉ hành động nghỉ ngơi để phục hồi sức lực."
-    }
-
+    "每个人": {
+    pinyin: "měi ge rén",
+    hanviet: "[Mỗi Cá Nhân]",
+    pos: "n",
+    meaning: "Mỗi người, mọi người",
+    exampleChinese: "每个人都需要休息。",
+    exampleVietnamese: "→ Mỗi người đều cần nghỉ ngơi.",
+    usage: "Dùng để nói về từng người trong một nhóm."
+},
+
+"希望": {
+    pinyin: "xīwàng",
+    hanviet: "[Hy Vọng]",
+    pos: "v",
+    meaning: "Hy vọng, mong muốn",
+    exampleChinese: "我希望明天是好天气。",
+    exampleVietnamese: "→ Tôi hy vọng ngày mai thời tiết đẹp.",
+    usage: "Thường dùng: 希望 + mệnh đề / 希望 + động từ."
+},
+
+"自己": {
+    pinyin: "zìjǐ",
+    hanviet: "[Tự Kỷ]",
+    pos: "pron",
+    meaning: "Bản thân, chính mình",
+    exampleChinese: "你要相信自己。",
+    exampleVietnamese: "→ Bạn phải tin vào bản thân mình.",
+    usage: "Đại từ phản thân, chỉ chính người được nhắc đến."
+},
+
+"健康": {
+    pinyin: "jiànkāng",
+    hanviet: "[Kiện Khang]",
+    pos: "n, a",
+    meaning: "Sức khỏe; khỏe mạnh",
+    exampleChinese: "健康比什么都重要。",
+    exampleVietnamese: "→ Sức khỏe quan trọng hơn tất cả mọi thứ.",
+    usage: "Có thể làm danh từ hoặc tính từ: 身体健康 (cơ thể khỏe mạnh)."
+},
+
+"那么": {
+    pinyin: "nàme",
+    hanviet: "[Na Ma]",
+    pos: "adv",
+    meaning: "Vậy thì; như vậy; thế thì",
+    exampleChinese: "那么，我们开始吧。",
+    exampleVietnamese: "→ Vậy thì, chúng ta bắt đầu nhé.",
+    usage: "Dùng để nối câu, chuyển sang kết quả hoặc câu hỏi tiếp theo."
+},
+
+"什么": {
+    pinyin: "shénme",
+    hanviet: "[Thập Ma]",
+    pos: "pron",
+    meaning: "Cái gì; gì",
+    exampleChinese: "你想吃什么？",
+    exampleVietnamese: "→ Bạn muốn ăn gì?",
+    usage: "Đại từ nghi vấn, dùng để hỏi sự vật, việc hoặc nội dung."
+},
+
+"才": {
+    pinyin: "cái",
+    hanviet: "[Tài]",
+    pos: "adv",
+    meaning: "Mới; mới là; thì mới",
+    exampleChinese: "努力学习才会进步。",
+    exampleVietnamese: "→ Chăm chỉ học thì mới tiến bộ.",
+    usage: "Trong bài, 才 nhấn mạnh điều kiện cần để có kết quả."
+},
+
+"过去": {
+    pinyin: "guòqù",
+    hanviet: "[Quá Khứ]",
+    pos: "n / v",
+    meaning: "Quá khứ; đi qua, trôi qua",
+    exampleChinese: "过去的事情就让它过去吧。",
+    exampleVietnamese: "→ Chuyện đã qua thì hãy để nó qua đi.",
+    usage: "Làm danh từ chỉ thời gian đã qua; cũng có thể là động từ 'đi qua'."
+},
+
+"人们": {
+    pinyin: "rénmen",
+    hanviet: "[Nhân Môn]",
+    pos: "n",
+    meaning: "Mọi người, con người",
+    exampleChinese: "现在人们很重视环境保护。",
+    exampleVietnamese: "→ Hiện nay mọi người rất coi trọng việc bảo vệ môi trường.",
+    usage: "Chỉ con người nói chung; không dùng cho một số lượng người xác định."
+},
+
+"认为": {
+    pinyin: "rènwéi",
+    hanviet: "[Nhận Vi]",
+    pos: "v",
+    meaning: "Cho rằng, cho là, cho rằng",
+    exampleChinese: "我认为这个办法很好。",
+    exampleVietnamese: "→ Tôi cho rằng cách này rất tốt.",
+    usage: "Thường dùng: 认为 + mệnh đề."
+},
+
+"指": {
+    pinyin: "zhǐ",
+    hanviet: "[Chỉ]",
+    pos: "v",
+    meaning: "Chỉ, đề cập đến, nói đến/ (n) ngón tay, chỉ số",
+    exampleChinese: "这里的“他”指谁？",
+    exampleVietnamese: "→ “Anh ấy” ở đây chỉ ai?",
+    usage: "Thường dùng để giải thích một từ hoặc khái niệm: A 指 B."
+},
+"认识": {
+    pinyin: "rènshi",
+    hanviet: "[Nhận Thức]",
+    pos: "v, n",
+    meaning: "(v) biết, quen / (n) sự nhận thức, hiểu biết",
+    exampleChinese: "这里的“他”指谁？",
+    usage: "认识 + người/ sự vật/ khái niệm/ sự thật, vấn đề."
+},
+"身体": {
+    pinyin: "shēntǐ",
+    hanviet: "[Thân Thể]",
+    pos: "n",
+    meaning: "Cơ thể, thân thể",
+    exampleChinese: "你要照顾好自己的身体。",
+    exampleVietnamese: "→ Bạn phải chăm sóc tốt cơ thể của mình.",
+    usage: "Thường kết hợp: 身体健康, 锻炼身体."
+},
+
+"生病": {
+    pinyin: "shēng bìng",
+    hanviet: "[Sinh Bệnh]",
+    pos: "v",
+    meaning: "Bị bệnh, ốm",
+    exampleChinese: "他昨天生病了，没去上班。",
+    exampleVietnamese: "→ Hôm qua anh ấy bị ốm nên không đi làm.",
+    usage: "Dùng với 了 khi nói một lần bị ốm cụ thể."
+},
+
+"但是": {
+    pinyin: "dànshì",
+    hanviet: "[Đãn Thị]",
+    pos: "conj",
+    meaning: "Nhưng, tuy nhiên",
+    exampleChinese: "他很累，但是还在学习。",
+    exampleVietnamese: "→ Anh ấy rất mệt nhưng vẫn đang học.",
+    usage: "Liên từ biểu thị sự chuyển ý hoặc đối lập."
+},
+
+"现在": {
+    pinyin: "xiànzài",
+    hanviet: "[Hiện Tại]",
+    pos: "n / adv",
+    meaning: "Hiện tại, bây giờ",
+    exampleChinese: "现在我明白了。",
+    exampleVietnamese: "→ Bây giờ tôi hiểu rồi.",
+    usage: "Dùng ở đầu câu hoặc trước động từ để chỉ thời điểm hiện tại."
+},
+
+"认识到": {
+    pinyin: "rènshi dào",
+    hanviet: "[Nhận Thức Đáo]",
+    pos: "v",
+    meaning: "Nhận thức được, nhận ra",
+    exampleChinese: "我终于认识到时间的重要性。",
+    exampleVietnamese: "→ Cuối cùng tôi cũng nhận ra tầm quan trọng của thời gian.",
+    usage: "认识到 + sự việc / ý nghĩa / vấn đề."
+},
+
+"精神": {
+    pinyin: "jīngshén",
+    hanviet: "[Tinh Thần]",
+    pos: "n",
+    meaning: "Tinh thần; tâm trạng",
+    exampleChinese: "她今天精神很好。",
+    exampleVietnamese: "→ Hôm nay tinh thần cô ấy rất tốt.",
+    usage: "Trong bài, 精神上的健康 là sức khỏe tinh thần."
+},
+
+"精神上": {
+    pinyin: "jīngshén shàng",
+    hanviet: "[Tinh Thần Thượng]",
+    pos: "n",
+    meaning: "Về mặt tinh thần",
+    exampleChinese: "他精神上压力很大。",
+    exampleVietnamese: "→ Về mặt tinh thần, anh ấy có áp lực rất lớn.",
+    usage: "Thường dùng sau một danh từ để nói về một phương diện nào đó."
+},
+
+"只有…才…": {
+    pinyin: "zhǐyǒu…cái…",
+    hanviet: "[Chỉ Hữu…Tài…]",
+    pos: "cấu trúc",
+    meaning: "Chỉ có… thì mới…",
+    exampleChinese: "只有认真练习，才会说好中文。",
+    exampleVietnamese: "→ Chỉ có luyện tập nghiêm túc thì mới nói tiếng Trung tốt.",
+    usage: "Nhấn mạnh điều kiện cần thiết để kết quả phía sau xảy ra."
+},
+
+"算": {
+    pinyin: "suàn",
+    hanviet: "[Toán]",
+    pos: "v",
+    meaning: "Tính là, được coi là",
+    exampleChinese: "这样算不算迟到？",
+    exampleVietnamese: "→ Như vậy có được tính là đi muộn không?",
+    usage: "Thường dùng: 算 + danh từ / 算是 + danh từ."
+},
+
+"真正": {
+    pinyin: "zhēnzhèng",
+    hanviet: "[Chân Chính]",
+    pos: "a / adv",
+    meaning: "Thật sự, thực sự, chân chính",
+    exampleChinese: "真正的朋友会帮助你。",
+    exampleVietnamese: "→ Người bạn thật sự sẽ giúp đỡ bạn.",
+    usage: "Thường đứng trước danh từ để nhấn mạnh tính xác thực."
+},
+
+"教授": {
+    pinyin: "jiàoshòu",
+    hanviet: "[Giáo Thụ]",
+    pos: "n",
+    meaning: "Giáo sư",
+    exampleChinese: "王教授正在给学生上课。",
+    exampleVietnamese: "→ Giáo sư Vương đang dạy học sinh.",
+    usage: "Cách gọi chức danh học thuật: 王教授."
+},
+
+"数字": {
+    pinyin: "shùzì",
+    hanviet: "[Số Tự]",
+    pos: "n",
+    meaning: "Con số, chữ số",
+    exampleChinese: "这个数字不太准确。",
+    exampleVietnamese: "→ Con số này không được chính xác lắm.",
+    usage: "Dùng cho số liệu, chữ số hoặc số lượng thể hiện bằng số."
+},
+
+"说明": {
+    pinyin: "shuōmíng",
+    hanviet: "[Thuyết Minh]",
+    pos: "v",
+    meaning: "Giải thích, chứng minh, cho thấy",
+    exampleChinese: "这个例子说明了问题。",
+    exampleVietnamese: "→ Ví dụ này đã cho thấy vấn đề.",
+    usage: "说明 + sự việc / nguyên nhân / ý nghĩa."
+},
+
+"多么": {
+    pinyin: "duōme",
+    hanviet: "[Đa Ma]",
+    pos: "adv",
+    meaning: "Biết bao, bao nhiêu, rất",
+    exampleChinese: "健康是多么重要啊！",
+    exampleVietnamese: "→ Sức khỏe quan trọng biết bao!",
+    usage: "Dùng trong câu cảm thán để nhấn mạnh mức độ."
+},
+
+"重要": {
+    pinyin: "zhòngyào",
+    hanviet: "[Trọng Yếu]",
+    pos: "a",
+    meaning: "Quan trọng",
+    exampleChinese: "这是一个很重要的决定。",
+    exampleVietnamese: "→ Đây là một quyết định rất quan trọng.",
+    usage: "Thường dùng: 对…很重要 / 重要的 + danh từ."
+},
+
+"要是": {
+    pinyin: "yàoshi",
+    hanviet: "[Yếu Thị]",
+    pos: "conj",
+    meaning: "Nếu, giả sử như",
+    exampleChinese: "要是明天下雨，我们就不去了。",
+    exampleVietnamese: "→ Nếu ngày mai mưa, chúng tôi sẽ không đi.",
+    usage: "Dùng để giả định điều kiện, gần nghĩa với 如果."
+},
+
+"其他": {
+    pinyin: "qítā",
+    hanviet: "[Kỳ Tha]",
+    pos: "pron",
+    meaning: "Khác, những cái khác",
+    exampleChinese: "其他问题以后再说。",
+    exampleVietnamese: "→ Những vấn đề khác để sau nói tiếp.",
+    usage: "Thường đứng trước danh từ: 其他人, 其他事情."
+},
+
+"后面": {
+    pinyin: "hòumian",
+    hanviet: "[Hậu Diện]",
+    pos: "n",
+    meaning: "Phía sau; phần sau",
+    exampleChinese: "答案在书的后面。",
+    exampleVietnamese: "→ Đáp án ở phía sau quyển sách.",
+    usage: "Có thể chỉ vị trí hoặc phần nội dung ở sau."
+},
+
+"如果": {
+    pinyin: "rúguǒ",
+    hanviet: "[Như Quả]",
+    pos: "conj",
+    meaning: "Nếu",
+    exampleChinese: "如果你有时间，就来找我吧。",
+    exampleVietnamese: "→ Nếu bạn có thời gian thì đến tìm tôi nhé.",
+    usage: "Dùng mở đầu mệnh đề điều kiện; thường đi với 就 ở vế sau."
+},
+
+"不管": {
+    pinyin: "bùguǎn",
+    hanviet: "[Bất Quản]",
+    pos: "conj",
+    meaning: "Bất kể, dù cho, không quan tâm",
+    exampleChinese: "不管多忙，我都会吃早餐。",
+    exampleVietnamese: "→ Dù bận thế nào, tôi cũng sẽ ăn sáng.",
+    usage: "Thường dùng với 都 / 也: 不管…都/也…"
+},
+
+"多少": {
+    pinyin: "duōshao",
+    hanviet: "[Đa Thiểu]",
+    pos: "pron",
+    meaning: "Bao nhiêu; một mức độ nào đó",
+    exampleChinese: "这里有多少人？",
+    exampleVietnamese: "→ Ở đây có bao nhiêu người?",
+    usage: "Dùng để hỏi số lượng; trong 不管有多少 là 'dù có bao nhiêu'."
+},
+
+"没用": {
+    pinyin: "méi yòng",
+    hanviet: "[Một Dụng]",
+    pos: "a",
+    meaning: "Vô dụng, không có tác dụng",
+    exampleChinese: "光着急是没用的。",
+    exampleVietnamese: "→ Chỉ lo lắng thôi thì không có tác dụng.",
+    usage: "Dùng để nói một việc, đồ vật hoặc cách làm không đem lại hiệu quả."
+},
+
+"所以": {
+    pinyin: "suǒyǐ",
+    hanviet: "[Sở Dĩ]",
+    pos: "conj",
+    meaning: "Cho nên, vì vậy",
+    exampleChinese: "今天下雨，所以我没出门。",
+    exampleVietnamese: "→ Hôm nay trời mưa, vì vậy tôi không ra ngoài.",
+    usage: "Dùng ở vế kết quả; vế trước thường nêu nguyên nhân."
+},
+
+"平时": {
+    pinyin: "píngshí",
+    hanviet: "[Bình Thời]",
+    pos: "n / adv",
+    meaning: "Bình thường, thường ngày",
+    exampleChinese: "我平时晚上十点睡觉。",
+    exampleVietnamese: "→ Bình thường tôi ngủ lúc 10 giờ tối.",
+    usage: "Dùng để nói thói quen hoặc tình trạng thường ngày."
+},
+
+"一定": {
+    pinyin: "yídìng",
+    hanviet: "[Nhất Định]",
+    pos: "adv",
+    meaning: "Nhất định, chắc chắn, phải",
+    exampleChinese: "你一定要注意安全。",
+    exampleVietnamese: "→ Bạn nhất định phải chú ý an toàn.",
+    usage: "Đặt trước động từ để nhấn mạnh yêu cầu hoặc sự chắc chắn."
+},
+
+"注意": {
+    pinyin: "zhùyì",
+    hanviet: "[Chú Ý]",
+    pos: "v",
+    meaning: "Chú ý, để ý",
+    exampleChinese: "请注意听老师说。",
+    exampleVietnamese: "→ Hãy chú ý nghe thầy giáo nói.",
+    usage: "Thường dùng: 注意 + động từ / danh từ; 注意安全."
+},
+
+"锻炼": {
+    pinyin: "duànliàn",
+    hanviet: "[Đoán Luyện]",
+    pos: "v",
+    meaning: "Rèn luyện, tập luyện",
+    exampleChinese: "为了健康，他每天锻炼身体。",
+    exampleVietnamese: "→ Vì sức khỏe, anh ấy tập luyện cơ thể mỗi ngày.",
+    usage: "Thường dùng: 锻炼身体; cũng có thể là rèn luyện năng lực."
+},
+
+"别": {
+    pinyin: "bié",
+    hanviet: "[Biệt]",
+    pos: "adv",
+    meaning: "Đừng, chớ",
+    exampleChinese: "别忘了带手机。",
+    exampleVietnamese: "→ Đừng quên mang điện thoại.",
+    usage: "Đặt trước động từ để tạo câu mệnh lệnh phủ định."
+},
+
+"等": {
+    pinyin: "děng",
+    hanviet: "[Đẳng]",
+    pos: "v",
+    meaning: "Đợi, chờ",
+    exampleChinese: "请你等我一下。",
+    exampleVietnamese: "→ Bạn hãy đợi tôi một lát.",
+    usage: "Thường dùng: 等 + người / sự việc; 等一下 là đợi một lát."
+},
+
+"出问题": {
+    pinyin: "chū wèntí",
+    hanviet: "[Xuất Vấn Đề]",
+    pos: "v",
+    meaning: "Xảy ra vấn đề, gặp trục trặc",
+    exampleChinese: "电脑出问题了，打不开。",
+    exampleVietnamese: "→ Máy tính xảy ra vấn đề rồi, không mở được.",
+    usage: "Dùng cho sức khỏe, máy móc, kế hoạch hoặc công việc gặp vấn đề."
+},
+
+"后悔": {
+    pinyin: "hòuhuǐ",
+    hanviet: "[Hậu Hối]",
+    pos: "v",
+    meaning: "Hối hận",
+    exampleChinese: "我后悔没有早点开始学习。",
+    exampleVietnamese: "→ Tôi hối hận vì đã không bắt đầu học sớm hơn.",
+    usage: "Thường dùng: 后悔 + động từ / 后悔做了某事."
+}
 };
-
 
 /* ================================================= */
 /* ================= BIẾN ========================== */
@@ -3718,42 +3060,31 @@ function shortPOS(posStr) {
         posStr.split("/")[0].trim();
 
     const map = [
-        [["名词", "danh từ"], "n"],
-        [["形容词", "tính từ"], "a"],
-        [["副词", "phó từ"], "adv"],
-        [["连词", "liên từ"], "conj"],
-        [["介词", "giới từ"], "prep"],
-        [["代词", "đại từ"], "pron"],
-        [["助词", "trợ từ"], "part"],
-        [["数量词", "lượng từ"], "num"],
-        [["方位词", "từ phương vị"], "suf"],
-        [["趋向补语", "bổ ngữ"], "compl"],
-        [["动词短语", "短语", "cụm từ", "cụm động từ"], "phr"],
-        [["能愿动词", "động từ năng nguyện"], "aux"],
-        [["动词", "động từ"], "v"]
-    ];
+    [["名词", "danh từ", "n"], "n"],
+    [["形容词", "tính từ", "a"], "a"],
+    [["副词", "phó từ", "adv"], "adv"],
+    [["连词", "liên từ", "conj"], "conj"],
+    [["介词", "giới từ", "prep"], "prep"],
+    [["代词", "đại từ", "pron"], "pron"],
+    [["助词", "trợ từ", "part"], "part"],
+    [["数量词", "lượng từ", "num"], "num"],
+    [["方位词", "từ phương vị", "suf"], "suf"],
+    [["趋向补语", "bổ ngữ", "compl"], "compl"],
+    [["动词短语", "短语", "cụm từ", "cụm động từ", "phr"], "phr"],
+    [["能愿动词", "động từ năng nguyện", "aux"], "aux"],
+    [["动词", "động từ", "v"], "v"],
+    [["cấu trúc", "ct"], "ct"]
+];
 
-    for (const [keys, abbr] of map) {
-
-        for (const k of keys) {
-
-            if (first.includes(k)) return abbr;
-
+    for (const [keywords, short] of map) {
+        for (const keyword of keywords) {
+            if (first.includes(keyword)) {
+                return short;
+            }
         }
-
     }
 
-    for (const [keys, abbr] of map) {
-
-        for (const k of keys) {
-
-            if (posStr.includes(k)) return abbr;
-
-        }
-
-    }
-
-    return "?";
+    return first;
 
 }
 
@@ -6115,15 +5446,25 @@ function renderLessonWords() {
 
                 if (part.isWordLike) {
 
-                    const span = document.createElement("span");
-                    span.className = "word";
-                    span.dataset.word = value;
-                    span.textContent = value;
-                    span.onclick = function(event) {
-                        event.stopPropagation();
-                        showWord(value, span);
+                    const separatedWords = {
+                        "才算是": ["才", "算", "是"]
                     };
-                    container.appendChild(span);
+
+                    const wordsToRender =
+                        separatedWords[value] || [value];
+
+                    wordsToRender.forEach(function(word) {
+
+                        const span = document.createElement("span");
+                        span.className = "word";
+                        span.dataset.word = word;
+                        span.textContent = word;
+                        span.onclick = function(event) {
+                            event.stopPropagation();
+                            showWord(word, span);
+                        };
+                        container.appendChild(span);
+                    });
 
                 } else {
 
