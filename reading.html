@@ -1,12 +1,15 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>课本阅读</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@600;700&family=Nunito:wght@500;700;800&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@600;700&family=Nunito:wght@500;700;800&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <style>
         .node-progress {
@@ -56,7 +59,7 @@
             margin: 17px 0 0 !important;
         }
 
-        .journey-header .journey-title + .journey-pinyin {
+        .journey-header .journey-title+.journey-pinyin {
             margin-top: 5px;
             font-size: 14px;
         }
@@ -86,12 +89,29 @@
             display: none;
         }
 
-        .gate--ink .gate-arch { background-image: url("images/hsk1-scholar-door.jpg"); }
-        .gate--tang .gate-arch { background-image: url("images/hsk2-palace-door.jpg"); }
-        .gate--garden .gate-arch { background-image: url("images/hsk3-garden-door.jpg"); }
-        .gate--deco .gate-arch { background-image: url("images/hsk4-art-deco-door.jpg"); }
-        .gate--neon .gate-arch { background-image: url("images/hsk5-modern-city-door.jpg"); }
-        .gate--future .gate-arch { background-image: url("images/hsk6-future-portal.jpg"); }
+        .gate--ink .gate-arch {
+            background-image: url("images/hsk1-scholar-door.jpg");
+        }
+
+        .gate--tang .gate-arch {
+            background-image: url("images/hsk2-palace-door.jpg");
+        }
+
+        .gate--garden .gate-arch {
+            background-image: url("images/hsk3-garden-door.jpg");
+        }
+
+        .gate--deco .gate-arch {
+            background-image: url("images/hsk4-art-deco-door.jpg");
+        }
+
+        .gate--neon .gate-arch {
+            background-image: url("images/hsk5-modern-city-door.jpg");
+        }
+
+        .gate--future .gate-arch {
+            background-image: url("images/hsk6-future-portal.jpg");
+        }
 
         /* HSK 6 giữ dáng cửa vòm như các level khác, không có khung vuông. */
         .gate--future .gate-arch {
@@ -140,6 +160,7 @@
         }
     </style>
 </head>
+
 <body class="journey-body">
     <main class="journey-container">
         <a href="index.html" class="back-link">← Quay lại trang chủ</a>
@@ -275,32 +296,60 @@
     <script src="supabase.js"></script>
     <script>
         const levels = {
-            hsk1: { title: "HSK 1", lessons: [
-                { label: "Bài 1", title: "你好", href: "#" },
-                { label: "Bài 2", title: "谢谢", href: "#" },
-            ]},
-            hsk2: { title: "HSK 2", lessons: [
-                { label: "Bài 1", title: "我的家", href: "#" },
-                { label: "Bài 2", title: "天气", href: "#" },
-            ]},
-            hsk3: { title: "HSK 3", lessons: [
-                { label: "Bài 1", title: "我的家", href: "#" },
-                { label: "Bài 2", title: "天气", href: "#" },
-            ]},
-            hsk4: { title: "HSK 4", lessons: [
-                { number: 7,  label: "Bài 7",  title: "生活中不缺少美", href: "HSK4 - lesson 7.html" },
-                { number: 8,  label: "Bài 8",  title: "生活中不缺少美", href: "HSK4 - lesson 8.html" },
-                { number: 10, label: "Bài 10", title: "幸福的标准",     href: "HSK4 - lesson 10.html" },
-                { number: 11, label: "Bài 11", title: "人生的意义",     href: "HSK4 - lesson 11.html" },
-            ]},
-            hsk5: { title: "HSK 5", lessons: [
-                { label: "Bài 1", title: "我的家", href: "#" },
-                { label: "Bài 2", title: "天气", href: "#" },
-            ]},
-            hsk6: { title: "HSK 6", lessons: [
-                { label: "Bài 1", title: "我的家", href: "#" },
-                { label: "Bài 2", title: "天气", href: "#" },
-            ]},
+            hsk1: {
+                title: "HSK 1", lessons: [
+                    { label: "Bài 1", title: "你好", href: "#" },
+                    { label: "Bài 2", title: "谢谢", href: "#" },
+                ]
+            },
+            hsk2: {
+                title: "HSK 2", lessons: [
+                    { label: "Bài 1", title: "我的家", href: "#" },
+                    { label: "Bài 2", title: "天气", href: "#" },
+                ]
+            },
+            hsk3: {
+                title: "HSK 3", lessons: [
+                    { label: "Bài 1", title: "我的家", href: "#" },
+                    { label: "Bài 2", title: "天气", href: "#" },
+                ]
+            },
+            hsk4: {
+                title: "HSK 4", lessons: [
+                    { number: 1, label: "Bài 1", title: "简单的爱情", href: "HSK4 - lesson 1.html" },
+                    { number: 2, label: "Bài 2", title: "真正的友谊", href: "HSK4 - lesson 2.html" },
+                    { number: 3, label: "Bài 3", title: "经理对我印象不错", href: "HSK4 - lesson 3.html" },
+                    { number: 4, label: "Bài 4", title: "不要太着急赚钱", href: "HSK4 - lesson 4.html" },
+                    { number: 5, label: "Bài 5", title: "只买对的，不买贵的", href: "HSK4 - lesson 5.html" },
+                    { number: 6, label: "Bài 6", title: "一分钱，一分货", href: "HSK4 - lesson 6.html" },
+                    { number: 7, label: "Bài 7", title: "最好的医生是自己", href: "HSK4 - lesson 7.html" },
+                    { number: 8, label: "Bài 8", title: "生活中不缺少美", href: "HSK4 - lesson 8.html" },
+                    { number: 9, label: "Bài 9", title: "阳光总在风雨后", href: "HSK4 - lesson 9.html" },
+                    { number: 10, label: "Bài 10", title: "幸福的标准", href: "HSK4 - lesson 10.html" },
+                    { number: 11, label: "Bài 11", title: "读书好，读好书，好读书", href: "HSK4 - lesson 11.html" },
+                    { number: 12, label: "Bài 12", title: "用心发现世界", href: "HSK4 - lesson 12.html" },
+                    { number: 13, label: "Bài 13", title: "喝着茶看京剧", href: "HSK4 - lesson 13.html" },
+                    { number: 14, label: "Bài 14", title: "保护地球母亲", href: "HSK4 - lesson 14.html" },
+                    { number: 15, label: "Bài 15", title: "教育孩子的艺术", href: "HSK4 - lesson 15.html" },
+                    { number: 16, label: "Bài 16", title: "生活可以更美好", href: "HSK4 - lesson 16.html" },
+                    { number: 17, label: "Bài 17", title: "人与自然", href: "HSK4 - lesson 17.html" },
+                    { number: 18, label: "Bài 18", title: "科技异世界", href: "HSK4 - lesson 18.html" },
+                    { number: 19, label: "Bài 19", title: "生活的味道", href: "HSK4 - lesson 19.html" },
+                    { number: 20, label: "Bài 20", title: "路上的风景", href: "HSK4 - lesson 20.html" },
+                ]
+            },
+            hsk5: {
+                title: "HSK 5", lessons: [
+                    { label: "Bài 1", title: "我的家", href: "#" },
+                    { label: "Bài 2", title: "天气", href: "#" },
+                ]
+            },
+            hsk6: {
+                title: "HSK 6", lessons: [
+                    { label: "Bài 1", title: "我的家", href: "#" },
+                    { label: "Bài 2", title: "天气", href: "#" },
+                ]
+            },
         };
 
         const gatesView = document.getElementById('gatesView');
@@ -470,4 +519,5 @@
         });
     </script>
 </body>
+
 </html>
