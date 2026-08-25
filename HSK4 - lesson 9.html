@@ -8,7 +8,7 @@
 <meta name="viewport"
       content="width=device-width, initial-scale=1.0">
 
-<title>阅读与读书 - Bài 11 · HSK 4</title>
+<title>勇敢与坚持 - Bài 9 · HSK 4</title>
 
 <style>
 
@@ -1494,8 +1494,8 @@ body {
 
 <div class="lesson-title">
 
-    <h1>阅读与读书</h1>
-    <p>Bài 11 · HSK 4</p>
+    <h1>勇敢与坚持</h1>
+    <p>Bài 9 · HSK 4</p>
 
 </div>
 
@@ -1841,9 +1841,6 @@ body {
     </h3>
 
     <p id="studyExampleChinese">
-    </p>
-
-    <p id="studyExamplePinyin">
     </p>
 
     <p id="studyExampleVietnamese">
@@ -2687,7 +2684,7 @@ function refreshLessonAfterCloudLoad() {
     applySavedHighlights();
     renderPinnedSidebar();
 
-    if (localStorage.getItem("lesson11Completed") === "true") {
+    if (localStorage.getItem("lesson9Completed") === "true") {
         updateStatus("completed");
     } else if (getSavedWords().length > 0) {
         updateStatus("learning");
@@ -2697,7 +2694,7 @@ function refreshLessonAfterCloudLoad() {
 }
 
 function initSupabaseProgress() {
-    lessonProgressSync = window.LessonProgress.create(11, {
+    lessonProgressSync = window.LessonProgress.create(9, {
         onRemoteLoaded: refreshLessonAfterCloudLoad
     });
 }
@@ -2710,7 +2707,7 @@ function initSupabaseProgress() {
 function getSavedWords() {
 
     return JSON.parse(
-        localStorage.getItem("lesson11SavedWords")
+        localStorage.getItem("lesson9SavedWords")
     ) || [];
 
 }
@@ -2719,7 +2716,7 @@ function getSavedWords() {
 function setSavedWords(words) {
 
     localStorage.setItem(
-        "lesson11SavedWords",
+        "lesson9SavedWords",
         JSON.stringify(words)
     );
 
@@ -4546,11 +4543,6 @@ function showStudyWord() {
     ).textContent =
         data.exampleChinese;
 
-    document.getElementById(
-        "studyExamplePinyin"
-    ).textContent =
-        data.examplePinyin || "";
-
 
     document.getElementById(
         "studyExampleVietnamese"
@@ -5437,7 +5429,7 @@ function finishSentenceGame() {
 
 
     localStorage.setItem(
-        "lesson11Completed",
+        "lesson9Completed",
         "true"
     );
 
@@ -5567,11 +5559,6 @@ document.getElementById("readingText2").dataset.rawText = "每一个人都希望
 Object.keys(vocabulary).forEach(function(word) { delete vocabulary[word]; });
 [["勇敢","yǒnggǎn","[Dũng Cảm]","a","Dũng cảm"],["担心","dānxīn","[Đam Tâm]","v","Lo lắng"],["结果","jiéguǒ","[Kết Quả]","n","Kết quả"],["考虑","kǎolǜ","[Khảo Lự]","v","Cân nhắc"],["失败","shībài","[Thất Bại]","v / n","Thất bại"],["看重","kànzhòng","[Khán Trọng]","v","Coi trọng"],["烦恼","fánnǎo","[Phiền Não]","n","Phiền não"],["注意力","zhùyìlì","[Chú Ý Lực]","n","Sự chú ý"],["过程","guòchéng","[Quá Trình]","n","Quá trình"],["解决","jiějué","[Giải Quyết]","v","Giải quyết"],["即使","jíshǐ","[Tức Sử]","conj","Cho dù"],["至少","zhìshǎo","[Chí Thiểu]","adv","Ít nhất"],["努力","nǔlì","[Nỗ Lực]","v / n","Nỗ lực"],["总结","zǒngjié","[Tổng Kết]","v","Tổng kết"],["经验","jīngyàn","[Kinh Nghiệm]","n","Kinh nghiệm"],["积累","jīlěi","[Tích Lũy]","v / n","Tích lũy"],["成功","chénggōng","[Thành Công]","v / n","Thành công"],["越来越","yuèláiyuè","[Việt Lai Việt]","adv","Càng ngày càng"],["困难","kùnnan","[Khốn Nan]","n / a","Khó khăn"],["放弃","fàngqì","[Phóng Khí]","v","Từ bỏ"],["态度","tàidu","[Thái Độ]","n","Thái độ"],["爱迪生","Àidíshēng","[Ái Địch Sinh]","n","Edison"],["材料","cáiliào","[Tài Liệu]","n","Vật liệu"],["点亮","diǎnliàng","[Điểm Lượng]","v","Thắp sáng"],["经历","jīnglì","[Kinh Lịch]","v","Trải qua"],["区别","qūbié","[Khu Biệt]","n","Sự khác biệt"],["坚持","jiānchí","[Kiên Trì]","v","Kiên trì"],["暂时","zànshí","adv","Tạm thời"],["面对","miànduì","[Diện Đối]","v","Đối mặt"]].forEach(function(x){vocabulary[x[0]]={pinyin:x[1],hanviet:x[2]||"—",pos:x[3],meaning:x[4],exampleChinese:x[0],exampleVietnamese:"",usage:"Từ vựng trong Lesson 9."};});
 
-document.getElementById("readingText1").dataset.rawText = "根据调查，阅读能力好的人，不但容易找到工作，而且工资也比较高。怎么才能有效提高自己的阅读能力呢？做读书笔记就是其中一种好方法。读书笔记有很多种，最简单的就是把自己喜欢或者觉得有用的词语和句子记下来。另外，在看完一篇文章或一本书之后，还可以把它的主要内容和自己的想法写下来。然而，你不能完全相信书本上的内容，要有自己的看法和判断。坚持做读书笔记，对提高阅读能力有很大帮助。";
-document.getElementById("readingText2").dataset.rawText = "读书好，读好书，好读书。虽然这句话只用了三个相同的汉字，但是不同的顺序却表示了不同的意思。首先，读书好说的是读书有很多好处；其次，每个人的时间都是有限的，不可能把世界上每一本书都读完，所以要读好的书；最后，好读书就是要养成阅读的习惯，使读书真正成为自己的兴趣爱好。阅读有许多好处，它能丰富你的知识，让你找到解决问题的办法；同时，它还会丰富你的情感，使你的生活更精彩。所以，让阅读成为你的习惯吧！";
-Object.keys(vocabulary).forEach(function(w){delete vocabulary[w];});
-[["根据","gēnjù","[Căn Cứ]","prep / v","Căn cứ; theo","根据调查，我们发现了问题。","Gēnjù diàochá, wǒmen fāxiàn le wèntí.","根据 + danh từ, nêu căn cứ."],["调查","diàochá","[Điều Tra]","v / n","Điều tra, khảo sát","公司正在调查这个问题。","Gōngsī zhèngzài diàochá zhège wèntí.","调查 + vấn đề/đối tượng."],["阅读能力","yuèdú nénglì","[Duyệt Độc Năng Lực]","n","Năng lực đọc hiểu","他的阅读能力很强。","Tā de yuèdú nénglì hěn qiáng.","Chỉ khả năng đọc hiểu."],["不但…而且…","bùdàn…érqiě…","[Bất Đãn…Nhi Thả…]","cấu trúc","Không những… mà còn…","她不但会说中文，而且会说英语。","Tā bùdàn huì shuō Zhōngwén, érqiě huì shuō Yīngyǔ.","Liên kết hai ý tăng tiến."],["提高","tígāo","[Đề Cao]","v","Nâng cao","多练习能提高水平。","Duō liànxí néng tígāo shuǐpíng.","提高 + năng lực/trình độ."],["读书笔记","dúshū bǐjì","[Độc Thư Bút Ký]","n","Ghi chép khi đọc sách","我每天写读书笔记。","Wǒ měitiān xiě dúshū bǐjì.","做/写读书笔记."],["主要内容","zhǔyào nèiróng","[Chủ Yếu Nội Dung]","n","Nội dung chính","请说说文章的主要内容。","Qǐng shuōshuo wénzhāng de zhǔyào nèiróng.","主要 + danh từ."],["看法","kànfa","[Khán Pháp]","n","Quan điểm","我有不同的看法。","Wǒ yǒu bùtóng de kànfa.","对…有看法."],["判断","pànduàn","[Phán Đoán]","v / n","Phán đoán","你要自己判断。","Nǐ yào zìjǐ pànduàn.","自己判断 / 作出判断."],["坚持","jiānchí","[Kiên Trì]","v","Kiên trì","请坚持每天阅读。","Qǐng jiānchí měitiān yuèdú.","坚持 + động từ."],["虽然…但是…","suīrán…dànshì…","[Tuy Nhiên…Đãn Thị…]","cấu trúc","Tuy… nhưng…","虽然很忙，但是他还在学习。","Suīrán hěn máng, dànshì tā hái zài xuéxí.","Biểu thị chuyển ý."],["顺序","shùnxù","[Thuận Tự]","n","Thứ tự","请按顺序回答问题。","Qǐng àn shùnxù huídá wèntí.","按顺序 = theo thứ tự."],["首先","shǒuxiān","[Thủ Tiên]","adv","Trước hết","首先，我们看看原因。","Shǒuxiān, wǒmen kànkan yuányīn.","Đi với 其次、最后."],["其次","qícì","[Kỳ Thứ]","adv","Thứ hai","其次，要注意安全。","Qícì, yào zhùyì ānquán.","Liệt kê ý thứ hai."],["有限","yǒuxiàn","[Hữu Hạn]","a","Có hạn","时间是有限的。","Shíjiān shì yǒuxiàn de.","有限的 + danh từ."],["养成","yǎngchéng","[Dưỡng Thành]","v","Hình thành","要养成好习惯。","Yào yǎngchéng hǎo xíguàn.","养成 + thói quen."],["兴趣爱好","xìngqù àihào","[Hứng Thú Ái Hảo]","n","Sở thích","阅读是我的兴趣爱好。","Yuèdú shì wǒ de xìngqù àihào.","Sở thích cá nhân."],["丰富","fēngfù","[Phong Phú]","v / a","Làm phong phú","旅行能丰富生活。","Lǚxíng néng fēngfù shēnghuó.","丰富 + kiến thức/cuộc sống."],["精彩","jīngcǎi","[Tinh Thái]","a","Đặc sắc","比赛非常精彩。","Bǐsài fēicháng jīngcǎi.","很/非常精彩."]].forEach(function(x){vocabulary[x[0]]={pinyin:x[1],hanviet:x[2],pos:x[3],meaning:x[4],exampleChinese:x[5],examplePinyin:x[6],exampleVietnamese:"→ "+x[4],usage:x[7]};});
-
 renderLessonWords();
 ensureLessonVocabulary();
 
@@ -5596,7 +5583,7 @@ renderPinnedSidebar();
 
 if (
     localStorage.getItem(
-        "lesson11Completed"
+        "lesson9Completed"
     ) === "true"
 ) {
 

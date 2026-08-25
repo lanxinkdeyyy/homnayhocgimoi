@@ -39,6 +39,105 @@
         .node-progress[data-status="completed"]::before {
             background: #63b87b;
         }
+
+        .journey-header .journey-pinyin {
+            display: block;
+            margin: 5px 0 0;
+            color: #8c8c84;
+            font-family: "Nunito", sans-serif;
+            font-size: 12px;
+            font-style: italic;
+            font-weight: 700;
+            letter-spacing: 0.04em;
+            line-height: 1.35;
+        }
+
+        .journey-header .journey-title {
+            margin: 17px 0 0 !important;
+        }
+
+        .journey-header .journey-title + .journey-pinyin {
+            margin-top: 5px;
+            font-size: 14px;
+        }
+
+        .journey-header .journey-translation {
+            margin: 4px 0 0;
+            color: #6f8175;
+            font-family: "Nunito", sans-serif;
+            font-size: 13px;
+            font-weight: 700;
+            line-height: 1.35;
+        }
+
+        .journey-header .journey-sub {
+            margin: 17px auto 0 !important;
+            line-height: 1.55;
+        }
+
+        .gate-arch {
+            overflow: hidden;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+
+        .gate-arch .gate-leaf {
+            display: none;
+        }
+
+        .gate--ink .gate-arch { background-image: url("images/hsk1-scholar-door.jpg"); }
+        .gate--tang .gate-arch { background-image: url("images/hsk2-palace-door.jpg"); }
+        .gate--garden .gate-arch { background-image: url("images/hsk3-garden-door.jpg"); }
+        .gate--deco .gate-arch { background-image: url("images/hsk4-art-deco-door.jpg"); }
+        .gate--neon .gate-arch { background-image: url("images/hsk5-modern-city-door.jpg"); }
+        .gate--future .gate-arch { background-image: url("images/hsk6-future-portal.jpg"); }
+
+        /* HSK 6 giữ dáng cửa vòm như các level khác, không có khung vuông. */
+        .gate--future .gate-arch {
+            border: 0 !important;
+            border-radius: 50% 50% 0 0 / 30% 30% 0 0 !important;
+            box-shadow: none !important;
+        }
+
+        .gate-era-pinyin,
+        .gate-era-vietnamese {
+            display: block;
+            margin-top: 2px;
+            font-family: "Nunito", sans-serif;
+            font-size: 11px;
+            font-weight: 700;
+            line-height: 1.3;
+        }
+
+        .gate-era-pinyin {
+            color: #8c8c84;
+            font-style: italic;
+        }
+
+        .gate-era-vietnamese {
+            color: #66776b;
+        }
+
+        /* Mobile: 6 cửa xếp dọc, mỗi cửa vừa chiều ngang màn hình. */
+        @media (max-width: 700px) {
+            .gates-garden {
+                grid-template-columns: minmax(0, 1fr) !important;
+                justify-items: center;
+                gap: 38px !important;
+            }
+
+            .gate {
+                width: min(100%, 340px) !important;
+                margin: 0 auto;
+            }
+
+            .gate-arch {
+                width: 100% !important;
+                height: auto !important;
+                aspect-ratio: 2 / 3;
+            }
+        }
     </style>
 </head>
 <body class="journey-body">
@@ -47,7 +146,11 @@
 
         <header class="journey-header">
             <p class="journey-eyebrow">课本阅读 · 阅读花园</p>
+            <p class="journey-pinyin">Kèběn yuèdú · yuèdú huāyuán</p>
+            <p class="journey-translation">Giáo trình đọc · Vườn đọc</p>
             <h1 class="journey-title">选择你的旅程</h1>
+            <p class="journey-pinyin">Xuǎnzé nǐ de lǚchéng</p>
+            <p class="journey-translation">Chọn hành trình của bạn</p>
             <p class="journey-sub">Mỗi cánh cửa dẫn tới một chặng đường riêng — chọn cấp độ để bước vào.</p>
         </header>
 
@@ -60,6 +163,8 @@
                 </span>
                 <span class="gate-caption">
                     <span class="gate-era">水墨古风</span>
+                    <span class="gate-era-pinyin">Shuǐmò gǔfēng</span>
+                    <span class="gate-era-vietnamese">Cổ phong mực nước</span>
                     <span class="gate-plaque-row">
                         <span class="gate-ornament">🖌️</span>
                         <span class="gate-plaque">HSK 1</span>
@@ -75,6 +180,8 @@
                 </span>
                 <span class="gate-caption">
                     <span class="gate-era">盛唐华彩</span>
+                    <span class="gate-era-pinyin">Shèng Táng huácǎi</span>
+                    <span class="gate-era-vietnamese">Thịnh Đường rực sắc</span>
                     <span class="gate-plaque-row">
                         <span class="gate-ornament">🐉</span>
                         <span class="gate-plaque">HSK 2</span>
@@ -83,13 +190,15 @@
                 </span>
             </button>
 
-            <button class="gate gate--garden" data-level="hsk3" aria-label="Mở cánh cửa HSK 3 — Giang Nam nhã viên">
+            <button class="gate gate--garden" data-level="hsk3" aria-label="Mở cánh cửa HSK 3 — Giang Nam nhã uyển">
                 <span class="gate-arch">
                     <span class="gate-leaf left"></span>
                     <span class="gate-leaf right"></span>
                 </span>
                 <span class="gate-caption">
                     <span class="gate-era">江南雅苑</span>
+                    <span class="gate-era-pinyin">Jiāngnán yǎyuàn</span>
+                    <span class="gate-era-vietnamese">Giang Nam nhã uyển</span>
                     <span class="gate-plaque-row">
                         <span class="gate-ornament">🪷</span>
                         <span class="gate-plaque">HSK 3</span>
@@ -105,6 +214,8 @@
                 </span>
                 <span class="gate-caption">
                     <span class="gate-era">民国摩登</span>
+                    <span class="gate-era-pinyin">Mínguó módēng</span>
+                    <span class="gate-era-vietnamese">Dân quốc tân thời</span>
                     <span class="gate-plaque-row">
                         <span class="gate-ornament">🎷</span>
                         <span class="gate-plaque">HSK 4</span>
@@ -113,13 +224,15 @@
                 </span>
             </button>
 
-            <button class="gate gate--neon" data-level="hsk5" aria-label="Mở cánh cửa HSK 5 — Đô thị hiện đại">
+            <button class="gate gate--neon" data-level="hsk5" aria-label="Mở cánh cửa HSK 5 — Đô thị nghê hồng">
                 <span class="gate-arch">
                     <span class="gate-leaf left"></span>
                     <span class="gate-leaf right"></span>
                 </span>
                 <span class="gate-caption">
                     <span class="gate-era">都市霓虹</span>
+                    <span class="gate-era-pinyin">Dūshì níhóng</span>
+                    <span class="gate-era-vietnamese">Đô thị nghê hồng</span>
                     <span class="gate-plaque-row">
                         <span class="gate-ornament">🌆</span>
                         <span class="gate-plaque">HSK 5</span>
@@ -128,13 +241,15 @@
                 </span>
             </button>
 
-            <button class="gate gate--future" data-level="hsk6" aria-label="Mở cánh cửa HSK 6 — Tương lai huyền ảo">
+            <button class="gate gate--future" data-level="hsk6" aria-label="Mở cánh cửa HSK 6 — Tương lai huyền cảnh">
                 <span class="gate-arch">
                     <span class="gate-leaf left"></span>
                     <span class="gate-leaf right"></span>
                 </span>
                 <span class="gate-caption">
                     <span class="gate-era">未来幻境</span>
+                    <span class="gate-era-pinyin">Wèilái huànjìng</span>
+                    <span class="gate-era-vietnamese">Tương lai huyền cảnh</span>
                     <span class="gate-plaque-row">
                         <span class="gate-ornament">🔮</span>
                         <span class="gate-plaque">HSK 6</span>
