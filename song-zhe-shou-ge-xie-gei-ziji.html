@@ -290,6 +290,7 @@
             <button class="song-color-button yellow" data-color="yellow" type="button"></button>
             <button class="song-color-button orange" data-color="orange" type="button"></button>
             <button class="song-color-button purple" data-color="purple" type="button"></button>
+            <button class="song-color-button gray" data-color="gray" type="button"></button>
             <button id="songUnderlineWord" class="song-underline-button" type="button">U</button>
         </div>
     </div>
@@ -1125,7 +1126,7 @@
         function applyWordStyles() {
             const highlights = getHighlights();
             const underlines = getUnderlines();
-            const colors = ["green", "blue", "yellow", "orange", "purple"];
+            const colors = ["green", "blue", "yellow", "orange", "purple", "gray"];
 
             document.querySelectorAll(".song-word").forEach(function(element) {
                 colors.forEach(function(color) {

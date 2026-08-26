@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>学中文歌</title>
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body class="songs-page">
     <main class="songs-container">
         <a href="index.html" class="back-link">← Quay lại</a>
@@ -17,10 +19,7 @@
         </header>
 
         <section class="song-grid" aria-label="Danh sách bài hát">
-            <a
-                class="song-card"
-                href="song-zhe-shou-ge-xie-gei-ziji.html"
-                data-progress-id="1001">
+            <a class="song-card" href="song-zhe-shou-ge-xie-gei-ziji.html" data-progress-id="1001">
 
                 <span class="song-card-disc">
                     <img src="zheshougexiegeiziji.jpg" alt="Ảnh bìa 这首歌写给自己">
@@ -37,10 +36,7 @@
                 <span class="song-card-play">▶</span>
             </a>
 
-            <a
-                class="song-card"
-                href="song-hai-di.html"
-                data-progress-id="1002">
+            <a class="song-card" href="song-hai-di.html" data-progress-id="1002">
 
                 <span class="song-card-disc">
                     <img src="haidi.jpg" alt="Ảnh bìa 海底">
@@ -51,6 +47,38 @@
                     <strong>海底 · Đáy Biển</strong>
                     <span>Hǎidǐ</span>
                     <small>一支榴莲 · Nhất Chi Lựu Liên</small>
+                    <em class="song-status" data-status="new">Chưa bắt đầu</em>
+                </span>
+
+                <span class="song-card-play">▶</span>
+            </a>
+            <a class="song-card" href="song-xia-bei-zi-bu-yi-ding-hai-neng-yu-jian-ni.html" data-progress-id="1002">
+
+                <span class="song-card-disc">
+                    <img src="xiabeizibuyidinghainengyujianni.jpg" alt="Ảnh bìa 下辈子不一定还能遇见你">
+                    <span class="song-card-hole"></span>
+                </span>
+
+                <span class="song-card-info">
+                    <strong>下辈子不一定还能遇见你 · Kiếp sau không chắc còn có thể gặp được anh</strong>
+                    <span>Hǎidǐ</span>
+                    <small>莫叫姐姐 · Mạc Khiếu Tỷ Tỷ</small>
+                    <em class="song-status" data-status="new">Chưa bắt đầu</em>
+                </span>
+
+                <span class="song-card-play">▶</span>
+            </a>
+            <a class="song-card" href="song-an-hoa-kieu.html" data-progress-id="1003">
+
+                <span class="song-card-disc">
+                    <img src="images_anheqiu.png" alt="Ảnh bìa 安和桥">
+                    <span class="song-card-hole"></span>
+                </span>
+
+                <span class="song-card-info">
+                    <strong>安和桥 · An Hòa Kiều</strong>
+                    <span>Ānhé qiáo</span>
+                    <small>宋冬野 · Tống Đông Dã</small>
                     <em class="song-status" data-status="new">Chưa bắt đầu</em>
                 </span>
 
@@ -89,7 +117,7 @@
                 document.querySelectorAll(".song-card[data-progress-id]")
             );
             const ids = cards
-                .map(function(card) {
+                .map(function (card) {
                     return Number(card.dataset.progressId);
                 })
                 .filter(Number.isFinite);
@@ -105,7 +133,7 @@
                 completed: "Đã hoàn thành ✓"
             };
 
-            cards.forEach(function(card) {
+            cards.forEach(function (card) {
                 const id = Number(card.dataset.progressId);
                 const status = statuses[id] || "new";
                 const badge = card.querySelector(".song-status");
@@ -120,4 +148,5 @@
         loadSongStatus();
     </script>
 </body>
+
 </html>

@@ -1023,6 +1023,7 @@ h1 {
 .song-word.highlight-yellow { background: #f4e6a3; }
 .song-word.highlight-purple { background: #dbcaf0; }
 .song-word.highlight-orange { background: #ffd2a8; }
+.song-word.highlight-gray { background: #d9dde1; }
 .song-word.is-underlined {
     text-decoration: underline;
     text-decoration-thickness: 1px;
@@ -1162,6 +1163,7 @@ h1 {
 .song-color-button.yellow { background: #f4d66d; }
 .song-color-button.purple { background: #ad8ed6; }
 .song-color-button.orange { background: #ffd2a8; }
+.song-color-button.gray { background: #aeb5bd; }
 
 .song-underline-button {
     width: 30px;
