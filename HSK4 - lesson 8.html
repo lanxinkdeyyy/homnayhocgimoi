@@ -1586,7 +1586,7 @@ body {
             <span id="audioDuration1">0:00</span>
         </div>
 
-        <audio id="audio1" src="audio/HSK4 - quyển thượng - Bài 7.4.mp3"></audio>
+        <audio id="audio1" src="audio/HSK4 - quyển thượng - Bài 8.4.mp3"></audio>
 
     </div>
 
@@ -1619,7 +1619,7 @@ body {
             <span id="audioDuration2">0:00</span>
         </div>
 
-        <audio id="audio2" src="audio/HSK4 - quyển thượng - Bài 7.5.mp3"></audio>
+        <audio id="audio2" src="audio/HSK4 - quyển thượng - Bài 8.5.mp3"></audio>
 
     </div>
 
@@ -2189,6 +2189,26 @@ const vocabulary = {
     usage: "Dùng để nối câu, chuyển sang kết quả hoặc câu hỏi tiếp theo."
 },
 
+"窗": {
+    pinyin: "chuāng",
+    hanviet: "[Song]",
+    pos: "n",
+    meaning: "Cửa sổ",
+    exampleChinese: "请把窗打开。",
+    exampleVietnamese: "→ Hãy mở cửa sổ ra.",
+    usage: "窗 là cách nói ngắn của 窗户. 常用：窗外、开窗、关窗。"
+},
+
+"窗户": {
+    pinyin: "chuānghu",
+    hanviet: "[Song Hộ]",
+    pos: "n",
+    meaning: "Cửa sổ",
+    exampleChinese: "窗户外面有很多树。",
+    exampleVietnamese: "→ Bên ngoài cửa sổ có rất nhiều cây.",
+    usage: "Danh từ. 常用：开窗户、关窗户、窗户外面。"
+},
+
 "什么": {
     pinyin: "shénme",
     hanviet: "[Thập Ma]",
@@ -2304,6 +2324,16 @@ const vocabulary = {
     exampleChinese: "我终于认识到时间的重要性。",
     exampleVietnamese: "→ Cuối cùng tôi cũng nhận ra tầm quan trọng của thời gian.",
     usage: "认识到 + sự việc / ý nghĩa / vấn đề."
+},
+
+"窗外": {
+    pinyin: "chuāngwài",
+    hanviet: "[Song Ngoại]",
+    pos: "n",
+    meaning: "Bên ngoài cửa sổ",
+    exampleChinese: "窗外的风景很漂亮。",
+    exampleVietnamese: "→ Phong cảnh bên ngoài cửa sổ rất đẹp.",
+    usage: "窗 (cửa sổ) + 外 (bên ngoài). 常用：窗外的风景、看着窗外。"
 },
 
 "精神": {
@@ -2574,14 +2604,29 @@ Object.assign(vocabulary, {
     "生命": {pinyin:"shēngmìng", hanviet:"[Sinh Mệnh]", pos:"n", meaning:"Sinh mệnh, sự sống", exampleChinese:"生命很宝贵。", exampleVietnamese:"→ Sự sống rất quý giá.", usage:"Chỉ sự sống hoặc cuộc đời."},
     "颜色": {pinyin:"yánsè", hanviet:"[Nhan Sắc]", pos:"n", meaning:"Màu sắc", exampleChinese:"我喜欢这个颜色。", exampleVietnamese:"→ Tôi thích màu này.", usage:"Dùng để nói về màu sắc."},
     "花": {pinyin:"huā", hanviet:"[Hoa]", pos:"n", meaning:"Hoa", exampleChinese:"花开了。", exampleVietnamese:"→ Hoa nở rồi.", usage:"Danh từ chỉ hoa."},
-    "大自然": {pinyin:"dà zìrán", hanviet:"[Đại Tự Nhiên]", pos:"n", meaning:"Thiên nhiên", exampleChinese:"大自然很美。", exampleVietnamese:"→ Thiên nhiên rất đẹp.", usage:"Chỉ thế giới tự nhiên."},
+    "自然": {pinyin:"zìrán", hanviet:"[Tự Nhiên]", pos:"n", meaning:"Thiên nhiên", exampleChinese:"大自然很美。", exampleVietnamese:"→ Thiên nhiên rất đẹp.", usage:"Chỉ thế giới tự nhiên."},
     "礼物": {pinyin:"lǐwù", hanviet:"[Lễ Vật]", pos:"n", meaning:"Quà tặng", exampleChinese:"这是送给你的礼物。", exampleVietnamese:"→ Đây là quà tặng cho bạn.", usage:"礼物 thường đi với 送、收到."},
     "生活": {pinyin:"shēnghuó", hanviet:"[Sinh Hoạt]", pos:"n / v", meaning:"Cuộc sống; sinh hoạt", exampleChinese:"我的生活很简单。", exampleVietnamese:"→ Cuộc sống của tôi rất đơn giản.", usage:"Có thể là danh từ hoặc động từ."},
     "缺少": {pinyin:"quēshǎo", hanviet:"[Khuyết Thiểu]", pos:"v", meaning:"Thiếu, thiếu hụt", exampleChinese:"这里缺少水。", exampleVietnamese:"→ Ở đây thiếu nước.", usage:"缺少 + danh từ."},
     "发现": {pinyin:"fāxiàn", hanviet:"[Phát Hiện]", pos:"v", meaning:"Phát hiện, nhận ra", exampleChinese:"我发现了一个问题。", exampleVietnamese:"→ Tôi phát hiện một vấn đề.", usage:"发现 + sự vật / vấn đề."},
     "眼睛": {pinyin:"yǎnjing", hanviet:"[Nhãn Tinh]", pos:"n", meaning:"Mắt", exampleChinese:"她的眼睛很漂亮。", exampleVietnamese:"→ Mắt cô ấy rất đẹp.", usage:"Danh từ chỉ mắt."},
+    "有关": {pinyin:"yǒuguān", hanviet:"[Hữu Quan]", pos:"v", meaning:"Có liên quan", exampleChinese:"这件事跟你的工作有关。", exampleVietnamese:"→ Việc này có liên quan đến công việc của bạn.", usage:"Thường dùng: 与/跟/和……有关 = có liên quan đến…; 无关 = không liên quan."},
+    "穿": {pinyin:"chuān", hanviet:"[Xuyên]", pos:"v", meaning:"Mặc; xuyên qua", exampleChinese:"今天很冷，记得多穿一点儿。", exampleVietnamese:"→ Hôm nay lạnh, nhớ mặc thêm một chút.", usage:"穿 + quần áo/giày: mặc hoặc đi. Ví dụ: 穿衣服、穿裙子、穿鞋。"},
+    "比较": {pinyin:"bǐjiào", hanviet:"[Tỉ Giảo]", pos:"adv / v", meaning:"Khá, tương đối; so sánh", exampleChinese:"这件衣服比较适合你。", exampleVietnamese:"→ Bộ quần áo này khá hợp với bạn.", usage:"比较 + tính từ: khá/tương đối…; 比较 A 和 B: so sánh A và B。"},
     "只要": {pinyin:"zhǐyào", hanviet:"[Chỉ Yếu]", pos:"conj", meaning:"Chỉ cần", exampleChinese:"只要努力，就会进步。", exampleVietnamese:"→ Chỉ cần cố gắng thì sẽ tiến bộ.", usage:"Thường dùng với 就 ở vế sau."},
     "到处": {pinyin:"dàochù", hanviet:"[Đáo Xứ]", pos:"adv", meaning:"Khắp nơi, mọi nơi", exampleChinese:"这里到处都是花。", exampleVietnamese:"→ Ở đây đâu đâu cũng có hoa.", usage:"Đứng trước động từ hoặc 是."},
+    "窗户": {pinyin:"chuānghu", hanviet:"[Song Hộ]", pos:"n", meaning:"Cửa sổ", exampleChinese:"请打开窗户。", exampleVietnamese:"→ Hãy mở cửa sổ.", usage:"Danh từ. 常用：开窗户、关窗户。"},
+    "共同": {pinyin:"gòngtóng", hanviet:"[Cộng Đồng]", pos:"a / adv", meaning:"Chung, cùng nhau", exampleChinese:"我们有一个共同的目标。", exampleVietnamese:"→ Chúng tôi có một mục tiêu chung.", usage:"共同的 + danh từ: chung; 共同 + động từ: cùng nhau làm gì. Ví dụ: 共同努力。"},
+    "而": {pinyin:"ér", hanviet:"[Nhi]", pos:"conj", meaning:"Mà, còn, nhưng", exampleChinese:"他很努力，而结果也很好。", exampleVietnamese:"→ Anh ấy rất nỗ lực, và kết quả cũng tốt.", usage:"Dùng để nối hai vế/cụm có quan hệ bổ sung hoặc đối lập nhẹ. Thường gặp: 而且 (hơn nữa), 然而 (tuy nhiên), 而不是 (chứ không phải)。"},
+    "却": {pinyin:"què", hanviet:"[Khước]", pos:"adv", meaning:"Lại, nhưng lại", exampleChinese:"他想帮忙，却不知道怎么做。", exampleVietnamese:"→ Anh ấy muốn giúp, nhưng lại không biết làm thế nào.", usage:"Thường đặt trước động từ/tính từ để nhấn mạnh kết quả trái với điều người ta mong đợi: 虽然……却……。"},
+    "容易": {pinyin:"róngyì", hanviet:"[Dung Dị]", pos:"a", meaning:"Dễ, dễ dàng", exampleChinese:"这个问题不容易回答。", exampleVietnamese:"→ Câu hỏi này không dễ trả lời.", usage:"容易 + động từ: dễ làm gì; 不容易: không dễ. Ví dụ: 容易忘记、容易生病。"},
+     "觉得": {pinyin:"juéde", hanviet:"[Giác Đắc]", pos:"v", meaning:"Cảm thấy, cho rằng", exampleChinese:"我觉得这个方法很好。", exampleVietnamese:"→ Tôi thấy phương pháp này rất tốt.", usage:"觉得 + tính từ/câu: cảm thấy, cho rằng thế nào. Ví dụ: 觉得很累、觉得他说得对。"},
+     "得到": {pinyin:"dédào", hanviet:"[Đắc Đáo]", pos:"v", meaning:"Nhận được, có được", exampleChinese:"他终于得到了大家的支持。", exampleVietnamese:"→ Cuối cùng anh ấy đã nhận được sự ủng hộ của mọi người.", usage:"得到 + kết quả/thứ trừu tượng: 得到帮助、得到机会、得到答案、得到充分的休息。"},
+    "窗外": {pinyin:"chuāngwài", hanviet:"[Song Ngoại]", pos:"n", meaning:"Bên ngoài cửa sổ", exampleChinese:"窗外下雨了。", exampleVietnamese:"→ Bên ngoài cửa sổ trời mưa rồi.", usage:"窗 + 外. Chỉ không gian ở phía ngoài cửa sổ."},
+    "站": {pinyin:"zhàn", hanviet:"[Trạm]", pos:"v", meaning:"Đứng; đứng tại", exampleChinese:"请站在门口等我。", exampleVietnamese:"→ Hãy đứng ở cửa chờ tôi.", usage:"站 + địa điểm: đứng ở đâu. Trong bài: 站在……前 = đứng trước…"},
+    "选": {pinyin:"xuǎn", hanviet:"[Tuyển]", pos:"v", meaning:"Chọn, lựa chọn", exampleChinese:"你可以选自己喜欢的颜色。", exampleVietnamese:"→ Bạn có thể chọn màu mình thích.", usage:"选 + danh từ: chọn cái gì. 选择 là dạng đầy đủ hơn của 选."},
+    "与": {pinyin:"yǔ", hanviet:"[Dữ]", pos:"prep", meaning:"Với, và", exampleChinese:"我想与你分享这个好消息。", exampleVietnamese:"→ Tôi muốn chia sẻ tin tốt này với bạn.", usage:"与 là cách nói trang trọng của 和、跟. Thường dùng: 与……一起 / 与……有关 / 与……交流。"},
+    "样子": {pinyin:"yàngzi", hanviet:"[Dạng Tử]", pos:"n", meaning:"Dáng vẻ, hình dáng, bộ dạng", exampleChinese:"这个地方以前是什么样子？", exampleVietnamese:"→ Nơi này trước đây trông như thế nào?", usage:"Thường dùng: 什么样子？; ……的样子; 看起来……的样子。"},
     "态度": {pinyin:"tàidu", hanviet:"[Thái Độ]", pos:"n", meaning:"Thái độ", exampleChinese:"他的学习态度很好。", exampleVietnamese:"→ Thái độ học tập của anh ấy rất tốt.", usage:"Thường dùng: 对…的态度."},
     "选择": {pinyin:"xuǎnzé", hanviet:"[Tuyển Trạch]", pos:"v / n", meaning:"Lựa chọn", exampleChinese:"你可以自己选择。", exampleVietnamese:"→ Bạn có thể tự lựa chọn.", usage:"选择 + danh từ / động từ."},
     "因此": {pinyin:"yīncǐ", hanviet:"[Nhân Thử]", pos:"conj", meaning:"Vì vậy, do đó", exampleChinese:"他生病了，因此没来。", exampleVietnamese:"→ Anh ấy bị ốm, vì vậy không đến.", usage:"Dùng để nối nguyên nhân và kết quả."},
@@ -3119,9 +3164,6 @@ function shortPOS(posStr) {
         posStr.split("/")[0].trim();
 
     const map = [
-    [["名词", "danh từ", "n"], "n"],
-    [["形容词", "tính từ", "a"], "a"],
-    [["副词", "phó từ", "adv"], "adv"],
     [["连词", "liên từ", "conj"], "conj"],
     [["介词", "giới từ", "prep"], "prep"],
     [["代词", "đại từ", "pron"], "pron"],
@@ -4004,6 +4046,7 @@ function toggleUnderline() {
     } else {
 
         currentWordElement.style.textDecoration = "underline";
+        currentWordElement.style.textDecorationColor = "#e53935";
         currentWordElement.style.textDecorationThickness = "1px";
         currentWordElement.style.textUnderlineOffset = "5px";
     }
@@ -4064,6 +4107,7 @@ function applySavedHighlights() {
             if (!id || !underlines[id]) return;
 
             el.style.textDecoration = "underline";
+            el.style.textDecorationColor = "#e53935";
             el.style.textDecorationThickness = "1px";
             el.style.textUnderlineOffset = "5px";
         });
