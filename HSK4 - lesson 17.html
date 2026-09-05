@@ -1476,6 +1476,72 @@ body {
     color: #555;
 }
 
+
+/* ========= ĐÁNH DẤU CỤM TỪ (NHIỀU TỪ) ============= */
+/* ================================================= */
+
+/* Khối bọc ngoài 1 cụm từ được bôi đen chọn.
+   Dùng padding/border-radius ở CHÍNH khối này (không phải từng
+   .word con) để màu nền / gạch chân trải liền mạch, không đứt đoạn. */
+.phrase-mark {
+    padding: 4px 6px;
+    border-radius: 7px;
+    transition: 0.2s;
+}
+
+/* Từ bên trong cụm không tự vẽ padding/nền riêng nữa,
+   để tránh bị chia thành từng ô rời rạc. */
+.phrase-mark .word {
+    padding: 0;
+    border-radius: 0;
+}
+
+.phrase-mark .word:hover {
+    background: transparent;
+}
+
+/* ================================================= */
+/* ========= THANH CÔNG CỤ KHI BÔI ĐEN CỤM TỪ ======= */
+/* ================================================= */
+
+.phrase-toolbar {
+    display: none;
+    position: fixed;
+    z-index: 1600;
+    background: white;
+    border-radius: 14px;
+    padding: 8px 10px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
+
+.phrase-toolbar.show {
+    display: block;
+}
+
+.phrase-toolbar-colors {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.phrase-remove-btn {
+    margin-left: 4px;
+    width: 32px;
+    height: 32px;
+    border: none;
+    border-radius: 8px;
+    background: #f2dede;
+    color: #c75c5c;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+.phrase-remove-btn:hover {
+    background: #e9bcbc;
+}
+
+
+
 </style>
 
 </head>
@@ -2645,6 +2711,8 @@ let currentHighlight = {};
 
 let currentUnderline = {};
 
+let currentPhraseInfo = null;
+
 let matchPairs = [];
 
 let selectedChinese = null;
@@ -2685,6 +2753,7 @@ function refreshLessonAfterCloudLoad() {
 
     updateSavedList();
     applySavedHighlights();
+    applySavedPhraseMarks();
     renderPinnedSidebar();
 
     if (localStorage.getItem("lesson11Completed") === "true") {
@@ -2791,6 +2860,37 @@ function setUnderlines(data) {
     );
 
     queueProgressSync();
+
+}
+
+
+/* ========= LƯU ĐÁNH DẤU CỤM TỪ (NHIỀU TỪ) ========= */
+/* ================================================= */
+
+function getPhraseMarks() {
+
+    return JSON.parse(
+        localStorage.getItem("lesson17PhraseMarks")
+    ) || {};
+
+}
+
+
+function setPhraseMarks(data) {
+
+    localStorage.setItem(
+        "lesson17PhraseMarks",
+        JSON.stringify(data)
+    );
+
+    queueProgressSync();
+
+}
+
+
+function phraseKey(startId, endId) {
+
+    return startId + "__" + endId;
 
 }
 
@@ -4071,6 +4171,513 @@ function applySavedHighlights() {
             el.style.textUnderlineOffset = "5px";
         });
 }
+
+/* ========= ĐÁNH DẤU CỤM TỪ (BÔI ĐEN NHIỀU TỪ) ===== */
+/* ================================================= */
+
+/*
+ * Tìm node con cấp 1 (trực tiếp) của "container" chứa "node".
+ * Vì .reading-text chỉ có 1 cấp con (các .word và các text node
+ * xen kẽ), hàm này giúp quy mọi điểm chọn (dù đang ở trong 1 .word
+ * hay ở 1 text node thuần) về đúng "ô" cấp 1 tương ứng.
+ */
+function getTopLevelNode(node, container) {
+
+    let current = node;
+
+    while (current && current.parentNode !== container) {
+        current = current.parentNode;
+    }
+
+    return current;
+}
+
+
+/*
+ * Phân tích vùng bôi đen hiện tại (window selection) để xác định:
+ * - Đang SỬA một cụm đã đánh dấu sẵn (chọn lại đè lên 1 .phrase-mark), hoặc
+ * - Đang TẠO MỚI một cụm từ (kéo chọn qua từ 2 từ trở lên).
+ * Trả về null nếu vùng chọn không hợp lệ để tạo/sửa cụm từ.
+ */
+function analyzeSelectionForPhrase(selection) {
+
+    if (!selection || selection.isCollapsed) return null;
+    if (selection.rangeCount === 0) return null;
+
+    const range = selection.getRangeAt(0);
+
+    const startNode =
+        range.startContainer.nodeType === 3
+            ? range.startContainer.parentElement
+            : range.startContainer;
+
+    const endNode =
+        range.endContainer.nodeType === 3
+            ? range.endContainer.parentElement
+            : range.endContainer;
+
+    if (!startNode || !endNode) return null;
+
+    /* Trường hợp SỬA: điểm đầu và điểm cuối cùng nằm trong 1 cụm đã có sẵn */
+    const startPhrase = startNode.closest(".phrase-mark");
+    const endPhrase = endNode.closest(".phrase-mark");
+
+    if (startPhrase && startPhrase === endPhrase) {
+
+        return {
+            mode: "edit",
+            element: startPhrase,
+            startWordId: startPhrase.dataset.startWord,
+            endWordId: startPhrase.dataset.endWord
+        };
+    }
+
+    /* Trường hợp TẠO MỚI: phải nằm trong cùng 1 khối .reading-text */
+    const container = startNode.closest(".reading-text[data-raw-text]");
+    if (!container) return null;
+
+    const endContainer = endNode.closest(".reading-text[data-raw-text]");
+    if (endContainer !== container) return null;
+
+    const topChildren = Array.from(container.childNodes);
+
+    const startTop = getTopLevelNode(range.startContainer, container);
+    const endTop = getTopLevelNode(range.endContainer, container);
+
+    let startIndex = topChildren.indexOf(startTop);
+    let endIndex = topChildren.indexOf(endTop);
+
+    if (startIndex === -1 || endIndex === -1) return null;
+
+    if (startIndex > endIndex) {
+        const swap = startIndex;
+        startIndex = endIndex;
+        endIndex = swap;
+    }
+
+    let slice = topChildren.slice(startIndex, endIndex + 1);
+
+    /* Để đơn giản, không cho vùng chọn mới đè lên cụm đã đánh dấu sẵn.
+       Muốn mở rộng 1 cụm đã có, hãy xóa đánh dấu cũ rồi chọn lại. */
+    const touchesExistingPhrase =
+        slice.some(function(n) {
+            return n.nodeType === 1 && n.classList.contains("phrase-mark");
+        });
+
+    if (touchesExistingPhrase) return null;
+
+    const isWordNode = function(n) {
+        return n.nodeType === 1 && n.classList.contains("word");
+    };
+
+    const firstWordPos = slice.findIndex(isWordNode);
+
+    let lastWordPos = -1;
+    for (let i = slice.length - 1; i >= 0; i--) {
+        if (isWordNode(slice[i])) {
+            lastWordPos = i;
+            break;
+        }
+    }
+
+    /* Cần ít nhất 2 từ khác nhau mới coi là "cụm từ";
+       chỉ 1 từ thì dùng cơ chế bấm-từng-từ có sẵn là đủ. */
+    if (
+        firstWordPos === -1 ||
+        lastWordPos === -1 ||
+        firstWordPos === lastWordPos
+    ) {
+        return null;
+    }
+
+    slice = slice.slice(firstWordPos, lastWordPos + 1);
+
+    return {
+        mode: "create",
+        container: container,
+        nodes: slice,
+        startWordId: slice[0].dataset.wordId,
+        endWordId: slice[slice.length - 1].dataset.wordId
+    };
+}
+
+
+/*
+ * Bọc 1 dãy node liền kề (đã xác định sẵn) vào 1 <span class="phrase-mark">.
+ * Đây là điểm mấu chốt giúp highlight/gạch chân trải liền mạch:
+ * cả cụm dùng CHUNG 1 khối duy nhất thay vì mỗi từ 1 khối riêng.
+ */
+function wrapPhraseNodes(info) {
+
+    const wrapper = document.createElement("span");
+
+    wrapper.className = "phrase-mark";
+    wrapper.dataset.startWord = info.startWordId;
+    wrapper.dataset.endWord = info.endWordId;
+
+    info.container.insertBefore(wrapper, info.nodes[0]);
+
+    info.nodes.forEach(function(node) {
+        wrapper.appendChild(node);
+    });
+
+    return wrapper;
+}
+
+
+/*
+ * Gỡ 1 cụm .phrase-mark ra, trả các .word/text node bên trong
+ * về lại đúng vị trí cũ trong .reading-text (không mất chức năng
+ * bấm xem nghĩa của từng từ bên trong).
+ */
+function unwrapPhraseElement(wrapper) {
+
+    if (!wrapper || !wrapper.parentNode) return;
+
+    const parent = wrapper.parentNode;
+
+    while (wrapper.firstChild) {
+        parent.insertBefore(wrapper.firstChild, wrapper);
+    }
+
+    parent.removeChild(wrapper);
+}
+
+
+/*
+ * Đảm bảo đang có 1 phần tử .phrase-mark thật sự để áp màu/gạch chân lên:
+ * nếu đang ở chế độ "create" thì tạo mới (bọc DOM lại);
+ * nếu đang "edit" thì dùng lại phần tử đã có.
+ */
+function ensurePhraseWrapper() {
+
+    if (!currentPhraseInfo) return null;
+
+    if (currentPhraseInfo.mode === "edit") {
+
+        return {
+            element: currentPhraseInfo.element,
+            key: phraseKey(
+                currentPhraseInfo.startWordId,
+                currentPhraseInfo.endWordId
+            )
+        };
+    }
+
+    const wrapper = wrapPhraseNodes(currentPhraseInfo);
+
+    const key = phraseKey(
+        currentPhraseInfo.startWordId,
+        currentPhraseInfo.endWordId
+    );
+
+    currentPhraseInfo = {
+        mode: "edit",
+        element: wrapper,
+        startWordId: currentPhraseInfo.startWordId,
+        endWordId: currentPhraseInfo.endWordId
+    };
+
+    return { element: wrapper, key: key };
+}
+
+
+/* Nếu cụm không còn màu và cũng không còn gạch chân thì gỡ hẳn ra. */
+function cleanupPhraseRecord(marks, target) {
+
+    const record = marks[target.key];
+
+    if (record && !record.color && !record.underline) {
+
+        delete marks[target.key];
+
+        unwrapPhraseElement(target.element);
+
+        hidePhraseToolbar();
+    }
+}
+
+
+function applyPhraseColor(color) {
+
+    const target = ensurePhraseWrapper();
+    if (!target) return;
+
+    const marks = getPhraseMarks();
+    const record = marks[target.key] || {};
+
+    target.element.classList.remove(
+        "highlight-green",
+        "highlight-blue",
+        "highlight-gray",
+        "highlight-yellow",
+        "highlight-orange",
+        "highlight-purple"
+    );
+
+    if (record.color === color) {
+
+        record.color = null;
+
+    } else {
+
+        record.color = color;
+        target.element.classList.add("highlight-" + color);
+    }
+
+    marks[target.key] = record;
+    cleanupPhraseRecord(marks, target);
+    setPhraseMarks(marks);
+
+    updatePhraseToolbarState();
+}
+
+
+function applyPhraseUnderline() {
+
+    const target = ensurePhraseWrapper();
+    if (!target) return;
+
+    const marks = getPhraseMarks();
+    const record = marks[target.key] || {};
+
+    const isUnderlined = !!record.underline;
+
+    if (isUnderlined) {
+
+        target.element.style.textDecoration = "none";
+        record.underline = false;
+
+    } else {
+
+        target.element.style.textDecoration = "underline";
+        target.element.style.textDecorationColor = "#e53935";
+        target.element.style.textDecorationThickness = "1px";
+        target.element.style.textUnderlineOffset = "5px";
+        record.underline = true;
+    }
+
+    marks[target.key] = record;
+    cleanupPhraseRecord(marks, target);
+    setPhraseMarks(marks);
+
+    updatePhraseToolbarState();
+}
+
+
+function removeCurrentPhrase() {
+
+    if (!currentPhraseInfo || currentPhraseInfo.mode !== "edit") {
+        hidePhraseToolbar();
+        return;
+    }
+
+    const key = phraseKey(
+        currentPhraseInfo.startWordId,
+        currentPhraseInfo.endWordId
+    );
+
+    const marks = getPhraseMarks();
+    delete marks[key];
+    setPhraseMarks(marks);
+
+    unwrapPhraseElement(currentPhraseInfo.element);
+
+    hidePhraseToolbar();
+}
+
+
+function updatePhraseToolbarState() {
+
+    document
+        .querySelectorAll("#phraseToolbar .color-btn")
+        .forEach(function(btn) {
+            btn.classList.remove("active-color");
+        });
+
+    const underlineBtn =
+        document.getElementById("phraseUnderlineButton");
+
+    if (underlineBtn) underlineBtn.classList.remove("active");
+
+    if (!currentPhraseInfo || currentPhraseInfo.mode !== "edit") return;
+
+    const key = phraseKey(
+        currentPhraseInfo.startWordId,
+        currentPhraseInfo.endWordId
+    );
+
+    const record = getPhraseMarks()[key];
+    if (!record) return;
+
+    if (record.color) {
+
+        const btn = document.querySelector(
+            "#phraseToolbar .color-btn." + record.color
+        );
+
+        if (btn) btn.classList.add("active-color");
+    }
+
+    if (record.underline && underlineBtn) {
+        underlineBtn.classList.add("active");
+    }
+}
+
+
+function showPhraseToolbar(rect) {
+
+    const toolbar = document.getElementById("phraseToolbar");
+    if (!toolbar || !rect) return;
+
+    toolbar.classList.add("show");
+
+    const toolbarRect = toolbar.getBoundingClientRect();
+    const margin = 8;
+
+    let left = rect.left + rect.width / 2 - toolbarRect.width / 2;
+    let top = rect.top - toolbarRect.height - 10;
+
+    left = Math.max(
+        margin,
+        Math.min(left, window.innerWidth - toolbarRect.width - margin)
+    );
+
+    if (top < margin) {
+        top = rect.bottom + 10;
+    }
+
+    toolbar.style.left = left + "px";
+    toolbar.style.top = top + "px";
+
+    updatePhraseToolbarState();
+}
+
+
+function hidePhraseToolbar() {
+
+    const toolbar = document.getElementById("phraseToolbar");
+    if (toolbar) toolbar.classList.remove("show");
+
+    currentPhraseInfo = null;
+}
+
+
+/* Bắt sự kiện bôi đen (chuột lẫn cảm ứng) trong bài đọc */
+function handleReadingSelectionEnd() {
+
+    setTimeout(function() {
+
+        const selection = window.getSelection();
+
+        if (!selection || selection.isCollapsed) return;
+
+        const info = analyzeSelectionForPhrase(selection);
+        if (!info) return;
+
+        currentPhraseInfo = info;
+
+        const range = selection.rangeCount
+            ? selection.getRangeAt(0)
+            : null;
+
+        const rect =
+            info.mode === "edit"
+                ? info.element.getBoundingClientRect()
+                : (range ? range.getBoundingClientRect() : null);
+
+        showPhraseToolbar(rect);
+
+    }, 0);
+}
+
+document.addEventListener("mouseup", handleReadingSelectionEnd);
+document.addEventListener("touchend", handleReadingSelectionEnd);
+
+/* Bấm ra ngoài toolbar (và ngoài cụm đang sửa) thì ẩn toolbar đi */
+document.addEventListener("click", function(event) {
+
+    const toolbar = document.getElementById("phraseToolbar");
+    if (!toolbar || !toolbar.classList.contains("show")) return;
+
+    const clickedInsideToolbar = toolbar.contains(event.target);
+
+    const clickedInsideCurrentPhrase =
+        currentPhraseInfo &&
+        currentPhraseInfo.mode === "edit" &&
+        currentPhraseInfo.element.contains(event.target);
+
+    if (!clickedInsideToolbar && !clickedInsideCurrentPhrase) {
+        hidePhraseToolbar();
+    }
+});
+
+
+/* ================================================= */
+/* ===== ÁP LẠI CÁC CỤM TỪ ĐÃ ĐÁNH DẤU KHI TẢI TRANG = */
+/* ================================================= */
+
+function applySavedPhraseMarks() {
+
+    const marks = getPhraseMarks();
+
+    Object.keys(marks).forEach(function(key) {
+
+        const record = marks[key];
+        if (!record || (!record.color && !record.underline)) return;
+
+        const parts = key.split("__");
+        const startId = parts[0];
+        const endId = parts[1];
+
+        const startEl = document.querySelector(
+            '#reading .reading-main .word[data-word-id="' + startId + '"]'
+        );
+
+        const endEl = document.querySelector(
+            '#reading .reading-main .word[data-word-id="' + endId + '"]'
+        );
+
+        if (!startEl || !endEl || startEl === endEl) return;
+
+        /* Tránh bọc lại 2 lần nếu hàm này lỡ được gọi nhiều lần */
+        if (startEl.closest(".phrase-mark") || endEl.closest(".phrase-mark")) {
+            return;
+        }
+
+        const container = startEl.closest(".reading-text[data-raw-text]");
+        if (!container) return;
+        if (endEl.closest(".reading-text[data-raw-text]") !== container) return;
+
+        const topChildren = Array.from(container.childNodes);
+
+        const startIndex = topChildren.indexOf(startEl);
+        const endIndex = topChildren.indexOf(endEl);
+
+        if (startIndex === -1 || endIndex === -1 || startIndex > endIndex) return;
+
+        const nodes = topChildren.slice(startIndex, endIndex + 1);
+
+        const wrapper = wrapPhraseNodes({
+            container: container,
+            nodes: nodes,
+            startWordId: startId,
+            endWordId: endId
+        });
+
+        if (record.color) {
+            wrapper.classList.add("highlight-" + record.color);
+        }
+
+        if (record.underline) {
+            wrapper.style.textDecoration = "underline";
+            wrapper.style.textDecorationColor = "#e53935";
+            wrapper.style.textDecorationThickness = "1px";
+            wrapper.style.textUnderlineOffset = "5px";
+        }
+    });
+}
+
 
 /* ================================================= */
 /* ================= TAB ============================ */
@@ -5607,6 +6214,8 @@ updateSavedList();
 
 applySavedHighlights();
 
+applySavedPhraseMarks();
+
 renderPinnedSidebar();
 
 
@@ -5633,6 +6242,67 @@ if (
 initSupabaseProgress();
 
 </script>
+
+
+
+<div
+    id="phraseToolbar"
+    class="phrase-toolbar">
+
+    <div class="phrase-toolbar-colors">
+
+        <button
+            class="color-btn green"
+            onclick="applyPhraseColor('green')">
+        </button>
+
+        <button
+            class="color-btn blue"
+            onclick="applyPhraseColor('blue')">
+        </button>
+
+        <button
+            class="color-btn gray"
+            onclick="applyPhraseColor('gray')">
+        </button>
+
+        <button
+            class="color-btn yellow"
+            onclick="applyPhraseColor('yellow')">
+        </button>
+
+        <button
+            class="color-btn orange"
+            onclick="applyPhraseColor('orange')">
+        </button>
+
+        <button
+            class="color-btn purple"
+            onclick="applyPhraseColor('purple')">
+        </button>
+
+        <button
+            id="phraseUnderlineButton"
+            class="underline-btn"
+            onclick="applyPhraseUnderline()">
+            U
+        </button>
+
+        <button
+            class="phrase-remove-btn"
+            title="Xóa đánh dấu cụm từ"
+            onclick="removeCurrentPhrase()">
+            ✕
+        </button>
+
+    </div>
+
+</div>
+
+
+</div>
+
+</section>
 
 
 </body>
