@@ -25,16 +25,24 @@ window.supabaseClient = supabaseClient;
         underlines: { suffix: "Underlines", fallback: {} },
         pinnedWords: { suffix: "PinnedWords", fallback: [] },
         pinnedPositions: { suffix: "PinnedPositions", fallback: {} },
-        notes: { suffix: "Notes", fallback: {} }
+        notes: { suffix: "Notes", fallback: {} },
+
+        // Highlight cả cụm từ
+        phraseMarks: { suffix: "PhraseMarks", fallback: [] }
     };
+
 
     function emptyValue(fallback) {
         return Array.isArray(fallback) ? [] : {};
     }
 
+
     function readLocalValue(key, fallback) {
         const raw = localStorage.getItem(key);
-        if (raw === null) return emptyValue(fallback);
+
+        if (raw === null) {
+            return emptyValue(fallback);
+        }
 
         try {
             return JSON.parse(raw);
@@ -43,12 +51,14 @@ window.supabaseClient = supabaseClient;
         }
     }
 
+
     function collectLocalProgress(lessonNumber) {
         const prefix = "lesson" + lessonNumber;
         const progress = {};
 
         Object.keys(LOCAL_FIELDS).forEach(function(field) {
             const config = LOCAL_FIELDS[field];
+
             progress[field] = readLocalValue(
                 prefix + config.suffix,
                 config.fallback
@@ -64,6 +74,7 @@ window.supabaseClient = supabaseClient;
         return progress;
     }
 
+
     function applyLocalProgress(lessonNumber, progress) {
         if (!progress || typeof progress !== "object") return;
 
@@ -71,9 +82,11 @@ window.supabaseClient = supabaseClient;
 
         Object.keys(LOCAL_FIELDS).forEach(function(field) {
             const config = LOCAL_FIELDS[field];
-            const value = progress[field] !== undefined
-                ? progress[field]
-                : emptyValue(config.fallback);
+
+            const value =
+                progress[field] !== undefined
+                    ? progress[field]
+                    : emptyValue(config.fallback);
 
             localStorage.setItem(
                 prefix + config.suffix,
@@ -82,62 +95,173 @@ window.supabaseClient = supabaseClient;
         });
 
         if (progress.completed) {
-            localStorage.setItem(prefix + "Completed", "true");
+            localStorage.setItem(
+                prefix + "Completed",
+                "true"
+            );
         } else {
-            localStorage.removeItem(prefix + "Completed");
+            localStorage.removeItem(
+                prefix + "Completed"
+            );
         }
 
         if (progress.started) {
-            localStorage.setItem(prefix + "Started", "true");
+            localStorage.setItem(
+                prefix + "Started",
+                "true"
+            );
         } else {
-            localStorage.removeItem(prefix + "Started");
+            localStorage.removeItem(
+                prefix + "Started"
+            );
         }
     }
 
+
     function getLessonColumn(row) {
-        if (row && "lesson_id" in row) return "lesson_id";
-        if (row && "lesson_number" in row) return "lesson_number";
-        if (row && "lesson" in row) return "lesson";
+        if (row && "lesson_id" in row) {
+            return "lesson_id";
+        }
+
+        if (row && "lesson_number" in row) {
+            return "lesson_number";
+        }
+
+        if (row && "lesson" in row) {
+            return "lesson";
+        }
+
         return "lesson_id";
     }
 
+
     function getDataColumn(row) {
-        if (row && "progress_data" in row) return "progress_data";
-        if (row && "data" in row) return "data";
-        if (row && "progress" in row) return "progress";
+        if (row && "progress_data" in row) {
+            return "progress_data";
+        }
+
+        if (row && "data" in row) {
+            return "data";
+        }
+
+        if (row && "progress" in row) {
+            return "progress";
+        }
+
         return null;
     }
 
+
     function getLessonNumber(row) {
         if (!row) return null;
-        return row.lesson_id ?? row.lesson_number ?? row.lesson ?? null;
+
+        return (
+            row.lesson_id ??
+            row.lesson_number ??
+            row.lesson ??
+            null
+        );
     }
 
+
+    /*
+     * Đọc progress từ Supabase.
+     *
+     * QUAN TRỌNG:
+     * Không return progress_data trực tiếp nữa.
+     *
+     * Nếu row cũ có:
+     *
+     * progress_data = {}
+     * status = "completed"
+     *
+     * thì vẫn phải giữ trạng thái completed.
+     */
     function progressFromRow(row) {
+
         const dataColumn = getDataColumn(row);
 
-        if (dataColumn && row[dataColumn]) {
-            return row[dataColumn];
+        let progress = {};
+
+        if (
+            dataColumn &&
+            row[dataColumn] &&
+            typeof row[dataColumn] === "object"
+        ) {
+            progress = {
+                ...row[dataColumn]
+            };
+        } else {
+
+            progress = {
+                savedWords: row.saved_words || [],
+                sentences: row.sentences || {},
+                highlights: row.highlights || {},
+                underlines: row.underlines || {},
+                pinnedWords: row.pinned_words || [],
+                pinnedPositions: row.pinned_positions || {},
+                notes: row.notes || {},
+                phraseMarks: row.phrase_marks || []
+            };
         }
 
-        return {
-            savedWords: row.saved_words || [],
-            sentences: row.sentences || {},
-            highlights: row.highlights || {},
-            underlines: row.underlines || {},
-            pinnedWords: row.pinned_words || [],
-            pinnedPositions: row.pinned_positions || {},
-            notes: row.notes || {},
-            completed: Boolean(
-                row.completed ?? row.is_completed ?? row.status === "completed"
-            ),
-            started: row.status === "learning" ||
-                row.status === "completed" ||
-                Boolean(row.completed ?? row.is_completed)
-        };
+
+        /*
+         * Gộp status của row với dữ liệu trong progress_data.
+         *
+         * Status trong bảng là nguồn dự phòng để tránh mất
+         * trạng thái của các row cũ.
+         */
+
+        const rowCompleted =
+            row.status === "completed" ||
+            Boolean(
+                row.completed ??
+                row.is_completed
+            );
+
+        const rowStarted =
+            row.status === "learning" ||
+            row.status === "completed" ||
+            Boolean(
+                row.completed ??
+                row.is_completed
+            );
+
+
+        progress.completed =
+            Boolean(progress.completed) ||
+            rowCompleted;
+
+
+        progress.started =
+            Boolean(progress.started) ||
+            rowStarted ||
+            progress.completed;
+
+
+        /*
+         * Đảm bảo các field luôn tồn tại.
+         */
+
+        Object.keys(LOCAL_FIELDS).forEach(function(field) {
+
+            if (progress[field] === undefined) {
+
+                progress[field] =
+                    emptyValue(
+                        LOCAL_FIELDS[field].fallback
+                    );
+            }
+        });
+
+
+        return progress;
     }
 
+
     function expandedProgress(progress) {
+
         return {
             saved_words: progress.savedWords,
             sentences: progress.sentences,
@@ -146,272 +270,776 @@ window.supabaseClient = supabaseClient;
             pinned_words: progress.pinnedWords,
             pinned_positions: progress.pinnedPositions,
             notes: progress.notes,
+            phrase_marks: progress.phraseMarks,
             completed: progress.completed
         };
     }
 
+
+    /*
+     * Tính status dựa trên progress hiện tại.
+     */
+    function getProgressStatus(progress) {
+
+        if (progress.completed) {
+            return "completed";
+        }
+
+        if (
+            progress.started ||
+            (progress.savedWords || []).length > 0 ||
+            (progress.phraseMarks || []).length > 0
+        ) {
+            return "learning";
+        }
+
+        return "new";
+    }
+
+
     function changesForExistingRow(row, progress) {
+
         const dataColumn = getDataColumn(row);
 
+        /*
+         * Trường hợp bảng dùng progress_data JSONB.
+         */
         if (dataColumn) {
+
             const changes = {};
+
             changes[dataColumn] = progress;
-            if ("updated_at" in row) {
-                changes.updated_at = new Date().toISOString();
+
+
+            /*
+             * Đồng bộ luôn status.
+             *
+             * Đây là phần quan trọng:
+             * trước đây update progress_data nhưng status
+             * có thể vẫn giữ giá trị cũ.
+             */
+            if ("status" in row) {
+                changes.status =
+                    getProgressStatus(progress);
             }
+
+
+            if ("updated_at" in row) {
+                changes.updated_at =
+                    new Date().toISOString();
+            }
+
             return changes;
         }
 
-        const allChanges = expandedProgress(progress);
+
+        /*
+         * Hỗ trợ schema cũ nếu dữ liệu đang nằm ở
+         * từng column riêng.
+         */
+
+        const allChanges =
+            expandedProgress(progress);
+
         const changes = {};
 
-        Object.keys(allChanges).forEach(function(key) {
-            if (key in row) changes[key] = allChanges[key];
-        });
+
+        Object.keys(allChanges).forEach(
+            function(key) {
+
+                if (key in row) {
+                    changes[key] =
+                        allChanges[key];
+                }
+            }
+        );
+
 
         if ("is_completed" in row) {
-            changes.is_completed = progress.completed;
+
+            changes.is_completed =
+                progress.completed;
+
             delete changes.completed;
         }
 
+
         if ("status" in row) {
-            changes.status = progress.completed
-                ? "completed"
-                : (progress.started || (progress.savedWords || []).length > 0)
-                    ? "learning"
-                    : "new";
+
+            changes.status =
+                getProgressStatus(progress);
         }
 
+
         if ("updated_at" in row) {
-            changes.updated_at = new Date().toISOString();
+
+            changes.updated_at =
+                new Date().toISOString();
         }
+
 
         return changes;
     }
 
-    function createSession(lessonNumber, options) {
+
+    function createSession(
+        lessonNumber,
+        options
+    ) {
+
         let user = null;
         let row = null;
-        let lessonColumn = "lesson_id";
+
+        let lessonColumn =
+            "lesson_id";
+
         let saveTimer = null;
+
         let ready = false;
+
         let applyingRemote = false;
 
+
         const session = {
+
             scheduleSave: function() {
-                if (!ready || applyingRemote || !user) return;
+
+                if (
+                    !ready ||
+                    applyingRemote ||
+                    !user
+                ) {
+                    return;
+                }
+
                 clearTimeout(saveTimer);
-                saveTimer = setTimeout(saveNow, 350);
+
+                saveTimer =
+                    setTimeout(
+                        saveNow,
+                        350
+                    );
             },
+
+
             saveNow: saveNow,
+
+
             isReady: function() {
                 return ready;
             }
         };
 
+
+        /*
+         * Tạo row đầu tiên nếu lesson chưa có dữ liệu.
+         */
         async function insertFirstRow(progress) {
-            const common = { user_id: user.id };
+
+            const common = {
+                user_id: user.id
+            };
+
+
+            /*
+             * Ưu tiên schema hiện tại:
+             *
+             * lesson_id
+             * progress_data
+             * status
+             */
+
             const compactCandidates = [
-                ["lesson_id", "progress_data"],
-                ["lesson_number", "progress_data"],
-                ["lesson_id", "data"],
-                ["lesson_number", "data"],
-                ["lesson_id", "progress"],
-                ["lesson_number", "progress"]
+
+                [
+                    "lesson_id",
+                    "progress_data"
+                ],
+
+                [
+                    "lesson_number",
+                    "progress_data"
+                ],
+
+                [
+                    "lesson_id",
+                    "data"
+                ],
+
+                [
+                    "lesson_number",
+                    "data"
+                ],
+
+                [
+                    "lesson_id",
+                    "progress"
+                ],
+
+                [
+                    "lesson_number",
+                    "progress"
+                ]
             ];
 
-            for (const pair of compactCandidates) {
-                const payload = { ...common };
-                payload[pair[0]] = lessonNumber;
-                payload[pair[1]] = progress;
 
-                const result = await supabaseClient
-                    .from(TABLE_NAME)
-                    .insert(payload)
-                    .select()
-                    .maybeSingle();
+            for (
+                const pair
+                of compactCandidates
+            ) {
+
+                const payload = {
+                    ...common
+                };
+
+                payload[pair[0]] =
+                    lessonNumber;
+
+                payload[pair[1]] =
+                    progress;
+
+
+                /*
+                 * Với schema hiện tại của bé,
+                 * progress_data đi cùng status.
+                 */
+                if (
+                    pair[1] === "progress_data"
+                ) {
+
+                    payload.status =
+                        getProgressStatus(
+                            progress
+                        );
+
+                    payload.reading_id = 0;
+
+                    payload.updated_at =
+                        new Date()
+                            .toISOString();
+                }
+
+
+                const result =
+                    await supabaseClient
+                        .from(TABLE_NAME)
+                        .insert(payload)
+                        .select()
+                        .maybeSingle();
+
 
                 if (!result.error) {
-                    lessonColumn = pair[0];
-                    row = result.data;
+
+                    lessonColumn =
+                        pair[0];
+
+                    row =
+                        result.data;
+
                     return true;
                 }
             }
 
+
+            /*
+             * Fallback cho schema chỉ có status.
+             */
+
             const statusPayload = {
+
                 ...common,
-                lesson_id: lessonNumber,
+
+                lesson_id:
+                    lessonNumber,
+
                 reading_id: 0,
-                status: progress.completed
-                    ? "completed"
-                    : (progress.started || (progress.savedWords || []).length > 0)
-                        ? "learning"
-                        : "new",
-                updated_at: new Date().toISOString()
+
+                status:
+                    getProgressStatus(
+                        progress
+                    ),
+
+                updated_at:
+                    new Date()
+                        .toISOString()
             };
 
-            const statusResult = await supabaseClient
-                .from(TABLE_NAME)
-                .insert(statusPayload)
-                .select()
-                .maybeSingle();
+
+            const statusResult =
+                await supabaseClient
+                    .from(TABLE_NAME)
+                    .insert(statusPayload)
+                    .select()
+                    .maybeSingle();
+
 
             if (!statusResult.error) {
-                lessonColumn = "lesson_id";
-                row = statusResult.data;
+
+                lessonColumn =
+                    "lesson_id";
+
+                row =
+                    statusResult.data;
+
                 return true;
             }
 
-            const expandedLessonColumns = ["lesson_id", "lesson_number"];
 
-            for (const field of expandedLessonColumns) {
+            /*
+             * Fallback cho schema cũ:
+             * mỗi loại dữ liệu là một column.
+             */
+
+            const expandedLessonColumns = [
+                "lesson_id",
+                "lesson_number"
+            ];
+
+
+            for (
+                const field
+                of expandedLessonColumns
+            ) {
+
                 const payload = {
-                    ...common,
-                    ...expandedProgress(progress)
-                };
-                payload[field] = lessonNumber;
 
-                const result = await supabaseClient
-                    .from(TABLE_NAME)
-                    .insert(payload)
-                    .select()
-                    .maybeSingle();
+                    ...common,
+
+                    ...expandedProgress(
+                        progress
+                    )
+                };
+
+
+                payload[field] =
+                    lessonNumber;
+
+
+                const result =
+                    await supabaseClient
+                        .from(TABLE_NAME)
+                        .insert(payload)
+                        .select()
+                        .maybeSingle();
+
 
                 if (!result.error) {
-                    lessonColumn = field;
-                    row = result.data;
+
+                    lessonColumn =
+                        field;
+
+                    row =
+                        result.data;
+
                     return true;
                 }
             }
 
+
             console.warn(
-                "Không lưu được tiến độ bài " + lessonNumber +
-                " vào bảng " + TABLE_NAME + "."
+
+                "Không lưu được tiến độ bài " +
+                lessonNumber +
+                " vào bảng " +
+                TABLE_NAME +
+                "."
             );
+
+
             return false;
         }
 
+
+        /*
+         * Lưu dữ liệu hiện tại lên Supabase.
+         */
         async function saveNow() {
-            if (!ready || !user) return;
 
-            const progress = collectLocalProgress(lessonNumber);
-
-            if (!row) {
-                await insertFirstRow(progress);
+            if (
+                !ready ||
+                !user
+            ) {
                 return;
             }
 
-            const changes = changesForExistingRow(row, progress);
-            if (Object.keys(changes).length === 0) return;
 
-            let query = supabaseClient
-                .from(TABLE_NAME)
-                .update(changes);
+            const progress =
+                collectLocalProgress(
+                    lessonNumber
+                );
 
-            if (row.id !== undefined) {
-                query = query.eq("id", row.id);
-            } else {
-                query = query
-                    .eq("user_id", user.id)
-                    .eq(lessonColumn, lessonNumber);
+
+            if (!row) {
+
+                await insertFirstRow(
+                    progress
+                );
+
+                return;
             }
 
-            const result = await query.select().maybeSingle();
+
+            const changes =
+                changesForExistingRow(
+                    row,
+                    progress
+                );
+
+
+            if (
+                Object.keys(changes)
+                    .length === 0
+            ) {
+                return;
+            }
+
+
+            let query =
+                supabaseClient
+                    .from(TABLE_NAME)
+                    .update(changes);
+
+
+            if (
+                row.id !== undefined
+            ) {
+
+                query =
+                    query.eq(
+                        "id",
+                        row.id
+                    );
+
+            } else {
+
+                query =
+                    query
+                        .eq(
+                            "user_id",
+                            user.id
+                        )
+                        .eq(
+                            lessonColumn,
+                            lessonNumber
+                        );
+            }
+
+
+            const result =
+                await query
+                    .select()
+                    .maybeSingle();
+
 
             if (result.error) {
+
                 console.warn(
-                    "Không cập nhật được tiến độ bài " + lessonNumber + ":",
+
+                    "Không cập nhật được tiến độ bài " +
+                    lessonNumber +
+                    ":",
+
                     result.error.message
                 );
+
             } else if (result.data) {
-                row = result.data;
+
+                row =
+                    result.data;
             }
         }
 
-        session.readyPromise = (async function() {
-            const userResult = await supabaseClient.auth.getUser();
-            user = userResult.data && userResult.data.user;
 
-            if (!user) return session;
+        /*
+         * Load dữ liệu khi mở lesson.
+         */
 
-            const rowResult = await supabaseClient
-                .from(TABLE_NAME)
-                .select("*")
-                .eq("user_id", user.id);
+        session.readyPromise =
+            (async function() {
 
-            if (rowResult.error) {
-                console.warn(
-                    "Không đọc được bảng " + TABLE_NAME + ":",
-                    rowResult.error.message
-                );
-                return session;
-            }
+                const userResult =
+                    await supabaseClient
+                        .auth
+                        .getUser();
 
-            const rows = rowResult.data || [];
-            row = rows.find(function(item) {
-                return Number(getLessonNumber(item)) === Number(lessonNumber);
-            }) || null;
 
-            const schemaSample = row || rows[0] || null;
-            lessonColumn = getLessonColumn(schemaSample);
-            ready = true;
+                user =
+                    userResult.data &&
+                    userResult.data.user;
 
-            if (row) {
-                applyingRemote = true;
-                applyLocalProgress(lessonNumber, progressFromRow(row));
 
-                if (options && typeof options.onRemoteLoaded === "function") {
-                    options.onRemoteLoaded();
+                if (!user) {
+                    return session;
                 }
 
-                applyingRemote = false;
-            } else {
-                await saveNow();
-            }
 
-            return session;
-        })();
+                const rowResult =
+                    await supabaseClient
+                        .from(TABLE_NAME)
+                        .select("*")
+                        .eq(
+                            "user_id",
+                            user.id
+                        );
+
+
+                if (rowResult.error) {
+
+                    console.warn(
+
+                        "Không đọc được bảng " +
+                        TABLE_NAME +
+                        ":",
+
+                        rowResult.error.message
+                    );
+
+                    return session;
+                }
+
+
+                const rows =
+                    rowResult.data || [];
+
+
+                row =
+                    rows.find(
+                        function(item) {
+
+                            return (
+                                Number(
+                                    getLessonNumber(
+                                        item
+                                    )
+                                ) ===
+                                Number(
+                                    lessonNumber
+                                )
+                            );
+                        }
+                    ) || null;
+
+
+                const schemaSample =
+                    row ||
+                    rows[0] ||
+                    null;
+
+
+                lessonColumn =
+                    getLessonColumn(
+                        schemaSample
+                    );
+
+
+                ready = true;
+
+
+                if (row) {
+
+                    applyingRemote =
+                        true;
+
+
+                    applyLocalProgress(
+
+                        lessonNumber,
+
+                        progressFromRow(
+                            row
+                        )
+                    );
+
+
+                    if (
+                        options &&
+                        typeof options.onRemoteLoaded ===
+                            "function"
+                    ) {
+
+                        options
+                            .onRemoteLoaded();
+                    }
+
+
+                    applyingRemote =
+                        false;
+
+                } else {
+
+                    await saveNow();
+                }
+
+
+                return session;
+
+            })();
+
 
         return session;
     }
 
-    async function loadLessonStatuses(lessonNumbers) {
+
+    /*
+     * Load trạng thái các lesson để tô màu
+     * ở trang danh sách bài học.
+     */
+
+    async function loadLessonStatuses(
+        lessonNumbers
+    ) {
+
         const result = {};
-        lessonNumbers.forEach(function(number) {
-            const localProgress = collectLocalProgress(number);
-            if (localProgress.completed) result[number] = "completed";
-            else if (localProgress.started || (localProgress.savedWords || []).length > 0) result[number] = "learning";
-            else result[number] = "new";
-        });
 
-        const userResult = await supabaseClient.auth.getUser();
-        const user = userResult.data && userResult.data.user;
 
-        if (!user) return result;
+        lessonNumbers.forEach(
+            function(number) {
 
-        const rowResult = await supabaseClient
-            .from(TABLE_NAME)
-            .select("*")
-            .eq("user_id", user.id);
+                const localProgress =
+                    collectLocalProgress(
+                        number
+                    );
 
-        if (rowResult.error) return result;
 
-        (rowResult.data || []).forEach(function(row) {
-            const number = Number(getLessonNumber(row));
-            if (!lessonNumbers.includes(number)) return;
+                if (
+                    localProgress.completed
+                ) {
 
-            const progress = progressFromRow(row);
-            if (progress.completed) result[number] = "completed";
-            else if (progress.started || (progress.savedWords || []).length > 0) result[number] = "learning";
-        });
+                    result[number] =
+                        "completed";
+
+                } else if (
+                    localProgress.started ||
+                    (
+                        localProgress.savedWords ||
+                        []
+                    ).length > 0 ||
+                    (
+                        localProgress.phraseMarks ||
+                        []
+                    ).length > 0
+                ) {
+
+                    result[number] =
+                        "learning";
+
+                } else {
+
+                    result[number] =
+                        "new";
+                }
+            }
+        );
+
+
+        const userResult =
+            await supabaseClient
+                .auth
+                .getUser();
+
+
+        const user =
+            userResult.data &&
+            userResult.data.user;
+
+
+        if (!user) {
+            return result;
+        }
+
+
+        const rowResult =
+            await supabaseClient
+                .from(TABLE_NAME)
+                .select("*")
+                .eq(
+                    "user_id",
+                    user.id
+                );
+
+
+        if (rowResult.error) {
+            return result;
+        }
+
+
+        (
+            rowResult.data || []
+        ).forEach(
+            function(row) {
+
+                const number =
+                    Number(
+                        getLessonNumber(
+                            row
+                        )
+                    );
+
+
+                if (
+                    !lessonNumbers.includes(
+                        number
+                    )
+                ) {
+                    return;
+                }
+
+
+                const progress =
+                    progressFromRow(
+                        row
+                    );
+
+
+                if (
+                    progress.completed
+                ) {
+
+                    result[number] =
+                        "completed";
+
+                } else if (
+                    progress.started ||
+                    (
+                        progress.savedWords ||
+                        []
+                    ).length > 0 ||
+                    (
+                        progress.phraseMarks ||
+                        []
+                    ).length > 0
+                ) {
+
+                    result[number] =
+                        "learning";
+
+                } else {
+
+                    result[number] =
+                        "new";
+                }
+            }
+        );
+
 
         return result;
     }
 
+
+    /*
+     * Cho các lesson HTML gọi chung.
+     */
+
     window.LessonProgress = {
-        create: createSession,
-        collectLocalProgress: collectLocalProgress,
-        loadLessonStatuses: loadLessonStatuses
+
+        create:
+            createSession,
+
+        collectLocalProgress:
+            collectLocalProgress,
+
+        loadLessonStatuses:
+            loadLessonStatuses
     };
 
 })();
