@@ -2735,7 +2735,7 @@ let questionTimerInterval = null;
 /* ============== SUPABASE USER PROGRESS ============ */
 /* ================================================= */
 
-/* ===== ĐỒNG BỘ TIẾN ĐỘ BÀI 8 ===================== */
+/* ===== ĐỒNG BỘ TIẾN ĐỘ BÀI 4 ===================== */
 /* ================================================= */
 
 let lessonProgressSync = null;
@@ -2755,7 +2755,7 @@ function refreshLessonAfterCloudLoad() {
     applySavedPhraseMarks();
     renderPinnedSidebar();
 
-    if (localStorage.getItem("lesson11Completed") === "true") {
+    if (localStorage.getItem("lesson4Completed") === "true") {
         updateStatus("completed");
     } else if (getSavedWords().length > 0) {
         updateStatus("learning");
@@ -2765,7 +2765,7 @@ function refreshLessonAfterCloudLoad() {
 }
 
 function initSupabaseProgress() {
-    lessonProgressSync = window.LessonProgress.create(11, {
+    lessonProgressSync = window.LessonProgress.create(4, {
         onRemoteLoaded: refreshLessonAfterCloudLoad
     });
 }
@@ -2778,7 +2778,7 @@ function initSupabaseProgress() {
 function getSavedWords() {
 
     return JSON.parse(
-        localStorage.getItem("lesson11SavedWords")
+        localStorage.getItem("lesson4SavedWords")
     ) || [];
 
 }
@@ -2787,7 +2787,7 @@ function getSavedWords() {
 function setSavedWords(words) {
 
     localStorage.setItem(
-        "lesson11SavedWords",
+        "lesson4SavedWords",
         JSON.stringify(words)
     );
 
@@ -2799,7 +2799,7 @@ function setSavedWords(words) {
 function getSentences() {
 
     return JSON.parse(
-        localStorage.getItem("lesson9Sentences")
+        localStorage.getItem("lesson4Sentences")
     ) || {};
 
 }
@@ -2808,7 +2808,7 @@ function getSentences() {
 function setSentences(data) {
 
     localStorage.setItem(
-        "lesson9Sentences",
+        "lesson4Sentences",
         JSON.stringify(data)
     );
 
@@ -2824,7 +2824,7 @@ function setSentences(data) {
 function getHighlights() {
 
     return JSON.parse(
-        localStorage.getItem("lesson9Highlights")
+        localStorage.getItem("lesson4Highlights")
     ) || {};
 
 }
@@ -2833,7 +2833,7 @@ function getHighlights() {
 function setHighlights(data) {
 
     localStorage.setItem(
-        "lesson9Highlights",
+        "lesson4Highlights",
         JSON.stringify(data)
     );
 
@@ -2845,7 +2845,7 @@ function setHighlights(data) {
 function getUnderlines() {
 
     return JSON.parse(
-        localStorage.getItem("lesson9Underlines")
+        localStorage.getItem("lesson4Underlines")
     ) || {};
 
 }
@@ -2854,7 +2854,7 @@ function getUnderlines() {
 function setUnderlines(data) {
 
     localStorage.setItem(
-        "lesson9Underlines",
+        "lesson4Underlines",
         JSON.stringify(data)
     );
 
@@ -2901,7 +2901,7 @@ function phraseKey(startId, endId) {
 function getPinnedWords() {
 
     return JSON.parse(
-        localStorage.getItem("lesson9PinnedWords")
+        localStorage.getItem("lesson4PinnedWords")
     ) || [];
 
 }
@@ -2910,7 +2910,7 @@ function getPinnedWords() {
 function setPinnedWords(words) {
 
     localStorage.setItem(
-        "lesson9PinnedWords",
+        "lesson4PinnedWords",
         JSON.stringify(words)
     );
 
@@ -2921,7 +2921,7 @@ function setPinnedWords(words) {
 function getPinnedPositions() {
 
     return JSON.parse(
-        localStorage.getItem("lesson9PinnedPositions")
+        localStorage.getItem("lesson4PinnedPositions")
     ) || {};
 
 }
@@ -2930,7 +2930,7 @@ function getPinnedPositions() {
 function setPinnedPositions(data) {
 
     localStorage.setItem(
-        "lesson9PinnedPositions",
+        "lesson4PinnedPositions",
         JSON.stringify(data)
     );
 
@@ -2946,7 +2946,7 @@ function setPinnedPositions(data) {
 function getNotes() {
 
     return JSON.parse(
-        localStorage.getItem("lesson9Notes")
+        localStorage.getItem("lesson4Notes")
     ) || {};
 
 }
@@ -2955,7 +2955,7 @@ function getNotes() {
 function setNotes(data) {
 
     localStorage.setItem(
-        "lesson9Notes",
+        "lesson4Notes",
         JSON.stringify(data)
     );
 
@@ -4961,8 +4961,8 @@ let mobileAudioId = "1";
 function getMobileAudioElements() {
     return {
         bar: document.getElementById("mobileAudioBar"),
-        lesson1: document.getElementById("mobileAudioLesson1"),
-        lesson2: document.getElementById("mobileAudioLesson2"),
+        lesson4: document.getElementById("mobileAudioLesson1"),
+        lesson4: document.getElementById("mobileAudioLesson2"),
         play: document.getElementById("mobileAudioPlay"),
         progress: document.getElementById("mobileAudioProgress"),
         time: document.getElementById("mobileAudioTime")
@@ -4978,8 +4978,8 @@ function syncMobileAudioUI() {
     const audioEl = player.audioEl;
     const duration = isNaN(audioEl.duration) ? 0 : audioEl.duration;
 
-    ui.lesson1.classList.toggle("active", mobileAudioId === "1");
-    ui.lesson2.classList.toggle("active", mobileAudioId === "2");
+    ui.lesson4.classList.toggle("active", mobileAudioId === "1");
+    ui.lesson4.classList.toggle("active", mobileAudioId === "2");
     ui.progress.max = duration || 100;
     ui.progress.value = audioEl.currentTime || 0;
     ui.time.textContent =
@@ -5305,11 +5305,11 @@ function repeatStudy() {
 
 
     localStorage.removeItem(
-        "lesson9Sentences"
+        "lesson4Sentences"
     );
 
     localStorage.removeItem(
-        "lesson9Notes"
+        "lesson4Notes"
     );
 
     queueProgressSync();
@@ -6043,7 +6043,7 @@ function finishSentenceGame() {
 
 
     localStorage.setItem(
-        "lesson11Completed",
+        "lesson4Completed",
         "true"
     );
 
@@ -6209,7 +6209,7 @@ currentUnderline = getUnderlines();
 document
     .querySelectorAll("#reading .reading-main .word")
     .forEach(function(el, index) {
-        el.dataset.wordId = "lesson9-word-" + (index + 1);
+        el.dataset.wordId = "lesson4-word-" + (index + 1);
     });
 
 updateSavedList();
@@ -6223,7 +6223,7 @@ renderPinnedSidebar();
 
 if (
     localStorage.getItem(
-        "lesson11Completed"
+        "lesson4Completed"
     ) === "true"
 ) {
 

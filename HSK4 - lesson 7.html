@@ -4900,8 +4900,8 @@ let mobileAudioId = "1";
 function getMobileAudioElements() {
     return {
         bar: document.getElementById("mobileAudioBar"),
-        lesson1: document.getElementById("mobileAudioLesson1"),
-        lesson2: document.getElementById("mobileAudioLesson2"),
+        lesson7: document.getElementById("mobileAudioLesson1"),
+        lesson7: document.getElementById("mobileAudioLesson2"),
         play: document.getElementById("mobileAudioPlay"),
         progress: document.getElementById("mobileAudioProgress"),
         time: document.getElementById("mobileAudioTime")
@@ -4917,8 +4917,8 @@ function syncMobileAudioUI() {
     const audioEl = player.audioEl;
     const duration = isNaN(audioEl.duration) ? 0 : audioEl.duration;
 
-    ui.lesson1.classList.toggle("active", mobileAudioId === "1");
-    ui.lesson2.classList.toggle("active", mobileAudioId === "2");
+    ui.lesson7.classList.toggle("active", mobileAudioId === "1");
+    ui.lesson7.classList.toggle("active", mobileAudioId === "2");
     ui.progress.max = duration || 100;
     ui.progress.value = audioEl.currentTime || 0;
     ui.time.textContent =
