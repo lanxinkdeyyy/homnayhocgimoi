@@ -433,8 +433,57 @@ window.supabaseClient = supabaseClient;
                 await saveNow();
             }
 
+            subscribeRealtime();
+
             return session;
         })();
+
+        function subscribeRealtime() {
+            // Lắng nghe realtime: khi THIẾT BỊ KHÁC (đang đăng nhập cùng
+            // tài khoản) lưu tiến độ lên Supabase, dòng user_progress đổi
+            // -> Supabase đẩy sự kiện này về ngay lập tức cho mọi thiết bị
+            // đang mở trang, không cần load lại trang mới thấy.
+            if (!user) return;
+
+            const channel = supabaseClient
+                .channel("user_progress_lesson_" + lessonNumber + "_" + user.id)
+                .on(
+                    "postgres_changes",
+                    {
+                        event: "*",
+                        schema: "public",
+                        table: TABLE_NAME,
+                        filter: "user_id=eq." + user.id
+                    },
+                    function(payload) {
+                        const changedRow = payload.new;
+                        if (!changedRow) return;
+                        if (Number(getLessonNumber(changedRow)) !== Number(lessonNumber)) return;
+
+                        // Bỏ qua nếu đây chính là lần lưu do THIẾT BỊ NÀY vừa
+                        // gửi lên (updated_at trùng row đang giữ) để khỏi tự
+                        // làm mới lại UI của chính mình sau khi lưu.
+                        if (row && changedRow.updated_at && row.updated_at === changedRow.updated_at) {
+                            return;
+                        }
+
+                        row = changedRow;
+                        applyingRemote = true;
+                        applyLocalProgress(lessonNumber, progressFromRow(changedRow));
+
+                        if (options && typeof options.onRemoteLoaded === "function") {
+                            options.onRemoteLoaded();
+                        }
+
+                        applyingRemote = false;
+                    }
+                )
+                .subscribe();
+
+            session.unsubscribeRealtime = function() {
+                supabaseClient.removeChannel(channel);
+            };
+        }
 
         return session;
     }
