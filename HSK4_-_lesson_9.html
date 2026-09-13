@@ -1,0 +1,6281 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<title>勇敢与坚持 - Bài 9 · HSK 4</title>
+
+<style>
+
+/* ================================================= */
+/* ================= CƠ BẢN ======================== */
+/* ================================================= */
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f3f8f4;
+    color: #333;
+}
+
+.lesson-page {
+    width: 90%;
+    max-width: 1000px;
+    margin: 30px auto;
+}
+
+.back-link {
+    display: inline-block;
+    margin-bottom: 20px;
+    color: #5b8f72;
+    text-decoration: none;
+}
+
+.lesson-title {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.lesson-title h1 {
+    margin-bottom: 8px;
+}
+
+.lesson-title p {
+    color: #777;
+}
+
+
+/* ================================================= */
+/* ================= STATUS ======================== */
+/* ================================================= */
+
+.lesson-status {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 15px;
+}
+
+.status-dot {
+    display: inline-block;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    margin-right: 7px;
+    vertical-align: middle;
+    background: white;
+    border: 1px solid #ddd;
+}
+
+.status-dot.learning {
+    background: #f3a847;
+    border: none;
+}
+
+.status-dot.completed {
+    background: #63b87b;
+    border: none;
+}
+
+
+/* ================================================= */
+/* ================= 3 TAB ========================= */
+/* ================================================= */
+
+.tabs {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 25px;
+}
+
+.tab-button {
+    border: none;
+    padding: 12px 30px;
+    border-radius: 20px;
+    background: white;
+    color: #555;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.tab-button:hover {
+    background: #e8f3eb;
+}
+
+.tab-button.active {
+    background: #8fc7a5;
+    color: white;
+}
+
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+
+/* ================================================= */
+/* ================= CARD ========================== */
+/* ================================================= */
+
+.content-card {
+    background: white;
+    border-radius: 25px;
+    padding: 35px;
+    box-shadow:
+        0 8px 25px rgba(0,0,0,0.06);
+}
+
+
+/* ================================================= */
+/* ================= AUDIO ========================= */
+/* ================================================= */
+
+.audio-section {
+    text-align: center;
+    margin-bottom: 25px;
+    padding-bottom: 20px;
+    border-bottom: 1px dashed #dce9df;
+}
+
+.vinyl {
+    width: 120px;
+    height: 120px;
+    margin: 0 auto 20px;
+    border-radius: 50%;
+
+    background:
+        repeating-radial-gradient(
+            circle,
+            #222 0px,
+            #222 3px,
+            #333 4px,
+            #222 6px
+        );
+
+    border: 8px solid #111;
+    position: relative;
+}
+
+.vinyl::before {
+    content: "";
+    position: absolute;
+    width: 35px;
+    height: 35px;
+    background: #e7a5a5;
+    border-radius: 50%;
+    top: 50%;
+    left: 50%;
+    transform:
+        translate(-50%, -50%);
+}
+
+.vinyl.playing {
+    animation:
+        rotateVinyl 2s linear infinite;
+}
+
+@keyframes rotateVinyl {
+
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+
+}
+
+.audio-button {
+    border: none;
+    background: #8fc7a5;
+    color: white;
+    padding: 10px 25px;
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+.audio-button:hover {
+    background: #76b58f;
+}
+
+.audio-progress-wrap {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 15px;
+    max-width: 350px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.audio-progress-wrap span {
+    font-size: 13px;
+    color: #777;
+    min-width: 32px;
+}
+
+.audio-progress {
+    flex: 1;
+    -webkit-appearance: none;
+    appearance: none;
+    height: 5px;
+    border-radius: 5px;
+    background: #dce9df;
+    outline: none;
+    cursor: pointer;
+}
+
+.audio-progress::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: #8fc7a5;
+    cursor: pointer;
+}
+
+.audio-progress::-moz-range-thumb {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: #8fc7a5;
+    border: none;
+    cursor: pointer;
+}
+
+
+/* ================================================= */
+/* ================= READING ======================= */
+/* ================================================= */
+
+.reading-block {
+    margin-bottom: 40px;
+}
+
+.reading-heading {
+    color: #5b8f72;
+    font-size: 20px;
+    margin-bottom: 15px;
+}
+
+.reading-text {
+    font-size: 24px;
+    line-height: 2.4;
+    text-align: left;
+}
+
+.word {
+    cursor: pointer;
+    padding: 4px 6px;
+    border-radius: 7px;
+    transition: 0.2s;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 5px;
+}
+
+.word:hover {
+    background: #e0f2e5;
+}
+
+
+/* ================================================= */
+/* ============ READING LAYOUT (3/4 + 1/4) ========= */
+/* ================================================= */
+
+.reading-layout {
+    display: flex;
+    align-items: flex-start;
+    position: relative;
+}
+
+.reading-main {
+    flex: 0 0 74%;
+    max-width: 74%;
+    min-width: 0;
+}
+
+.reading-divider {
+    flex: 0 0 1px;
+    width: 1px;
+    align-self: stretch;
+    background: #e3e3e3;
+    margin: 0 20px;
+}
+
+.reading-sidebar {
+    flex: 1;
+    min-width: 0;
+    position: relative;
+    align-self: stretch;
+    padding-top: 4px;
+}
+
+.connector-svg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+    overflow: visible;
+}
+
+.pin-empty {
+    color: #999;
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+.pin-card {
+    position: relative;
+    background: #fffdf5;
+    border: 1px solid #ece6cf;
+    border-radius: 8px;
+    padding: 8px 26px 8px 10px;
+    margin-bottom: 12px;
+    font-size: 14px;
+    line-height: 1.5;
+    cursor: pointer;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    word-break: break-word;
+}
+
+.pin-card:hover {
+    border-color: #d8cfa0;
+}
+
+.pin-pinyin {
+    font-style: italic;
+    color: #5b8f72;
+}
+
+.pin-pos {
+    color: #888;
+    margin: 0 4px;
+}
+
+.pin-meaning {
+    color: #333;
+    font-weight: bold;
+}
+
+.pin-remove {
+    position: absolute;
+    right: 6px;
+    top: 6px;
+    width: 18px;
+    height: 18px;
+    line-height: 16px;
+    border: none;
+    border-radius: 50%;
+    background: #f2dede;
+    color: #c75c5c;
+    font-size: 13px;
+    cursor: pointer;
+    padding: 0;
+}
+
+.pin-remove:hover {
+    background: #e9bcbc;
+}
+
+.pin-word {
+    background: #82b7e8;
+    margin-top: 10px;
+}
+
+.pin-word:hover {
+    background: #6ba3d9;
+}
+
+.pin-word.pinned {
+    background: #4f8ecb;
+}
+
+/* ================= MOBILE AUDIO BAR ================= */
+
+.mobile-audio-bar {
+    display: none;
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1500;
+    background: rgba(255,255,255,0.98);
+    border-top: 1px solid #dce9df;
+    box-shadow: 0 -5px 18px rgba(0,0,0,0.08);
+    padding: 8px 10px;
+    align-items: center;
+    gap: 8px;
+    font-family: Arial, sans-serif;
+}
+
+.mobile-audio-track {
+    flex: 1;
+    min-width: 0;
+}
+
+.mobile-audio-top {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 4px;
+}
+
+.mobile-audio-lessons {
+    display: flex;
+    flex: 0 0 auto;
+    gap: 3px;
+}
+
+.mobile-audio-lesson {
+    border: 1px solid #dce9df;
+    background: #f3f8f4;
+    color: #4f8063;
+    border-radius: 12px;
+    padding: 4px 8px;
+    font-size: 11px;
+    cursor: pointer;
+}
+
+.mobile-audio-lesson.active {
+    background: #8fc7a5;
+    border-color: #8fc7a5;
+    color: white;
+}
+
+.mobile-audio-play {
+    flex: 0 0 auto;
+    border: none;
+    background: #8fc7a5;
+    color: white;
+    border-radius: 50%;
+    width: 34px;
+    height: 34px;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+.mobile-audio-time {
+    color: #777;
+    font-size: 10px;
+    white-space: nowrap;
+    min-width: 66px;
+    text-align: right;
+}
+
+.mobile-audio-progress {
+    width: 100%;
+    height: 4px;
+    margin: 0;
+    -webkit-appearance: none;
+    appearance: none;
+    background: #dce9df;
+    border-radius: 4px;
+    outline: none;
+    cursor: pointer;
+}
+
+.mobile-audio-progress::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: #8fc7a5;
+    cursor: pointer;
+}
+
+.mobile-audio-progress::-moz-range-thumb {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: #8fc7a5;
+    border: none;
+    cursor: pointer;
+}
+
+@media (max-width: 760px) {
+
+    /* ================= MOBILE: ĐỌC BÀI 74% + NOTE 26% ================= */
+
+    body {
+        padding-bottom: 76px;
+    }
+
+    .lesson-page {
+        width: 96%;
+        margin: 15px auto 25px;
+    }
+
+    .lesson-title {
+        margin-bottom: 15px;
+    }
+
+    .lesson-title h1 {
+        font-size: 24px;
+        margin-bottom: 5px;
+    }
+
+    .lesson-title p {
+        font-size: 13px;
+    }
+
+    .lesson-status {
+        margin-bottom: 12px;
+        font-size: 13px;
+    }
+
+    .tabs {
+        gap: 6px;
+        margin-bottom: 14px;
+    }
+
+    .tab-button {
+        padding: 9px 12px;
+        font-size: 13px;
+    }
+
+    .content-card {
+        border-radius: 16px;
+        padding: 16px;
+    }
+
+    .reading-layout {
+        flex-direction: row;
+        align-items: flex-start;
+    }
+
+    .reading-main {
+        flex: 0 0 74%;
+        max-width: 74%;
+        min-width: 0;
+    }
+
+    .reading-divider {
+        display: block;
+        flex: 0 0 1px;
+        width: 1px;
+        margin: 0 6px;
+        align-self: stretch;
+        background: #e3e3e3;
+    }
+
+    .reading-sidebar {
+        flex: 1 1 0;
+        max-width: none;
+        min-width: 0;
+        margin-top: 0;
+        padding-top: 2px;
+        border-top: none;
+        align-self: stretch;
+    }
+
+    .connector-svg {
+        display: block;
+    }
+
+    .reading-block {
+        margin-bottom: 22px;
+    }
+
+    .reading-heading {
+        font-size: 15px;
+        margin-bottom: 8px;
+    }
+
+    .reading-text {
+        font-size: 16px;
+        line-height: 1.8;
+    }
+
+    .word {
+        padding: 2px 2px;
+        border-radius: 4px;
+        text-underline-offset: 3px;
+    }
+
+    .audio-section {
+        margin-bottom: 12px;
+        padding-bottom: 10px;
+    }
+
+    .vinyl {
+        width: 62px;
+        height: 62px;
+        margin-bottom: 8px;
+        border-width: 5px;
+    }
+
+    .vinyl::before {
+        width: 19px;
+        height: 19px;
+    }
+
+    .audio-button,
+    .audio-progress-wrap {
+        display: none;
+    }
+
+    .pin-empty {
+        font-size: 10px;
+        line-height: 1.35;
+    }
+
+    .pin-card {
+        padding: 5px 18px 5px 5px;
+        margin-bottom: 7px;
+        font-size: 9px;
+        line-height: 1.25;
+        border-radius: 6px;
+    }
+
+    .pin-remove {
+        right: 3px;
+        top: 3px;
+        width: 14px;
+        height: 14px;
+        line-height: 12px;
+        font-size: 10px;
+    }
+
+    .pin-word {
+        margin-top: 6px;
+    }
+
+    .mobile-audio-bar {
+        display: flex;
+    }
+
+    .saved-section {
+        margin-top: 20px;
+        padding-top: 16px;
+    }
+
+    .saved-toggle {
+        padding: 10px 12px;
+        font-size: 13px;
+        border-radius: 11px;
+    }
+
+    .saved-word-item {
+        padding: 8px 10px;
+        border-radius: 9px;
+    }
+
+    .saved-word-main {
+        font-size: 14px;
+    }
+
+    .remove-saved {
+        width: 24px;
+        height: 24px;
+        line-height: 24px;
+        font-size: 15px;
+    }
+
+}
+
+
+/* ================================================= */
+/* ================= WORD POPUP ==================== */
+/* ================================================= */
+
+.word-popup {
+    display: none;
+
+    position: fixed;
+
+    width: 350px;
+    max-width: 90%;
+
+    background: white;
+
+    padding: 30px;
+
+    border-radius: 22px;
+
+    box-shadow:
+        0 15px 50px rgba(0,0,0,0.25);
+
+    left: 50%;
+    top: 50%;
+
+    transform:
+        translate(-50%, -50%);
+
+    z-index: 1000;
+
+    text-align: center;
+}
+
+.word-popup.show {
+    display: block;
+}
+
+.word-popup h2 {
+    font-size: 42px;
+    margin: 5px 0 10px;
+}
+
+.word-popup p {
+    margin: 8px 0;
+}
+
+#popupPinyin {
+    color: #5b8f72;
+    font-size: 21px;
+}
+
+#popupHanViet {
+    color: #888;
+}
+
+#popupPOS {
+    color: #555;
+}
+
+#popupMeaning {
+    font-size: 20px;
+}
+
+.close-popup {
+    position: absolute;
+    right: 15px;
+    top: 10px;
+
+    border: none;
+    background: none;
+
+    font-size: 25px;
+    cursor: pointer;
+    color: #888;
+}
+
+
+/* ================================================= */
+/* ============= NÚT LƯU TỪ ======================== */
+/* ================================================= */
+
+.save-word {
+    display: block;
+
+    width: 100%;
+
+    margin: 20px auto 8px;
+
+    padding: 12px 18px;
+
+    border: none;
+
+    border-radius: 12px;
+
+    background: #8fc7a5;
+
+    color: white;
+
+    font-size: 16px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+.save-word:hover {
+    background: #76b58f;
+    transform: translateY(-1px);
+}
+
+.save-word.saved {
+    background: #63b87b;
+}
+
+
+/* ================================================= */
+/* ===== POPUP HIGHLIGHT TOOLBAR =================== */
+/* ================================================= */
+
+.highlight-title {
+    margin-top: 20px;
+    margin-bottom: 10px;
+
+    font-size: 14px;
+    color: #777;
+}
+
+.highlight-tools {
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+
+    gap: 8px;
+
+    flex-wrap: wrap;
+}
+
+.color-btn {
+    width: 30px;
+    height: 30px;
+
+    border-radius: 50%;
+
+    border: 3px solid white;
+
+    box-shadow:
+        0 0 0 1px #ccc;
+
+    cursor: pointer;
+
+    transition: 0.15s;
+}
+
+.color-btn:hover {
+    transform: scale(1.1);
+}
+
+.color-btn.active-color {
+    box-shadow:
+        0 0 0 2px #555;
+    transform: scale(1.08);
+}
+
+.green {
+    background: #8fc7a5;
+}
+
+.blue {
+    background: #82b7e8;
+}
+
+.gray {
+    background: #aaa;
+}
+
+.yellow {
+    background: #f4d66d;
+}
+
+.orange {
+    background: #efa45d;
+}
+
+.purple {
+    background: #ad8ed6;
+}
+
+.underline-btn {
+    margin-left: 8px;
+
+    width: 32px;
+    height: 32px;
+
+    border: none;
+
+    border-radius: 8px;
+
+    background: #f1f1f1;
+
+    cursor: pointer;
+
+    font-weight: bold;
+
+    text-decoration: underline;
+}
+
+.underline-btn.active {
+    background: #d5eadb;
+    color: #4f8063;
+}
+
+
+/* ================================================= */
+/* ============== HIGHLIGHT 6 MÀU ================== */
+/* ================================================= */
+
+.highlight-green {
+    background: #b8e2c4 !important;
+}
+
+.highlight-blue {
+    background: #b9d9f4 !important;
+}
+
+.highlight-gray {
+    background: #d0d0d0 !important;
+}
+
+.highlight-yellow {
+    background: #f8e58b !important;
+}
+
+.highlight-orange {
+    background: #f5bd80 !important;
+}
+
+.highlight-purple {
+    background: #d0b8ed !important;
+}
+
+
+/* ================================================= */
+/* ================ SAVED WORDS ==================== */
+/* ================================================= */
+
+.saved-section {
+    margin-top: 35px;
+    padding-top: 25px;
+
+    border-top: 1px solid #e5e5e5;
+}
+
+.saved-toggle {
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    border: none;
+
+    background: #edf7f0;
+
+    color: #4f8063;
+
+    padding: 14px 18px;
+
+    border-radius: 14px;
+
+    cursor: pointer;
+
+    font-size: 16px;
+
+    font-weight: bold;
+
+    transition: 0.2s;
+}
+
+.saved-toggle:hover {
+    background: #dceee1;
+}
+
+.saved-arrow {
+    transition: 0.2s;
+}
+
+.saved-toggle.open .saved-arrow {
+    transform: rotate(180deg);
+}
+
+.saved-list {
+    display: none;
+
+    margin-top: 12px;
+
+    flex-direction: column;
+
+    gap: 8px;
+}
+
+.saved-list.show {
+    display: flex;
+}
+
+.saved-word-item {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    background: #f7fbf8;
+
+    border: 1px solid #e1eee4;
+
+    padding: 11px 14px;
+
+    border-radius: 12px;
+
+    color: #4f8063;
+
+    transition: 0.2s;
+}
+
+.saved-word-item:hover {
+    background: #edf7f0;
+}
+
+.saved-word-main {
+    flex: 1;
+
+    cursor: pointer;
+
+    font-size: 17px;
+
+    font-weight: 500;
+}
+
+.remove-saved {
+    width: 28px;
+    height: 28px;
+
+    border: none;
+
+    border-radius: 50%;
+
+    background: #f2dede;
+
+    color: #c75c5c;
+
+    cursor: pointer;
+
+    font-size: 17px;
+
+    line-height: 28px;
+
+    padding: 0;
+}
+
+.remove-saved:hover {
+    background: #e9bcbc;
+    color: #a94444;
+}
+
+.no-saved {
+    color: #999;
+    font-size: 14px;
+
+    padding: 10px;
+}
+
+
+/* ================================================= */
+/* ================= STUDY ========================= */
+/* ================================================= */
+
+.study-card {
+    text-align: center;
+
+    min-height: 650px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: center;
+}
+
+.study-progress {
+    color: #777;
+    margin-bottom: 20px;
+}
+
+.chinese-word {
+    font-size: 60px;
+    margin-bottom: 10px;
+}
+
+.pinyin {
+    font-size: 25px;
+    color: #5b8f72;
+}
+
+.hanviet {
+    margin-top: 10px;
+    color: #777;
+}
+
+.meaning {
+    font-size: 22px;
+    margin: 15px 0;
+}
+
+.example-box {
+    margin-top: 25px;
+
+    padding: 20px;
+
+    background: #f3f8f4;
+
+    border-radius: 18px;
+
+    text-align: left;
+}
+
+.example-box h3 {
+    margin-top: 0;
+}
+
+.example-box p {
+    font-family: Arial, sans-serif;
+}
+
+
+/* ================================================= */
+/* ================= GHI CHÚ ======================= */
+/* ================================================= */
+
+.note-title {
+    text-align: left;
+
+    margin-top: 25px;
+    margin-bottom: 8px;
+
+    font-size: 15px;
+    font-weight: bold;
+
+    color: #555;
+}
+
+.note-input,
+.sentence-input {
+    width: 100%;
+
+    margin-top: 8px;
+
+    padding: 15px;
+
+    border: 2px solid #dce9df;
+
+    border-radius: 15px;
+
+    resize: vertical;
+
+    font-size: 16px;
+
+    font-family: Arial, sans-serif;
+
+    line-height: 1.6;
+
+    outline: none;
+}
+
+.note-input {
+    min-height: 90px;
+}
+
+.sentence-input {
+    min-height: 100px;
+}
+
+.note-input:focus,
+.sentence-input:focus {
+    border-color: #8fc7a5;
+}
+
+
+/* ================================================= */
+/* ================= NEXT BUTTON =================== */
+/* ================================================= */
+
+.next-button {
+    margin-top: 20px;
+
+    padding: 12px 30px;
+
+    border: none;
+
+    border-radius: 20px;
+
+    background: #8fc7a5;
+
+    color: white;
+
+    cursor: pointer;
+}
+
+.next-button:hover {
+    background: #76b58f;
+}
+
+
+/* ================================================= */
+/* ================= REVIEW ======================== */
+/* ================================================= */
+
+.review-menu {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.game-button {
+    padding: 25px;
+
+    border: none;
+
+    border-radius: 20px;
+
+    background: #f3f8f4;
+
+    font-size: 20px;
+
+    cursor: pointer;
+}
+
+.game-button:hover {
+    background: #dfeee3;
+}
+
+
+/* ================================================= */
+/* ================= GAME ========================== */
+/* ================================================= */
+
+.game-screen {
+    display: none;
+}
+
+.game-screen.active {
+    display: block;
+}
+
+.game-header {
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    margin-bottom: 25px;
+}
+
+.timer {
+    font-size: 22px;
+
+    font-weight: bold;
+
+    color: #5b8f72;
+}
+
+.match-board {
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 30px;
+}
+
+.match-column {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 15px;
+}
+
+.match-card {
+    padding: 22px;
+
+    border-radius: 18px;
+
+    background: #f4f8f5;
+
+    border: 2px solid transparent;
+
+    cursor: pointer;
+
+    font-size: 20px;
+
+    text-align: center;
+
+    transition: 0.2s;
+}
+
+.match-card:hover {
+    transform: translateY(-2px);
+
+    background: #e6f2e9;
+}
+
+.match-card.selected {
+    border-color: #8fc7a5;
+
+    background: #e4f2e8;
+}
+
+.match-card.wrong {
+    border-color: #e76f6f;
+
+    background: #ffe5e5;
+}
+
+.match-card.hidden {
+    visibility: hidden;
+}
+
+.game-message {
+    text-align: center;
+
+    min-height: 30px;
+
+    margin-top: 20px;
+
+    font-weight: bold;
+}
+
+.sentence-game {
+    text-align: center;
+}
+
+.sentence-game-word {
+    font-size: 55px;
+
+    margin: 25px 0;
+}
+
+.sentence-game-input {
+    width: 100%;
+
+    min-height: 100px;
+
+    padding: 15px;
+
+    border: 2px solid #dce9df;
+
+    border-radius: 15px;
+
+    font-size: 18px;
+
+    font-family: Arial, sans-serif;
+}
+
+.sentence-game-top {
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+}
+
+.question-timer {
+    background: #f3f8f4;
+
+    padding: 8px 15px;
+
+    border-radius: 15px;
+
+    color: #5b8f72;
+
+    font-weight: bold;
+}
+
+.correct-message {
+    color: #55a66c;
+
+    margin-top: 15px;
+}
+
+.incorrect-message {
+    color: #d9534f;
+
+    margin-top: 15px;
+}
+
+.back-game {
+    margin-top: 20px;
+
+    border: none;
+
+    background: none;
+
+    color: #5b8f72;
+
+    cursor: pointer;
+}
+
+
+/* ================================================= */
+/* ================= MODAL ========================= */
+/* ================================================= */
+
+.finish-modal {
+    display: none;
+
+    position: fixed;
+
+    inset: 0;
+
+    background: rgba(0,0,0,0.35);
+
+    z-index: 2000;
+
+    align-items: center;
+
+    justify-content: center;
+}
+
+.finish-modal.show {
+    display: flex;
+}
+
+.finish-box {
+    background: white;
+
+    width: 400px;
+
+    max-width: 90%;
+
+    padding: 35px;
+
+    border-radius: 25px;
+
+    text-align: center;
+}
+
+.finish-box h2 {
+    margin-top: 0;
+}
+
+.finish-buttons {
+    display: flex;
+
+    justify-content: center;
+
+    gap: 12px;
+
+    margin-top: 25px;
+}
+
+.modal-btn {
+    border: none;
+
+    padding: 12px 22px;
+
+    border-radius: 20px;
+
+    cursor: pointer;
+}
+
+.ok-btn {
+    background: #8fc7a5;
+
+    color: white;
+}
+
+.repeat-btn {
+    background: #f1f5f2;
+
+    color: #555;
+}
+
+
+/* ========= ĐÁNH DẤU CỤM TỪ (NHIỀU TỪ) ============= */
+/* ================================================= */
+
+/* Khối bọc ngoài 1 cụm từ được bôi đen chọn.
+   Dùng padding/border-radius ở CHÍNH khối này (không phải từng
+   .word con) để màu nền / gạch chân trải liền mạch, không đứt đoạn. */
+.phrase-mark {
+    padding: 4px 6px;
+    border-radius: 7px;
+    transition: 0.2s;
+}
+
+/* Từ bên trong cụm không tự vẽ padding/nền riêng nữa,
+   để tránh bị chia thành từng ô rời rạc. */
+.phrase-mark .word {
+    padding: 0;
+    border-radius: 0;
+}
+
+.phrase-mark .word:hover {
+    background: transparent;
+}
+
+/* ================================================= */
+/* ========= THANH CÔNG CỤ KHI BÔI ĐEN CỤM TỪ ======= */
+/* ================================================= */
+
+.phrase-toolbar {
+    display: none;
+    position: fixed;
+    z-index: 1600;
+    background: white;
+    border-radius: 14px;
+    padding: 8px 10px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
+
+.phrase-toolbar.show {
+    display: block;
+}
+
+.phrase-toolbar-colors {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.phrase-remove-btn {
+    margin-left: 4px;
+    width: 32px;
+    height: 32px;
+    border: none;
+    border-radius: 8px;
+    background: #f2dede;
+    color: #c75c5c;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+.phrase-remove-btn:hover {
+    background: #e9bcbc;
+}
+
+
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<div class="lesson-page">
+
+
+<a href="reading.html" class="back-link">
+    ← Quay lại danh sách bài
+</a>
+
+
+<div class="lesson-title">
+
+    <h1>勇敢与坚持</h1>
+    <p>Bài 9 · HSK 4</p>
+
+</div>
+
+
+<div class="lesson-status">
+
+    <span
+        id="statusDot"
+        class="status-dot">
+    </span>
+
+    <span id="statusText">
+        Chưa bắt đầu
+    </span>
+
+</div>
+
+
+<!-- ================================================= -->
+<!-- ================= 3 TAB ========================= -->
+<!-- ================================================= -->
+
+<div class="tabs">
+
+    <button
+        class="tab-button active"
+        onclick="openTab('reading', this)">
+        📖 Đọc bài
+    </button>
+
+    <button
+        class="tab-button"
+        onclick="openTab('study', this)">
+        📚 Học bài
+    </button>
+
+    <button
+        class="tab-button"
+        onclick="openTab('review', this)">
+        🧠 Ôn tập
+    </button>
+
+</div>
+
+
+<!-- ================================================= -->
+<!-- ================= ĐỌC BÀI ======================= -->
+<!-- ================================================= -->
+
+<section
+    id="reading"
+    class="tab-content active">
+
+<div class="content-card">
+
+
+<div class="reading-layout" id="readingLayout">
+
+<svg id="connectorSvg" class="connector-svg"></svg>
+
+<div class="reading-main">
+
+
+<!-- ================================================= -->
+<!-- ================= BÀI ĐỌC 1 + 2 ==================== -->
+
+<!-- ================================================= -->
+<!-- ================= BÀI ĐỌC 1 ==================== -->
+<!-- ================================================= -->
+
+<div class="reading-block">
+
+    <h3 class="reading-heading">
+        📖 课文 4
+    </h3>
+
+    <div class="audio-section">
+
+        <div class="vinyl" id="vinyl1"></div>
+
+        <button class="audio-button" id="audioButton1" onclick="toggleAudio('1')">
+            ▶ Phát bài nghe
+        </button>
+
+        <div class="audio-progress-wrap">
+            <span id="audioCurrentTime1">0:00</span>
+            <input type="range" id="audioProgress1" class="audio-progress" value="0" min="0" max="100" step="0.1">
+            <span id="audioDuration1">0:00</span>
+        </div>
+
+        <audio id="audio1" src="audio/HSK4 - quyển thượng - Bài 9.4.mp3"></audio>
+
+    </div>
+
+    <div class="reading-text" id="readingText1" data-raw-text="草绿了，那是生命的颜色；花开了，那是大自然的礼物。生活中不缺少美，缺少的是发现美的眼睛。只要有心，生活中的美到处都是。生活的态度要自己选择，因此，遇到烦恼时，你应该想一些办法让自己从不高兴的心情中走出来。窗外是什么样子，我们无法改变，但我们可以选择站在哪个窗户前。选择一个能够带给我们快乐的窗户，这样才能选对心情，选对生活的态度。"></div>
+
+</div>
+
+
+<!-- ================================================= -->
+<!-- ================= BÀI ĐỌC 2 ==================== -->
+<!-- ================================================= -->
+
+<div class="reading-block">
+
+    <h3 class="reading-heading">
+        📖 课文 5
+    </h3>
+
+    <div class="audio-section">
+
+        <div class="vinyl" id="vinyl2"></div>
+
+        <button class="audio-button" id="audioButton2" onclick="toggleAudio('2')">
+            ▶ Phát bài nghe
+        </button>
+
+        <div class="audio-progress-wrap">
+            <span id="audioCurrentTime2">0:00</span>
+            <input type="range" id="audioProgress2" class="audio-progress" value="0" min="0" max="100" step="0.1">
+            <span id="audioDuration2">0:00</span>
+        </div>
+
+        <audio id="audio2" src="audio/HSK4 - quyển thượng - Bài 9.5.mp3"></audio>
+
+    </div>
+
+    <div class="reading-text" id="readingText2" data-raw-text="科学研究证明，女孩子对衣服颜色的选择往往与她们的性格有关。喜欢穿白色衣服的女孩子性格比较阳光，生活态度积极向上是她们的共同特点；而喜欢穿红色衣服的女孩子性格比较浪漫。颜色也会影响人的心情，不同的颜色会给我们带来不同的感情变化。红色让人变得热情；黄色和白色让人心情愉快；黑色却容易让人感到伤心；人们在看到蓝色时会觉得很舒服，变得安静下来；绿色让我们的眼睛得到休息。"></div>
+
+</div>
+
+
+</div>
+<!-- END .reading-main -->
+
+<div class="reading-divider"></div>
+
+<div class="reading-sidebar" id="readingSidebar">
+    <div class="pin-empty">Chưa có từ nào được ghim.</div>
+</div>
+
+</div>
+<!-- END .reading-layout -->
+
+
+<!-- ================================================= -->
+<!-- ========== TỪ VỰNG ĐÃ LƯU ====================== -->
+<!-- ================================================= -->
+
+<div class="saved-section">
+
+    <button
+        id="savedToggle"
+        class="saved-toggle"
+        onclick="toggleSavedList()">
+
+        <span>
+            📚 Từ vựng đã lưu
+        </span>
+
+        <span
+            id="savedArrow"
+            class="saved-arrow">
+            ▼
+        </span>
+
+    </button>
+
+    <div
+        id="savedList"
+        class="saved-list">
+    </div>
+
+</div>
+
+
+<!-- ================================================= -->
+<!-- ================= POPUP ========================== -->
+<!-- ================================================= -->
+
+<div
+    id="wordPopup"
+    class="word-popup">
+
+    <button
+        class="close-popup"
+        onclick="closeWord()">
+        ×
+    </button>
+
+    <h2 id="popupWord">
+        你好
+    </h2>
+
+    <p id="popupPinyin">
+        nǐ hǎo
+    </p>
+
+    <p id="popupHanViet">
+        nhĩ hảo
+    </p>
+
+    <p>
+        <strong id="popupPOS">
+            词语
+        </strong>
+    </p>
+
+    <p id="popupMeaning">
+        Nghĩa của từ
+    </p>
+
+
+    <button
+        id="saveWordButton"
+        class="save-word"
+        onclick="saveCurrentWord()">
+
+        ♡ Lưu từ
+
+    </button>
+
+    <button
+        id="pinWordButton"
+        class="save-word pin-word"
+        onclick="togglePinWord()">
+
+        📌 Hiện từ
+
+    </button>
+
+
+    <div class="highlight-title">
+        🎨 Đánh dấu từ
+    </div>
+
+
+    <div class="highlight-tools">
+
+        <button
+            class="color-btn green"
+            onclick="toggleHighlight('green')">
+        </button>
+
+        <button
+            class="color-btn blue"
+            onclick="toggleHighlight('blue')">
+        </button>
+
+        <button
+            class="color-btn gray"
+            onclick="toggleHighlight('gray')">
+        </button>
+
+        <button
+            class="color-btn yellow"
+            onclick="toggleHighlight('yellow')">
+        </button>
+
+        <button
+            class="color-btn orange"
+            onclick="toggleHighlight('orange')">
+        </button>
+
+        <button
+            class="color-btn purple"
+            onclick="toggleHighlight('purple')">
+        </button>
+
+        <button
+            id="underlineButton"
+            class="underline-btn"
+            onclick="toggleUnderline()">
+            U
+        </button>
+
+    </div>
+
+</div>
+
+
+</div>
+
+</section>
+
+
+<!-- ================================================= -->
+<!-- ================= HỌC BÀI ======================= -->
+<!-- ================================================= -->
+
+<section
+    id="study"
+    class="tab-content">
+
+<div class="content-card study-card">
+
+
+<div
+    id="studyProgress"
+    class="study-progress">
+</div>
+
+
+<div
+    id="studyWord"
+    class="chinese-word">
+</div>
+
+
+<div
+    id="studyPinyin"
+    class="pinyin">
+</div>
+
+
+<div
+    id="studyHanviet"
+    class="hanviet">
+</div>
+
+
+<div>
+
+    <strong>
+        Part of speech:
+    </strong>
+
+    <span id="studyPOS"></span>
+
+</div>
+
+
+<div
+    id="studyMeaning"
+    class="meaning">
+</div>
+
+
+<div class="example-box">
+
+    <h3>
+        📌 Ví dụ & cách dùng
+    </h3>
+
+    <p id="studyExampleChinese">
+    </p>
+
+    <p id="studyExampleVietnamese">
+    </p>
+
+    <p id="studyUsage">
+    </p>
+
+</div>
+
+
+<!-- ================================================= -->
+<!-- ================= GHI CHÚ ======================= -->
+<!-- ================================================= -->
+
+<div class="note-title">
+    📝 Ghi chú cá nhân
+</div>
+
+<textarea
+    id="studyNote"
+    class="note-input"
+    placeholder="Viết ghi chú của bạn về từ này...">
+</textarea>
+
+
+<!-- ================================================= -->
+<!-- ================= ĐẶT CÂU ======================= -->
+<!-- ================================================= -->
+
+<div class="note-title">
+    ✏️ Tự đặt câu
+</div>
+
+<textarea
+    id="studySentence"
+    class="sentence-input"
+    placeholder="Hãy tự đặt một câu với từ này...">
+</textarea>
+
+
+<button
+    class="next-button"
+    onclick="completeStudyWord()">
+
+    Hoàn thành từ này →
+
+</button>
+
+
+</div>
+
+</section>
+
+
+<!-- ================================================= -->
+<!-- ================= ÔN TẬP ======================== -->
+<!-- ================================================= -->
+
+<section
+    id="review"
+    class="tab-content">
+
+
+<div
+    id="reviewMenu"
+    class="content-card">
+
+    <h2>
+        🧠 Ôn tập
+    </h2>
+
+    <p>
+        Ôn lại những từ bạn đã lưu.
+    </p>
+
+    <div class="review-menu">
+
+        <button
+            class="game-button"
+            onclick="startQuickMatch()">
+            ⚡ Quick Match
+        </button>
+
+        <button
+            class="game-button"
+            onclick="startSentenceGame()">
+            ✏️ Đặt câu
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- QUICK MATCH -->
+
+<div
+    id="quickMatch"
+    class="content-card game-screen">
+
+    <div class="game-header">
+
+        <h2>
+            ⚡ Quick Match
+        </h2>
+
+        <div
+            id="matchTimer"
+            class="timer">
+            60s
+        </div>
+
+    </div>
+
+    <p>
+        Ghép từ tiếng Trung với nghĩa tiếng Việt.
+    </p>
+
+    <div class="match-board">
+
+        <div
+            id="chineseColumn"
+            class="match-column">
+        </div>
+
+        <div
+            id="vietnameseColumn"
+            class="match-column">
+        </div>
+
+    </div>
+
+    <div
+        id="matchMessage"
+        class="game-message">
+    </div>
+
+    <button
+        class="back-game"
+        onclick="backToReviewMenu()">
+        ← Quay lại
+    </button>
+
+</div>
+
+
+<!-- ĐẶT CÂU -->
+
+<div
+    id="sentenceGame"
+    class="content-card game-screen">
+
+    <div class="sentence-game-top">
+
+        <h2>
+            ✏️ Đặt câu
+        </h2>
+
+        <div
+            id="questionTimer"
+            class="question-timer">
+            0s
+        </div>
+
+    </div>
+
+    <p>
+        Hãy nhập đúng câu mà bạn đã đặt ở phần Học bài.
+    </p>
+
+    <div
+        id="sentenceProgress">
+    </div>
+
+    <div
+        id="sentenceGameWord"
+        class="sentence-game-word">
+    </div>
+
+    <textarea
+        id="sentenceGameInput"
+        class="sentence-game-input"
+        placeholder="Nhập câu của bạn...">
+    </textarea>
+
+    <div
+        id="sentenceMessage"
+        class="game-message">
+    </div>
+
+    <button
+        class="next-button"
+        onclick="checkSentence()">
+        Kiểm tra
+    </button>
+
+    <button
+        class="back-game"
+        onclick="backToReviewMenu()">
+        ← Quay lại
+    </button>
+
+</div>
+
+
+</section>
+
+</div>
+
+
+<!-- ================================================= -->
+<!-- ================= FINISH MODAL ================== -->
+<!-- ================================================= -->
+
+<div
+    id="finishModal"
+    class="finish-modal">
+
+    <div class="finish-box">
+
+        <h2>
+            🎉 Bạn đã học hết từ vựng!
+        </h2>
+
+        <p>
+            Bạn đã hoàn thành toàn bộ các từ đã lưu.
+        </p>
+
+        <div class="finish-buttons">
+
+            <button
+                class="modal-btn ok-btn"
+                onclick="finishStudy()">
+                OK
+            </button>
+
+            <button
+                class="modal-btn repeat-btn"
+                onclick="repeatStudy()">
+                Học lại từ vựng
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- ================= MOBILE AUDIO CONTROL ================= -->
+
+<div id="mobileAudioBar" class="mobile-audio-bar">
+    <div class="mobile-audio-track">
+        <div class="mobile-audio-top">
+            <div class="mobile-audio-lessons" aria-label="Chọn bài nghe">
+                <button id="mobileAudioLesson1" class="mobile-audio-lesson active" type="button" onclick="selectMobileAudio('1')">
+                    Bài 1
+                </button>
+                <button id="mobileAudioLesson2" class="mobile-audio-lesson" type="button" onclick="selectMobileAudio('2')">
+                    Bài 2
+                </button>
+            </div>
+
+            <button
+                id="mobileAudioPlay"
+                class="mobile-audio-play"
+                type="button"
+                onclick="toggleMobileAudio()"
+                aria-label="Phát hoặc tạm dừng">
+                ▶
+            </button>
+
+            <span id="mobileAudioTime" class="mobile-audio-time">0:00 / 0:00</span>
+        </div>
+
+        <input
+            id="mobileAudioProgress"
+            class="mobile-audio-progress"
+            type="range"
+            value="0"
+            min="0"
+            max="100"
+            step="0.1"
+            aria-label="Thời gian bài nghe">
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase.js"></script>
+<script>
+
+/* ================================================= */
+/* ================= DỮ LIỆU ======================== */
+/* ================================================= */
+
+const vocabulary = {
+
+    "每个人": {
+    pinyin: "měi ge rén",
+    hanviet: "[Mỗi Cá Nhân]",
+    pos: "n",
+    meaning: "Mỗi người, mọi người",
+    exampleChinese: "每个人都需要休息。",
+    exampleVietnamese: "→ Mỗi người đều cần nghỉ ngơi.",
+    usage: "Dùng để nói về từng người trong một nhóm."
+},
+
+"希望": {
+    pinyin: "xīwàng",
+    hanviet: "[Hy Vọng]",
+    pos: "v",
+    meaning: "Hy vọng, mong muốn",
+    exampleChinese: "我希望明天是好天气。",
+    exampleVietnamese: "→ Tôi hy vọng ngày mai thời tiết đẹp.",
+    usage: "Thường dùng: 希望 + mệnh đề / 希望 + động từ."
+},
+
+"自己": {
+    pinyin: "zìjǐ",
+    hanviet: "[Tự Kỷ]",
+    pos: "pron",
+    meaning: "Bản thân, chính mình",
+    exampleChinese: "你要相信自己。",
+    exampleVietnamese: "→ Bạn phải tin vào bản thân mình.",
+    usage: "Đại từ phản thân, chỉ chính người được nhắc đến."
+},
+
+"健康": {
+    pinyin: "jiànkāng",
+    hanviet: "[Kiện Khang]",
+    pos: "n, a",
+    meaning: "Sức khỏe; khỏe mạnh",
+    exampleChinese: "健康比什么都重要。",
+    exampleVietnamese: "→ Sức khỏe quan trọng hơn tất cả mọi thứ.",
+    usage: "Có thể làm danh từ hoặc tính từ: 身体健康 (cơ thể khỏe mạnh)."
+},
+
+"那么": {
+    pinyin: "nàme",
+    hanviet: "[Na Ma]",
+    pos: "adv",
+    meaning: "Vậy thì; như vậy; thế thì",
+    exampleChinese: "那么，我们开始吧。",
+    exampleVietnamese: "→ Vậy thì, chúng ta bắt đầu nhé.",
+    usage: "Dùng để nối câu, chuyển sang kết quả hoặc câu hỏi tiếp theo."
+},
+
+"什么": {
+    pinyin: "shénme",
+    hanviet: "[Thập Ma]",
+    pos: "pron",
+    meaning: "Cái gì; gì",
+    exampleChinese: "你想吃什么？",
+    exampleVietnamese: "→ Bạn muốn ăn gì?",
+    usage: "Đại từ nghi vấn, dùng để hỏi sự vật, việc hoặc nội dung."
+},
+
+"才": {
+    pinyin: "cái",
+    hanviet: "[Tài]",
+    pos: "adv",
+    meaning: "Mới; mới là; thì mới",
+    exampleChinese: "努力学习才会进步。",
+    exampleVietnamese: "→ Chăm chỉ học thì mới tiến bộ.",
+    usage: "Trong bài, 才 nhấn mạnh điều kiện cần để có kết quả."
+},
+
+"过去": {
+    pinyin: "guòqù",
+    hanviet: "[Quá Khứ]",
+    pos: "n / v",
+    meaning: "Quá khứ; đi qua, trôi qua",
+    exampleChinese: "过去的事情就让它过去吧。",
+    exampleVietnamese: "→ Chuyện đã qua thì hãy để nó qua đi.",
+    usage: "Làm danh từ chỉ thời gian đã qua; cũng có thể là động từ 'đi qua'."
+},
+
+"人们": {
+    pinyin: "rénmen",
+    hanviet: "[Nhân Môn]",
+    pos: "n",
+    meaning: "Mọi người, con người",
+    exampleChinese: "现在人们很重视环境保护。",
+    exampleVietnamese: "→ Hiện nay mọi người rất coi trọng việc bảo vệ môi trường.",
+    usage: "Chỉ con người nói chung; không dùng cho một số lượng người xác định."
+},
+
+"认为": {
+    pinyin: "rènwéi",
+    hanviet: "[Nhận Vi]",
+    pos: "v",
+    meaning: "Cho rằng, cho là, cho rằng",
+    exampleChinese: "我认为这个办法很好。",
+    exampleVietnamese: "→ Tôi cho rằng cách này rất tốt.",
+    usage: "Thường dùng: 认为 + mệnh đề."
+},
+
+"指": {
+    pinyin: "zhǐ",
+    hanviet: "[Chỉ]",
+    pos: "v",
+    meaning: "Chỉ, đề cập đến, nói đến/ (n) ngón tay, chỉ số",
+    exampleChinese: "这里的“他”指谁？",
+    exampleVietnamese: "→ “Anh ấy” ở đây chỉ ai?",
+    usage: "Thường dùng để giải thích một từ hoặc khái niệm: A 指 B."
+},
+"认识": {
+    pinyin: "rènshi",
+    hanviet: "[Nhận Thức]",
+    pos: "v, n",
+    meaning: "(v) biết, quen / (n) sự nhận thức, hiểu biết",
+    exampleChinese: "这里的“他”指谁？",
+    usage: "认识 + người/ sự vật/ khái niệm/ sự thật, vấn đề."
+},
+"身体": {
+    pinyin: "shēntǐ",
+    hanviet: "[Thân Thể]",
+    pos: "n",
+    meaning: "Cơ thể, thân thể",
+    exampleChinese: "你要照顾好自己的身体。",
+    exampleVietnamese: "→ Bạn phải chăm sóc tốt cơ thể của mình.",
+    usage: "Thường kết hợp: 身体健康, 锻炼身体."
+},
+
+"生病": {
+    pinyin: "shēng bìng",
+    hanviet: "[Sinh Bệnh]",
+    pos: "v",
+    meaning: "Bị bệnh, ốm",
+    exampleChinese: "他昨天生病了，没去上班。",
+    exampleVietnamese: "→ Hôm qua anh ấy bị ốm nên không đi làm.",
+    usage: "Dùng với 了 khi nói một lần bị ốm cụ thể."
+},
+
+"但是": {
+    pinyin: "dànshì",
+    hanviet: "[Đãn Thị]",
+    pos: "conj",
+    meaning: "Nhưng, tuy nhiên",
+    exampleChinese: "他很累，但是还在学习。",
+    exampleVietnamese: "→ Anh ấy rất mệt nhưng vẫn đang học.",
+    usage: "Liên từ biểu thị sự chuyển ý hoặc đối lập."
+},
+
+"现在": {
+    pinyin: "xiànzài",
+    hanviet: "[Hiện Tại]",
+    pos: "n / adv",
+    meaning: "Hiện tại, bây giờ",
+    exampleChinese: "现在我明白了。",
+    exampleVietnamese: "→ Bây giờ tôi hiểu rồi.",
+    usage: "Dùng ở đầu câu hoặc trước động từ để chỉ thời điểm hiện tại."
+},
+
+"认识到": {
+    pinyin: "rènshi dào",
+    hanviet: "[Nhận Thức Đáo]",
+    pos: "v",
+    meaning: "Nhận thức được, nhận ra",
+    exampleChinese: "我终于认识到时间的重要性。",
+    exampleVietnamese: "→ Cuối cùng tôi cũng nhận ra tầm quan trọng của thời gian.",
+    usage: "认识到 + sự việc / ý nghĩa / vấn đề."
+},
+
+"精神": {
+    pinyin: "jīngshén",
+    hanviet: "[Tinh Thần]",
+    pos: "n",
+    meaning: "Tinh thần; tâm trạng",
+    exampleChinese: "她今天精神很好。",
+    exampleVietnamese: "→ Hôm nay tinh thần cô ấy rất tốt.",
+    usage: "Trong bài, 精神上的健康 là sức khỏe tinh thần."
+},
+
+"精神上": {
+    pinyin: "jīngshén shàng",
+    hanviet: "[Tinh Thần Thượng]",
+    pos: "n",
+    meaning: "Về mặt tinh thần",
+    exampleChinese: "他精神上压力很大。",
+    exampleVietnamese: "→ Về mặt tinh thần, anh ấy có áp lực rất lớn.",
+    usage: "Thường dùng sau một danh từ để nói về một phương diện nào đó."
+},
+
+"只有…才…": {
+    pinyin: "zhǐyǒu…cái…",
+    hanviet: "[Chỉ Hữu…Tài…]",
+    pos: "cấu trúc",
+    meaning: "Chỉ có… thì mới…",
+    exampleChinese: "只有认真练习，才会说好中文。",
+    exampleVietnamese: "→ Chỉ có luyện tập nghiêm túc thì mới nói tiếng Trung tốt.",
+    usage: "Nhấn mạnh điều kiện cần thiết để kết quả phía sau xảy ra."
+},
+
+"算": {
+    pinyin: "suàn",
+    hanviet: "[Toán]",
+    pos: "v",
+    meaning: "Tính là, được coi là",
+    exampleChinese: "这样算不算迟到？",
+    exampleVietnamese: "→ Như vậy có được tính là đi muộn không?",
+    usage: "Thường dùng: 算 + danh từ / 算是 + danh từ."
+},
+
+"真正": {
+    pinyin: "zhēnzhèng",
+    hanviet: "[Chân Chính]",
+    pos: "a / adv",
+    meaning: "Thật sự, thực sự, chân chính",
+    exampleChinese: "真正的朋友会帮助你。",
+    exampleVietnamese: "→ Người bạn thật sự sẽ giúp đỡ bạn.",
+    usage: "Thường đứng trước danh từ để nhấn mạnh tính xác thực."
+},
+
+"教授": {
+    pinyin: "jiàoshòu",
+    hanviet: "[Giáo Thụ]",
+    pos: "n",
+    meaning: "Giáo sư",
+    exampleChinese: "王教授正在给学生上课。",
+    exampleVietnamese: "→ Giáo sư Vương đang dạy học sinh.",
+    usage: "Cách gọi chức danh học thuật: 王教授."
+},
+
+"数字": {
+    pinyin: "shùzì",
+    hanviet: "[Số Tự]",
+    pos: "n",
+    meaning: "Con số, chữ số",
+    exampleChinese: "这个数字不太准确。",
+    exampleVietnamese: "→ Con số này không được chính xác lắm.",
+    usage: "Dùng cho số liệu, chữ số hoặc số lượng thể hiện bằng số."
+},
+
+"说明": {
+    pinyin: "shuōmíng",
+    hanviet: "[Thuyết Minh]",
+    pos: "v",
+    meaning: "Giải thích, chứng minh, cho thấy",
+    exampleChinese: "这个例子说明了问题。",
+    exampleVietnamese: "→ Ví dụ này đã cho thấy vấn đề.",
+    usage: "说明 + sự việc / nguyên nhân / ý nghĩa."
+},
+
+"多么": {
+    pinyin: "duōme",
+    hanviet: "[Đa Ma]",
+    pos: "adv",
+    meaning: "Biết bao, bao nhiêu, rất",
+    exampleChinese: "健康是多么重要啊！",
+    exampleVietnamese: "→ Sức khỏe quan trọng biết bao!",
+    usage: "Dùng trong câu cảm thán để nhấn mạnh mức độ."
+},
+
+"重要": {
+    pinyin: "zhòngyào",
+    hanviet: "[Trọng Yếu]",
+    pos: "a",
+    meaning: "Quan trọng",
+    exampleChinese: "这是一个很重要的决定。",
+    exampleVietnamese: "→ Đây là một quyết định rất quan trọng.",
+    usage: "Thường dùng: 对…很重要 / 重要的 + danh từ."
+},
+
+"要是": {
+    pinyin: "yàoshi",
+    hanviet: "[Yếu Thị]",
+    pos: "conj",
+    meaning: "Nếu, giả sử như",
+    exampleChinese: "要是明天下雨，我们就不去了。",
+    exampleVietnamese: "→ Nếu ngày mai mưa, chúng tôi sẽ không đi.",
+    usage: "Dùng để giả định điều kiện, gần nghĩa với 如果."
+},
+
+"其他": {
+    pinyin: "qítā",
+    hanviet: "[Kỳ Tha]",
+    pos: "pron",
+    meaning: "Khác, những cái khác",
+    exampleChinese: "其他问题以后再说。",
+    exampleVietnamese: "→ Những vấn đề khác để sau nói tiếp.",
+    usage: "Thường đứng trước danh từ: 其他人, 其他事情."
+},
+
+"后面": {
+    pinyin: "hòumian",
+    hanviet: "[Hậu Diện]",
+    pos: "n",
+    meaning: "Phía sau; phần sau",
+    exampleChinese: "答案在书的后面。",
+    exampleVietnamese: "→ Đáp án ở phía sau quyển sách.",
+    usage: "Có thể chỉ vị trí hoặc phần nội dung ở sau."
+},
+
+"如果": {
+    pinyin: "rúguǒ",
+    hanviet: "[Như Quả]",
+    pos: "conj",
+    meaning: "Nếu",
+    exampleChinese: "如果你有时间，就来找我吧。",
+    exampleVietnamese: "→ Nếu bạn có thời gian thì đến tìm tôi nhé.",
+    usage: "Dùng mở đầu mệnh đề điều kiện; thường đi với 就 ở vế sau."
+},
+
+"不管": {
+    pinyin: "bùguǎn",
+    hanviet: "[Bất Quản]",
+    pos: "conj",
+    meaning: "Bất kể, dù cho, không quan tâm",
+    exampleChinese: "不管多忙，我都会吃早餐。",
+    exampleVietnamese: "→ Dù bận thế nào, tôi cũng sẽ ăn sáng.",
+    usage: "Thường dùng với 都 / 也: 不管…都/也…"
+},
+
+"多少": {
+    pinyin: "duōshao",
+    hanviet: "[Đa Thiểu]",
+    pos: "pron",
+    meaning: "Bao nhiêu; một mức độ nào đó",
+    exampleChinese: "这里有多少人？",
+    exampleVietnamese: "→ Ở đây có bao nhiêu người?",
+    usage: "Dùng để hỏi số lượng; trong 不管有多少 là 'dù có bao nhiêu'."
+},
+
+"没用": {
+    pinyin: "méi yòng",
+    hanviet: "[Một Dụng]",
+    pos: "a",
+    meaning: "Vô dụng, không có tác dụng",
+    exampleChinese: "光着急是没用的。",
+    exampleVietnamese: "→ Chỉ lo lắng thôi thì không có tác dụng.",
+    usage: "Dùng để nói một việc, đồ vật hoặc cách làm không đem lại hiệu quả."
+},
+
+"所以": {
+    pinyin: "suǒyǐ",
+    hanviet: "[Sở Dĩ]",
+    pos: "conj",
+    meaning: "Cho nên, vì vậy",
+    exampleChinese: "今天下雨，所以我没出门。",
+    exampleVietnamese: "→ Hôm nay trời mưa, vì vậy tôi không ra ngoài.",
+    usage: "Dùng ở vế kết quả; vế trước thường nêu nguyên nhân."
+},
+
+"平时": {
+    pinyin: "píngshí",
+    hanviet: "[Bình Thời]",
+    pos: "n / adv",
+    meaning: "Bình thường, thường ngày",
+    exampleChinese: "我平时晚上十点睡觉。",
+    exampleVietnamese: "→ Bình thường tôi ngủ lúc 10 giờ tối.",
+    usage: "Dùng để nói thói quen hoặc tình trạng thường ngày."
+},
+
+"一定": {
+    pinyin: "yídìng",
+    hanviet: "[Nhất Định]",
+    pos: "adv",
+    meaning: "Nhất định, chắc chắn, phải",
+    exampleChinese: "你一定要注意安全。",
+    exampleVietnamese: "→ Bạn nhất định phải chú ý an toàn.",
+    usage: "Đặt trước động từ để nhấn mạnh yêu cầu hoặc sự chắc chắn."
+},
+
+"注意": {
+    pinyin: "zhùyì",
+    hanviet: "[Chú Ý]",
+    pos: "v",
+    meaning: "Chú ý, để ý",
+    exampleChinese: "请注意听老师说。",
+    exampleVietnamese: "→ Hãy chú ý nghe thầy giáo nói.",
+    usage: "Thường dùng: 注意 + động từ / danh từ; 注意安全."
+},
+
+"锻炼": {
+    pinyin: "duànliàn",
+    hanviet: "[Đoán Luyện]",
+    pos: "v",
+    meaning: "Rèn luyện, tập luyện",
+    exampleChinese: "为了健康，他每天锻炼身体。",
+    exampleVietnamese: "→ Vì sức khỏe, anh ấy tập luyện cơ thể mỗi ngày.",
+    usage: "Thường dùng: 锻炼身体; cũng có thể là rèn luyện năng lực."
+},
+
+"别": {
+    pinyin: "bié",
+    hanviet: "[Biệt]",
+    pos: "adv",
+    meaning: "Đừng, chớ",
+    exampleChinese: "别忘了带手机。",
+    exampleVietnamese: "→ Đừng quên mang điện thoại.",
+    usage: "Đặt trước động từ để tạo câu mệnh lệnh phủ định."
+},
+
+"等": {
+    pinyin: "děng",
+    hanviet: "[Đẳng]",
+    pos: "v",
+    meaning: "Đợi, chờ",
+    exampleChinese: "请你等我一下。",
+    exampleVietnamese: "→ Bạn hãy đợi tôi một lát.",
+    usage: "Thường dùng: 等 + người / sự việc; 等一下 là đợi một lát."
+},
+
+"出问题": {
+    pinyin: "chū wèntí",
+    hanviet: "[Xuất Vấn Đề]",
+    pos: "v",
+    meaning: "Xảy ra vấn đề, gặp trục trặc",
+    exampleChinese: "电脑出问题了，打不开。",
+    exampleVietnamese: "→ Máy tính xảy ra vấn đề rồi, không mở được.",
+    usage: "Dùng cho sức khỏe, máy móc, kế hoạch hoặc công việc gặp vấn đề."
+},
+
+"后悔": {
+    pinyin: "hòuhuǐ",
+    hanviet: "[Hậu Hối]",
+    pos: "v",
+    meaning: "Hối hận",
+    exampleChinese: "我后悔没有早点开始学习。",
+    exampleVietnamese: "→ Tôi hối hận vì đã không bắt đầu học sớm hơn.",
+    usage: "Thường dùng: 后悔 + động từ / 后悔做了某事."
+}
+};
+
+/* Từ vựng Lesson 8 */
+Object.keys(vocabulary).forEach(function(word) { delete vocabulary[word]; });
+Object.assign(vocabulary, {
+    "草": {pinyin:"cǎo", hanviet:"[Thảo]", pos:"n", meaning:"Cỏ", exampleChinese:"草绿了。", exampleVietnamese:"→ Cỏ xanh rồi.", usage:"Danh từ chỉ cỏ."},
+    "生命": {pinyin:"shēngmìng", hanviet:"[Sinh Mệnh]", pos:"n", meaning:"Sinh mệnh, sự sống", exampleChinese:"生命很宝贵。", exampleVietnamese:"→ Sự sống rất quý giá.", usage:"Chỉ sự sống hoặc cuộc đời."},
+    "颜色": {pinyin:"yánsè", hanviet:"[Nhan Sắc]", pos:"n", meaning:"Màu sắc", exampleChinese:"我喜欢这个颜色。", exampleVietnamese:"→ Tôi thích màu này.", usage:"Dùng để nói về màu sắc."},
+    "花": {pinyin:"huā", hanviet:"[Hoa]", pos:"n", meaning:"Hoa", exampleChinese:"花开了。", exampleVietnamese:"→ Hoa nở rồi.", usage:"Danh từ chỉ hoa."},
+    "大自然": {pinyin:"dà zìrán", hanviet:"[Đại Tự Nhiên]", pos:"n", meaning:"Thiên nhiên", exampleChinese:"大自然很美。", exampleVietnamese:"→ Thiên nhiên rất đẹp.", usage:"Chỉ thế giới tự nhiên."},
+    "礼物": {pinyin:"lǐwù", hanviet:"[Lễ Vật]", pos:"n", meaning:"Quà tặng", exampleChinese:"这是送给你的礼物。", exampleVietnamese:"→ Đây là quà tặng cho bạn.", usage:"礼物 thường đi với 送、收到."},
+    "生活": {pinyin:"shēnghuó", hanviet:"[Sinh Hoạt]", pos:"n / v", meaning:"Cuộc sống; sinh hoạt", exampleChinese:"我的生活很简单。", exampleVietnamese:"→ Cuộc sống của tôi rất đơn giản.", usage:"Có thể là danh từ hoặc động từ."},
+    "缺少": {pinyin:"quēshǎo", hanviet:"[Khuyết Thiểu]", pos:"v", meaning:"Thiếu, thiếu hụt", exampleChinese:"这里缺少水。", exampleVietnamese:"→ Ở đây thiếu nước.", usage:"缺少 + danh từ."},
+    "发现": {pinyin:"fāxiàn", hanviet:"[Phát Hiện]", pos:"v", meaning:"Phát hiện, nhận ra", exampleChinese:"我发现了一个问题。", exampleVietnamese:"→ Tôi phát hiện một vấn đề.", usage:"发现 + sự vật / vấn đề."},
+    "眼睛": {pinyin:"yǎnjing", hanviet:"[Nhãn Tinh]", pos:"n", meaning:"Mắt", exampleChinese:"她的眼睛很漂亮。", exampleVietnamese:"→ Mắt cô ấy rất đẹp.", usage:"Danh từ chỉ mắt."},
+    "只要": {pinyin:"zhǐyào", hanviet:"[Chỉ Yếu]", pos:"conj", meaning:"Chỉ cần", exampleChinese:"只要努力，就会进步。", exampleVietnamese:"→ Chỉ cần cố gắng thì sẽ tiến bộ.", usage:"Thường dùng với 就 ở vế sau."},
+    "到处": {pinyin:"dàochù", hanviet:"[Đáo Xứ]", pos:"adv", meaning:"Khắp nơi, mọi nơi", exampleChinese:"这里到处都是花。", exampleVietnamese:"→ Ở đây đâu đâu cũng có hoa.", usage:"Đứng trước động từ hoặc 是."},
+    "态度": {pinyin:"tàidu", hanviet:"[Thái Độ]", pos:"n", meaning:"Thái độ", exampleChinese:"他的学习态度很好。", exampleVietnamese:"→ Thái độ học tập của anh ấy rất tốt.", usage:"Thường dùng: 对…的态度."},
+    "选择": {pinyin:"xuǎnzé", hanviet:"[Tuyển Trạch]", pos:"v / n", meaning:"Lựa chọn", exampleChinese:"你可以自己选择。", exampleVietnamese:"→ Bạn có thể tự lựa chọn.", usage:"选择 + danh từ / động từ."},
+    "因此": {pinyin:"yīncǐ", hanviet:"[Nhân Thử]", pos:"conj", meaning:"Vì vậy, do đó", exampleChinese:"他生病了，因此没来。", exampleVietnamese:"→ Anh ấy bị ốm, vì vậy không đến.", usage:"Dùng để nối nguyên nhân và kết quả."},
+    "遇到": {pinyin:"yùdào", hanviet:"[Ngộ Đáo]", pos:"v", meaning:"Gặp phải", exampleChinese:"遇到问题别着急。", exampleVietnamese:"→ Gặp vấn đề đừng vội.", usage:"遇到 + người / việc / khó khăn."},
+    "烦恼": {pinyin:"fánnǎo", hanviet:"[Phiền Não]", pos:"n / v", meaning:"Phiền não, buồn phiền", exampleChinese:"别为小事烦恼。", exampleVietnamese:"→ Đừng phiền não vì chuyện nhỏ.", usage:"Có thể là danh từ hoặc động từ."},
+    "应该": {pinyin:"yīnggāi", hanviet:"[Ưng Cai]", pos:"aux", meaning:"Nên, cần phải", exampleChinese:"你应该早点休息。", exampleVietnamese:"→ Bạn nên nghỉ sớm.", usage:"Đặt trước động từ để đưa lời khuyên."},
+    "办法": {pinyin:"bànfǎ", hanviet:"[Biện Pháp]", pos:"n", meaning:"Cách, biện pháp", exampleChinese:"我想到了一个办法。", exampleVietnamese:"→ Tôi nghĩ ra một cách.", usage:"想办法 = tìm cách."},
+    "心情": {pinyin:"xīnqíng", hanviet:"[Tâm Tình]", pos:"n", meaning:"Tâm trạng", exampleChinese:"我今天心情很好。", exampleVietnamese:"→ Hôm nay tâm trạng tôi rất tốt.", usage:"Thường dùng: 心情好 / 不好."},
+    "无法": {pinyin:"wúfǎ", hanviet:"[Vô Pháp]", pos:"v", meaning:"Không thể", exampleChinese:"我无法回答这个问题。", exampleVietnamese:"→ Tôi không thể trả lời câu hỏi này.", usage:"无法 + động từ."},
+    "改变": {pinyin:"gǎibiàn", hanviet:"[Cải Biến]", pos:"v", meaning:"Thay đổi", exampleChinese:"我们不能改变过去。", exampleVietnamese:"→ Chúng ta không thể thay đổi quá khứ.", usage:"改变 + sự vật / tình hình."},
+    "能够": {pinyin:"nénggòu", hanviet:"[Năng Cấu]", pos:"aux", meaning:"Có thể, có khả năng", exampleChinese:"我能够帮助你。", exampleVietnamese:"→ Tôi có thể giúp bạn.", usage:"Đặt trước động từ."},
+    "带给": {pinyin:"dài gěi", hanviet:"[Đới Cấp]", pos:"v", meaning:"Mang đến cho", exampleChinese:"音乐带给我快乐。", exampleVietnamese:"→ Âm nhạc mang đến cho tôi niềm vui.", usage:"带给 + người + điều gì."},
+    "快乐": {pinyin:"kuàilè", hanviet:"[Khoái Lạc]", pos:"a", meaning:"Vui vẻ, hạnh phúc", exampleChinese:"祝你快乐。", exampleVietnamese:"→ Chúc bạn vui vẻ.", usage:"Có thể làm tính từ hoặc danh từ."},
+    "科学": {pinyin:"kēxué", hanviet:"[Khoa Học]", pos:"n", meaning:"Khoa học", exampleChinese:"科学改变生活。", exampleVietnamese:"→ Khoa học thay đổi cuộc sống.", usage:"Danh từ chỉ khoa học."},
+    "研究": {pinyin:"yánjiū", hanviet:"[Nghiên Cứu]", pos:"v / n", meaning:"Nghiên cứu", exampleChinese:"他们正在研究这个问题。", exampleVietnamese:"→ Họ đang nghiên cứu vấn đề này.", usage:"研究 + vấn đề / lĩnh vực."},
+    "证明": {pinyin:"zhèngmíng", hanviet:"[Chứng Minh]", pos:"v", meaning:"Chứng minh", exampleChinese:"事实证明他是对的。", exampleVietnamese:"→ Sự thật chứng minh anh ấy đúng.", usage:"证明 + kết luận / sự việc."},
+    "女孩子": {pinyin:"nǚ háizi", hanviet:"[Nữ Hài Tử]", pos:"n", meaning:"Cô gái", exampleChinese:"那个女孩子很开朗。", exampleVietnamese:"→ Cô gái đó rất vui vẻ.", usage:"Cách nói thân mật về bé gái/cô gái."},
+    "衣服": {pinyin:"yīfu", hanviet:"[Y Phục]", pos:"n", meaning:"Quần áo", exampleChinese:"这件衣服很漂亮。", exampleVietnamese:"→ Bộ quần áo này rất đẹp.", usage:"Lượng từ thường dùng: 件."},
+    "往往": {pinyin:"wǎngwǎng", hanviet:"[Vãng Vãng]", pos:"adv", meaning:"Thường thường", exampleChinese:"他往往很早起床。", exampleVietnamese:"→ Anh ấy thường dậy rất sớm.", usage:"Chỉ tình huống thường xảy ra."},
+    "性格": {pinyin:"xìnggé", hanviet:"[Tính Cách]", pos:"n", meaning:"Tính cách", exampleChinese:"她的性格很开朗。", exampleVietnamese:"→ Tính cách cô ấy rất vui vẻ.", usage:"性格 + tính từ."},
+    "喜欢": {pinyin:"xǐhuan", hanviet:"[Hỉ Hoan]", pos:"v", meaning:"Thích", exampleChinese:"我喜欢蓝色。", exampleVietnamese:"→ Tôi thích màu xanh lam.", usage:"喜欢 + danh từ / động từ."},
+    "白色": {pinyin:"báisè", hanviet:"[Bạch Sắc]", pos:"n", meaning:"Màu trắng", exampleChinese:"我喜欢白色衣服。", exampleVietnamese:"→ Tôi thích quần áo màu trắng.", usage:"Tên một màu sắc."},
+    "阳光": {pinyin:"yángguāng", hanviet:"[Dương Quang]", pos:"n / a", meaning:"Ánh nắng; lạc quan", exampleChinese:"她是一个很阳光的人。", exampleVietnamese:"→ Cô ấy là người rất lạc quan.", usage:"Trong bài chỉ tính cách tích cực."},
+    "积极向上": {pinyin:"jījí xiàngshàng", hanviet:"[Tích Cực Hướng Thượng]", pos:"a", meaning:"Tích cực vươn lên", exampleChinese:"保持积极向上的态度。", exampleVietnamese:"→ Giữ thái độ tích cực vươn lên.", usage:"Cụm miêu tả thái độ sống."},
+    "特点": {pinyin:"tèdiǎn", hanviet:"[Đặc Điểm]", pos:"n", meaning:"Đặc điểm", exampleChinese:"这是它的特点。", exampleVietnamese:"→ Đây là đặc điểm của nó.", usage:"Dùng để nói điểm nổi bật."},
+    "红色": {pinyin:"hóngsè", hanviet:"[Hồng Sắc]", pos:"n", meaning:"Màu đỏ", exampleChinese:"红色让人热情。", exampleVietnamese:"→ Màu đỏ khiến người ta nhiệt tình.", usage:"Tên một màu sắc."},
+    "浪漫": {pinyin:"làngmàn", hanviet:"[Lãng Mạn]", pos:"a", meaning:"Lãng mạn", exampleChinese:"这是一个浪漫的故事。", exampleVietnamese:"→ Đây là một câu chuyện lãng mạn.", usage:"Dùng để miêu tả tính cách hoặc bầu không khí."},
+    "影响": {pinyin:"yǐngxiǎng", hanviet:"[Ảnh Hưởng]", pos:"v / n", meaning:"Ảnh hưởng", exampleChinese:"天气影响心情。", exampleVietnamese:"→ Thời tiết ảnh hưởng tâm trạng.", usage:"影响 + người / sự việc."},
+    "不同": {pinyin:"bùtóng", hanviet:"[Bất Đồng]", pos:"a", meaning:"Khác nhau", exampleChinese:"每个人的想法不同。", exampleVietnamese:"→ Suy nghĩ của mỗi người khác nhau.", usage:"不同的 + danh từ."},
+    "感情": {pinyin:"gǎnqíng", hanviet:"[Cảm Tình]", pos:"n", meaning:"Tình cảm, cảm xúc", exampleChinese:"颜色会影响人的感情。", exampleVietnamese:"→ Màu sắc có thể ảnh hưởng cảm xúc của con người.", usage:"Trong bài là thay đổi cảm xúc."},
+    "变化": {pinyin:"biànhuà", hanviet:"[Biến Hóa]", pos:"n / v", meaning:"Thay đổi, biến hóa", exampleChinese:"天气发生了变化。", exampleVietnamese:"→ Thời tiết đã có thay đổi.", usage:"发生变化 = xảy ra thay đổi."},
+    "热情": {pinyin:"rèqíng", hanviet:"[Nhiệt Tình]", pos:"a", meaning:"Nhiệt tình", exampleChinese:"他对人很热情。", exampleVietnamese:"→ Anh ấy rất nhiệt tình với mọi người.", usage:"热情地 + động từ / 很热情."},
+    "黄色": {pinyin:"huángsè", hanviet:"[Hoàng Sắc]", pos:"n", meaning:"Màu vàng", exampleChinese:"黄色让人心情愉快。", exampleVietnamese:"→ Màu vàng khiến người ta vui vẻ.", usage:"Tên một màu sắc."},
+    "愉快": {pinyin:"yúkuài", hanviet:"[Du Khoái]", pos:"a", meaning:"Vui vẻ, dễ chịu", exampleChinese:"祝你旅途愉快。", exampleVietnamese:"→ Chúc bạn chuyến đi vui vẻ.", usage:"Thường dùng: 心情愉快."},
+    "黑色": {pinyin:"hēisè", hanviet:"[Hắc Sắc]", pos:"n", meaning:"Màu đen", exampleChinese:"他穿黑色衣服。", exampleVietnamese:"→ Anh ấy mặc quần áo màu đen.", usage:"Tên một màu sắc."},
+    "伤心": {pinyin:"shāngxīn", hanviet:"[Thương Tâm]", pos:"a / v", meaning:"Buồn, đau lòng", exampleChinese:"别太伤心。", exampleVietnamese:"→ Đừng quá buồn.", usage:"Dùng để nói cảm xúc buồn."},
+    "蓝色": {pinyin:"lánsè", hanviet:"[Lam Sắc]", pos:"n", meaning:"Màu xanh lam", exampleChinese:"蓝色看起来很舒服。", exampleVietnamese:"→ Màu xanh lam trông rất dễ chịu.", usage:"Tên một màu sắc."},
+    "舒服": {pinyin:"shūfu", hanviet:"[Thư Phục]", pos:"a", meaning:"Thoải mái, dễ chịu", exampleChinese:"这个房间很舒服。", exampleVietnamese:"→ Căn phòng này rất dễ chịu.", usage:"Dùng cho cảm giác cơ thể hoặc tâm trạng."},
+    "安静": {pinyin:"ānjìng", hanviet:"[An Tĩnh]", pos:"a", meaning:"Yên tĩnh", exampleChinese:"请安静一下。", exampleVietnamese:"→ Hãy yên lặng một chút.", usage:"Có thể chỉ nơi chốn hoặc trạng thái."},
+    "绿色": {pinyin:"lǜsè", hanviet:"[Lục Sắc]", pos:"n", meaning:"Màu xanh lá", exampleChinese:"草是绿色的。", exampleVietnamese:"→ Cỏ có màu xanh lá.", usage:"Tên một màu sắc."},
+    "眼睛": {pinyin:"yǎnjing", hanviet:"[Nhãn Tinh]", pos:"n", meaning:"Mắt", exampleChinese:"让眼睛休息一下。", exampleVietnamese:"→ Hãy để mắt nghỉ một chút.", usage:"Danh từ chỉ mắt."},
+    "休息": {pinyin:"xiūxi", hanviet:"[Hưu Tức]", pos:"v", meaning:"Nghỉ ngơi", exampleChinese:"眼睛需要休息。", exampleVietnamese:"→ Mắt cần nghỉ ngơi.", usage:"休息一下 = nghỉ một chút."}
+});
+
+/* ================================================= */
+/* ================= BIẾN ========================== */
+/* ================================================= */
+
+let currentWord = "";
+
+let currentWordElement = null;
+
+let studyWords = [];
+
+let studyIndex = 0;
+
+let currentHighlight = {};
+
+let currentUnderline = {};
+
+let currentPhraseInfo = null;
+
+let matchPairs = [];
+
+let selectedChinese = null;
+
+let selectedVietnamese = null;
+
+let matchTimerInterval = null;
+
+let matchTime = 60;
+
+let sentenceWords = [];
+
+let sentenceIndex = 0;
+
+let questionStartTime = null;
+
+let questionTimerInterval = null;
+
+
+/* ================================================= */
+/* ============== SUPABASE USER PROGRESS ============ */
+/* ================================================= */
+
+/* ===== ĐỒNG BỘ TIẾN ĐỘ BÀI 9 ===================== */
+/* ================================================= */
+
+let lessonProgressSync = null;
+
+function queueProgressSync() {
+    if (lessonProgressSync) {
+        lessonProgressSync.scheduleSave();
+    }
+}
+
+function refreshLessonAfterCloudLoad() {
+    currentHighlight = getHighlights();
+    currentUnderline = getUnderlines();
+
+    updateSavedList();
+    applySavedHighlights();
+    applySavedPhraseMarks();
+    renderPinnedSidebar();
+
+    if (localStorage.getItem("lesson9Completed") === "true") {
+        updateStatus("completed");
+    } else if (getSavedWords().length > 0) {
+        updateStatus("learning");
+    } else {
+        updateStatus("new");
+    }
+}
+
+function initSupabaseProgress() {
+    lessonProgressSync = window.LessonProgress.create(9, {
+        onRemoteLoaded: refreshLessonAfterCloudLoad
+    });
+}
+
+
+/* ================================================= */
+/* ================= LOCAL STORAGE ================= */
+/* ================================================= */
+
+function getSavedWords() {
+
+    return JSON.parse(
+        localStorage.getItem("lesson9SavedWords")
+    ) || [];
+
+}
+
+
+function setSavedWords(words) {
+
+    localStorage.setItem(
+        "lesson9SavedWords",
+        JSON.stringify(words)
+    );
+
+    queueProgressSync();
+
+}
+
+
+function getSentences() {
+
+    return JSON.parse(
+        localStorage.getItem("lesson9Sentences")
+    ) || {};
+
+}
+
+
+function setSentences(data) {
+
+    localStorage.setItem(
+        "lesson9Sentences",
+        JSON.stringify(data)
+    );
+
+    queueProgressSync();
+
+}
+
+
+/* ================================================= */
+/* ========== LƯU HIGHLIGHT / UNDERLINE ============ */
+/* ================================================= */
+
+function getHighlights() {
+
+    return JSON.parse(
+        localStorage.getItem("lesson9Highlights")
+    ) || {};
+
+}
+
+
+function setHighlights(data) {
+
+    localStorage.setItem(
+        "lesson9Highlights",
+        JSON.stringify(data)
+    );
+
+    queueProgressSync();
+
+}
+
+
+function getUnderlines() {
+
+    return JSON.parse(
+        localStorage.getItem("lesson9Underlines")
+    ) || {};
+
+}
+
+
+function setUnderlines(data) {
+
+    localStorage.setItem(
+        "lesson9Underlines",
+        JSON.stringify(data)
+    );
+
+    queueProgressSync();
+
+}
+
+
+/* ========= LƯU ĐÁNH DẤU CỤM TỪ (NHIỀU TỪ) ========= */
+/* ================================================= */
+
+function getPhraseMarks() {
+
+    return JSON.parse(
+        localStorage.getItem("lesson9PhraseMarks")
+    ) || {};
+
+}
+
+
+function setPhraseMarks(data) {
+
+    localStorage.setItem(
+        "lesson9PhraseMarks",
+        JSON.stringify(data)
+    );
+
+    queueProgressSync();
+
+}
+
+
+function phraseKey(startId, endId) {
+
+    return startId + "__" + endId;
+
+}
+
+
+/* ================================================= */
+/* ============== TỪ ĐƯỢC GHIM (SIDEBAR) =========== */
+/* ================================================= */
+
+function getPinnedWords() {
+
+    return JSON.parse(
+        localStorage.getItem("lesson9PinnedWords")
+    ) || [];
+
+}
+
+
+function setPinnedWords(words) {
+
+    localStorage.setItem(
+        "lesson9PinnedWords",
+        JSON.stringify(words)
+    );
+
+    queueProgressSync();
+
+}
+
+function getPinnedPositions() {
+
+    return JSON.parse(
+        localStorage.getItem("lesson9PinnedPositions")
+    ) || {};
+
+}
+
+
+function setPinnedPositions(data) {
+
+    localStorage.setItem(
+        "lesson9PinnedPositions",
+        JSON.stringify(data)
+    );
+
+    queueProgressSync();
+
+}
+
+
+/* ================================================= */
+/* ================= GHI CHÚ ======================= */
+/* ================================================= */
+
+function getNotes() {
+
+    return JSON.parse(
+        localStorage.getItem("lesson9Notes")
+    ) || {};
+
+}
+
+
+function setNotes(data) {
+
+    localStorage.setItem(
+        "lesson9Notes",
+        JSON.stringify(data)
+    );
+
+    queueProgressSync();
+
+}
+
+
+/* ================================================= */
+/* ================= POPUP ========================== */
+/* ================================================= */
+
+function showWord(word, element = null) {
+
+    currentWord = word;
+
+    currentWordElement =
+        element && element.classList.contains("word")
+            ? element
+            : null;
+
+    const data = vocabulary[word];
+
+    if (!data) return;
+
+    document.getElementById("popupWord").textContent =
+        word;
+
+    document.getElementById("popupPinyin").textContent =
+        data.pinyin;
+
+    document.getElementById("popupHanViet").textContent =
+        data.hanviet;
+
+    document.getElementById("popupPOS").textContent =
+        data.pos;
+
+    document.getElementById("popupMeaning").textContent =
+        data.meaning;
+
+    document.getElementById("wordPopup")
+        .classList.add("show");
+
+    updateSaveButton();
+
+    updatePinButton();
+
+    updateUnderlineButton();
+
+    updateColorButtons();
+
+}
+
+
+/* ================================================= */
+/* ============ CLICK RA NGOÀI POPUP =============== */
+/* ================================================= */
+
+document.addEventListener(
+    "click",
+    function(event) {
+
+        const popup =
+            document.getElementById("wordPopup");
+
+        const clickedWord =
+            event.target.closest(".word");
+
+        if (
+            popup.classList.contains("show") &&
+            !popup.contains(event.target) &&
+            !clickedWord
+        ) {
+
+            closeWord();
+
+        }
+
+    }
+);
+
+
+function closeWord() {
+
+    document
+        .getElementById("wordPopup")
+        .classList.remove("show");
+
+}
+
+
+/* ================================================= */
+/* ================= LƯU / HỦY LƯU ================= */
+/* ================================================= */
+
+function saveCurrentWord() {
+
+    if (!currentWord) return;
+
+    let savedWords = getSavedWords();
+
+    const index =
+        savedWords.indexOf(currentWord);
+
+    if (index === -1) {
+
+        savedWords.push(currentWord);
+
+        setSavedWords(savedWords);
+
+        updateSaveButton();
+
+        updateSavedList();
+
+        updateStatus("learning");
+
+    } else {
+
+        savedWords.splice(index, 1);
+
+        setSavedWords(savedWords);
+
+        updateSaveButton();
+
+        updateSavedList();
+
+        updateStatus(
+            savedWords.length > 0
+                ? "learning"
+                : "new"
+        );
+
+    }
+
+}
+
+
+/* ================================================= */
+/* ============ UPDATE NÚT LƯU ===================== */
+/* ================================================= */
+
+function updateSaveButton() {
+
+    const button =
+        document.getElementById(
+            "saveWordButton"
+        );
+
+    if (!button || !currentWord) return;
+
+    const saved =
+        getSavedWords().includes(
+            currentWord
+        );
+
+    if (saved) {
+
+        button.textContent =
+            "✓ Đã lưu";
+
+        button.classList.add(
+            "saved"
+        );
+
+    } else {
+
+        button.textContent =
+            "♡ Lưu từ";
+
+        button.classList.remove(
+            "saved"
+        );
+
+    }
+
+}
+
+
+/* ================================================= */
+/* ============ NÚT HIỆN TỪ (GHIM SIDEBAR) ========= */
+/* ================================================= */
+
+function togglePinWord() {
+
+    if (!currentWord) return;
+
+    let pinned = getPinnedWords();
+    let positions = getPinnedPositions();
+
+    const index =
+        pinned.indexOf(currentWord);
+
+    if (index === -1) {
+
+        pinned.push(currentWord);
+
+        if (currentWordElement && currentWordElement.dataset.wordId) {
+            positions[currentWord] = currentWordElement.dataset.wordId;
+        }
+
+    } else {
+
+        pinned.splice(index, 1);
+        delete positions[currentWord];
+
+    }
+
+    setPinnedWords(pinned);
+    setPinnedPositions(positions);
+
+    updatePinButton();
+    renderPinnedSidebar();
+
+}
+
+
+function updatePinButton() {
+
+    const button =
+        document.getElementById(
+            "pinWordButton"
+        );
+
+    if (!button || !currentWord) return;
+
+    const pinned =
+        getPinnedWords().includes(
+            currentWord
+        );
+
+    if (pinned) {
+
+        button.textContent =
+            "📌 Đã hiện";
+
+        button.classList.add(
+            "pinned"
+        );
+
+    } else {
+
+        button.textContent =
+            "📌 Hiện từ";
+
+        button.classList.remove(
+            "pinned"
+        );
+
+    }
+
+}
+
+
+/* ================================================= */
+/* ========== RÚT GỌN TỪ LOẠI / NGHĨA ============== */
+/* ================================================= */
+
+function shortPOS(posStr) {
+
+    if (!posStr) return "?";
+
+    const first =
+        posStr.split("/")[0].trim();
+
+    const map = [
+    [["名词", "danh từ", "n"], "n"],
+    [["形容词", "tính từ", "a"], "a"],
+    [["副词", "phó từ", "adv"], "adv"],
+    [["连词", "liên từ", "conj"], "conj"],
+    [["介词", "giới từ", "prep"], "prep"],
+    [["代词", "đại từ", "pron"], "pron"],
+    [["助词", "trợ từ", "part"], "part"],
+    [["数量词", "lượng từ", "num"], "num"],
+    [["方位词", "từ phương vị", "suf"], "suf"],
+    [["趋向补语", "bổ ngữ", "compl"], "compl"],
+    [["动词短语", "短语", "cụm từ", "cụm động từ", "phr"], "phr"],
+    [["能愿动词", "động từ năng nguyện", "aux"], "aux"],
+    [["动词", "động từ", "v"], "v"],
+    [["cấu trúc", "ct"], "ct"]
+];
+
+    for (const [keywords, short] of map) {
+        for (const keyword of keywords) {
+            if (first.includes(keyword)) {
+                return short;
+            }
+        }
+    }
+
+    return first;
+
+}
+
+
+function shortMeaning(meaningStr) {
+
+    if (!meaningStr) return "";
+
+    return meaningStr
+        .split(/[,;]/)[0]
+        .trim();
+
+}
+
+
+/* ================================================= */
+/* ================ SAVED LIST ===================== */
+/* ================================================= */
+
+function toggleSavedList() {
+
+    const list =
+        document.getElementById(
+            "savedList"
+        );
+
+    const button =
+        document.getElementById(
+            "savedToggle"
+        );
+
+    list.classList.toggle("show");
+
+    button.classList.toggle("open");
+
+}
+
+
+function updateSavedList() {
+
+    const list =
+        document.getElementById(
+            "savedList"
+        );
+
+    const savedWords =
+        getSavedWords();
+
+    list.innerHTML = "";
+
+    if (savedWords.length === 0) {
+
+        list.innerHTML =
+            '<div class="no-saved">' +
+            'Chưa có từ nào được lưu.' +
+            '</div>';
+
+        return;
+
+    }
+
+
+    savedWords.forEach(function(word) {
+
+        const item =
+            document.createElement("div");
+
+        item.className =
+            "saved-word-item";
+
+
+        const main =
+            document.createElement("div");
+
+        main.className =
+            "saved-word-main";
+
+        main.textContent =
+            word;
+
+        main.onclick =
+            function() {
+
+                showWord(word);
+
+            };
+
+
+        const removeButton =
+            document.createElement("button");
+
+        removeButton.className =
+            "remove-saved";
+
+        removeButton.textContent =
+            "×";
+
+        removeButton.title =
+            "Xóa khỏi danh sách đã lưu";
+
+
+        removeButton.onclick =
+            function(event) {
+
+                event.stopPropagation();
+
+                removeSavedWord(word);
+
+            };
+
+
+        item.appendChild(main);
+
+        item.appendChild(removeButton);
+
+        list.appendChild(item);
+
+    });
+
+}
+
+
+/* ================================================= */
+/* ============== XÓA TỪ ĐÃ LƯU ==================== */
+/* ================================================= */
+
+function removeSavedWord(word) {
+
+    let savedWords =
+        getSavedWords();
+
+    savedWords =
+        savedWords.filter(
+            item => item !== word
+        );
+
+    setSavedWords(savedWords);
+
+    updateSavedList();
+
+    if (currentWord === word) {
+
+        updateSaveButton();
+
+    }
+
+    updateStatus(
+        savedWords.length > 0
+            ? "learning"
+            : "new"
+    );
+
+}
+
+
+/* ================================================= */
+/* ============ SIDEBAR TỪ ĐƯỢC GHIM =============== */
+/* ================================================= */
+
+function renderPinnedSidebar() {
+
+    const sidebar =
+        document.getElementById(
+            "readingSidebar"
+        );
+
+    if (!sidebar) return;
+
+    const pinned =
+        getPinnedWords();
+
+    sidebar.innerHTML = "";
+
+    if (pinned.length === 0) {
+
+        sidebar.innerHTML =
+            '<div class="pin-empty">' +
+            'Chưa có từ nào được ghim.' +
+            '</div>';
+
+        updateConnectorLines();
+
+        return;
+
+    }
+
+
+    pinned.forEach(function(word) {
+
+        const data =
+            vocabulary[word];
+
+        if (!data) return;
+
+
+        const card =
+            document.createElement("div");
+
+        card.className =
+            "pin-card";
+
+        card.dataset.word =
+            word;
+
+        card.onclick =
+            function() {
+
+                showWord(word);
+
+            };
+
+
+        const posShort =
+            shortPOS(data.pos);
+
+        const meaningShort =
+            shortMeaning(data.meaning);
+
+
+        const removeButton =
+            document.createElement("button");
+
+        removeButton.className =
+            "pin-remove";
+
+        removeButton.title =
+            "Bỏ ghim";
+
+        removeButton.textContent =
+            "×";
+
+        removeButton.onclick =
+            function(event) {
+
+                event.stopPropagation();
+
+                removePinnedWord(word);
+
+            };
+
+
+        const pinyinSpan =
+            document.createElement("span");
+
+        pinyinSpan.className =
+            "pin-pinyin";
+
+        pinyinSpan.textContent =
+            "/" + data.pinyin + "/";
+
+
+        const posSpan =
+            document.createElement("span");
+
+        posSpan.className =
+            "pin-pos";
+
+        posSpan.textContent =
+            "(" + posShort + ")";
+
+
+        const meaningSpan =
+            document.createElement("span");
+
+        meaningSpan.className =
+            "pin-meaning";
+
+        meaningSpan.textContent =
+            meaningShort;
+
+
+        card.appendChild(removeButton);
+
+        card.appendChild(pinyinSpan);
+
+        card.appendChild(
+            document.createTextNode(" ")
+        );
+
+        card.appendChild(posSpan);
+
+        card.appendChild(
+            document.createTextNode(" ")
+        );
+
+        card.appendChild(meaningSpan);
+
+
+        sidebar.appendChild(card);
+
+    });
+
+
+    updateConnectorLines();
+
+}
+
+
+function removePinnedWord(word) {
+
+    let pinned =
+        getPinnedWords().filter(
+            w => w !== word
+        );
+
+    setPinnedWords(pinned);
+
+    if (currentWord === word) {
+
+        updatePinButton();
+
+    }
+
+    renderPinnedSidebar();
+
+}
+
+
+/* ================================================= */
+/* ========== ĐƯỜNG NỐI TỪ ↔ THẺ GHIM ============== */
+/* ================================================= */
+
+function updateConnectorLines() {
+
+    const container = document.getElementById("readingLayout");
+    const svg = document.getElementById("connectorSvg");
+    const sidebar = document.getElementById("readingSidebar");
+
+    if (!container || !svg || !sidebar) return;
+
+    const containerRect = container.getBoundingClientRect();
+    const w = container.clientWidth;
+    const h = container.clientHeight;
+
+    svg.setAttribute("width", w);
+    svg.setAttribute("height", h);
+    svg.setAttribute("viewBox", "0 0 " + w + " " + h);
+    svg.innerHTML = "";
+
+    const pinned = getPinnedWords();
+    const positions = getPinnedPositions();
+
+    if (!pinned.length) return;
+
+    /* =====================================================
+       1. Lấy đúng vị trí của từng từ được ghim
+       ===================================================== */
+
+    const entries = [];
+
+    document
+        .querySelectorAll("#reading .reading-text")
+        .forEach(function(textBlock) {
+
+            textBlock.querySelectorAll(".word").forEach(function(el) {
+
+                const r = el.getBoundingClientRect();
+
+                entries.push({
+                    el: el,
+                    word: el.dataset.word,
+                    id: el.dataset.wordId,
+                    textBlock: textBlock,
+                    rect: r,
+                    centerX: r.left + r.width / 2,
+                    centerY: r.top + r.height / 2
+                });
+
+            });
+        });
+
+    const items = pinned.map(function(word) {
+
+        const card = document.querySelector(
+            '.pin-card[data-word="' + CSS.escape(word) + '"]'
+        );
+
+        if (!card) return null;
+
+        const wantedId = positions[word];
+
+        let source = wantedId
+            ? entries.find(function(entry) {
+                return entry.id === wantedId;
+            })
+            : null;
+
+        /* Từ được ghim từ phiên bản cũ chưa có ID riêng. */
+        if (!source) {
+            source = entries.find(function(entry) {
+                return entry.word === word;
+            });
+        }
+
+        if (!source) return null;
+
+        return {
+            word: word,
+            card: card,
+            source: source
+        };
+
+    }).filter(Boolean);
+
+    if (!items.length) return;
+
+    /* =====================================================
+       2. Xác định các dòng THỰC TẾ trong từng đoạn text
+       ===================================================== */
+
+    function getLines(textBlock) {
+
+        const lines = [];
+
+        textBlock.querySelectorAll(".word").forEach(function(el) {
+
+            const r = el.getBoundingClientRect();
+            const cy = r.top + r.height / 2;
+
+            let line = lines.find(function(existing) {
+                return Math.abs(existing.centerY - cy) < 10;
+            });
+
+            if (!line) {
+                line = {
+                    top: r.top,
+                    bottom: r.bottom,
+                    centerY: cy,
+                    words: []
+                };
+                lines.push(line);
+            }
+
+            line.words.push(el);
+            line.top = Math.min(line.top, r.top);
+            line.bottom = Math.max(line.bottom, r.bottom);
+            line.centerY =
+                (line.top + line.bottom) / 2;
+        });
+
+        lines.sort(function(a, b) {
+            return a.centerY - b.centerY;
+        });
+
+        return lines;
+    }
+
+    const lineCache = new Map();
+
+    items.forEach(function(item) {
+
+        if (!lineCache.has(item.source.textBlock)) {
+            lineCache.set(
+                item.source.textBlock,
+                getLines(item.source.textBlock)
+            );
+        }
+
+        const lines = lineCache.get(item.source.textBlock);
+
+        item.line = lines.reduce(function(best, line) {
+            if (!best) return line;
+
+            return Math.abs(line.centerY - item.source.centerY) <
+                   Math.abs(best.centerY - item.source.centerY)
+                ? line
+                : best;
+        }, null);
+    });
+
+    /* =====================================================
+       3. Đặt note đúng NGANG với dòng chứa từ.
+
+       Sidebar phải cao bằng reading-layout. Không dùng
+       sidebar.clientHeight để clamp vì trước đây sidebar
+       chỉ cao bằng nội dung card -> tất cả card bị đẩy lên đầu.
+       ===================================================== */
+
+    const sidebarRect = sidebar.getBoundingClientRect();
+
+    const groups = [];
+
+    items.forEach(function(item) {
+
+        let group = groups.find(function(g) {
+            return g.line === item.line;
+        });
+
+        if (!group) {
+            group = {
+                line: item.line,
+                items: []
+            };
+            groups.push(group);
+        }
+
+        group.items.push(item);
+    });
+
+    /* =====================================================
+       3. Xếp note theo đúng thứ tự đọc và tuyệt đối không chồng.
+
+       - Nhóm cùng một dòng: trái -> phải.
+       - Note trong cùng dòng: xếp từ trên -> dưới theo thứ tự
+         của từ từ trái sang phải.
+       - Các dòng khác nhau: nhóm phía trên luôn đứng trước nhóm
+         phía dưới.
+       - Nếu hai nhóm có chiều cao lớn, nhóm phía dưới sẽ được
+         đẩy xuống vừa đủ để không đè lên nhóm phía trên.
+       ===================================================== */
+
+    groups.sort(function(a, b) {
+        return a.line.centerY - b.line.centerY;
+    });
+
+    const groupGap = 12;
+    const cardGap = 10;
+    const layoutHeight = container.clientHeight;
+
+    /* Tính chiều cao thực tế của từng nhóm. */
+    groups.forEach(function(group) {
+
+        group.items.sort(function(a, b) {
+            return a.source.centerX - b.source.centerX;
+        });
+
+        group.height =
+            group.items.reduce(function(sum, item) {
+                return sum + item.card.offsetHeight;
+            }, 0) +
+            cardGap * Math.max(0, group.items.length - 1);
+
+        group.desiredTop =
+            group.line.centerY - sidebarRect.top -
+            group.height / 2;
+    });
+
+    /*
+     * Đặt từ trên xuống dưới. Mỗi nhóm cố bám sát dòng của nó,
+     * nhưng không bao giờ được chồng lên nhóm trước.
+     */
+    let previousBottom = 4;
+
+    groups.forEach(function(group) {
+
+        let top = Math.max(
+            4,
+            group.desiredTop
+        );
+
+        if (top < previousBottom + groupGap) {
+            top = previousBottom + groupGap;
+        }
+
+        group.top = top;
+        group.bottom = top + group.height;
+
+        previousBottom = group.bottom;
+    });
+
+    /*
+     * Nếu đẩy xuống quá thấp, dịch cả cụm lên một lượng vừa đủ,
+     * nhưng vẫn giữ khoảng cách giữa các note.
+     */
+    const bottomLimit = Math.max(4, layoutHeight - 4);
+    const overflow =
+        previousBottom - bottomLimit;
+
+    if (overflow > 0) {
+
+        groups.forEach(function(group) {
+            group.top -= overflow;
+        });
+
+        /* Không để note đầu tiên vượt khỏi vùng layout. */
+        const firstTop =
+            groups.length
+                ? groups[0].top
+                : 4;
+
+        if (firstTop < 4) {
+            const correction = 4 - firstTop;
+
+            groups.forEach(function(group) {
+                group.top += correction;
+            });
+        }
+    }
+
+    groups.forEach(function(group) {
+
+        let top = group.top;
+
+        group.items.forEach(function(item) {
+
+            item.card.style.position = "absolute";
+            item.card.style.left = "0";
+            item.card.style.right = "0";
+            item.card.style.marginBottom = "0";
+            item.card.style.top = top + "px";
+
+            const cardRect =
+                item.card.getBoundingClientRect();
+
+            item.cardCenterY =
+                cardRect.top + cardRect.height / 2;
+
+            top += cardRect.height + cardGap;
+        });
+    });
+
+    /* =====================================================
+       4. Vẽ đường đúng theo nét đỏ trong ảnh:
+
+          từ
+           │  <- chỉ đi dọc từ mép trên/dưới của từ
+           └──────────────  <- đi ngang NGAY TRONG KHOẢNG
+                              TRỐNG giữa hai dòng
+                         │
+                         └──── note
+
+       Tuyệt đối không chọn một Y nằm giữa thân dòng.
+       ===================================================== */
+
+    const textBlocks = Array.from(
+        document.querySelectorAll("#reading .reading-text")
+    );
+
+    items.forEach(function(item) {
+
+        const source = item.source;
+        const line = item.line;
+
+        if (!line) return;
+
+        const wordRect = source.el.getBoundingClientRect();
+        const textRect = source.textBlock.getBoundingClientRect();
+        const lines = lineCache.get(source.textBlock) || [];
+        const index = lines.indexOf(line);
+
+        const nextLine = lines[index + 1] || null;
+        const prevLine = lines[index - 1] || null;
+
+        const nextGap = nextLine
+            ? nextLine.top - line.bottom
+            : -1;
+
+        const prevGap = prevLine
+            ? line.top - prevLine.bottom
+            : -1;
+
+        /*
+         * Ưu tiên khoảng trống ngay BÊN DƯỚI dòng.
+         * Nếu không có (dòng cuối), dùng khoảng trống bên trên.
+         * RouteY luôn nằm giữa hai dòng, không bao giờ nằm
+         * trong vùng chữ hoặc vùng audio.
+         */
+        let routeYViewport;
+        let goDown;
+
+        if (nextLine && nextGap > 2) {
+            goDown = true;
+            routeYViewport =
+                line.bottom + nextGap / 2;
+        } else if (prevLine && prevGap > 2) {
+            goDown = false;
+            routeYViewport =
+                line.top - prevGap / 2;
+        } else {
+            /* Trường hợp cực hiếm: hai dòng sát nhau. */
+            goDown = true;
+            routeYViewport = line.bottom + 2;
+        }
+
+        /* Không cho route thoát khỏi chính textBlock. */
+        routeYViewport = Math.max(
+            textRect.top + 1,
+            Math.min(
+                routeYViewport,
+                textRect.bottom - 1
+            )
+        );
+
+        const sourceX =
+            source.centerX - containerRect.left;
+
+        const sourceY = goDown
+            ? wordRect.bottom - containerRect.top
+            : wordRect.top - containerRect.top;
+
+        const routeY =
+            routeYViewport - containerRect.top;
+
+        /*
+         * Đường ngang chỉ chạy trong phần text.
+         * Sau khi tới mép phải text, mới đi vào vùng divider/sidebar.
+         */
+        const textRight =
+            textRect.right - containerRect.left;
+
+        /* Điểm dọc nằm trong khoảng divider, không đè text. */
+        const verticalX =
+            textRight + 8;
+
+        const cardRect = item.card.getBoundingClientRect();
+
+        const cardLeft =
+            cardRect.left - containerRect.left;
+
+        const cardCenterY =
+            item.cardCenterY - containerRect.top;
+
+        /*
+         * Route chính:
+         * 1. center-top/bottom của chữ
+         * 2. xuống/lên đúng vào khe giữa dòng
+         * 3. ngang tới divider
+         * 4. dọc tới đúng tâm note
+         * 5. ngang vào note
+         */
+        const points = [
+            sourceX + "," + sourceY,
+            sourceX + "," + routeY,
+            verticalX + "," + routeY,
+            verticalX + "," + cardCenterY,
+            cardLeft + "," + cardCenterY
+        ].join(" ");
+
+        const polyline = document.createElementNS(
+            "http://www.w3.org/2000/svg",
+            "polyline"
+        );
+
+        polyline.setAttribute("points", points);
+        polyline.setAttribute("fill", "none");
+        polyline.setAttribute("stroke", "#b8cdbf");
+        polyline.setAttribute("stroke-width", "1.2");
+        polyline.setAttribute("stroke-dasharray", "4,4");
+        polyline.setAttribute("stroke-linecap", "round");
+        polyline.setAttribute("stroke-linejoin", "round");
+
+        svg.appendChild(polyline);
+    });
+}
+
+
+/* ================================================= */
+/* ================= HIGHLIGHT ====================== */
+/* ================================================= */
+
+function toggleHighlight(color) {
+
+    if (!currentWord || !currentWordElement) return;
+
+    const elementId = currentWordElement.dataset.wordId;
+    if (!elementId) return;
+
+    const oldColor = currentHighlight[elementId];
+
+    if (oldColor === color) {
+
+        currentWordElement.classList.remove(
+            "highlight-green",
+            "highlight-blue",
+            "highlight-gray",
+            "highlight-yellow",
+            "highlight-orange",
+            "highlight-purple"
+        );
+
+        currentHighlight[elementId] = null;
+
+        setHighlights(currentHighlight);
+        updateColorButtons();
+        return;
+    }
+
+    currentWordElement.classList.remove(
+        "highlight-green",
+        "highlight-blue",
+        "highlight-gray",
+        "highlight-yellow",
+        "highlight-orange",
+        "highlight-purple"
+    );
+
+    currentWordElement.classList.add(
+        "highlight-" + color
+    );
+
+    currentHighlight[elementId] = color;
+
+    setHighlights(currentHighlight);
+    updateColorButtons();
+}
+
+/* ================================================= */
+/* ============ UPDATE 6 MÀU ======================= */
+/* ================================================= */
+
+function updateColorButtons() {
+
+    document
+        .querySelectorAll(".color-btn")
+        .forEach(function(button) {
+
+            button.classList.remove(
+                "active-color"
+            );
+
+        });
+
+
+    const color =
+        currentWordElement
+            ? currentHighlight[currentWordElement.dataset.wordId]
+            : null;
+
+    if (!color) return;
+
+
+    const button =
+        document.querySelector(
+            ".color-btn." + color
+        );
+
+    if (button) {
+
+        button.classList.add(
+            "active-color"
+        );
+
+    }
+
+}
+
+
+/* ================================================= */
+/* ================= UNDERLINE ====================== */
+/* ================================================= */
+
+function toggleUnderline() {
+
+    if (!currentWord || !currentWordElement) return;
+
+    const elementId = currentWordElement.dataset.wordId;
+    if (!elementId) return;
+
+    const alreadyUnderlined =
+        currentUnderline[elementId];
+
+    if (alreadyUnderlined) {
+
+        currentWordElement.style.textDecoration = "none";
+        currentWordElement.style.textDecorationThickness = "";
+        currentWordElement.style.textUnderlineOffset = "";
+
+    } else {
+
+        currentWordElement.style.textDecoration = "underline";
+        currentWordElement.style.textDecorationThickness = "1px";
+        currentWordElement.style.textUnderlineOffset = "5px";
+    }
+
+    currentUnderline[elementId] = !alreadyUnderlined;
+
+    setUnderlines(currentUnderline);
+    updateUnderlineButton();
+}
+
+function updateUnderlineButton() {
+
+    const button =
+        document.getElementById("underlineButton");
+
+    if (!button) return;
+
+    const isUnderlined =
+        currentWordElement
+            ? !!currentUnderline[currentWordElement.dataset.wordId]
+            : false;
+
+    if (isUnderlined) {
+        button.classList.add("active");
+    } else {
+        button.classList.remove("active");
+    }
+}
+
+/* ================================================= */
+/* ========== ÁP DỤNG LẠI HIGHLIGHT/UNDERLINE ====== */
+/* ================================================= */
+
+function applySavedHighlights() {
+
+    const highlights = getHighlights();
+
+    document
+        .querySelectorAll("#reading .reading-main .word")
+        .forEach(function(el) {
+
+            const id = el.dataset.wordId;
+            if (!id) return;
+
+            const color = highlights[id];
+            if (!color) return;
+
+            el.classList.add("highlight-" + color);
+        });
+
+    const underlines = getUnderlines();
+
+    document
+        .querySelectorAll("#reading .reading-main .word")
+        .forEach(function(el) {
+
+            const id = el.dataset.wordId;
+            if (!id || !underlines[id]) return;
+
+            el.style.textDecoration = "underline";
+            el.style.textDecorationThickness = "1px";
+            el.style.textUnderlineOffset = "5px";
+        });
+}
+
+/* ========= ĐÁNH DẤU CỤM TỪ (BÔI ĐEN NHIỀU TỪ) ===== */
+/* ================================================= */
+
+/*
+ * Tìm node con cấp 1 (trực tiếp) của "container" chứa "node".
+ * Vì .reading-text chỉ có 1 cấp con (các .word và các text node
+ * xen kẽ), hàm này giúp quy mọi điểm chọn (dù đang ở trong 1 .word
+ * hay ở 1 text node thuần) về đúng "ô" cấp 1 tương ứng.
+ */
+function getTopLevelNode(node, container) {
+
+    let current = node;
+
+    while (current && current.parentNode !== container) {
+        current = current.parentNode;
+    }
+
+    return current;
+}
+
+
+/*
+ * Phân tích vùng bôi đen hiện tại (window selection) để xác định:
+ * - Đang SỬA một cụm đã đánh dấu sẵn (chọn lại đè lên 1 .phrase-mark), hoặc
+ * - Đang TẠO MỚI một cụm từ (kéo chọn qua từ 2 từ trở lên).
+ * Trả về null nếu vùng chọn không hợp lệ để tạo/sửa cụm từ.
+ */
+function analyzeSelectionForPhrase(selection) {
+
+    if (!selection || selection.isCollapsed) return null;
+    if (selection.rangeCount === 0) return null;
+
+    const range = selection.getRangeAt(0);
+
+    const startNode =
+        range.startContainer.nodeType === 3
+            ? range.startContainer.parentElement
+            : range.startContainer;
+
+    const endNode =
+        range.endContainer.nodeType === 3
+            ? range.endContainer.parentElement
+            : range.endContainer;
+
+    if (!startNode || !endNode) return null;
+
+    /* Trường hợp SỬA: điểm đầu và điểm cuối cùng nằm trong 1 cụm đã có sẵn */
+    const startPhrase = startNode.closest(".phrase-mark");
+    const endPhrase = endNode.closest(".phrase-mark");
+
+    if (startPhrase && startPhrase === endPhrase) {
+
+        return {
+            mode: "edit",
+            element: startPhrase,
+            startWordId: startPhrase.dataset.startWord,
+            endWordId: startPhrase.dataset.endWord
+        };
+    }
+
+    /* Trường hợp TẠO MỚI: phải nằm trong cùng 1 khối .reading-text */
+    const container = startNode.closest(".reading-text[data-raw-text]");
+    if (!container) return null;
+
+    const endContainer = endNode.closest(".reading-text[data-raw-text]");
+    if (endContainer !== container) return null;
+
+    const topChildren = Array.from(container.childNodes);
+
+    const startTop = getTopLevelNode(range.startContainer, container);
+    const endTop = getTopLevelNode(range.endContainer, container);
+
+    let startIndex = topChildren.indexOf(startTop);
+    let endIndex = topChildren.indexOf(endTop);
+
+    if (startIndex === -1 || endIndex === -1) return null;
+
+    if (startIndex > endIndex) {
+        const swap = startIndex;
+        startIndex = endIndex;
+        endIndex = swap;
+    }
+
+    let slice = topChildren.slice(startIndex, endIndex + 1);
+
+    /* Để đơn giản, không cho vùng chọn mới đè lên cụm đã đánh dấu sẵn.
+       Muốn mở rộng 1 cụm đã có, hãy xóa đánh dấu cũ rồi chọn lại. */
+    const touchesExistingPhrase =
+        slice.some(function(n) {
+            return n.nodeType === 1 && n.classList.contains("phrase-mark");
+        });
+
+    if (touchesExistingPhrase) return null;
+
+    const isWordNode = function(n) {
+        return n.nodeType === 1 && n.classList.contains("word");
+    };
+
+    const firstWordPos = slice.findIndex(isWordNode);
+
+    let lastWordPos = -1;
+    for (let i = slice.length - 1; i >= 0; i--) {
+        if (isWordNode(slice[i])) {
+            lastWordPos = i;
+            break;
+        }
+    }
+
+    /* Cần ít nhất 2 từ khác nhau mới coi là "cụm từ";
+       chỉ 1 từ thì dùng cơ chế bấm-từng-từ có sẵn là đủ. */
+    if (
+        firstWordPos === -1 ||
+        lastWordPos === -1 ||
+        firstWordPos === lastWordPos
+    ) {
+        return null;
+    }
+
+    slice = slice.slice(firstWordPos, lastWordPos + 1);
+
+    return {
+        mode: "create",
+        container: container,
+        nodes: slice,
+        startWordId: slice[0].dataset.wordId,
+        endWordId: slice[slice.length - 1].dataset.wordId
+    };
+}
+
+
+/*
+ * Bọc 1 dãy node liền kề (đã xác định sẵn) vào 1 <span class="phrase-mark">.
+ * Đây là điểm mấu chốt giúp highlight/gạch chân trải liền mạch:
+ * cả cụm dùng CHUNG 1 khối duy nhất thay vì mỗi từ 1 khối riêng.
+ */
+function wrapPhraseNodes(info) {
+
+    const wrapper = document.createElement("span");
+
+    wrapper.className = "phrase-mark";
+    wrapper.dataset.startWord = info.startWordId;
+    wrapper.dataset.endWord = info.endWordId;
+
+    info.container.insertBefore(wrapper, info.nodes[0]);
+
+    info.nodes.forEach(function(node) {
+        wrapper.appendChild(node);
+    });
+
+    return wrapper;
+}
+
+
+/*
+ * Gỡ 1 cụm .phrase-mark ra, trả các .word/text node bên trong
+ * về lại đúng vị trí cũ trong .reading-text (không mất chức năng
+ * bấm xem nghĩa của từng từ bên trong).
+ */
+function unwrapPhraseElement(wrapper) {
+
+    if (!wrapper || !wrapper.parentNode) return;
+
+    const parent = wrapper.parentNode;
+
+    while (wrapper.firstChild) {
+        parent.insertBefore(wrapper.firstChild, wrapper);
+    }
+
+    parent.removeChild(wrapper);
+}
+
+
+/*
+ * Đảm bảo đang có 1 phần tử .phrase-mark thật sự để áp màu/gạch chân lên:
+ * nếu đang ở chế độ "create" thì tạo mới (bọc DOM lại);
+ * nếu đang "edit" thì dùng lại phần tử đã có.
+ */
+function ensurePhraseWrapper() {
+
+    if (!currentPhraseInfo) return null;
+
+    if (currentPhraseInfo.mode === "edit") {
+
+        return {
+            element: currentPhraseInfo.element,
+            key: phraseKey(
+                currentPhraseInfo.startWordId,
+                currentPhraseInfo.endWordId
+            )
+        };
+    }
+
+    const wrapper = wrapPhraseNodes(currentPhraseInfo);
+
+    const key = phraseKey(
+        currentPhraseInfo.startWordId,
+        currentPhraseInfo.endWordId
+    );
+
+    currentPhraseInfo = {
+        mode: "edit",
+        element: wrapper,
+        startWordId: currentPhraseInfo.startWordId,
+        endWordId: currentPhraseInfo.endWordId
+    };
+
+    return { element: wrapper, key: key };
+}
+
+
+/* Nếu cụm không còn màu và cũng không còn gạch chân thì gỡ hẳn ra. */
+function cleanupPhraseRecord(marks, target) {
+
+    const record = marks[target.key];
+
+    if (record && !record.color && !record.underline) {
+
+        delete marks[target.key];
+
+        unwrapPhraseElement(target.element);
+
+        hidePhraseToolbar();
+    }
+}
+
+
+function applyPhraseColor(color) {
+
+    const target = ensurePhraseWrapper();
+    if (!target) return;
+
+    const marks = getPhraseMarks();
+    const record = marks[target.key] || {};
+
+    target.element.classList.remove(
+        "highlight-green",
+        "highlight-blue",
+        "highlight-gray",
+        "highlight-yellow",
+        "highlight-orange",
+        "highlight-purple"
+    );
+
+    if (record.color === color) {
+
+        record.color = null;
+
+    } else {
+
+        record.color = color;
+        target.element.classList.add("highlight-" + color);
+    }
+
+    marks[target.key] = record;
+    cleanupPhraseRecord(marks, target);
+    setPhraseMarks(marks);
+
+    updatePhraseToolbarState();
+}
+
+
+function applyPhraseUnderline() {
+
+    const target = ensurePhraseWrapper();
+    if (!target) return;
+
+    const marks = getPhraseMarks();
+    const record = marks[target.key] || {};
+
+    const isUnderlined = !!record.underline;
+
+    if (isUnderlined) {
+
+        target.element.style.textDecoration = "none";
+        record.underline = false;
+
+    } else {
+
+        target.element.style.textDecoration = "underline";
+        target.element.style.textDecorationColor = "#e53935";
+        target.element.style.textDecorationThickness = "1px";
+        target.element.style.textUnderlineOffset = "5px";
+        record.underline = true;
+    }
+
+    marks[target.key] = record;
+    cleanupPhraseRecord(marks, target);
+    setPhraseMarks(marks);
+
+    updatePhraseToolbarState();
+}
+
+
+function removeCurrentPhrase() {
+
+    if (!currentPhraseInfo || currentPhraseInfo.mode !== "edit") {
+        hidePhraseToolbar();
+        return;
+    }
+
+    const key = phraseKey(
+        currentPhraseInfo.startWordId,
+        currentPhraseInfo.endWordId
+    );
+
+    const marks = getPhraseMarks();
+    delete marks[key];
+    setPhraseMarks(marks);
+
+    unwrapPhraseElement(currentPhraseInfo.element);
+
+    hidePhraseToolbar();
+}
+
+
+function updatePhraseToolbarState() {
+
+    document
+        .querySelectorAll("#phraseToolbar .color-btn")
+        .forEach(function(btn) {
+            btn.classList.remove("active-color");
+        });
+
+    const underlineBtn =
+        document.getElementById("phraseUnderlineButton");
+
+    if (underlineBtn) underlineBtn.classList.remove("active");
+
+    if (!currentPhraseInfo || currentPhraseInfo.mode !== "edit") return;
+
+    const key = phraseKey(
+        currentPhraseInfo.startWordId,
+        currentPhraseInfo.endWordId
+    );
+
+    const record = getPhraseMarks()[key];
+    if (!record) return;
+
+    if (record.color) {
+
+        const btn = document.querySelector(
+            "#phraseToolbar .color-btn." + record.color
+        );
+
+        if (btn) btn.classList.add("active-color");
+    }
+
+    if (record.underline && underlineBtn) {
+        underlineBtn.classList.add("active");
+    }
+}
+
+
+function showPhraseToolbar(rect) {
+
+    const toolbar = document.getElementById("phraseToolbar");
+    if (!toolbar || !rect) return;
+
+    toolbar.classList.add("show");
+
+    const toolbarRect = toolbar.getBoundingClientRect();
+    const margin = 8;
+
+    let left = rect.left + rect.width / 2 - toolbarRect.width / 2;
+    let top = rect.top - toolbarRect.height - 10;
+
+    left = Math.max(
+        margin,
+        Math.min(left, window.innerWidth - toolbarRect.width - margin)
+    );
+
+    if (top < margin) {
+        top = rect.bottom + 10;
+    }
+
+    toolbar.style.left = left + "px";
+    toolbar.style.top = top + "px";
+
+    updatePhraseToolbarState();
+}
+
+
+function hidePhraseToolbar() {
+
+    const toolbar = document.getElementById("phraseToolbar");
+    if (toolbar) toolbar.classList.remove("show");
+
+    currentPhraseInfo = null;
+}
+
+
+/* Bắt sự kiện bôi đen (chuột lẫn cảm ứng) trong bài đọc */
+function handleReadingSelectionEnd() {
+
+    setTimeout(function() {
+
+        const selection = window.getSelection();
+
+        if (!selection || selection.isCollapsed) return;
+
+        const info = analyzeSelectionForPhrase(selection);
+        if (!info) return;
+
+        currentPhraseInfo = info;
+
+        const range = selection.rangeCount
+            ? selection.getRangeAt(0)
+            : null;
+
+        const rect =
+            info.mode === "edit"
+                ? info.element.getBoundingClientRect()
+                : (range ? range.getBoundingClientRect() : null);
+
+        showPhraseToolbar(rect);
+
+    }, 0);
+}
+
+document.addEventListener("mouseup", handleReadingSelectionEnd);
+document.addEventListener("touchend", handleReadingSelectionEnd);
+
+/* Bấm ra ngoài toolbar (và ngoài cụm đang sửa) thì ẩn toolbar đi */
+document.addEventListener("click", function(event) {
+
+    const toolbar = document.getElementById("phraseToolbar");
+    if (!toolbar || !toolbar.classList.contains("show")) return;
+
+    const clickedInsideToolbar = toolbar.contains(event.target);
+
+    const clickedInsideCurrentPhrase =
+        currentPhraseInfo &&
+        currentPhraseInfo.mode === "edit" &&
+        currentPhraseInfo.element.contains(event.target);
+
+    if (!clickedInsideToolbar && !clickedInsideCurrentPhrase) {
+        hidePhraseToolbar();
+    }
+});
+
+
+/* ================================================= */
+/* ===== ÁP LẠI CÁC CỤM TỪ ĐÃ ĐÁNH DẤU KHI TẢI TRANG = */
+/* ================================================= */
+
+function applySavedPhraseMarks() {
+
+    const marks = getPhraseMarks();
+
+    Object.keys(marks).forEach(function(key) {
+
+        const record = marks[key];
+        if (!record || (!record.color && !record.underline)) return;
+
+        const parts = key.split("__");
+        const startId = parts[0];
+        const endId = parts[1];
+
+        const startEl = document.querySelector(
+            '#reading .reading-main .word[data-word-id="' + startId + '"]'
+        );
+
+        const endEl = document.querySelector(
+            '#reading .reading-main .word[data-word-id="' + endId + '"]'
+        );
+
+        if (!startEl || !endEl || startEl === endEl) return;
+
+        /* Tránh bọc lại 2 lần nếu hàm này lỡ được gọi nhiều lần */
+        if (startEl.closest(".phrase-mark") || endEl.closest(".phrase-mark")) {
+            return;
+        }
+
+        const container = startEl.closest(".reading-text[data-raw-text]");
+        if (!container) return;
+        if (endEl.closest(".reading-text[data-raw-text]") !== container) return;
+
+        const topChildren = Array.from(container.childNodes);
+
+        const startIndex = topChildren.indexOf(startEl);
+        const endIndex = topChildren.indexOf(endEl);
+
+        if (startIndex === -1 || endIndex === -1 || startIndex > endIndex) return;
+
+        const nodes = topChildren.slice(startIndex, endIndex + 1);
+
+        const wrapper = wrapPhraseNodes({
+            container: container,
+            nodes: nodes,
+            startWordId: startId,
+            endWordId: endId
+        });
+
+        if (record.color) {
+            wrapper.classList.add("highlight-" + record.color);
+        }
+
+        if (record.underline) {
+            wrapper.style.textDecoration = "underline";
+            wrapper.style.textDecorationColor = "#e53935";
+            wrapper.style.textDecorationThickness = "1px";
+            wrapper.style.textUnderlineOffset = "5px";
+        }
+    });
+}
+
+
+/* ================================================= */
+/* ================= TAB ============================ */
+/* ================================================= */
+
+function openTab(tabName, button) {
+
+    document
+        .querySelectorAll(".tab-content")
+        .forEach(function(content) {
+
+            content.classList.remove(
+                "active"
+            );
+
+        });
+
+
+    document
+        .querySelectorAll(".tab-button")
+        .forEach(function(btn) {
+
+            btn.classList.remove(
+                "active"
+            );
+
+        });
+
+
+    document
+        .getElementById(tabName)
+        .classList.add("active");
+
+
+    button.classList.add("active");
+
+
+    updateStatus("learning");
+
+
+    if (tabName === "study") {
+
+        prepareStudy();
+
+    }
+
+
+    if (tabName === "reading") {
+
+        setTimeout(
+            updateConnectorLines,
+            50
+        );
+
+    }
+
+}
+
+
+/* ================================================= */
+/* ================= AUDIO (2 PLAYER) =============== */
+/* ================================================= */
+
+const audioPlayers = {};
+
+function formatTime(seconds) {
+
+    if (isNaN(seconds) || seconds < 0) return "0:00";
+
+    const m = Math.floor(seconds / 60);
+    const s = Math.floor(seconds % 60);
+
+    return m + ":" + (s < 10 ? "0" : "") + s;
+
+}
+
+function setupAudioPlayer(id) {
+
+    const audioEl =
+        document.getElementById("audio" + id);
+
+    const vinylEl =
+        document.getElementById("vinyl" + id);
+
+    const audioButtonEl =
+        document.getElementById("audioButton" + id);
+
+    const progressBarEl =
+        document.getElementById("audioProgress" + id);
+
+    const currentTimeEl =
+        document.getElementById("audioCurrentTime" + id);
+
+    const durationEl =
+        document.getElementById("audioDuration" + id);
+
+
+    audioPlayers[id] = {
+        audioEl: audioEl,
+        vinylEl: vinylEl,
+        audioButtonEl: audioButtonEl,
+        progressBarEl: progressBarEl
+    };
+
+
+    audioEl.addEventListener(
+        "loadedmetadata",
+        function() {
+
+            progressBarEl.max =
+                audioEl.duration;
+
+            durationEl.textContent =
+                formatTime(audioEl.duration);
+
+        }
+    );
+
+
+    audioEl.addEventListener(
+        "timeupdate",
+        function() {
+
+            progressBarEl.value =
+                audioEl.currentTime;
+
+            currentTimeEl.textContent =
+                formatTime(audioEl.currentTime);
+
+        }
+    );
+
+
+    progressBarEl.addEventListener(
+        "input",
+        function() {
+
+            audioEl.currentTime =
+                progressBarEl.value;
+
+        }
+    );
+
+
+    audioEl.addEventListener(
+        "play",
+        function() {
+
+            vinylEl.classList.add(
+                "playing"
+            );
+
+            audioButtonEl.textContent =
+                "⏸ Tạm dừng";
+
+        }
+    );
+
+
+    audioEl.addEventListener(
+        "pause",
+        function() {
+
+            vinylEl.classList.remove(
+                "playing"
+            );
+
+            audioButtonEl.textContent =
+                "▶ Phát bài nghe";
+
+        }
+    );
+
+
+    audioEl.addEventListener(
+        "ended",
+        function() {
+
+            vinylEl.classList.remove(
+                "playing"
+            );
+
+            audioButtonEl.textContent =
+                "▶ Phát bài nghe";
+
+            progressBarEl.value = 0;
+
+            currentTimeEl.textContent =
+                "0:00";
+
+        }
+    );
+
+}
+
+
+function pauseOtherAudios(exceptId) {
+
+    Object.keys(audioPlayers).forEach(
+        function(id) {
+
+            if (id !== exceptId) {
+
+                const player =
+                    audioPlayers[id];
+
+                if (!player.audioEl.paused) {
+
+                    player.audioEl.pause();
+
+                }
+
+            }
+
+        }
+    );
+
+}
+
+
+function toggleAudio(id) {
+
+    const player =
+        audioPlayers[id];
+
+    if (!player) return;
+
+    const audioEl =
+        player.audioEl;
+
+    const vinylEl =
+        player.vinylEl;
+
+    const audioButtonEl =
+        player.audioButtonEl;
+
+
+    if (audioEl.paused) {
+
+        pauseOtherAudios(id);
+
+        const playPromise =
+            audioEl.play();
+
+        if (playPromise !== undefined) {
+
+            playPromise
+                .catch(function(err) {
+
+                    console.error(
+                        "Không phát được audio:",
+                        err
+                    );
+
+                    vinylEl.classList.remove(
+                        "playing"
+                    );
+
+                });
+
+        }
+
+    } else {
+
+        audioEl.pause();
+
+    }
+
+}
+
+
+setupAudioPlayer("1");
+setupAudioPlayer("2");
+
+
+/* ================================================= */
+/* ============== MOBILE AUDIO CONTROL ============== */
+/* ================================================= */
+
+let mobileAudioId = "1";
+
+function getMobileAudioElements() {
+    return {
+        bar: document.getElementById("mobileAudioBar"),
+        lesson9: document.getElementById("mobileAudioLesson1"),
+        lesson9: document.getElementById("mobileAudioLesson2"),
+        play: document.getElementById("mobileAudioPlay"),
+        progress: document.getElementById("mobileAudioProgress"),
+        time: document.getElementById("mobileAudioTime")
+    };
+}
+
+function syncMobileAudioUI() {
+    const ui = getMobileAudioElements();
+    const player = audioPlayers[mobileAudioId];
+
+    if (!ui.bar || !player) return;
+
+    const audioEl = player.audioEl;
+    const duration = isNaN(audioEl.duration) ? 0 : audioEl.duration;
+
+    ui.lesson9.classList.toggle("active", mobileAudioId === "1");
+    ui.lesson9.classList.toggle("active", mobileAudioId === "2");
+    ui.progress.max = duration || 100;
+    ui.progress.value = audioEl.currentTime || 0;
+    ui.time.textContent =
+        formatTime(audioEl.currentTime) + " / " + formatTime(duration);
+    ui.play.textContent = audioEl.paused ? "▶" : "⏸";
+}
+
+function selectMobileAudio(id) {
+    if (!audioPlayers[id]) return;
+
+    mobileAudioId = id;
+    syncMobileAudioUI();
+}
+
+function toggleMobileAudio() {
+    const player = audioPlayers[mobileAudioId];
+    if (!player) return;
+
+    if (player.audioEl.paused) {
+        pauseOtherAudios(mobileAudioId);
+
+        const playPromise = player.audioEl.play();
+
+        if (playPromise !== undefined) {
+            playPromise.catch(function(err) {
+                console.error("Không phát được audio:", err);
+                syncMobileAudioUI();
+            });
+        }
+    } else {
+        player.audioEl.pause();
+    }
+
+    syncMobileAudioUI();
+}
+
+(function setupMobileAudioControl() {
+    const ui = getMobileAudioElements();
+    if (!ui.bar) return;
+
+    ui.progress.addEventListener("input", function() {
+        const player = audioPlayers[mobileAudioId];
+        if (player) {
+            player.audioEl.currentTime = Number(this.value);
+            syncMobileAudioUI();
+        }
+    });
+
+    Object.keys(audioPlayers).forEach(function(id) {
+        const audioEl = audioPlayers[id].audioEl;
+
+        ["loadedmetadata", "timeupdate", "play", "pause", "ended"].forEach(function(eventName) {
+            audioEl.addEventListener(eventName, function() {
+                if (id === mobileAudioId || eventName === "play") {
+                    syncMobileAudioUI();
+                }
+            });
+        });
+    });
+
+    syncMobileAudioUI();
+})();
+
+/* ================================================= */
+/* ================= STUDY ========================= */
+/* ================================================= */
+
+function prepareStudy() {
+
+    studyWords =
+        getSavedWords();
+
+
+    if (studyWords.length === 0) {
+
+        document.getElementById(
+            "studyProgress"
+        ).textContent =
+            "Bạn chưa lưu từ vựng nào.";
+
+        document.getElementById(
+            "studyWord"
+        ).textContent = "";
+
+        document.getElementById(
+            "studyPinyin"
+        ).textContent = "";
+
+        document.getElementById(
+            "studyHanviet"
+        ).textContent = "";
+
+        document.getElementById(
+            "studyPOS"
+        ).textContent = "";
+
+        document.getElementById(
+            "studyMeaning"
+        ).textContent = "";
+
+        return;
+
+    }
+
+
+    if (
+        studyIndex >= studyWords.length
+    ) {
+
+        studyIndex = 0;
+
+    }
+
+
+    showStudyWord();
+
+}
+
+
+function showStudyWord() {
+
+    const word =
+        studyWords[studyIndex];
+
+    const data =
+        vocabulary[word];
+
+
+    document.getElementById(
+        "studyProgress"
+    ).textContent =
+        "Từ " +
+        (studyIndex + 1) +
+        " / " +
+        studyWords.length;
+
+
+    document.getElementById(
+        "studyWord"
+    ).textContent =
+        word;
+
+
+    document.getElementById(
+        "studyPinyin"
+    ).textContent =
+        data.pinyin;
+
+
+    document.getElementById(
+        "studyHanviet"
+    ).textContent =
+        data.hanviet;
+
+
+    document.getElementById(
+        "studyPOS"
+    ).textContent =
+        data.pos;
+
+
+    document.getElementById(
+        "studyMeaning"
+    ).textContent =
+        data.meaning;
+
+
+    document.getElementById(
+        "studyExampleChinese"
+    ).textContent =
+        data.exampleChinese;
+
+
+    document.getElementById(
+        "studyExampleVietnamese"
+    ).textContent =
+        data.exampleVietnamese;
+
+
+    document.getElementById(
+        "studyUsage"
+    ).textContent =
+        data.usage;
+
+
+    /* ================= GHI CHÚ ================= */
+
+    const notes =
+        getNotes();
+
+    document.getElementById(
+        "studyNote"
+    ).value =
+        notes[word] || "";
+
+
+    /* ================= ĐẶT CÂU ================= */
+
+    const sentences =
+        getSentences();
+
+
+    document.getElementById(
+        "studySentence"
+    ).value =
+        sentences[word] || "";
+
+
+    updateStatus("learning");
+
+
+}
+
+
+/* ================================================= */
+/* ========== HOÀN THÀNH 1 TỪ ====================== */
+/* ================================================= */
+
+function completeStudyWord() {
+
+    const word =
+        studyWords[studyIndex];
+
+
+    const noteInput =
+        document.getElementById(
+            "studyNote"
+        );
+
+
+    const sentenceInput =
+        document.getElementById(
+            "studySentence"
+        );
+
+
+    const note =
+        noteInput.value.trim();
+
+
+    const sentence =
+        sentenceInput.value.trim();
+
+
+    if (sentence === "") {
+
+        alert(
+            "Hãy tự đặt một câu trước khi sang từ tiếp theo nhé!"
+        );
+
+        sentenceInput.focus();
+
+        return;
+
+    }
+
+
+    /* ================= LƯU GHI CHÚ ================= */
+
+    const notes =
+        getNotes();
+
+    notes[word] =
+        note;
+
+    setNotes(notes);
+
+
+    /* ================= LƯU CÂU ================= */
+
+    const sentences =
+        getSentences();
+
+    sentences[word] =
+        sentence;
+
+    setSentences(sentences);
+
+
+    studyIndex++;
+
+
+    if (
+        studyIndex >=
+        studyWords.length
+    ) {
+
+        document
+            .getElementById(
+                "finishModal"
+            )
+            .classList.add("show");
+
+        return;
+
+    }
+
+
+    showStudyWord();
+
+}
+
+
+/* ================================================= */
+/* ================= HỌC LẠI ======================== */
+/* ================================================= */
+
+function repeatStudy() {
+
+    document
+        .getElementById(
+            "finishModal"
+        )
+        .classList.remove("show");
+
+
+    studyIndex = 0;
+
+
+    localStorage.removeItem(
+        "lesson9Sentences"
+    );
+
+    localStorage.removeItem(
+        "lesson9Notes"
+    );
+
+    queueProgressSync();
+
+
+    prepareStudy();
+
+}
+
+
+/* ================================================= */
+/* ================= OK ============================= */
+/* ================================================= */
+
+function finishStudy() {
+
+    document
+        .getElementById(
+            "finishModal"
+        )
+        .classList.remove("show");
+
+
+    updateStatus("learning");
+
+
+    alert(
+        "✓ Bạn đã học xong toàn bộ từ vựng!"
+    );
+
+}
+
+
+/* ================================================= */
+/* ================= STATUS ========================= */
+/* ================================================= */
+
+function updateStatus(status) {
+
+    const dot =
+        document.getElementById(
+            "statusDot"
+        );
+
+    const text =
+        document.getElementById(
+            "statusText"
+        );
+
+
+    dot.className =
+        "status-dot";
+
+
+    if (status === "learning") {
+
+        dot.classList.add(
+            "learning"
+        );
+
+        text.textContent =
+            "Đang học";
+
+    }
+
+
+    if (status === "completed") {
+
+        dot.classList.add(
+            "completed"
+        );
+
+        text.textContent =
+            "Đã hoàn thành ✓";
+
+    }
+
+
+    if (status === "new") {
+
+        text.textContent =
+            "Chưa bắt đầu";
+
+    }
+
+}
+
+
+/* ================================================= */
+/* ================= QUICK MATCH ==================== */
+/* ================================================= */
+
+function startQuickMatch() {
+
+    const saved =
+        getSavedWords();
+
+
+    if (saved.length < 3) {
+
+        alert(
+            "Bạn cần lưu ít nhất 3 từ để chơi Quick Match."
+        );
+
+        return;
+
+    }
+
+
+    document
+        .getElementById(
+            "reviewMenu"
+        )
+        .style.display = "none";
+
+
+    document
+        .getElementById(
+            "quickMatch"
+        )
+        .classList.add("active");
+
+
+    matchTime = 60;
+
+
+    document.getElementById(
+        "matchTimer"
+    ).textContent =
+        "60s";
+
+
+    createMatchRound();
+
+
+    clearInterval(
+        matchTimerInterval
+    );
+
+
+    matchTimerInterval =
+        setInterval(function() {
+
+            matchTime--;
+
+
+            document.getElementById(
+                "matchTimer"
+            ).textContent =
+                matchTime + "s";
+
+
+            if (matchTime <= 0) {
+
+                clearInterval(
+                    matchTimerInterval
+                );
+
+
+                alert(
+                    "⏰ Hết giờ!"
+                );
+
+
+                backToReviewMenu();
+
+            }
+
+        }, 1000);
+
+}
+
+
+/* ================================================= */
+/* ========== TẠO 3 CẶP MATCH ====================== */
+/* ================================================= */
+
+function createMatchRound() {
+
+    const saved =
+        getSavedWords();
+
+
+    const shuffled =
+        [...saved]
+        .sort(
+            () => Math.random() - 0.5
+        );
+
+
+    matchPairs =
+        shuffled.slice(0, 3);
+
+
+    selectedChinese = null;
+
+    selectedVietnamese = null;
+
+
+    const chineseColumn =
+        document.getElementById(
+            "chineseColumn"
+        );
+
+
+    const vietnameseColumn =
+        document.getElementById(
+            "vietnameseColumn"
+        );
+
+
+    chineseColumn.innerHTML = "";
+
+    vietnameseColumn.innerHTML = "";
+
+
+    matchPairs.forEach(function(word) {
+
+        const card =
+            document.createElement("div");
+
+
+        card.className =
+            "match-card";
+
+
+        card.textContent =
+            word;
+
+
+        card.dataset.word =
+            word;
+
+
+        card.onclick =
+            function() {
+
+                selectChinese(card);
+
+            };
+
+
+        chineseColumn.appendChild(card);
+
+    });
+
+
+    const vietnamese =
+        matchPairs
+        .map(
+            word =>
+                vocabulary[word].meaning
+        )
+        .sort(
+            () => Math.random() - 0.5
+        );
+
+
+    vietnamese.forEach(function(meaning) {
+
+        const card =
+            document.createElement("div");
+
+
+        card.className =
+            "match-card";
+
+
+        card.textContent =
+            meaning;
+
+
+        const matchedWord =
+            matchPairs.find(
+                word =>
+                    vocabulary[word].meaning ===
+                    meaning
+            );
+
+
+        card.dataset.word =
+            matchedWord;
+
+
+        card.onclick =
+            function() {
+
+                selectVietnamese(card);
+
+            };
+
+
+        vietnameseColumn.appendChild(
+            card
+        );
+
+    });
+
+}
+
+
+/* ================================================= */
+/* ============= SELECT CHINESE ==================== */
+/* ================================================= */
+
+function selectChinese(card) {
+
+    document
+        .querySelectorAll(
+            "#chineseColumn .match-card"
+        )
+        .forEach(function(c) {
+
+            c.classList.remove(
+                "selected"
+            );
+
+        });
+
+
+    card.classList.add(
+        "selected"
+    );
+
+
+    selectedChinese = card;
+
+
+    checkMatch();
+
+}
+
+
+/* ================================================= */
+/* =========== SELECT VIETNAMESE =================== */
+/* ================================================= */
+
+function selectVietnamese(card) {
+
+    document
+        .querySelectorAll(
+            "#vietnameseColumn .match-card"
+        )
+        .forEach(function(c) {
+
+            c.classList.remove(
+                "selected"
+            );
+
+        });
+
+
+    card.classList.add(
+        "selected"
+    );
+
+
+    selectedVietnamese = card;
+
+
+    checkMatch();
+
+}
+
+
+/* ================================================= */
+/* ================= CHECK MATCH ==================== */
+/* ================================================= */
+
+function checkMatch() {
+
+    if (
+        !selectedChinese ||
+        !selectedVietnamese
+    ) {
+
+        return;
+
+    }
+
+
+    if (
+        selectedChinese.dataset.word ===
+        selectedVietnamese.dataset.word
+    ) {
+
+        selectedChinese.classList.add(
+            "hidden"
+        );
+
+        selectedVietnamese.classList.add(
+            "hidden"
+        );
+
+
+        selectedChinese = null;
+
+        selectedVietnamese = null;
+
+
+        document.getElementById(
+            "matchMessage"
+        ).textContent =
+            "✓ Correct!";
+
+
+        setTimeout(function() {
+
+            createMatchRound();
+
+        }, 350);
+
+
+    } else {
+
+        selectedChinese.classList.add(
+            "wrong"
+        );
+
+        selectedVietnamese.classList.add(
+            "wrong"
+        );
+
+
+        document.getElementById(
+            "matchMessage"
+        ).textContent =
+            "✗ Sai rồi, thử lại nhé!";
+
+
+        const wrongChinese =
+            selectedChinese;
+
+
+        const wrongVietnamese =
+            selectedVietnamese;
+
+
+        setTimeout(function() {
+
+            wrongChinese.classList.remove(
+                "wrong",
+                "selected"
+            );
+
+
+            wrongVietnamese.classList.remove(
+                "wrong",
+                "selected"
+            );
+
+        }, 700);
+
+
+        selectedChinese = null;
+
+        selectedVietnamese = null;
+
+    }
+
+}
+
+
+/* ================================================= */
+/* ================= ĐẶT CÂU ======================= */
+/* ================================================= */
+
+function startSentenceGame() {
+
+    const saved =
+        getSavedWords();
+
+
+    if (saved.length === 0) {
+
+        alert(
+            "Bạn chưa có từ vựng nào để ôn tập."
+        );
+
+        return;
+
+    }
+
+
+    const sentences =
+        getSentences();
+
+
+    const allHaveSentences =
+        saved.every(
+            word =>
+                sentences[word] &&
+                sentences[word].trim() !== ""
+        );
+
+
+    if (!allHaveSentences) {
+
+        alert(
+            "Bạn cần hoàn thành phần Học bài trước."
+        );
+
+        return;
+
+    }
+
+
+    document
+        .getElementById(
+            "reviewMenu"
+        )
+        .style.display = "none";
+
+
+    document
+        .getElementById(
+            "sentenceGame"
+        )
+        .classList.add("active");
+
+
+    sentenceWords =
+        [...saved]
+        .sort(
+            () => Math.random() - 0.5
+        );
+
+
+    sentenceIndex = 0;
+
+
+    showSentenceQuestion();
+
+}
+
+
+/* ================================================= */
+/* ========== HIỆN CÂU HỎI ========================= */
+/* ================================================= */
+
+function showSentenceQuestion() {
+
+    if (
+        sentenceIndex >=
+        sentenceWords.length
+    ) {
+
+        finishSentenceGame();
+
+        return;
+
+    }
+
+
+    const word =
+        sentenceWords[sentenceIndex];
+
+
+    document.getElementById(
+        "sentenceProgress"
+    ).textContent =
+        "Từ " +
+        (sentenceIndex + 1) +
+        " / " +
+        sentenceWords.length;
+
+
+    document.getElementById(
+        "sentenceGameWord"
+    ).textContent =
+        word;
+
+
+    document.getElementById(
+        "sentenceGameInput"
+    ).value = "";
+
+
+    document.getElementById(
+        "sentenceMessage"
+    ).textContent = "";
+
+
+    startQuestionTimer();
+
+}
+
+
+/* ================================================= */
+/* ============= TIMER TỪNG CÂU ==================== */
+/* ================================================= */
+
+function startQuestionTimer() {
+
+    clearInterval(
+        questionTimerInterval
+    );
+
+
+    questionStartTime =
+        Date.now();
+
+
+    document.getElementById(
+        "questionTimer"
+    ).textContent =
+        "0s";
+
+
+    questionTimerInterval =
+        setInterval(function() {
+
+            const seconds =
+                Math.floor(
+                    (
+                        Date.now() -
+                        questionStartTime
+                    ) / 1000
+                );
+
+
+            document.getElementById(
+                "questionTimer"
+            ).textContent =
+                seconds + "s";
+
+
+        }, 1000);
+
+}
+
+
+/* ================================================= */
+/* ================= CHECK SENTENCE ================ */
+/* ================================================= */
+
+function checkSentence() {
+
+    const word =
+        sentenceWords[sentenceIndex];
+
+
+    const correctSentence =
+        getSentences()[word];
+
+
+    const input =
+        document
+            .getElementById(
+                "sentenceGameInput"
+            )
+            .value;
+
+
+    if (
+        input ===
+        correctSentence
+    ) {
+
+        clearInterval(
+            questionTimerInterval
+        );
+
+
+        document.getElementById(
+            "sentenceMessage"
+        ).textContent =
+            "✓ Correct!";
+
+
+        document.getElementById(
+            "sentenceMessage"
+        ).className =
+            "game-message correct-message";
+
+
+        setTimeout(function() {
+
+            sentenceIndex++;
+
+            showSentenceQuestion();
+
+        }, 600);
+
+
+    } else {
+
+        document.getElementById(
+            "sentenceMessage"
+        ).textContent =
+            "✗ Incorrect! Hãy nhập lại chính xác câu đã đặt.";
+
+
+        document.getElementById(
+            "sentenceMessage"
+        ).className =
+            "game-message incorrect-message";
+
+
+        document.getElementById(
+            "sentenceGameInput"
+        ).value = "";
+
+
+        document.getElementById(
+            "sentenceGameInput"
+        ).focus();
+
+    }
+
+}
+
+
+/* ================================================= */
+/* ============ HOÀN THÀNH GAME ĐẶT CÂU ============ */
+/* ================================================= */
+
+function finishSentenceGame() {
+
+    clearInterval(
+        questionTimerInterval
+    );
+
+
+    alert(
+        "🎉 Bạn đã hoàn thành game Đặt câu!"
+    );
+
+
+    updateStatus("completed");
+
+
+    localStorage.setItem(
+        "lesson9Completed",
+        "true"
+    );
+
+    queueProgressSync();
+
+
+    backToReviewMenu();
+
+}
+
+
+/* ================================================= */
+/* ================= BACK REVIEW =================== */
+/* ================================================= */
+
+function backToReviewMenu() {
+
+    clearInterval(
+        matchTimerInterval
+    );
+
+
+    clearInterval(
+        questionTimerInterval
+    );
+
+
+    document
+        .getElementById(
+            "quickMatch"
+        )
+        .classList.remove("active");
+
+
+    document
+        .getElementById(
+            "sentenceGame"
+        )
+        .classList.remove("active");
+
+
+    document
+        .getElementById(
+            "reviewMenu"
+        )
+        .style.display = "block";
+
+
+}
+
+
+/* ================================================= */
+/* ========== LESSON 8 WORD RENDERER =============== */
+/* ================================================= */
+
+function renderLessonWords() {
+
+    /* Ưu tiên cụm từ có trong vocabulary; các chữ còn lại luôn tách riêng. */
+    const knownWords = Object.keys(vocabulary)
+        .sort(function(a, b) { return b.length - a.length; });
+
+    document
+        .querySelectorAll(".reading-text[data-raw-text]")
+        .forEach(function(container) {
+
+            const text = container.dataset.rawText || "";
+            container.innerHTML = "";
+
+            let index = 0;
+            while (index < text.length) {
+
+                const matchedWord = knownWords.find(function(word) {
+                    return text.startsWith(word, index);
+                });
+
+                const value = matchedWord || text[index];
+
+                if (/^[\u4e00-\u9fff]+$/.test(value)) {
+                    const span = document.createElement("span");
+                    span.className = "word";
+                    span.dataset.word = value;
+                    span.textContent = value;
+                    span.onclick = function(event) {
+                        event.stopPropagation();
+                        showWord(value, span);
+                    };
+                    container.appendChild(span);
+                } else {
+                    container.appendChild(document.createTextNode(value));
+                }
+
+                index += value.length;
+            }
+        });
+}
+
+function ensureLessonVocabulary() {
+
+    document
+        .querySelectorAll("#reading .reading-main .word")
+        .forEach(function(el) {
+
+            const word = el.dataset.word;
+
+            if (!vocabulary[word]) {
+
+                vocabulary[word] = {
+                    pinyin: "—",
+                    hanviet: "—",
+                    pos: "词语 / từ trong bài",
+                    meaning: "Từ trong bài đọc 8",
+                    exampleChinese: word,
+                    exampleVietnamese: "",
+                    usage: "Từ này chưa được bổ sung thông tin từ vựng."
+                };
+            }
+        });
+}
+
+/* ================================================= */
+/* ================= LOAD =========================== */
+/* ================================================= */
+
+document.getElementById("readingText1").dataset.rawText = "如果你想做什么事情，那就勇敢地去做，不要担心结果，不要考虑会不会失败。要是太看重结果，失败就会给人们带来很多烦恼。我们应该把注意力放在做事情的过程中，这样你会在做的过程中发现解决问题的快乐，这是其他任何东西都给不了的。即使最后失败了也没有关系，因为至少你已经努力过，而且我们还可以从失败中总结出有用的经验，有了这些积累，成功自然离我们越来越近。";
+document.getElementById("readingText2").dataset.rawText = "每一个人都希望成功，可是很多时候，在成功之前会遇到很多困难。有些人遇到困难就放弃，而有些人遇到困难却想办法解决它。对困难的态度不同，结果也是不一样的。爱迪生就是在找了上千种材料后，才找到了能点亮电灯的材料。取得成功的人往往都经历过许多失败，他们和普通人的区别就是他们都坚持了下来。所以就算只有1%的希望，我们也要做出100%的努力。困难只是暂时的，“阳光总在风雨后”，只有我们勇敢地面对困难，才能有希望取得成功。";
+
+Object.keys(vocabulary).forEach(function(word) { delete vocabulary[word]; });
+[["勇敢","yǒnggǎn","[Dũng Cảm]","a","Dũng cảm"],["担心","dānxīn","[Đam Tâm]","v","Lo lắng"],["结果","jiéguǒ","[Kết Quả]","n","Kết quả"],["考虑","kǎolǜ","[Khảo Lự]","v","Cân nhắc"],["失败","shībài","[Thất Bại]","v / n","Thất bại"],["看重","kànzhòng","[Khán Trọng]","v","Coi trọng"],["烦恼","fánnǎo","[Phiền Não]","n","Phiền não"],["注意力","zhùyìlì","[Chú Ý Lực]","n","Sự chú ý"],["过程","guòchéng","[Quá Trình]","n","Quá trình"],["解决","jiějué","[Giải Quyết]","v","Giải quyết"],["即使","jíshǐ","[Tức Sử]","conj","Cho dù"],["至少","zhìshǎo","[Chí Thiểu]","adv","Ít nhất"],["努力","nǔlì","[Nỗ Lực]","v / n","Nỗ lực"],["总结","zǒngjié","[Tổng Kết]","v","Tổng kết"],["经验","jīngyàn","[Kinh Nghiệm]","n","Kinh nghiệm"],["积累","jīlěi","[Tích Lũy]","v / n","Tích lũy"],["成功","chénggōng","[Thành Công]","v / n","Thành công"],["越来越","yuèláiyuè","[Việt Lai Việt]","adv","Càng ngày càng"],["困难","kùnnan","[Khốn Nan]","n / a","Khó khăn"],["放弃","fàngqì","[Phóng Khí]","v","Từ bỏ"],["态度","tàidu","[Thái Độ]","n","Thái độ"],["爱迪生","Àidíshēng","[Ái Địch Sinh]","n","Edison"],["材料","cáiliào","[Tài Liệu]","n","Vật liệu"],["点亮","diǎnliàng","[Điểm Lượng]","v","Thắp sáng"],["经历","jīnglì","[Kinh Lịch]","v","Trải qua"],["区别","qūbié","[Khu Biệt]","n","Sự khác biệt"],["坚持","jiānchí","[Kiên Trì]","v","Kiên trì"],["暂时","zànshí","adv","Tạm thời"],["面对","miànduì","[Diện Đối]","v","Đối mặt"]].forEach(function(x){vocabulary[x[0]]={pinyin:x[1],hanviet:x[2]||"—",pos:x[3],meaning:x[4],exampleChinese:x[0],exampleVietnamese:"",usage:"Từ vựng trong Lesson 9."};});
+
+renderLessonWords();
+ensureLessonVocabulary();
+
+currentHighlight = getHighlights();
+
+currentUnderline = getUnderlines();
+
+// Gán ID riêng cho từng vị trí của từ trong bài đọc.
+// Vì vậy hai từ giống nhau ở hai câu khác nhau vẫn là hai vị trí độc lập.
+document
+    .querySelectorAll("#reading .reading-main .word")
+    .forEach(function(el, index) {
+        el.dataset.wordId = "lesson9-word-" + (index + 1);
+    });
+
+updateSavedList();
+
+applySavedHighlights();
+
+applySavedPhraseMarks();
+
+renderPinnedSidebar();
+
+
+if (
+    localStorage.getItem(
+        "lesson9Completed"
+    ) === "true"
+) {
+
+    updateStatus("completed");
+
+} else if (
+    getSavedWords().length > 0
+) {
+
+    updateStatus("learning");
+
+} else {
+
+    updateStatus("new");
+
+}
+
+initSupabaseProgress();
+
+</script>
+
+
+
+<div
+    id="phraseToolbar"
+    class="phrase-toolbar">
+
+    <div class="phrase-toolbar-colors">
+
+        <button
+            class="color-btn green"
+            onclick="applyPhraseColor('green')">
+        </button>
+
+        <button
+            class="color-btn blue"
+            onclick="applyPhraseColor('blue')">
+        </button>
+
+        <button
+            class="color-btn gray"
+            onclick="applyPhraseColor('gray')">
+        </button>
+
+        <button
+            class="color-btn yellow"
+            onclick="applyPhraseColor('yellow')">
+        </button>
+
+        <button
+            class="color-btn orange"
+            onclick="applyPhraseColor('orange')">
+        </button>
+
+        <button
+            class="color-btn purple"
+            onclick="applyPhraseColor('purple')">
+        </button>
+
+        <button
+            id="phraseUnderlineButton"
+            class="underline-btn"
+            onclick="applyPhraseUnderline()">
+            U
+        </button>
+
+        <button
+            class="phrase-remove-btn"
+            title="Xóa đánh dấu cụm từ"
+            onclick="removeCurrentPhrase()">
+            ✕
+        </button>
+
+    </div>
+
+</div>
+
+
+</div>
+
+</section>
+
+
+</body>
+
+</html>

@@ -235,6 +235,11 @@ window.supabaseClient = supabaseClient;
         async function insertFirstRow(progress) {
             const common = { user_id: user.id };
             const compactCandidates = [
+                // "lesson" (text) là tên cột thật trong bảng user_progress
+                // trên Supabase -> phải thử trước tiên, nếu không mọi lần
+                // insert đều bị Postgrest từ chối vì các cột lesson_id /
+                // lesson_number dưới đây không tồn tại trong bảng thật.
+                ["lesson", "progress_data"],
                 ["lesson_id", "progress_data"],
                 ["lesson_number", "progress_data"],
                 ["lesson_id", "data"],
@@ -245,12 +250,16 @@ window.supabaseClient = supabaseClient;
 
             for (const pair of compactCandidates) {
                 const payload = { ...common };
-                payload[pair[0]] = lessonNumber;
+                // Cột "lesson" là kiểu text trong DB, còn lessonNumber
+                // truyền vào là số (9) -> phải ép sang chuỗi cho đúng kiểu.
+                payload[pair[0]] = (pair[0] === "lesson")
+                    ? String(lessonNumber)
+                    : lessonNumber;
                 payload[pair[1]] = progress;
 
                 const result = await supabaseClient
                     .from(TABLE_NAME)
-                    .insert(payload)
+                    .upsert(payload, { onConflict: "user_id," + pair[0] })
                     .select()
                     .maybeSingle();
 
