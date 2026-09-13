@@ -314,6 +314,26 @@ window.supabaseClient = supabaseClient;
             return false;
         }
 
+        function flushNow() {
+            // Lưu ngay lập tức (bỏ qua debounce 350ms) khi tab/app sắp bị
+            // ẩn hoặc đóng, để không mất tiến độ vừa học nếu người dùng
+            // tắt máy/chuyển app trước khi debounce kịp chạy. Đây là chỗ
+            // khiến tiến độ học trên máy này chưa kịp lên cloud, nên máy
+            // khác đăng nhập cùng tài khoản không thấy được.
+            if (!ready || applyingRemote || !user) return;
+            clearTimeout(saveTimer);
+            saveNow();
+        }
+
+        if (typeof document !== "undefined") {
+            document.addEventListener("visibilitychange", function() {
+                if (document.visibilityState === "hidden") flushNow();
+            });
+        }
+        if (typeof window !== "undefined") {
+            window.addEventListener("pagehide", flushNow);
+        }
+
         async function saveNow() {
             if (!ready || !user) return;
 
@@ -371,9 +391,21 @@ window.supabaseClient = supabaseClient;
             }
 
             const rows = rowResult.data || [];
-            row = rows.find(function(item) {
+            const matchingRows = rows.filter(function(item) {
                 return Number(getLessonNumber(item)) === Number(lessonNumber);
-            }) || null;
+            });
+
+            // Bình thường chỉ có 1 row cho mỗi bài học. Nếu vì lý do gì đó
+            // (ví dụ 2 thiết bị cùng tạo row gần như đồng thời) mà có nhiều
+            // hơn 1 row trùng bài học, ưu tiên lấy row được cập nhật gần
+            // đây nhất để không bị "kẹt" ở một bản ghi cũ, thiếu tiến độ.
+            matchingRows.sort(function(a, b) {
+                const aTime = new Date(a.updated_at || a.created_at || 0).getTime();
+                const bTime = new Date(b.updated_at || b.created_at || 0).getTime();
+                return bTime - aTime;
+            });
+
+            row = matchingRows[0] || null;
 
             const schemaSample = row || rows[0] || null;
             lessonColumn = getLessonColumn(schemaSample);
