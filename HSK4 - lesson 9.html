@@ -1540,6 +1540,66 @@ body {
     background: #e9bcbc;
 }
 
+/* ================================================= */
+/* ================== IN BÀI HỌC =================== */
+/* ================================================= */
+
+.print-actions {
+    display: flex;
+    justify-content: flex-end;
+    position: relative;
+    margin: 0 0 18px;
+}
+
+.print-main-btn,
+.print-choice-btn {
+    border: none;
+    cursor: pointer;
+    font: inherit;
+    border-radius: 18px;
+}
+
+.print-main-btn {
+    background: #f1f6f2;
+    color: #4f8067;
+    font-weight: 700;
+    padding: 9px 16px;
+}
+
+.print-main-btn:hover {
+    background: #dcefe1;
+}
+
+.print-menu {
+    display: none;
+    position: absolute;
+    top: calc(100% + 7px);
+    right: 0;
+    z-index: 1500;
+    width: 190px;
+    padding: 8px;
+    background: #fff;
+    border: 1px solid #e2ece4;
+    border-radius: 13px;
+    box-shadow: 0 10px 24px rgba(39, 77, 57, 0.16);
+}
+
+.print-menu.show {
+    display: grid;
+    gap: 6px;
+}
+
+.print-choice-btn {
+    padding: 10px 12px;
+    background: #fff;
+    color: #444;
+    text-align: left;
+}
+
+.print-choice-btn:hover {
+    background: #eef7f0;
+}
+
 
 
 </style>
@@ -1617,6 +1677,19 @@ body {
 
 <div class="content-card">
 
+<div class="print-actions">
+    <button class="print-main-btn" type="button" onclick="togglePrintMenu()">
+        🖨 In bài
+    </button>
+    <div class="print-menu" id="printMenu">
+        <button class="print-choice-btn" type="button" onclick="printLesson('color')">
+            🎨 In màu
+        </button>
+        <button class="print-choice-btn" type="button" onclick="printLesson('practice')">
+            ✍️ In tập viết
+        </button>
+    </div>
+</div>
 
 <div class="reading-layout" id="readingLayout">
 
@@ -2633,63 +2706,68 @@ const vocabulary = {
 }
 };
 
-/* Từ vựng Lesson 8 */
+/* Từ vựng Lesson 9 */
 Object.keys(vocabulary).forEach(function(word) { delete vocabulary[word]; });
 Object.assign(vocabulary, {
-    "草": {pinyin:"cǎo", hanviet:"[Thảo]", pos:"n", meaning:"Cỏ", exampleChinese:"草绿了。", exampleVietnamese:"→ Cỏ xanh rồi.", usage:"Danh từ chỉ cỏ."},
-    "生命": {pinyin:"shēngmìng", hanviet:"[Sinh Mệnh]", pos:"n", meaning:"Sinh mệnh, sự sống", exampleChinese:"生命很宝贵。", exampleVietnamese:"→ Sự sống rất quý giá.", usage:"Chỉ sự sống hoặc cuộc đời."},
-    "颜色": {pinyin:"yánsè", hanviet:"[Nhan Sắc]", pos:"n", meaning:"Màu sắc", exampleChinese:"我喜欢这个颜色。", exampleVietnamese:"→ Tôi thích màu này.", usage:"Dùng để nói về màu sắc."},
-    "花": {pinyin:"huā", hanviet:"[Hoa]", pos:"n", meaning:"Hoa", exampleChinese:"花开了。", exampleVietnamese:"→ Hoa nở rồi.", usage:"Danh từ chỉ hoa."},
-    "大自然": {pinyin:"dà zìrán", hanviet:"[Đại Tự Nhiên]", pos:"n", meaning:"Thiên nhiên", exampleChinese:"大自然很美。", exampleVietnamese:"→ Thiên nhiên rất đẹp.", usage:"Chỉ thế giới tự nhiên."},
-    "礼物": {pinyin:"lǐwù", hanviet:"[Lễ Vật]", pos:"n", meaning:"Quà tặng", exampleChinese:"这是送给你的礼物。", exampleVietnamese:"→ Đây là quà tặng cho bạn.", usage:"礼物 thường đi với 送、收到."},
-    "生活": {pinyin:"shēnghuó", hanviet:"[Sinh Hoạt]", pos:"n / v", meaning:"Cuộc sống; sinh hoạt", exampleChinese:"我的生活很简单。", exampleVietnamese:"→ Cuộc sống của tôi rất đơn giản.", usage:"Có thể là danh từ hoặc động từ."},
-    "缺少": {pinyin:"quēshǎo", hanviet:"[Khuyết Thiểu]", pos:"v", meaning:"Thiếu, thiếu hụt", exampleChinese:"这里缺少水。", exampleVietnamese:"→ Ở đây thiếu nước.", usage:"缺少 + danh từ."},
-    "发现": {pinyin:"fāxiàn", hanviet:"[Phát Hiện]", pos:"v", meaning:"Phát hiện, nhận ra", exampleChinese:"我发现了一个问题。", exampleVietnamese:"→ Tôi phát hiện một vấn đề.", usage:"发现 + sự vật / vấn đề."},
-    "眼睛": {pinyin:"yǎnjing", hanviet:"[Nhãn Tinh]", pos:"n", meaning:"Mắt", exampleChinese:"她的眼睛很漂亮。", exampleVietnamese:"→ Mắt cô ấy rất đẹp.", usage:"Danh từ chỉ mắt."},
-    "只要": {pinyin:"zhǐyào", hanviet:"[Chỉ Yếu]", pos:"conj", meaning:"Chỉ cần", exampleChinese:"只要努力，就会进步。", exampleVietnamese:"→ Chỉ cần cố gắng thì sẽ tiến bộ.", usage:"Thường dùng với 就 ở vế sau."},
-    "到处": {pinyin:"dàochù", hanviet:"[Đáo Xứ]", pos:"adv", meaning:"Khắp nơi, mọi nơi", exampleChinese:"这里到处都是花。", exampleVietnamese:"→ Ở đây đâu đâu cũng có hoa.", usage:"Đứng trước động từ hoặc 是."},
-    "态度": {pinyin:"tàidu", hanviet:"[Thái Độ]", pos:"n", meaning:"Thái độ", exampleChinese:"他的学习态度很好。", exampleVietnamese:"→ Thái độ học tập của anh ấy rất tốt.", usage:"Thường dùng: 对…的态度."},
-    "选择": {pinyin:"xuǎnzé", hanviet:"[Tuyển Trạch]", pos:"v / n", meaning:"Lựa chọn", exampleChinese:"你可以自己选择。", exampleVietnamese:"→ Bạn có thể tự lựa chọn.", usage:"选择 + danh từ / động từ."},
-    "因此": {pinyin:"yīncǐ", hanviet:"[Nhân Thử]", pos:"conj", meaning:"Vì vậy, do đó", exampleChinese:"他生病了，因此没来。", exampleVietnamese:"→ Anh ấy bị ốm, vì vậy không đến.", usage:"Dùng để nối nguyên nhân và kết quả."},
-    "遇到": {pinyin:"yùdào", hanviet:"[Ngộ Đáo]", pos:"v", meaning:"Gặp phải", exampleChinese:"遇到问题别着急。", exampleVietnamese:"→ Gặp vấn đề đừng vội.", usage:"遇到 + người / việc / khó khăn."},
-    "烦恼": {pinyin:"fánnǎo", hanviet:"[Phiền Não]", pos:"n / v", meaning:"Phiền não, buồn phiền", exampleChinese:"别为小事烦恼。", exampleVietnamese:"→ Đừng phiền não vì chuyện nhỏ.", usage:"Có thể là danh từ hoặc động từ."},
-    "应该": {pinyin:"yīnggāi", hanviet:"[Ưng Cai]", pos:"aux", meaning:"Nên, cần phải", exampleChinese:"你应该早点休息。", exampleVietnamese:"→ Bạn nên nghỉ sớm.", usage:"Đặt trước động từ để đưa lời khuyên."},
-    "办法": {pinyin:"bànfǎ", hanviet:"[Biện Pháp]", pos:"n", meaning:"Cách, biện pháp", exampleChinese:"我想到了一个办法。", exampleVietnamese:"→ Tôi nghĩ ra một cách.", usage:"想办法 = tìm cách."},
-    "心情": {pinyin:"xīnqíng", hanviet:"[Tâm Tình]", pos:"n", meaning:"Tâm trạng", exampleChinese:"我今天心情很好。", exampleVietnamese:"→ Hôm nay tâm trạng tôi rất tốt.", usage:"Thường dùng: 心情好 / 不好."},
-    "无法": {pinyin:"wúfǎ", hanviet:"[Vô Pháp]", pos:"v", meaning:"Không thể", exampleChinese:"我无法回答这个问题。", exampleVietnamese:"→ Tôi không thể trả lời câu hỏi này.", usage:"无法 + động từ."},
-    "改变": {pinyin:"gǎibiàn", hanviet:"[Cải Biến]", pos:"v", meaning:"Thay đổi", exampleChinese:"我们不能改变过去。", exampleVietnamese:"→ Chúng ta không thể thay đổi quá khứ.", usage:"改变 + sự vật / tình hình."},
-    "能够": {pinyin:"nénggòu", hanviet:"[Năng Cấu]", pos:"aux", meaning:"Có thể, có khả năng", exampleChinese:"我能够帮助你。", exampleVietnamese:"→ Tôi có thể giúp bạn.", usage:"Đặt trước động từ."},
-    "带给": {pinyin:"dài gěi", hanviet:"[Đới Cấp]", pos:"v", meaning:"Mang đến cho", exampleChinese:"音乐带给我快乐。", exampleVietnamese:"→ Âm nhạc mang đến cho tôi niềm vui.", usage:"带给 + người + điều gì."},
-    "快乐": {pinyin:"kuàilè", hanviet:"[Khoái Lạc]", pos:"a", meaning:"Vui vẻ, hạnh phúc", exampleChinese:"祝你快乐。", exampleVietnamese:"→ Chúc bạn vui vẻ.", usage:"Có thể làm tính từ hoặc danh từ."},
-    "科学": {pinyin:"kēxué", hanviet:"[Khoa Học]", pos:"n", meaning:"Khoa học", exampleChinese:"科学改变生活。", exampleVietnamese:"→ Khoa học thay đổi cuộc sống.", usage:"Danh từ chỉ khoa học."},
-    "研究": {pinyin:"yánjiū", hanviet:"[Nghiên Cứu]", pos:"v / n", meaning:"Nghiên cứu", exampleChinese:"他们正在研究这个问题。", exampleVietnamese:"→ Họ đang nghiên cứu vấn đề này.", usage:"研究 + vấn đề / lĩnh vực."},
-    "证明": {pinyin:"zhèngmíng", hanviet:"[Chứng Minh]", pos:"v", meaning:"Chứng minh", exampleChinese:"事实证明他是对的。", exampleVietnamese:"→ Sự thật chứng minh anh ấy đúng.", usage:"证明 + kết luận / sự việc."},
-    "女孩子": {pinyin:"nǚ háizi", hanviet:"[Nữ Hài Tử]", pos:"n", meaning:"Cô gái", exampleChinese:"那个女孩子很开朗。", exampleVietnamese:"→ Cô gái đó rất vui vẻ.", usage:"Cách nói thân mật về bé gái/cô gái."},
-    "衣服": {pinyin:"yīfu", hanviet:"[Y Phục]", pos:"n", meaning:"Quần áo", exampleChinese:"这件衣服很漂亮。", exampleVietnamese:"→ Bộ quần áo này rất đẹp.", usage:"Lượng từ thường dùng: 件."},
-    "往往": {pinyin:"wǎngwǎng", hanviet:"[Vãng Vãng]", pos:"adv", meaning:"Thường thường", exampleChinese:"他往往很早起床。", exampleVietnamese:"→ Anh ấy thường dậy rất sớm.", usage:"Chỉ tình huống thường xảy ra."},
-    "性格": {pinyin:"xìnggé", hanviet:"[Tính Cách]", pos:"n", meaning:"Tính cách", exampleChinese:"她的性格很开朗。", exampleVietnamese:"→ Tính cách cô ấy rất vui vẻ.", usage:"性格 + tính từ."},
-    "喜欢": {pinyin:"xǐhuan", hanviet:"[Hỉ Hoan]", pos:"v", meaning:"Thích", exampleChinese:"我喜欢蓝色。", exampleVietnamese:"→ Tôi thích màu xanh lam.", usage:"喜欢 + danh từ / động từ."},
-    "白色": {pinyin:"báisè", hanviet:"[Bạch Sắc]", pos:"n", meaning:"Màu trắng", exampleChinese:"我喜欢白色衣服。", exampleVietnamese:"→ Tôi thích quần áo màu trắng.", usage:"Tên một màu sắc."},
-    "阳光": {pinyin:"yángguāng", hanviet:"[Dương Quang]", pos:"n / a", meaning:"Ánh nắng; lạc quan", exampleChinese:"她是一个很阳光的人。", exampleVietnamese:"→ Cô ấy là người rất lạc quan.", usage:"Trong bài chỉ tính cách tích cực."},
-    "积极向上": {pinyin:"jījí xiàngshàng", hanviet:"[Tích Cực Hướng Thượng]", pos:"a", meaning:"Tích cực vươn lên", exampleChinese:"保持积极向上的态度。", exampleVietnamese:"→ Giữ thái độ tích cực vươn lên.", usage:"Cụm miêu tả thái độ sống."},
-    "特点": {pinyin:"tèdiǎn", hanviet:"[Đặc Điểm]", pos:"n", meaning:"Đặc điểm", exampleChinese:"这是它的特点。", exampleVietnamese:"→ Đây là đặc điểm của nó.", usage:"Dùng để nói điểm nổi bật."},
-    "红色": {pinyin:"hóngsè", hanviet:"[Hồng Sắc]", pos:"n", meaning:"Màu đỏ", exampleChinese:"红色让人热情。", exampleVietnamese:"→ Màu đỏ khiến người ta nhiệt tình.", usage:"Tên một màu sắc."},
-    "浪漫": {pinyin:"làngmàn", hanviet:"[Lãng Mạn]", pos:"a", meaning:"Lãng mạn", exampleChinese:"这是一个浪漫的故事。", exampleVietnamese:"→ Đây là một câu chuyện lãng mạn.", usage:"Dùng để miêu tả tính cách hoặc bầu không khí."},
-    "影响": {pinyin:"yǐngxiǎng", hanviet:"[Ảnh Hưởng]", pos:"v / n", meaning:"Ảnh hưởng", exampleChinese:"天气影响心情。", exampleVietnamese:"→ Thời tiết ảnh hưởng tâm trạng.", usage:"影响 + người / sự việc."},
-    "不同": {pinyin:"bùtóng", hanviet:"[Bất Đồng]", pos:"a", meaning:"Khác nhau", exampleChinese:"每个人的想法不同。", exampleVietnamese:"→ Suy nghĩ của mỗi người khác nhau.", usage:"不同的 + danh từ."},
-    "感情": {pinyin:"gǎnqíng", hanviet:"[Cảm Tình]", pos:"n", meaning:"Tình cảm, cảm xúc", exampleChinese:"颜色会影响人的感情。", exampleVietnamese:"→ Màu sắc có thể ảnh hưởng cảm xúc của con người.", usage:"Trong bài là thay đổi cảm xúc."},
-    "变化": {pinyin:"biànhuà", hanviet:"[Biến Hóa]", pos:"n / v", meaning:"Thay đổi, biến hóa", exampleChinese:"天气发生了变化。", exampleVietnamese:"→ Thời tiết đã có thay đổi.", usage:"发生变化 = xảy ra thay đổi."},
-    "热情": {pinyin:"rèqíng", hanviet:"[Nhiệt Tình]", pos:"a", meaning:"Nhiệt tình", exampleChinese:"他对人很热情。", exampleVietnamese:"→ Anh ấy rất nhiệt tình với mọi người.", usage:"热情地 + động từ / 很热情."},
-    "黄色": {pinyin:"huángsè", hanviet:"[Hoàng Sắc]", pos:"n", meaning:"Màu vàng", exampleChinese:"黄色让人心情愉快。", exampleVietnamese:"→ Màu vàng khiến người ta vui vẻ.", usage:"Tên một màu sắc."},
-    "愉快": {pinyin:"yúkuài", hanviet:"[Du Khoái]", pos:"a", meaning:"Vui vẻ, dễ chịu", exampleChinese:"祝你旅途愉快。", exampleVietnamese:"→ Chúc bạn chuyến đi vui vẻ.", usage:"Thường dùng: 心情愉快."},
-    "黑色": {pinyin:"hēisè", hanviet:"[Hắc Sắc]", pos:"n", meaning:"Màu đen", exampleChinese:"他穿黑色衣服。", exampleVietnamese:"→ Anh ấy mặc quần áo màu đen.", usage:"Tên một màu sắc."},
-    "伤心": {pinyin:"shāngxīn", hanviet:"[Thương Tâm]", pos:"a / v", meaning:"Buồn, đau lòng", exampleChinese:"别太伤心。", exampleVietnamese:"→ Đừng quá buồn.", usage:"Dùng để nói cảm xúc buồn."},
-    "蓝色": {pinyin:"lánsè", hanviet:"[Lam Sắc]", pos:"n", meaning:"Màu xanh lam", exampleChinese:"蓝色看起来很舒服。", exampleVietnamese:"→ Màu xanh lam trông rất dễ chịu.", usage:"Tên một màu sắc."},
-    "舒服": {pinyin:"shūfu", hanviet:"[Thư Phục]", pos:"a", meaning:"Thoải mái, dễ chịu", exampleChinese:"这个房间很舒服。", exampleVietnamese:"→ Căn phòng này rất dễ chịu.", usage:"Dùng cho cảm giác cơ thể hoặc tâm trạng."},
-    "安静": {pinyin:"ānjìng", hanviet:"[An Tĩnh]", pos:"a", meaning:"Yên tĩnh", exampleChinese:"请安静一下。", exampleVietnamese:"→ Hãy yên lặng một chút.", usage:"Có thể chỉ nơi chốn hoặc trạng thái."},
-    "绿色": {pinyin:"lǜsè", hanviet:"[Lục Sắc]", pos:"n", meaning:"Màu xanh lá", exampleChinese:"草是绿色的。", exampleVietnamese:"→ Cỏ có màu xanh lá.", usage:"Tên một màu sắc."},
-    "眼睛": {pinyin:"yǎnjing", hanviet:"[Nhãn Tinh]", pos:"n", meaning:"Mắt", exampleChinese:"让眼睛休息一下。", exampleVietnamese:"→ Hãy để mắt nghỉ một chút.", usage:"Danh từ chỉ mắt."},
-    "休息": {pinyin:"xiūxi", hanviet:"[Hưu Tức]", pos:"v", meaning:"Nghỉ ngơi", exampleChinese:"眼睛需要休息。", exampleVietnamese:"→ Mắt cần nghỉ ngơi.", usage:"休息一下 = nghỉ một chút."}
+  "希望": {pinyin:"xīwàng", hanviet:"[Hy Vọng]", pos:"n/v", meaning:"Hy vọng", exampleChinese:"每一个人都希望成功。", exampleVietnamese:"→ Mỗi người đều hy vọng thành công.", usage:"希望 + động từ/mệnh đề = hy vọng làm gì."},
+  "如果": {pinyin:"rúguǒ", hanviet:"[Như Quả]", pos:"conj", meaning:"Nếu, nếu như", exampleChinese:"如果你有问题，可以问老师。", exampleVietnamese:"→ Nếu bạn có vấn đề, có thể hỏi giáo viên。", usage:"如果……就…… = nếu… thì…; vế sau cũng có thể không dùng 就."},
+  "事情": {pinyin:"shìqing", hanviet:"[Sự Tình]", pos:"n", meaning:"Sự việc, việc", exampleChinese:"这件事情很重要。", exampleVietnamese:"→ Việc này rất quan trọng.", usage:"件事情 = một sự việc; 做事情 = làm việc."},
+"担心": {pinyin:"dānxīn", hanviet:"[Đam Tâm]", pos:"v", meaning:"Lo lắng", exampleChinese:"别担心，一切都会好的。", exampleVietnamese:"→ Đừng lo, mọi chuyện sẽ ổn.", usage:"担心 + người / sự việc; 不要担心……"},
+"结果": {pinyin:"jiéguǒ", hanviet:"[Kết Quả]", pos:"n", meaning:"Kết quả", exampleChinese:"我们还不知道比赛的结果。", exampleVietnamese:"→ Chúng tôi vẫn chưa biết kết quả cuộc thi.", usage:"结果 của hành động/sự việc; 看重结果 = coi trọng kết quả."},
+"考虑": {pinyin:"kǎolǜ", hanviet:"[Khảo Lự]", pos:"v", meaning:"Cân nhắc, suy nghĩ", exampleChinese:"请你仔细考虑一下。", exampleVietnamese:"→ Bạn hãy suy nghĩ kỹ một chút.", usage:"考虑 + vấn đề / ý kiến; 考虑一下 = cân nhắc một chút."},
+"失败": {pinyin:"shībài", hanviet:"[Thất Bại]", pos:"v/n", meaning:"Thất bại", exampleChinese:"失败以后不要放弃。", exampleVietnamese:"→ Sau khi thất bại đừng từ bỏ.", usage:"失败了 = đã thất bại; 从失败中学习 = học từ thất bại."},
+"要是": {pinyin:"yàoshi", hanviet:"[Yếu Thị]", pos:"conj", meaning:"Nếu, nếu như", exampleChinese:"要是明天下雨，我们就不去了。", exampleVietnamese:"→ Nếu ngày mai mưa, chúng ta sẽ không đi.", usage:"要是……就…… = nếu… thì…; gần nghĩa với 如果."},
+"太": {pinyin:"tài", hanviet:"[Thái]", pos:"adv", meaning:"Quá, rất", exampleChinese:"这个问题太难了。", exampleVietnamese:"→ Vấn đề này quá khó.", usage:"太 + tính từ + 了 = quá…; 不太 + tính từ = không lắm."},
+"看重": {pinyin:"kànzhòng", hanviet:"[Khán Trọng]", pos:"v", meaning:"Coi trọng, xem trọng", exampleChinese:"他很看重这次机会。", exampleVietnamese:"→ Anh ấy rất coi trọng cơ hội lần này.", usage:"看重 + người / sự việc / kết quả."},
+"带": {pinyin:"dài", hanviet:"[Đới]", pos:"v", meaning:"Mang, đem lại", exampleChinese:"这件事给我带来了快乐。", exampleVietnamese:"→ Việc này đã mang lại niềm vui cho tôi.", usage:"带来 + danh từ = mang lại…; 带 + người/vật = mang, dẫn theo."},
+"烦恼": {pinyin:"fánnǎo", hanviet:"[Phiền Não]", pos:"n/v", meaning:"Phiền não, làm phiền lòng", exampleChinese:"不要让小事给你带来烦恼。", exampleVietnamese:"→ Đừng để những chuyện nhỏ mang đến phiền não cho bạn.", usage:"带来烦恼 = mang lại phiền não; 烦恼的事情 = việc phiền lòng."},
+"应该": {pinyin:"yīnggāi", hanviet:"[Ưng Cai]", pos:"aux", meaning:"Nên, cần phải", exampleChinese:"我们应该认真学习。", exampleVietnamese:"→ Chúng ta nên học tập nghiêm túc.", usage:"应该 + động từ; dùng để khuyên bảo hoặc nêu điều cần làm."},
+"把": {pinyin:"bǎ", hanviet:"[Bả]", pos:"prep", meaning:"Đem, lấy", exampleChinese:"请把书放在桌子上。", exampleVietnamese:"→ Hãy đặt sách lên bàn.", usage:"把 + tân ngữ + động từ + kết quả/nơi chốn; nhấn mạnh cách xử lý đối tượng."},
+"注意力": {pinyin:"zhùyìlì", hanviet:"[Chú Ý Lực]", pos:"n", meaning:"Sự chú ý, khả năng tập trung", exampleChinese:"请把注意力放在学习上。", exampleVietnamese:"→ Hãy tập trung sự chú ý vào việc học.", usage:"把注意力放在……上 = tập trung chú ý vào…"},
+"放": {pinyin:"fàng", hanviet:"[Phóng]", pos:"v", meaning:"Đặt, để; thả", exampleChinese:"请把手机放在这里。", exampleVietnamese:"→ Hãy đặt điện thoại ở đây.", usage:"放在 + nơi chốn; 把注意力放在……上 = tập trung vào…"},
+"过程中": {pinyin:"guòchéng zhōng", hanviet:"[Quá Trình Trung]", pos:"n", meaning:"Trong quá trình", exampleChinese:"在学习过程中，我们会遇到困难。", exampleVietnamese:"→ Trong quá trình học, chúng ta sẽ gặp khó khăn.", usage:"在……过程中 = trong quá trình…"},
+"发现": {pinyin:"fāxiàn", hanviet:"[Phát Hiện]", pos:"v", meaning:"Phát hiện, nhận ra", exampleChinese:"我发现他今天不太高兴。", exampleVietnamese:"→ Tôi phát hiện hôm nay anh ấy không vui lắm.", usage:"发现 + người / sự việc; 发现了 = đã phát hiện."},
+"解决": {pinyin:"jiějué", hanviet:"[Giải Quyết]", pos:"v", meaning:"Giải quyết", exampleChinese:"我们一起解决这个问题吧。", exampleVietnamese:"→ Chúng ta cùng giải quyết vấn đề này nhé.", usage:"解决 + 问题/困难 = giải quyết vấn đề/khó khăn."},
+"问题": {pinyin:"wèntí", hanviet:"[Vấn Đề]", pos:"n", meaning:"Vấn đề, câu hỏi", exampleChinese:"这个问题不容易回答。", exampleVietnamese:"→ Vấn đề này không dễ trả lời.", usage:"解决问题 = giải quyết vấn đề; 有问题 = có vấn đề."},
+"快乐": {pinyin:"kuàilè", hanviet:"[Khoái Lạc]", pos:"a", meaning:"Vui vẻ, hạnh phúc", exampleChinese:"祝你每天都快乐。", exampleVietnamese:"→ Chúc bạn mỗi ngày đều vui vẻ.", usage:"很快乐 = rất vui; 快乐地 + động từ = một cách vui vẻ."},
+"其他": {pinyin:"qítā", hanviet:"[Kỳ Tha]", pos:"pron", meaning:"Khác, những cái/người khác", exampleChinese:"其他人都已经到了。", exampleVietnamese:"→ Những người khác đều đã đến rồi.", usage:"其他 + danh từ = những… khác; 其他人 = người khác."},
+"任何": {pinyin:"rènhé", hanviet:"[Nhậm Hà]", pos:"pron", meaning:"Bất kỳ", exampleChinese:"任何人都可以参加。", exampleVietnamese:"→ Bất kỳ ai cũng có thể tham gia.", usage:"任何 + danh từ; thường dùng với 都 / 也 / 不."},
+"东西": {pinyin:"dōngxi", hanviet:"[Đông Tây]", pos:"n", meaning:"Đồ vật, thứ", exampleChinese:"这个东西很有用。", exampleVietnamese:"→ Thứ này rất hữu ích.", usage:"买东西 = mua đồ; 什么东西 = thứ gì."},
+"给不了": {pinyin:"gěi bù liǎo", hanviet:"[Cấp Bất Liễu]", pos:"v", meaning:"Không thể cho, không thể đem lại", exampleChinese:"这些钱给不了你真正的幸福。", exampleVietnamese:"→ Số tiền này không thể mang lại cho bạn hạnh phúc thật sự.", usage:"给 + 不 + 了 = không thể cho/đem lại; 了 ở đây là bổ ngữ khả năng."},
+"即使": {pinyin:"jíshǐ", hanviet:"[Tức Sử]", pos:"conj", meaning:"Dù cho, cho dù", exampleChinese:"即使下雨，我也会去。", exampleVietnamese:"→ Dù trời mưa, tôi vẫn sẽ đi.", usage:"即使……也…… = dù… vẫn…"},
+"最后": {pinyin:"zuìhòu", hanviet:"[Tối Hậu]", pos:"adv", meaning:"Cuối cùng", exampleChinese:"最后，他还是同意了。", exampleVietnamese:"→ Cuối cùng, anh ấy vẫn đồng ý.", usage:"最后 + mệnh đề; cuối cùng trong trình tự hoặc kết quả."},
+"关系": {pinyin:"guānxi", hanviet:"[Quan Hệ]", pos:"n", meaning:"Quan hệ; việc, vấn đề", exampleChinese:"这件事跟你没有关系。", exampleVietnamese:"→ Việc này không liên quan đến bạn.", usage:"没关系 = không sao/không liên quan; 跟……有关系 = có liên quan tới…"},
+"因为": {pinyin:"yīnwèi", hanviet:"[Nhân Vi]", pos:"conj", meaning:"Bởi vì", exampleChinese:"因为下雨，所以我们没去。", exampleVietnamese:"→ Bởi vì trời mưa nên chúng tôi không đi.", usage:"因为……所以…… = bởi vì… nên…; có thể lược bỏ 所以."},
+"至少": {pinyin:"zhìshǎo", hanviet:"[Chí Thiểu]", pos:"adv", meaning:"Ít nhất", exampleChinese:"你至少应该试一次。", exampleVietnamese:"→ Bạn ít nhất nên thử một lần.", usage:"至少 + số lượng / động từ; nhấn mạnh mức tối thiểu."},
+"已经": {pinyin:"yǐjīng", hanviet:"[Dĩ Kinh]", pos:"adv", meaning:"Đã", exampleChinese:"我已经做完作业了。", exampleVietnamese:"→ Tôi đã làm xong bài tập rồi.", usage:"已经 + động từ + 了 = đã… rồi."},
+"努力": {pinyin:"nǔlì", hanviet:"[Nỗ Lực]", pos:"v/a", meaning:"Nỗ lực, chăm chỉ", exampleChinese:"只要努力，就会进步。", exampleVietnamese:"→ Chỉ cần nỗ lực thì sẽ tiến bộ.", usage:"努力 + động từ = cố gắng làm…; 很努力 = rất chăm chỉ."},
+"而且": {pinyin:"érqiě", hanviet:"[Nhi Thả]", pos:"conj", meaning:"Hơn nữa, hơn nữa là", exampleChinese:"这家饭店不但便宜，而且很好吃。", exampleVietnamese:"→ Nhà hàng này không những rẻ mà còn rất ngon.", usage:"不但……而且…… = không những… mà còn…"},
+"总结": {pinyin:"zǒngjié", hanviet:"[Tổng Kết]", pos:"v/n", meaning:"Tổng kết, đúc kết", exampleChinese:"我们要从错误中总结经验。", exampleVietnamese:"→ Chúng ta cần tổng kết kinh nghiệm từ sai lầm.", usage:"总结经验 = đúc kết kinh nghiệm; 总结出 + kết quả."},
+"有用": {pinyin:"yǒuyòng", hanviet:"[Hữu Dụng]", pos:"a", meaning:"Hữu ích, có ích", exampleChinese:"这本书对我很有用。", exampleVietnamese:"→ Quyển sách này rất hữu ích với tôi.", usage:"对……有用 = có ích đối với…"},
+"经验": {pinyin:"jīngyàn", hanviet:"[Kinh Nghiệm]", pos:"n", meaning:"Kinh nghiệm", exampleChinese:"他有很多工作经验。", exampleVietnamese:"→ Anh ấy có nhiều kinh nghiệm làm việc.", usage:"工作经验 = kinh nghiệm làm việc; 积累经验 = tích lũy kinh nghiệm."},
+"积累": {pinyin:"jīlěi", hanviet:"[Tích Lũy]", pos:"v", meaning:"Tích lũy", exampleChinese:"学习需要慢慢积累。", exampleVietnamese:"→ Học tập cần tích lũy dần dần.", usage:"积累 + kinh nghiệm/kiến thức; 通过……积累……"},
+"成功": {pinyin:"chénggōng", hanviet:"[Thành Công]", pos:"n/v", meaning:"Thành công", exampleChinese:"每一个人都希望成功。", exampleVietnamese:"→ Mỗi người đều hy vọng thành công.", usage:"取得成功 = giành được thành công."},
+"自然": {pinyin:"zìrán", hanviet:"[Tự Nhiên]", pos:"adv", meaning:"Tự nhiên, tất nhiên", exampleChinese:"你认真准备，自然会有好结果。", exampleVietnamese:"→ Bạn chuẩn bị nghiêm túc thì tự nhiên sẽ có kết quả tốt.", usage:"……，自然…… = … thì đương nhiên…; cũng có thể là danh từ: 大自然."},
+"离": {pinyin:"lí", hanviet:"[Ly]", pos:"prep", meaning:"Cách, rời xa", exampleChinese:"我家离公司很近。", exampleVietnamese:"→ Nhà tôi cách công ty rất gần.", usage:"A 离 B + xa/gần; 离……越来越近 = ngày càng gần…"},
+  "成功": {pinyin:"chénggōng", hanviet:"[Thành Công]", pos:"n/v", meaning:"Thành công", exampleChinese:"每一个人都希望成功。", exampleVietnamese:"→ Mỗi người đều hy vọng thành công.", usage:"取得成功 = giành được thành công."},
+  "困难": {pinyin:"kùnnán", hanviet:"[Khốn Nan]", pos:"n/adj", meaning:"Khó khăn", exampleChinese:"在成功之前会遇到很多困难。", exampleVietnamese:"→ Trước khi thành công sẽ gặp rất nhiều khó khăn.", usage:"遇到困难 = gặp khó khăn."},
+  "放弃": {pinyin:"fàngqì", hanviet:"[Phóng Khí]", pos:"v", meaning:"Từ bỏ", exampleChinese:"有些人遇到困难就放弃。", exampleVietnamese:"→ Có người gặp khó khăn liền từ bỏ.", usage:"放弃 + danh từ/việc gì = từ bỏ cái gì."},
+  "办法": {pinyin:"bànfǎ", hanviet:"[Biện Pháp]", pos:"n", meaning:"Cách, biện pháp", exampleChinese:"有些人遇到困难却想办法解决它。", exampleVietnamese:"→ Có người gặp khó khăn lại nghĩ cách giải quyết nó.", usage:"想办法 = nghĩ cách."},
+  "解决": {pinyin:"jiějué", hanviet:"[Giải Quyết]", pos:"v", meaning:"Giải quyết", exampleChinese:"想办法解决它。", exampleVietnamese:"→ Nghĩ cách giải quyết nó.", usage:"解决问题 = giải quyết vấn đề."},
+  "态度": {pinyin:"tàidù", hanviet:"[Thái Độ]", pos:"n", meaning:"Thái độ", exampleChinese:"对困难的态度不同。", exampleVietnamese:"→ Thái độ đối với khó khăn khác nhau.", usage:"对...的态度 = thái độ đối với..."},
+  "结果": {pinyin:"jiéguǒ", hanviet:"[Kết Quả]", pos:"n", meaning:"Kết quả", exampleChinese:"结果也是不一样的。", exampleVietnamese:"→ Kết quả cũng khác nhau.", usage:"结果 đứng đầu câu = kết quả là..."},
+  "材料": {pinyin:"cáiliào", hanviet:"[Tài Liệu]", pos:"n", meaning:"Vật liệu, nguyên liệu", exampleChinese:"爱迪生在找了上千种材料后。", exampleVietnamese:"→ Edison sau khi tìm hơn ngàn loại vật liệu.", usage:"找材料 = tìm vật liệu."},
+  "点亮": {pinyin:"diǎnliàng", hanviet:"[Điểm Lượng]", pos:"v", meaning:"Thắp sáng, làm sáng lên", exampleChinese:"找到了能点亮电灯的材料。", exampleVietnamese:"→ Tìm được vật liệu có thể thắp sáng bóng đèn.", usage:"点亮 + danh từ (đèn, ước mơ...) = thắp sáng cái gì."},
+  "取得": {pinyin:"qǔdé", hanviet:"[Thủ Đắc]", pos:"v", meaning:"Đạt được, giành được", exampleChinese:"取得成功的人往往都经历过许多失败。", exampleVietnamese:"→ Người đạt được thành công thường đều đã trải qua nhiều thất bại.", usage:"取得 + thành quả (成功/成绩) = đạt được..."},
+  "经历": {pinyin:"jīnglì", hanviet:"[Kinh Lịch]", pos:"v/n", meaning:"Trải qua, kinh nghiệm", exampleChinese:"往往都经历过许多失败。", exampleVietnamese:"→ Thường đều đã trải qua nhiều thất bại.", usage:"经历过 + việc gì = đã từng trải qua..."},
+  "失败": {pinyin:"shībài", hanviet:"[Thất Bại]", pos:"n/v", meaning:"Thất bại", exampleChinese:"经历过许多失败。", exampleVietnamese:"→ Đã trải qua nhiều thất bại.", usage:"失败是成功之母 = thất bại là mẹ thành công (thành ngữ liên quan)."},
+  "区别": {pinyin:"qūbié", hanviet:"[Khu Biệt]", pos:"n/v", meaning:"Sự khác biệt", exampleChinese:"他们和普通人的区别就是他们都坚持了下来。", exampleVietnamese:"→ Sự khác biệt giữa họ và người bình thường là họ đều đã kiên trì.", usage:"A和B的区别 = sự khác biệt giữa A và B."},
+  "普通人": {pinyin:"pǔtōngrén", hanviet:"[Phổ Thông Nhân]", pos:"n", meaning:"Người bình thường", exampleChinese:"他们和普通人的区别。", exampleVietnamese:"→ Sự khác biệt giữa họ và người bình thường.", usage:"普通人 = người bình thường, người thường."},
+  "坚持": {pinyin:"jiānchí", hanviet:"[Kiên Trì]", pos:"v", meaning:"Kiên trì, kiên định", exampleChinese:"他们都坚持了下来。", exampleVietnamese:"→ Họ đều đã kiên trì đến cùng.", usage:"坚持 + động từ/下来 = kiên trì làm gì đến cùng."},
+  "努力": {pinyin:"nǔlì", hanviet:"[Nỗ Lực]", pos:"v/n", meaning:"Nỗ lực, cố gắng", exampleChinese:"我们也要做出100%的努力。", exampleVietnamese:"→ Chúng ta cũng phải bỏ ra 100% nỗ lực.", usage:"做出努力 = bỏ ra nỗ lực."},
+  "暂时": {pinyin:"zànshí", hanviet:"[Tạm Thời]", pos:"adj/adv", meaning:"Tạm thời", exampleChinese:"困难只是暂时的。", exampleVietnamese:"→ Khó khăn chỉ là tạm thời.", usage:"...只是暂时的 = ...chỉ là tạm thời."},
+  "勇敢": {pinyin:"yǒnggǎn", hanviet:"[Dũng Cảm]", pos:"adj", meaning:"Dũng cảm", exampleChinese:"我们勇敢地面对困难。", exampleVietnamese:"→ Chúng ta dũng cảm đối mặt với khó khăn.", usage:"勇敢地 + động từ = một cách dũng cảm làm gì."},
+  "面对": {pinyin:"miànduì", hanviet:"[Diện Đối]", pos:"v", meaning:"Đối mặt", exampleChinese:"勇敢地面对困难。", exampleVietnamese:"→ Dũng cảm đối mặt với khó khăn.", usage:"面对 + khó khăn/vấn đề = đối mặt với..."}  
 });
 
 /* ================================================= */
@@ -6160,11 +6238,212 @@ function ensureLessonVocabulary() {
 /* ================= LOAD =========================== */
 /* ================================================= */
 
+/* ================================================= */
+/* ================== IN BÀI HỌC =================== */
+/* ================================================= */
+
+function togglePrintMenu() {
+    const menu = document.getElementById("printMenu");
+    if (menu) menu.classList.toggle("show");
+}
+
+
+function escapePrintHTML(value) {
+    return String(value || "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/\"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+}
+
+
+function buildPrintNotes(textBlock) {
+    const pinned = getPinnedWords().filter(function(word) {
+        return textBlock && textBlock.querySelector(
+            '.word[data-word="' + CSS.escape(word) + '"]'
+        );
+    });
+    const positions = getPinnedPositions();
+
+    if (!pinned.length) {
+        return '<p class="print-empty-note">Chưa có từ nào được hiện ở phần ghi chú.</p>';
+    }
+
+    return pinned.map(function(word) {
+        const data = vocabulary[word];
+        if (!data) return "";
+
+        const sourceId = positions[word] || "";
+
+        return '<div class="print-note-card" data-word="' +
+            escapePrintHTML(word) + '" data-source-id="' +
+            escapePrintHTML(sourceId) + '">' +
+            '<strong>' + escapePrintHTML(word) + '</strong>' +
+            '<span>/' + escapePrintHTML(data.pinyin) + '/</span>' +
+            '<span>(' + escapePrintHTML(shortPOS(data.pos)) + ')</span>' +
+            '<span>' + escapePrintHTML(shortMeaning(data.meaning)) + '</span>' +
+            '</div>';
+    }).join("");
+}
+
+
+function drawPrintConnectorLines(printWindow) {
+    const printDocument = printWindow.document;
+
+    printDocument.querySelectorAll(".print-reading").forEach(function(page) {
+        const layout = page.querySelector(".print-layout");
+        const svg = page.querySelector(".print-connector");
+
+        if (!layout || !svg) return;
+
+        const layoutRect = layout.getBoundingClientRect();
+        svg.setAttribute("viewBox", "0 0 " + layoutRect.width + " " + layoutRect.height);
+        svg.setAttribute("width", layoutRect.width);
+        svg.setAttribute("height", layoutRect.height);
+        svg.innerHTML = "";
+
+        page.querySelectorAll(".print-note-card").forEach(function(card) {
+            const sourceId = card.dataset.sourceId;
+            let wordElement = sourceId
+                ? page.querySelector('.print-text .word[data-word-id="' + sourceId + '"]')
+                : null;
+
+            if (!wordElement) {
+                wordElement = page.querySelector(
+                    '.print-text .word[data-word="' + CSS.escape(card.dataset.word) + '"]'
+                );
+            }
+
+            if (!wordElement) return;
+
+            const wordRect = wordElement.getBoundingClientRect();
+            const cardRect = card.getBoundingClientRect();
+            const startX = wordRect.right - layoutRect.left;
+            const startY = wordRect.top + wordRect.height / 2 - layoutRect.top;
+            const endX = cardRect.left - layoutRect.left;
+            const endY = cardRect.top + cardRect.height / 2 - layoutRect.top;
+            const turnX = Math.max(startX + 8, endX - 11);
+            const path = printDocument.createElementNS("http://www.w3.org/2000/svg", "path");
+
+            path.setAttribute("d", "M " + startX + " " + startY + " H " + turnX + " V " + endY + " H " + endX);
+            path.setAttribute("fill", "none");
+            path.setAttribute("stroke", "#b9d6c0");
+            path.setAttribute("stroke-width", "1.1");
+            path.setAttribute("stroke-dasharray", "4 3");
+            svg.appendChild(path);
+        });
+    });
+}
+
+
+function printLesson(mode) {
+    const menu = document.getElementById("printMenu");
+    if (menu) menu.classList.remove("show");
+
+    const text1 = document.getElementById("readingText1");
+    const text2 = document.getElementById("readingText2");
+    const pageTitle = document.querySelector(".lesson-title h1");
+    const pageSubtitle = document.querySelector(".lesson-title p");
+
+    if (!text1 || !text2) return;
+
+    const printWindow = window.open("", "_blank");
+    if (!printWindow) {
+        alert("Trình duyệt đang chặn cửa sổ in. Hãy cho phép pop-up rồi thử lại nhé.");
+        return;
+    }
+
+    const practiceClass = mode === "practice" ? " practice-mode" : " color-mode";
+    const title = escapePrintHTML(pageTitle ? pageTitle.textContent : "Bài đọc");
+    const subtitle = escapePrintHTML(pageSubtitle ? pageSubtitle.textContent : "");
+
+    printWindow.document.open();
+    printWindow.document.write(`<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<title>${title}</title>
+<style>
+@page { size: A4 portrait; margin: 10mm; }
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; background: #fff; color: #222; }
+body { font-family: "Times New Roman", "Noto Serif SC", serif; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+.print-sheet { margin: 0; padding: 0; }
+.print-reading { min-height: 277mm; display: flex; flex-direction: column; break-after: page; page-break-after: always; }
+.print-reading:last-child { break-after: auto; page-break-after: auto; }
+.print-page-heading { border-bottom: 1px solid #222; padding: 0 0 3mm; margin: 0 0 4mm; }
+.print-page-heading h1 { margin: 0; font-size: 18pt; line-height: 1.1; }
+.print-page-heading p { margin: 1.5mm 0 0; font: 9.5pt Arial, sans-serif; color: #222; }
+.print-page-heading h2 { margin: 2mm 0 0; font: 700 12pt Arial, sans-serif; color: #222; }
+.print-layout { display: grid; grid-template-columns: 74fr 26fr; position: relative; align-items: stretch; }
+.print-main { min-width: 0; position: relative; z-index: 2; padding-right: 4mm; border-right: 0.35mm solid #e3e3e3; }
+.print-divider { display: none; }
+.print-sidebar { min-width: 0; position: relative; z-index: 2; padding: 1mm 0 0 4mm; }
+.print-connector { position: absolute; inset: 0; z-index: 1; pointer-events: none; overflow: visible; }
+.print-text { width: 100%; min-width: 0; font-family: KaiTi, STKaiti, "Kaiti SC", "DFKai-SB", serif; font-size: 20pt; line-height: 1.62; color: #222; text-align: left; }
+.print-text .word { cursor: default; padding: 2px 1px; border-radius: 4px; text-decoration-thickness: 1px; text-underline-offset: 4px; }
+.print-text .phrase-mark { padding: 1px 3px; border-radius: 4px; }
+.print-text .phrase-mark .word { padding: 0; border-radius: 0; }
+.highlight-green { background: #b8e2c4 !important; }
+.highlight-blue { background: #b9d9f4 !important; }
+.highlight-gray { background: #d0d0d0 !important; }
+.highlight-yellow { background: #f8e58b !important; }
+.highlight-orange { background: #f5bd80 !important; }
+.highlight-purple { background: #d0b8ed !important; }
+.print-notes { min-width: 0; }
+.print-notes h3 { margin: 0 0 3mm; font: 700 10pt Arial, sans-serif; color: #222; }
+.print-note-list { display: grid; gap: 7mm; }
+.print-note-card { position: relative; padding: 3mm 3.5mm; border: 1px solid #eadfc4; border-radius: 3mm; background: #fffbf1; box-shadow: 0 1.2mm 2.5mm rgba(94, 74, 36, 0.08); font: 10pt Arial, sans-serif; color: #111; }
+.print-note-card strong { margin-right: 1.5mm; }
+.print-note-card span { margin-right: 1.5mm; }
+.print-empty-note { margin: 0; font: italic 8.5pt Arial, sans-serif; color: #555; }
+.practice-lines { width: 74%; height: 55mm; flex: 0 0 55mm; margin-top: 4mm; display: grid; grid-template-rows: repeat(5, 11mm); }
+.practice-lines div { border-bottom: 0.35mm solid #d7d7d7; }
+.practice-mode .print-text, .practice-mode .print-text * { color: #b9b9b9 !important; text-decoration-color: #b9b9b9 !important; }
+.practice-mode .print-text { font-size: 20pt; line-height: 1.62; }
+.practice-mode .print-note-card, .practice-mode .print-notes h3, .practice-mode .print-page-heading, .practice-mode .print-page-heading p, .practice-mode .print-page-heading h2 { color: #111 !important; }
+</style>
+</head>
+<body>
+<main class="print-sheet${practiceClass}">
+  <article class="print-reading">
+    <header class="print-page-heading"><h1>${title}</h1><p>${subtitle}</p><h2>课文 4</h2></header>
+    <section class="print-layout">
+      <svg class="print-connector"></svg>
+      <div class="print-main"><div class="print-text">${text1.innerHTML}</div></div>
+      <div class="print-divider"></div>
+      <aside class="print-sidebar print-notes"><h3>Ghi chú từ vựng</h3><div class="print-note-list">${buildPrintNotes(text1)}</div></aside>
+    </section>
+    <div class="practice-lines"><div></div><div></div><div></div><div></div><div></div></div>
+  </article>
+  <article class="print-reading">
+    <header class="print-page-heading"><h1>${title}</h1><p>${subtitle}</p><h2>课文 5</h2></header>
+    <section class="print-layout">
+      <svg class="print-connector"></svg>
+      <div class="print-main"><div class="print-text">${text2.innerHTML}</div></div>
+      <div class="print-divider"></div>
+      <aside class="print-sidebar print-notes"><h3>Ghi chú từ vựng</h3><div class="print-note-list">${buildPrintNotes(text2)}</div></aside>
+    </section>
+    <div class="practice-lines"><div></div><div></div><div></div><div></div><div></div></div>
+  </article>
+</main>
+</body>
+</html>`);
+    printWindow.document.close();
+
+    setTimeout(function() {
+        drawPrintConnectorLines(printWindow);
+        printWindow.focus();
+        printWindow.print();
+    }, 300);
+}
+
 document.getElementById("readingText1").dataset.rawText = "如果你想做什么事情，那就勇敢地去做，不要担心结果，不要考虑会不会失败。要是太看重结果，失败就会给人们带来很多烦恼。我们应该把注意力放在做事情的过程中，这样你会在做的过程中发现解决问题的快乐，这是其他任何东西都给不了的。即使最后失败了也没有关系，因为至少你已经努力过，而且我们还可以从失败中总结出有用的经验，有了这些积累，成功自然离我们越来越近。";
 document.getElementById("readingText2").dataset.rawText = "每一个人都希望成功，可是很多时候，在成功之前会遇到很多困难。有些人遇到困难就放弃，而有些人遇到困难却想办法解决它。对困难的态度不同，结果也是不一样的。爱迪生就是在找了上千种材料后，才找到了能点亮电灯的材料。取得成功的人往往都经历过许多失败，他们和普通人的区别就是他们都坚持了下来。所以就算只有1%的希望，我们也要做出100%的努力。困难只是暂时的，“阳光总在风雨后”，只有我们勇敢地面对困难，才能有希望取得成功。";
 
 Object.keys(vocabulary).forEach(function(word) { delete vocabulary[word]; });
-[["勇敢","yǒnggǎn","[Dũng Cảm]","a","Dũng cảm"],["担心","dānxīn","[Đam Tâm]","v","Lo lắng"],["结果","jiéguǒ","[Kết Quả]","n","Kết quả"],["考虑","kǎolǜ","[Khảo Lự]","v","Cân nhắc"],["失败","shībài","[Thất Bại]","v / n","Thất bại"],["看重","kànzhòng","[Khán Trọng]","v","Coi trọng"],["烦恼","fánnǎo","[Phiền Não]","n","Phiền não"],["注意力","zhùyìlì","[Chú Ý Lực]","n","Sự chú ý"],["过程","guòchéng","[Quá Trình]","n","Quá trình"],["解决","jiějué","[Giải Quyết]","v","Giải quyết"],["即使","jíshǐ","[Tức Sử]","conj","Cho dù"],["至少","zhìshǎo","[Chí Thiểu]","adv","Ít nhất"],["努力","nǔlì","[Nỗ Lực]","v / n","Nỗ lực"],["总结","zǒngjié","[Tổng Kết]","v","Tổng kết"],["经验","jīngyàn","[Kinh Nghiệm]","n","Kinh nghiệm"],["积累","jīlěi","[Tích Lũy]","v / n","Tích lũy"],["成功","chénggōng","[Thành Công]","v / n","Thành công"],["越来越","yuèláiyuè","[Việt Lai Việt]","adv","Càng ngày càng"],["困难","kùnnan","[Khốn Nan]","n / a","Khó khăn"],["放弃","fàngqì","[Phóng Khí]","v","Từ bỏ"],["态度","tàidu","[Thái Độ]","n","Thái độ"],["爱迪生","Àidíshēng","[Ái Địch Sinh]","n","Edison"],["材料","cáiliào","[Tài Liệu]","n","Vật liệu"],["点亮","diǎnliàng","[Điểm Lượng]","v","Thắp sáng"],["经历","jīnglì","[Kinh Lịch]","v","Trải qua"],["区别","qūbié","[Khu Biệt]","n","Sự khác biệt"],["坚持","jiānchí","[Kiên Trì]","v","Kiên trì"],["暂时","zànshí","adv","Tạm thời"],["面对","miànduì","[Diện Đối]","v","Đối mặt"]].forEach(function(x){vocabulary[x[0]]={pinyin:x[1],hanviet:x[2]||"—",pos:x[3],meaning:x[4],exampleChinese:x[0],exampleVietnamese:"",usage:"Từ vựng trong Lesson 9."};});
+[["勇敢","yǒnggǎn","[Dũng Cảm]","a","Dũng cảm"],["担心","dānxīn","[Đam Tâm]","v","Lo lắng"],["结果","jiéguǒ","[Kết Quả]","n","Kết quả"],["考虑","kǎolǜ","[Khảo Lự]","v","Cân nhắc"],["失败","shībài","[Thất Bại]","v / n","Thất bại"],["看重","kànzhòng","[Khán Trọng]","v","Coi trọng"],["烦恼","fánnǎo","[Phiền Não]","n","Phiền não"],["注意力","zhùyìlì","[Chú Ý Lực]","n","Sự chú ý"],["过程","guòchéng","[Quá Trình]","n","Quá trình"],["解决","jiějué","[Giải Quyết]","v","Giải quyết"],["即使","jíshǐ","[Tức Sử]","conj","Cho dù"],["至少","zhìshǎo","[Chí Thiểu]","adv","Ít nhất"],["努力","nǔlì","[Nỗ Lực]","v / n","Nỗ lực"],["总结","zǒngjié","[Tổng Kết]","v","Tổng kết"],["经验","jīngyàn","[Kinh Nghiệm]","n","Kinh nghiệm"],["积累","jīlěi","[Tích Lũy]","v / n","Tích lũy"],["成功","chénggōng","[Thành Công]","v / n","Thành công"],["越来越","yuèláiyuè","[Việt Lai Việt]","adv","Càng ngày càng"],["困难","kùnnan","[Khốn Nan]","n / a","Khó khăn"],["放弃","fàngqì","[Phóng Khí]","v","Từ bỏ"],["态度","tàidu","[Thái Độ]","n","Thái độ"],["爱迪生","Àidíshēng","[Ái Địch Sinh]","n","Edison"],["材料","cáiliào","[Tài Liệu]","n","Vật liệu"],["点亮","diǎnliàng","[Điểm Lượng]","v","Thắp sáng"],["经历","jīnglì","[Kinh Lịch]","v","Trải qua"],["区别","qūbié","[Khu Biệt]","n","Sự khác biệt"],["坚持","jiānchí","[Kiên Trì]","v","Kiên trì"],["暂时","zànshí","adv","Tạm thời"],["面对","miànduì","[Diện Đối]","v","Đối mặt"],["希望","xīwàng","[Hy Vọng]","n / v","Hy vọng"],["办法","bànfǎ","[Biện Pháp]","n","Cách, biện pháp"],["取得","qǔdé","[Thủ Đắc]","v","Đạt được, giành được"],["普通人","pǔtōngrén","[Phổ Thông Nhân]","n","Người bình thường"]].forEach(function(x){vocabulary[x[0]]={pinyin:x[1],hanviet:x[2]||"—",pos:x[3],meaning:x[4],exampleChinese:x[0],exampleVietnamese:"",usage:"Từ vựng trong Lesson 9."};});
 
 renderLessonWords();
 ensureLessonVocabulary();
