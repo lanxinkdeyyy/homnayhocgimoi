@@ -1,0 +1,1037 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bài hát · Học qua bài hát</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .song-sync-panel {
+            margin: 10px 0 14px;
+            padding: 10px 14px;
+            border: 1px dashed #b8cdbf;
+            border-radius: 14px;
+            background: rgba(243, 248, 241, 0.8);
+        }
+        .song-sync-panel summary { cursor: pointer; color: #63816c; font-weight: 700; }
+        .song-sync-row { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-top: 10px; }
+        .song-sync-panel button {
+            padding: 7px 12px; border: 0; border-radius: 999px;
+            background: #e5efe6; color: #55705e; cursor: pointer; font-weight: 700;
+        }
+        .song-sync-panel button.primary { background: #71947b; color: #fff; }
+        .song-sync-panel button.danger { background: #f3e1e1; color: #a45a5a; }
+        .song-sync-panel button:disabled { opacity: .45; cursor: default; }
+        .song-sync-label { color: #7f7772; font-size: 13px; }
+        .song-sync-hint { margin: 8px 0 0; color: #7f7772; font-size: 13px; line-height: 1.6; }
+        .song-tap-next {
+            margin-top: 10px; padding: 10px 14px; border-radius: 12px;
+            background: #fff; border: 1px solid #d3dfd4; font-size: 18px; color: #3f6148;
+        }
+        .song-tap-next small { display: block; color: #8d8580; font-size: 12px; margin-bottom: 3px; }
+
+        /* Chữ chạy theo nhạc: từng từ sáng dần trong dòng đang hát */
+        .lyric-line .song-word { transition: color .12s linear, background .2s ease; }
+        .lyric-line.active .song-word { color: #8fa596; }
+        .lyric-line.active .song-word.sung { color: #2f6b45; }
+        .lyric-line.active .song-word.singing { color: #1f8a4c; text-shadow: 0 0 .5px #1f8a4c; }
+        .lyric-line.active { transform: scale(1.03); }
+        .lyric-line.tap-target { outline: 2px dashed #71947b; outline-offset: -2px; }
+        .song-lyrics-scroll { scroll-behavior: auto; }
+
+    </style>
+</head>
+
+<body class="song-study-page">
+    <main class="song-study-container">
+        <a href="songs.html" class="back-link">← Quay lại danh sách bài hát</a>
+
+        <header class="song-study-header">
+            <div>
+                <p class="songs-eyebrow" id="songEyebrow"></p>
+                <h1 id="songTitle"></h1>
+                <p id="songSubtitle"></p>
+            </div>
+
+            <em id="detailStatus" class="song-status" data-status="new">
+                Chưa bắt đầu
+            </em>
+        </header>
+
+        <div id="songStudyLayout" class="song-study-layout">
+            <svg id="songConnectorSvg" class="song-connector-svg"></svg>
+
+            <section class="song-main-panel">
+                <div class="song-player-card">
+                    <div id="songRecord" class="song-record">
+                        <img id="songCover" src="" alt="Ảnh bìa">
+                        <span class="song-record-hole"></span>
+                    </div>
+
+                    <div class="song-player-info">
+                        <h2 id="songPlayerTitle"></h2>
+                        <p id="songPlayerArtist"></p>
+
+                        <div class="song-controls">
+                            <button
+                                id="songPlayButton"
+                                class="song-play-button"
+                                type="button"
+                                aria-label="Phát hoặc tạm dừng">
+                                ▶
+                            </button>
+
+                            <span id="songTime" class="song-time">0:00 / 0:00</span>
+
+                            <input
+                                id="songProgress"
+                                class="song-progress"
+                                type="range"
+                                min="0"
+                                max="100"
+                                step="0.1"
+                                value="0"
+                                aria-label="Thời gian bài hát">
+                        </div>
+
+                        <audio id="songAudio" preload="metadata"></audio>
+                    </div>
+                </div>
+
+                <section class="song-lyrics-card">
+                    <h3>🎵 Lời bài hát</h3>
+                    <p class="song-lyrics-help">
+                        Bấm vào một dòng để tua audio · bấm vào một từ để mở thẻ từ.
+                    </p>
+
+                    <details id="songSyncPanel" class="song-sync-panel">
+                        <summary>⏱ Canh thời gian lời (khi chữ chạy lệch nhạc)</summary>
+
+                        <div class="song-sync-row">
+                            <span class="song-sync-label">Chỉnh nhanh toàn bài:</span>
+                            <button id="songOffsetM5" type="button">−0,5s</button>
+                            <button id="songOffsetM1" type="button">−0,1s</button>
+                            <button id="songOffsetReset" type="button">Đặt lại</button>
+                            <button id="songOffsetP1" type="button">+0,1s</button>
+                            <button id="songOffsetP5" type="button">+0,5s</button>
+                            <span id="songOffsetLabel" class="song-sync-label">0,0 giây</span>
+                        </div>
+                        <p class="song-sync-hint">
+                            Chữ chạy <b>sớm hơn</b> giọng hát → bấm “+”. Chữ chạy <b>trễ hơn</b> giọng hát → bấm “−”.
+                        </p>
+
+                        <div class="song-sync-row">
+                            <button id="songTapStart" type="button" class="primary">🎯 Gõ nhịp để canh chuẩn từng dòng</button>
+                            <button id="songTapNow" type="button" class="primary" hidden>⏺ Dòng này bắt đầu (Space)</button>
+                            <button id="songTapBack" type="button" hidden>↩ Lùi 1 dòng</button>
+                            <button id="songTapStop" type="button" hidden>⏹ Dừng &amp; lưu</button>
+                        </div>
+                        <div id="songTapNext" class="song-tap-next" hidden></div>
+                        <p class="song-sync-hint" id="songTapHint">
+                            Bấm nút trên, bài hát sẽ phát. Nghe nhạc và bấm <b>Space</b> (hoặc nút “Dòng này bắt đầu”)
+                            đúng lúc mỗi câu bắt đầu được hát. Muốn bắt đầu từ giữa bài: bấm vào dòng lời rồi mới bắt đầu gõ.
+                        </p>
+
+                        <div class="song-sync-row">
+                            <button id="songTimesCopy" type="button">📋 Copy mốc thời gian</button>
+                            <button id="songTimesClear" type="button" class="danger">Xóa mốc đã canh</button>
+                            <span id="songSyncMessage" class="song-sync-label"></span>
+                        </div>
+                    </details>
+
+
+                    <div id="songLyricsScroll" class="song-lyrics-scroll"></div>
+                </section>
+
+                <section class="song-saved-card">
+                    <h3>♡ Từ vựng đã lưu</h3>
+                    <div id="songSavedWords">Chưa có từ nào được lưu.</div>
+                </section>
+            </section>
+
+            <div class="song-layout-divider"></div>
+
+            <aside id="songNoteSidebar" class="song-note-sidebar">
+                <h3>📌 Thẻ ghi chú</h3>
+                <div class="song-note-empty">Chưa có từ nào được ghim.</div>
+            </aside>
+        </div>
+    </main>
+
+    <div id="songWordPopup" class="song-word-popup">
+        <button id="songPopupClose" class="song-popup-close" type="button">×</button>
+        <h2 id="songPopupWord">示例</h2>
+        <p id="songPopupPinyin" class="popup-pinyin">shìlì</p>
+        <p id="songPopupMeta" class="popup-meta">thị lệ · danh từ</p>
+        <p id="songPopupMeaning">Ví dụ</p>
+
+        <div class="song-popup-actions">
+            <button id="songSaveWord" type="button">♡ Lưu từ</button>
+            <button id="songPinWord" type="button">📌 Hiện từ</button>
+        </div>
+
+        <div class="song-highlight-tools" aria-label="Đánh dấu từ">
+            <button class="song-color-button green" data-color="green" type="button"></button>
+            <button class="song-color-button blue" data-color="blue" type="button"></button>
+            <button class="song-color-button yellow" data-color="yellow" type="button"></button>
+            <button class="song-color-button orange" data-color="orange" type="button"></button>
+            <button class="song-color-button purple" data-color="purple" type="button"></button>
+            <button class="song-color-button gray" data-color="gray" type="button"></button>
+            <button id="songUnderlineWord" class="song-underline-button" type="button">U</button>
+        </div>
+    </div>
+
+    
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabase.js"></script>
+    <script src="songs-data.js"></script>
+    <script>
+const SONG_NO = Number(new URLSearchParams(location.search).get("id"));
+        const SONG = (window.SONGS || {})[SONG_NO];
+
+        if (!SONG) {
+            document.body.innerHTML =
+                '<div style="max-width:600px;margin:60px auto;font-family:Arial,sans-serif;text-align:center;line-height:1.8">' +
+                '<h2>Không tìm thấy bài hát</h2>' +
+                '<p>Hãy mở bằng link dạng <code>song-lesson.html?id=1</code></p>' +
+                '<p><a href="songs.html">← Về danh sách bài hát</a></p></div>';
+            throw new Error("Song not found: " + SONG_NO);
+        }
+
+        const SONG_PROGRESS_ID = SONG.progressId || (1000 + SONG_NO);
+        const STORAGE_PREFIX = "lesson" + SONG_PROGRESS_ID;
+        const LYRIC_OFFSET_KEY = STORAGE_PREFIX + "LyricsOffset";
+        const LYRIC_TIMES_KEY = STORAGE_PREFIX + "LyricTimes";
+        const TAP_LATENCY = 0.12;          /* độ trễ phản xạ khi gõ nhịp (giây) */
+        const songVocabulary = SONG.vocab || {};
+
+        /* ---------- Đổ thông tin bài vào trang ---------- */
+        document.title = SONG.titleZh + " · " + SONG.titleVi + " · Học qua bài hát";
+        document.getElementById("songEyebrow").textContent =
+            "中文歌曲 · Bài hát " + String(SONG_NO).padStart(2, "0");
+        document.getElementById("songTitle").textContent = SONG.titleZh + " · " + SONG.titleVi;
+        document.getElementById("songSubtitle").textContent = SONG.pinyin + " · " + SONG.artist;
+        document.getElementById("songPlayerTitle").textContent = SONG.titleZh + " · " + SONG.titleVi;
+        document.getElementById("songPlayerArtist").textContent = SONG.artist;
+        const coverImg = document.getElementById("songCover");
+        coverImg.src = SONG.cover;
+        coverImg.alt = "Ảnh bìa " + SONG.titleZh;
+        document.getElementById("songAudio").src = SONG.audio;
+        document.getElementById("songProgress").max = SONG.duration || 100;
+
+        const audio = document.getElementById("songAudio");
+        const playButton = document.getElementById("songPlayButton");
+        const progress = document.getElementById("songProgress");
+        const timeLabel = document.getElementById("songTime");
+        const record = document.getElementById("songRecord");
+        const lyricsViewport = document.getElementById("songLyricsScroll");
+        const offsetLabel = document.getElementById("songOffsetLabel");
+        const syncMessage = document.getElementById("songSyncMessage");
+
+        let progressSync = null;
+        let currentWordElement = null;
+        let currentWord = "";
+        let activeLineId = "";
+        let lyricOffset = Number(localStorage.getItem(LYRIC_OFFSET_KEY)) || 0;
+        let rafId = 0;
+
+        function readJson(key, fallback) {
+            try {
+                return JSON.parse(localStorage.getItem(key)) || fallback;
+            } catch (error) {
+                return fallback;
+            }
+        }
+
+        /* ---------- Tách từ + dựng các dòng lời ---------- */
+        function renderLineWords(lineElement, text, lineIndex, lengths) {
+            lineElement.innerHTML = "";
+            const characters = Array.from(text);
+            let parts = null;
+
+            if (
+                lengths &&
+                lengths.reduce(function(total, length) { return total + length; }, 0) === characters.length
+            ) {
+                let position = 0;
+                parts = lengths.map(function(length) {
+                    const part = characters.slice(position, position + length).join("");
+                    position += length;
+                    return part;
+                });
+            }
+
+            if (!parts) {
+                if (window.Intl && Intl.Segmenter) {
+                    const segmenter = new Intl.Segmenter("zh", { granularity: "word" });
+                    parts = Array.from(segmenter.segment(text), function(item) { return item.segment; });
+                } else {
+                    parts = characters;
+                }
+            }
+
+            let wordIndex = 0;
+            parts.forEach(function(part) {
+                if (!part.trim() || /^[\p{P}\p{S}]+$/u.test(part)) {
+                    lineElement.appendChild(document.createTextNode(part));
+                    return;
+                }
+
+                wordIndex += 1;
+                const word = document.createElement("span");
+                word.className = "song-word";
+                word.dataset.word = part;
+                word.dataset.wordId =
+                    "line-" + String(lineIndex + 1).padStart(2, "0") +
+                    "-word-" + String(wordIndex).padStart(2, "0");
+                word.textContent = part;
+                lineElement.appendChild(word);
+            });
+        }
+
+        const lyricLines = SONG.lines.map(function(data, index) {
+            const el = document.createElement("div");
+            el.className = "lyric-line";
+            el.dataset.lineId = "line-" + String(index + 1).padStart(2, "0");
+            el.dataset.index = String(index);
+            renderLineWords(el, data.text, index, data.p);
+            lyricsViewport.appendChild(el);
+            return el;
+        });
+
+        /* ---------- Mốc thời gian ---------- */
+        /* Thứ tự ưu tiên: mốc bạn tự canh (lưu trên máy) > SONG.times > t trong từng dòng */
+        let customTimes = readJson(LYRIC_TIMES_KEY, null);
+        if (!Array.isArray(customTimes) || customTimes.length !== SONG.lines.length) customTimes = null;
+
+        function baseTime(index) {
+            if (customTimes && Number.isFinite(customTimes[index])) return customTimes[index];
+            if (SONG.times && Number.isFinite(SONG.times[index])) return SONG.times[index];
+            return SONG.lines[index].t;
+        }
+
+        let starts = [];   /* thời điểm bắt đầu hát từng dòng */
+        let sweeps = [];   /* thời điểm kết thúc hiệu ứng chạy chữ */
+        let ends = [];     /* thời điểm dòng hết "sáng" (nhạc đệm dài) */
+        let wordMarks = []; /* với mỗi dòng: mốc tỉ lệ ký tự của từng từ */
+
+        function computeTimes() {
+            const n = SONG.lines.length;
+            starts = []; sweeps = []; ends = [];
+            for (let i = 0; i < n; i++) starts.push(baseTime(i) + lyricOffset);
+
+            for (let i = 0; i < n; i++) {
+                const chars = Array.from(SONG.lines[i].text).length;
+                const next = i + 1 < n ? starts[i + 1] : starts[i] + 8;
+                const gap = next - starts[i];
+                const natural = Math.max(2.5, chars * 0.5);
+                const explicit = Number.isFinite(SONG.lines[i].e) ? SONG.lines[i].e + lyricOffset : null;
+                sweeps.push(explicit || Math.min(next, starts[i] + natural));
+                /* đoạn nhạc đệm dài (>12s): hết dòng thì tắt sáng, còn lại giữ sáng đến dòng sau */
+                ends.push(explicit || (gap > 12 ? starts[i] + Math.max(6, chars * 0.7) : next));
+            }
+        }
+
+        function computeWordMarks() {
+            wordMarks = lyricLines.map(function(line) {
+                const words = Array.from(line.querySelectorAll(".song-word"));
+                const total = Array.from(line.textContent).filter(function(c) {
+                    return c.trim() && !/[\p{P}\p{S}]/u.test(c);
+                }).length || 1;
+                let before = 0;
+                return words.map(function(w) {
+                    const startFrac = before / total;
+                    before += Array.from(w.textContent).length;
+                    return { el: w, start: startFrac };
+                });
+            });
+        }
+
+        function formatOffset() {
+            offsetLabel.textContent =
+                (lyricOffset > 0 ? "+" : "") + lyricOffset.toFixed(1).replace(".", ",") + " giây";
+        }
+
+        function changeLyricOffset(delta) {
+            lyricOffset = Math.round((lyricOffset + delta) * 10) / 10;
+            localStorage.setItem(LYRIC_OFFSET_KEY, String(lyricOffset));
+            formatOffset();
+            computeTimes();
+            activeLineId = "";
+            updateActiveLine();
+        }
+
+        function scheduleCloudSave() {
+            if (progressSync) progressSync.scheduleSave();
+        }
+
+        function getSavedWords() {
+            return readJson(STORAGE_PREFIX + "SavedWords", []);
+        }
+
+        function setSavedWords(words) {
+            localStorage.setItem(
+                STORAGE_PREFIX + "SavedWords",
+                JSON.stringify(words)
+            );
+            scheduleCloudSave();
+        }
+
+        function getPinnedWords() {
+            return readJson(STORAGE_PREFIX + "PinnedWords", []);
+        }
+
+        function setPinnedWords(words) {
+            localStorage.setItem(
+                STORAGE_PREFIX + "PinnedWords",
+                JSON.stringify(words)
+            );
+            scheduleCloudSave();
+        }
+
+        function getHighlights() {
+            return readJson(STORAGE_PREFIX + "Highlights", {});
+        }
+
+        function setHighlights(data) {
+            localStorage.setItem(
+                STORAGE_PREFIX + "Highlights",
+                JSON.stringify(data)
+            );
+            scheduleCloudSave();
+        }
+
+        function getUnderlines() {
+            return readJson(STORAGE_PREFIX + "Underlines", {});
+        }
+
+        function setUnderlines(data) {
+            localStorage.setItem(
+                STORAGE_PREFIX + "Underlines",
+                JSON.stringify(data)
+            );
+            scheduleCloudSave();
+        }
+
+        function formatTime(seconds) {
+            if (!Number.isFinite(seconds)) return "0:00";
+            const minutes = Math.floor(seconds / 60);
+            const rest = Math.floor(seconds % 60).toString().padStart(2, "0");
+            return minutes + ":" + rest;
+        }
+
+        function updatePlayer() {
+            const duration = Number.isFinite(audio.duration) ? audio.duration : 0;
+            progress.max = duration || SONG.duration || 0;
+            progress.value = audio.currentTime || 0;
+            timeLabel.textContent =
+                formatTime(audio.currentTime) + " / " + formatTime(duration);
+        }
+
+        function updateDetailStatus(status) {
+            const badge = document.getElementById("detailStatus");
+            const labels = {
+                new: "Chưa bắt đầu",
+                learning: "Đang học",
+                completed: "Đã hoàn thành ✓"
+            };
+            badge.dataset.status = status;
+            badge.textContent = labels[status];
+        }
+
+        function markStarted() {
+            localStorage.setItem(STORAGE_PREFIX + "Started", "true");
+            updateDetailStatus("learning");
+            scheduleCloudSave();
+        }
+
+        function markCompleted() {
+            localStorage.setItem(STORAGE_PREFIX + "Started", "true");
+            localStorage.setItem(STORAGE_PREFIX + "Completed", "true");
+            updateDetailStatus("completed");
+            scheduleCloudSave();
+        }
+
+
+        /* ---------- Dòng đang hát + chữ chạy ---------- */
+        function findActiveIndex(time) {
+            let result = -1;
+            for (let i = 0; i < starts.length; i++) {
+                if (starts[i] <= time) result = i; else break;
+            }
+            return result;
+        }
+
+        function centerActiveLine(line) {
+            if (!line) return;
+            const viewportRect = lyricsViewport.getBoundingClientRect();
+            const lineRect = line.getBoundingClientRect();
+            const target =
+                lyricsViewport.scrollTop +
+                (lineRect.top - viewportRect.top) -
+                (lyricsViewport.clientHeight / 2) +
+                (lineRect.height / 2);
+            lyricsViewport.scrollTo({ top: Math.max(0, target), behavior: "smooth" });
+        }
+
+        function updateActiveLine() {
+            const time = audio.currentTime || 0;
+            const idx = findActiveIndex(time);
+            const showActive = idx >= 0 && time < ends[idx];
+            const nextLineId = showActive ? lyricLines[idx].dataset.lineId : "";
+
+            lyricLines.forEach(function(line, i) {
+                line.classList.toggle("active", showActive && i === idx);
+                line.classList.toggle("past", i < idx || (i === idx && !showActive));
+            });
+
+            /* chữ chạy từng từ trong dòng đang hát */
+            if (showActive) {
+                const dur = Math.max(0.5, sweeps[idx] - starts[idx]);
+                const progressInLine = Math.min(1, Math.max(0, (time - starts[idx]) / dur));
+                const marks = wordMarks[idx];
+                let singing = -1;
+                marks.forEach(function(m, k) { if (progressInLine >= m.start) singing = k; });
+                marks.forEach(function(m, k) {
+                    m.el.classList.toggle("sung", k < singing || (k === singing && progressInLine >= 0.999));
+                    m.el.classList.toggle("singing", k === singing && progressInLine < 0.999);
+                });
+            }
+            /* dọn hiệu ứng ở các dòng không còn sáng */
+            document.querySelectorAll(".lyric-line:not(.active) .song-word.sung, .lyric-line:not(.active) .song-word.singing")
+                .forEach(function(el) { el.classList.remove("sung", "singing"); });
+
+            document.querySelectorAll(".song-note-card").forEach(function(card) {
+                card.classList.toggle("active-line-note", card.dataset.lineId === nextLineId);
+            });
+
+            if (activeLineId !== nextLineId) {
+                activeLineId = nextLineId;
+                if (showActive && !audio.paused) centerActiveLine(lyricLines[idx]);
+                drawSongConnectors();
+            }
+        }
+
+        /* Cập nhật theo từng khung hình khi đang phát (mượt, không lệch 0,25s như sự kiện timeupdate) */
+        function tick() {
+            updatePlayer();
+            updateActiveLine();
+            rafId = audio.paused ? 0 : requestAnimationFrame(tick);
+        }
+
+        function startTicking() {
+            if (!rafId) rafId = requestAnimationFrame(tick);
+        }
+
+        function toggleAudio() {
+            if (audio.paused) audio.play();
+            else audio.pause();
+        }
+
+        playButton.addEventListener("click", toggleAudio);
+        audio.addEventListener("loadedmetadata", function() {
+            if (!SONG.duration && audio.duration) progress.max = audio.duration;
+            updatePlayer();
+        });
+        audio.addEventListener("timeupdate", function() {
+            if (audio.paused) { updatePlayer(); updateActiveLine(); }
+        });
+        audio.addEventListener("seeked", function() { updatePlayer(); updateActiveLine(); });
+        audio.addEventListener("play", function() {
+            playButton.textContent = "❚❚";
+            record.classList.add("playing");
+            markStarted();
+            startTicking();
+        });
+        audio.addEventListener("pause", function() {
+            playButton.textContent = "▶";
+            record.classList.remove("playing");
+            updatePlayer();
+            updateActiveLine();
+        });
+        audio.addEventListener("ended", function() {
+            markCompleted();
+            record.classList.remove("playing");
+            playButton.textContent = "▶";
+            if (tapActive) stopTap(true);
+        });
+
+        progress.addEventListener("input", function() {
+            audio.currentTime = Number(progress.value);
+            updateActiveLine();
+        });
+
+        lyricsViewport.addEventListener("click", function(event) {
+            const wordElement = event.target.closest(".song-word");
+            if (wordElement && !tapActive) {
+                event.stopPropagation();
+                showSongWord(wordElement);
+                return;
+            }
+
+            const line = event.target.closest(".lyric-line");
+            if (line) {
+                const i = Number(line.dataset.index);
+                if (tapActive) {
+                    tapIndex = i;
+                    audio.currentTime = Math.max(0, starts[i] - 3);
+                    audio.play();
+                    renderTapState();
+                    return;
+                }
+                audio.currentTime = Math.max(0, starts[i]);
+                updateActiveLine();
+            }
+        });
+
+        /* ---------- Gõ nhịp để canh lại mốc thời gian ---------- */
+        let tapActive = false;
+        let tapIndex = 0;
+        let tapTimes = [];
+
+        const tapStartBtn = document.getElementById("songTapStart");
+        const tapNowBtn = document.getElementById("songTapNow");
+        const tapBackBtn = document.getElementById("songTapBack");
+        const tapStopBtn = document.getElementById("songTapStop");
+        const tapNextBox = document.getElementById("songTapNext");
+        const tapHint = document.getElementById("songTapHint");
+
+        function renderTapState() {
+            lyricLines.forEach(function(line, i) {
+                line.classList.toggle("tap-target", tapActive && i === tapIndex);
+            });
+            if (!tapActive) { tapNextBox.hidden = true; return; }
+            tapNextBox.hidden = false;
+            if (tapIndex >= SONG.lines.length) {
+                tapNextBox.innerHTML = "<small>Đã gõ hết lời</small>Bấm “Dừng &amp; lưu”.";
+                return;
+            }
+            const box = document.createElement("div");
+            const small = document.createElement("small");
+            small.textContent = "Câu sắp hát — bấm Space khi nghe câu này bắt đầu (dòng " +
+                (tapIndex + 1) + "/" + SONG.lines.length + ")";
+            tapNextBox.innerHTML = "";
+            tapNextBox.appendChild(small);
+            tapNextBox.appendChild(document.createTextNode(SONG.lines[tapIndex].text));
+            const target = lyricLines[tapIndex];
+            if (target) centerActiveLine(target);
+        }
+
+        function startTap() {
+            tapActive = true;
+            tapTimes = SONG.lines.map(function(_, i) { return baseTime(i); });
+            tapIndex = 0;
+            tapStartBtn.hidden = true;
+            tapNowBtn.hidden = false;
+            tapBackBtn.hidden = false;
+            tapStopBtn.hidden = false;
+            tapHint.hidden = true;
+            if (!audio.paused || audio.currentTime > 0) {
+                /* giữ nguyên vị trí hiện tại nếu người dùng đã chọn dòng */
+            }
+            if (audio.currentTime < 0.5) audio.currentTime = 0;
+            audio.play();
+            renderTapState();
+        }
+
+        function tapNow() {
+            if (!tapActive || tapIndex >= SONG.lines.length) return;
+            const t = audio.currentTime - TAP_LATENCY - lyricOffset;
+            tapTimes[tapIndex] = Math.max(0, Math.round(t * 20) / 20);
+            tapIndex += 1;
+            if (tapIndex >= SONG.lines.length) {
+                stopTap(true);
+                return;
+            }
+            /* cập nhật ngay để thấy hiệu ứng */
+            customTimes = tapTimes.slice();
+            computeTimes();
+            renderTapState();
+        }
+
+        function stopTap(save) {
+            tapActive = false;
+            tapStartBtn.hidden = false;
+            tapNowBtn.hidden = true;
+            tapBackBtn.hidden = true;
+            tapStopBtn.hidden = true;
+            tapHint.hidden = false;
+            renderTapState();
+            if (save) {
+                /* đảm bảo mốc tăng dần */
+                for (let i = 1; i < tapTimes.length; i++) {
+                    if (tapTimes[i] < tapTimes[i - 1]) tapTimes[i] = tapTimes[i - 1];
+                }
+                customTimes = tapTimes.slice();
+                localStorage.setItem(LYRIC_TIMES_KEY, JSON.stringify(customTimes));
+                syncMessage.textContent = "Đã lưu mốc thời gian mới trên máy này.";
+            }
+            computeTimes();
+            updateActiveLine();
+        }
+
+        tapStartBtn.addEventListener("click", startTap);
+        tapNowBtn.addEventListener("click", tapNow);
+        tapBackBtn.addEventListener("click", function() {
+            if (!tapActive) return;
+            tapIndex = Math.max(0, tapIndex - 1);
+            audio.currentTime = Math.max(0, starts[tapIndex] - 3);
+            renderTapState();
+        });
+        tapStopBtn.addEventListener("click", function() { stopTap(true); });
+
+        document.addEventListener("keydown", function(event) {
+            if (!tapActive || event.code !== "Space") return;
+            event.preventDefault();
+            tapNow();
+        });
+
+        document.getElementById("songTimesCopy").addEventListener("click", function() {
+            const arr = SONG.lines.map(function(_, i) { return Math.round(baseTime(i) * 20) / 20; });
+            const text = "times: " + JSON.stringify(arr);
+            const done = function() { syncMessage.textContent = "Đã copy. Dán cho Claude hoặc dán vào songs-data.js."; };
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(text).then(done, function() { window.prompt("Copy dòng này:", text); });
+            } else {
+                window.prompt("Copy dòng này:", text);
+            }
+        });
+
+        document.getElementById("songTimesClear").addEventListener("click", function() {
+            customTimes = null;
+            localStorage.removeItem(LYRIC_TIMES_KEY);
+            computeTimes();
+            updateActiveLine();
+            syncMessage.textContent = "Đã xóa mốc tự canh, quay về mốc gốc.";
+        });
+
+        document.getElementById("songOffsetM5").addEventListener("click", function() { changeLyricOffset(-0.5); });
+        document.getElementById("songOffsetM1").addEventListener("click", function() { changeLyricOffset(-0.1); });
+        document.getElementById("songOffsetP1").addEventListener("click", function() { changeLyricOffset(0.1); });
+        document.getElementById("songOffsetP5").addEventListener("click", function() { changeLyricOffset(0.5); });
+        document.getElementById("songOffsetReset").addEventListener("click", function() {
+            lyricOffset = 0;
+            localStorage.removeItem(LYRIC_OFFSET_KEY);
+            formatOffset();
+            computeTimes();
+            activeLineId = "";
+            updateActiveLine();
+        });
+
+        /* ---------- Từ vựng, thẻ ghi chú, highlight ---------- */
+        function compositeInfo(word) {
+            const chars = Array.from(word);
+            if (chars.length < 2) return null;
+            const infos = chars.map(function(c) { return songVocabulary[c]; });
+            if (infos.some(function(x) { return !x; })) return null;
+            return {
+                pinyin: infos.map(function(x) { return x.pinyin; }).join(" "),
+                hanviet: infos.map(function(x) { return x.hanviet; }).join(" "),
+                pos: "từ ghép",
+                meaning: infos.map(function(x) { return x.meaning; }).join(" + ")
+            };
+        }
+
+        function wordInfo(word) {
+            return songVocabulary[word] || compositeInfo(word) || {
+                pinyin: "—",
+                hanviet: "—",
+                pos: "词语 / từ vựng",
+                meaning: "Chưa bổ sung nghĩa"
+            };
+        }
+
+        function showSongWord(element) {
+            currentWordElement = element;
+            currentWord = element.dataset.word || element.textContent.trim();
+            const info = wordInfo(currentWord);
+
+            document.getElementById("songPopupWord").textContent = currentWord;
+            document.getElementById("songPopupPinyin").textContent = info.pinyin;
+            document.getElementById("songPopupMeta").textContent =
+                info.hanviet + " · " + info.pos;
+            document.getElementById("songPopupMeaning").textContent = info.meaning;
+
+            updatePopupButtons();
+            document.getElementById("songWordPopup").classList.add("show");
+        }
+
+        function closeSongWord() {
+            document.getElementById("songWordPopup").classList.remove("show");
+        }
+
+        document.getElementById("songPopupClose")
+            .addEventListener("click", closeSongWord);
+
+        document.addEventListener("click", function(event) {
+            const popup = document.getElementById("songWordPopup");
+            if (!popup.classList.contains("show")) return;
+            if (popup.contains(event.target) || event.target.closest(".song-word")) return;
+            closeSongWord();
+        });
+
+        function saveCurrentWord() {
+            if (!currentWord) return;
+            const saved = getSavedWords();
+            const index = saved.indexOf(currentWord);
+
+            if (index >= 0) saved.splice(index, 1);
+            else saved.push(currentWord);
+
+            setSavedWords(saved);
+            renderSavedWords();
+            updatePopupButtons();
+        }
+
+        document.getElementById("songSaveWord")
+            .addEventListener("click", saveCurrentWord);
+
+        function togglePinCurrentWord() {
+            if (!currentWordElement) return;
+
+            const id = currentWordElement.dataset.wordId;
+            const line = currentWordElement.closest(".lyric-line");
+            const pinned = getPinnedWords();
+            const index = pinned.findIndex(function(item) {
+                return item.id === id;
+            });
+
+            if (index >= 0) {
+                pinned.splice(index, 1);
+            } else {
+                pinned.push({
+                    id: id,
+                    word: currentWord,
+                    lineId: line.dataset.lineId
+                });
+            }
+
+            setPinnedWords(pinned);
+            renderPinnedWords();
+            updatePopupButtons();
+        }
+
+        document.getElementById("songPinWord")
+            .addEventListener("click", togglePinCurrentWord);
+
+        function updatePopupButtons() {
+            const saveButton = document.getElementById("songSaveWord");
+            const pinButton = document.getElementById("songPinWord");
+            const pinned = getPinnedWords();
+            const wordId = currentWordElement && currentWordElement.dataset.wordId;
+            const isSaved = getSavedWords().includes(currentWord);
+            const isPinned = pinned.some(function(item) {
+                return item.id === wordId;
+            });
+
+            saveButton.classList.toggle("active", isSaved);
+            saveButton.textContent = isSaved ? "♥ Đã lưu" : "♡ Lưu từ";
+            pinButton.classList.toggle("active", isPinned);
+            pinButton.textContent = isPinned ? "📌 Đang hiện" : "📌 Hiện từ";
+        }
+
+        function toggleHighlight(color) {
+            if (!currentWordElement) return;
+            const id = currentWordElement.dataset.wordId;
+            const highlights = getHighlights();
+            highlights[id] = highlights[id] === color ? null : color;
+            setHighlights(highlights);
+            applyWordStyles();
+        }
+
+        document.querySelectorAll(".song-color-button").forEach(function(button) {
+            button.addEventListener("click", function() {
+                toggleHighlight(button.dataset.color);
+            });
+        });
+
+        function toggleUnderline() {
+            if (!currentWordElement) return;
+            const id = currentWordElement.dataset.wordId;
+            const underlines = getUnderlines();
+            underlines[id] = !underlines[id];
+            setUnderlines(underlines);
+            applyWordStyles();
+        }
+
+        document.getElementById("songUnderlineWord")
+            .addEventListener("click", toggleUnderline);
+
+        function applyWordStyles() {
+            const highlights = getHighlights();
+            const underlines = getUnderlines();
+            const colors = ["green", "blue", "yellow", "orange", "purple", "gray"];
+
+            document.querySelectorAll(".song-word").forEach(function(element) {
+                colors.forEach(function(color) {
+                    element.classList.remove("highlight-" + color);
+                });
+
+                const id = element.dataset.wordId;
+                if (highlights[id]) {
+                    element.classList.add("highlight-" + highlights[id]);
+                }
+                element.classList.toggle("is-underlined", Boolean(underlines[id]));
+            });
+        }
+
+        function renderSavedWords() {
+            const container = document.getElementById("songSavedWords");
+            const saved = getSavedWords();
+
+            if (!saved.length) {
+                container.textContent = "Chưa có từ nào được lưu.";
+                return;
+            }
+
+            container.innerHTML = "";
+            saved.forEach(function(word) {
+                const chip = document.createElement("span");
+                chip.className = "song-saved-chip";
+                chip.textContent = word;
+                container.appendChild(chip);
+            });
+        }
+
+        function removePinnedWord(id) {
+            const pinned = getPinnedWords().filter(function(item) {
+                return item.id !== id;
+            });
+            setPinnedWords(pinned);
+            renderPinnedWords();
+        }
+
+        function renderPinnedWords() {
+            const sidebar = document.getElementById("songNoteSidebar");
+            const pinned = getPinnedWords();
+            sidebar.innerHTML = "<h3>📌 Thẻ ghi chú</h3>";
+
+            if (!pinned.length) {
+                const empty = document.createElement("div");
+                empty.className = "song-note-empty";
+                empty.textContent = "Chưa có từ nào được ghim.";
+                sidebar.appendChild(empty);
+                drawSongConnectors();
+                return;
+            }
+
+            pinned.forEach(function(item) {
+                const info = wordInfo(item.word);
+                const card = document.createElement("article");
+                card.className = "song-note-card";
+                card.dataset.wordId = item.id;
+                card.dataset.lineId = item.lineId;
+                card.classList.toggle(
+                    "active-line-note",
+                    item.lineId === activeLineId
+                );
+
+                card.innerHTML =
+                    "<strong>" + item.word + "</strong>" +
+                    "<p>/" + info.pinyin + "/ · " + info.pos + "</p>" +
+                    "<p>" + info.meaning + "</p>";
+
+                const remove = document.createElement("button");
+                remove.className = "song-note-remove";
+                remove.type = "button";
+                remove.textContent = "×";
+                remove.addEventListener("click", function() {
+                    removePinnedWord(item.id);
+                });
+
+                card.appendChild(remove);
+                sidebar.appendChild(card);
+            });
+
+            requestAnimationFrame(drawSongConnectors);
+        }
+
+        function drawSongConnectors() {
+            const layout = document.getElementById("songStudyLayout");
+            const svg = document.getElementById("songConnectorSvg");
+            const divider = document.querySelector(".song-layout-divider");
+            if (!layout || !svg || !divider) return;
+
+            const layoutRect = layout.getBoundingClientRect();
+            const dividerRect = divider.getBoundingClientRect();
+            svg.setAttribute("viewBox", "0 0 " + layout.clientWidth + " " + layout.clientHeight);
+            svg.innerHTML = "";
+
+            getPinnedWords().forEach(function(item) {
+                const word = document.querySelector(
+                    '.song-word[data-word-id="' + item.id + '"]'
+                );
+                const card = document.querySelector(
+                    '.song-note-card[data-word-id="' + item.id + '"]'
+                );
+                if (!word || !card) return;
+
+                const wordRect = word.getBoundingClientRect();
+                const cardRect = card.getBoundingClientRect();
+                const startX = wordRect.right - layoutRect.left;
+                const startY = wordRect.top + wordRect.height / 2 - layoutRect.top;
+                const turnX = dividerRect.left + dividerRect.width / 2 - layoutRect.left;
+                const endX = cardRect.left - layoutRect.left;
+                const endY = cardRect.top + cardRect.height / 2 - layoutRect.top;
+                const active = item.lineId === activeLineId;
+
+                const line = document.createElementNS(
+                    "http://www.w3.org/2000/svg",
+                    "polyline"
+                );
+                line.setAttribute(
+                    "points",
+                    [
+                        startX + "," + startY,
+                        turnX + "," + startY,
+                        turnX + "," + endY,
+                        endX + "," + endY
+                    ].join(" ")
+                );
+                line.setAttribute("fill", "none");
+                line.setAttribute("stroke", active ? "#6f987b" : "#b8cdbf");
+                line.setAttribute("stroke-width", active ? "2.2" : "1.2");
+                line.setAttribute("stroke-dasharray", "4,4");
+                line.setAttribute("stroke-linecap", "round");
+                line.setAttribute("stroke-linejoin", "round");
+                svg.appendChild(line);
+            });
+        }
+
+        function restorePageState() {
+            applyWordStyles();
+            renderSavedWords();
+            renderPinnedWords();
+            updateActiveLine();
+
+            if (localStorage.getItem(STORAGE_PREFIX + "Completed") === "true") {
+                updateDetailStatus("completed");
+            } else if (
+                localStorage.getItem(STORAGE_PREFIX + "Started") === "true" ||
+                getSavedWords().length > 0
+            ) {
+                updateDetailStatus("learning");
+            } else {
+                updateDetailStatus("new");
+            }
+        }
+
+
+        lyricsViewport.addEventListener("scroll", drawSongConnectors);
+        window.addEventListener("resize", drawSongConnectors);
+
+        /* ---------- Khởi động ---------- */
+        formatOffset();
+        computeTimes();
+        computeWordMarks();
+        restorePageState();
+
+        if (window.LessonProgress) {
+            progressSync = window.LessonProgress.create(SONG_PROGRESS_ID, {
+                onRemoteLoaded: restorePageState
+            });
+        }
+
+    </script>
+</body>
+</html>

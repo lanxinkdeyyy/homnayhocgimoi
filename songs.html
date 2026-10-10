@@ -18,134 +18,56 @@
             <p>Chọn một chiếc đĩa để bắt đầu học.</p>
         </header>
 
-        <section class="song-grid" aria-label="Danh sách bài hát">
-            <a class="song-card" href="song-zhe-shou-ge-xie-gei-ziji.html" data-progress-id="1001">
-
-                <span class="song-card-disc">
-                    <img src="images/zheshougexiegeiziji.jpg" alt="Ảnh bìa 这首歌写给自己">
-                    <span class="song-card-hole"></span>
-                </span>
-
-                <span class="song-card-info">
-                    <strong>这首歌写给自己</strong>
-                    <span>Zhè shǒu gē xiě gěi zìjǐ</span>
-                    <small>小鸭 · Vịt Nhỏ</small>
-                    <em class="song-status" data-status="new">Chưa bắt đầu</em>
-                </span>
-
-                <span class="song-card-play">▶</span>
-            </a>
-
-            <a class="song-card" href="song-hai-di.html" data-progress-id="1002">
-
-                <span class="song-card-disc">
-                    <img src="images/haidi.jpg" alt="Ảnh bìa 海底">
-                    <span class="song-card-hole"></span>
-                </span>
-
-                <span class="song-card-info">
-                    <strong>海底 · Đáy Biển</strong>
-                    <span>Hǎidǐ</span>
-                    <small>一支榴莲 · Nhất Chi Lựu Liên</small>
-                    <em class="song-status" data-status="new">Chưa bắt đầu</em>
-                </span>
-
-                <span class="song-card-play">▶</span>
-            </a>
-            <a class="song-card" href="song-xia-bei-zi-bu-yi-ding-hai-neng-yu-jian-ni.html" data-progress-id="1004">
-
-                <span class="song-card-disc">
-                    <img src="images/xiabeizibuyidinghainengyujianni.jpg" alt="Ảnh bìa 下辈子不一定还能遇见你">
-                    <span class="song-card-hole"></span>
-                </span>
-
-                <span class="song-card-info">
-                    <strong>下辈子不一定还能遇见你 · Kiếp sau không chắc còn có thể gặp được anh</strong>
-                    <span>Hǎidǐ</span>
-                    <small>莫叫姐姐 · Mạc Khiếu Tỷ Tỷ</small>
-                    <em class="song-status" data-status="new">Chưa bắt đầu</em>
-                </span>
-
-                <span class="song-card-play">▶</span>
-            </a>
-            <a class="song-card" href="song-an-hoa-kieu.html" data-progress-id="1003">
-
-                <span class="song-card-disc">
-                    <img src="images/anheqiu.png" alt="Ảnh bìa 安和桥">
-                    <span class="song-card-hole"></span>
-                </span>
-
-                <span class="song-card-info">
-                    <strong>安和桥 · An Hòa Kiều</strong>
-                    <span>Ānhé qiáo</span>
-                    <small>宋冬野 · Tống Đông Dã</small>
-                    <em class="song-status" data-status="new">Chưa bắt đầu</em>
-                </span>
-
-                <span class="song-card-play">▶</span>
-            </a>
-
-            <div class="song-card song-card--locked">
-                <span class="song-card-disc song-card-disc--placeholder">月</span>
-                <span class="song-card-info">
-                    <strong>月亮代表我的心</strong>
-                    <span>Yuèliang dàibiǎo wǒ de xīn</span>
-                    <small>Sắp thêm</small>
-                </span>
-                <span class="song-card-play">＋</span>
-            </div>
-
-            <div class="song-card song-card--locked">
-                <span class="song-card-disc song-card-disc--placeholder">幸</span>
-                <span class="song-card-info">
-                    <strong>小幸运</strong>
-                    <span>Xiǎo xìngyùn</span>
-                    <small>Sắp thêm</small>
-                </span>
-                <span class="song-card-play">＋</span>
-            </div>
-        </section>
+        <section class="song-grid" id="songGrid" aria-label="Danh sách bài hát"></section>
     </main>
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="supabase.js"></script>
+    <script src="songs-data.js"></script>
     <script>
-        async function loadSongStatus() {
-            if (!window.LessonProgress) return;
+        /* Danh sách tự dựng từ songs-data.js — thêm bài mới chỉ cần thêm vào file đó. */
+        (function () {
+            const grid = document.getElementById("songGrid");
+            Object.keys(window.SONGS || {}).map(Number)
+                .sort(function (a, b) { return a - b; })
+                .forEach(function (n) {
+                    const s = window.SONGS[n];
+                    const a = document.createElement("a");
+                    a.className = "song-card";
+                    a.href = "song-lesson.html?id=" + n;
+                    a.dataset.progressId = String(s.progressId || (1000 + n));
+                    a.innerHTML =
+                        '<span class="song-card-disc"><img alt=""><span class="song-card-hole"></span></span>' +
+                        '<span class="song-card-info"><strong></strong><span></span><small></small>' +
+                        '<em class="song-status" data-status="new">Chưa bắt đầu</em></span>' +
+                        '<span class="song-card-play">▶</span>';
+                    const im = a.querySelector("img");
+                    im.src = s.cover;
+                    im.alt = "Ảnh bìa " + s.titleZh;
+                    a.querySelector("strong").textContent = s.titleZh + " · " + s.titleVi;
+                    a.querySelector(".song-card-info > span").textContent = s.pinyin;
+                    a.querySelector("small").textContent = s.artist;
+                    grid.appendChild(a);
+                });
 
-            const cards = Array.from(
-                document.querySelectorAll(".song-card[data-progress-id]")
-            );
-            const ids = cards
-                .map(function (card) {
-                    return Number(card.dataset.progressId);
-                })
-                .filter(Number.isFinite);
-
-            if (!ids.length) return;
-
-            const statuses = await window.LessonProgress
-                .loadLessonStatuses(ids);
-
-            const labels = {
-                new: "Chưa bắt đầu",
-                learning: "Đang học",
-                completed: "Đã hoàn thành ✓"
-            };
-
-            cards.forEach(function (card) {
-                const id = Number(card.dataset.progressId);
-                const status = statuses[id] || "new";
-                const badge = card.querySelector(".song-status");
-
-                if (!badge) return;
-
-                badge.dataset.status = status;
-                badge.textContent = labels[status];
-            });
-        }
-
-        loadSongStatus();
+            async function loadSongStatus() {
+                if (!window.LessonProgress) return;
+                const cards = Array.from(grid.querySelectorAll(".song-card[data-progress-id]"));
+                const ids = cards.map(function (c) { return Number(c.dataset.progressId); })
+                    .filter(Number.isFinite);
+                if (!ids.length) return;
+                let statuses = {};
+                try { statuses = await window.LessonProgress.loadLessonStatuses(ids); } catch (e) { return; }
+                const labels = { new: "Chưa bắt đầu", learning: "Đang học", completed: "Đã hoàn thành ✓" };
+                cards.forEach(function (c) {
+                    const st = statuses[Number(c.dataset.progressId)] || "new";
+                    const b = c.querySelector(".song-status");
+                    b.dataset.status = st;
+                    b.textContent = labels[st];
+                });
+            }
+            loadSongStatus();
+        })();
     </script>
 </body>
 

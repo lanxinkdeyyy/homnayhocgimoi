@@ -1,0 +1,37 @@
+HƯỚNG DẪN THÊM 1 BÀI HÁT MỚI
+=============================
+
+Từ giờ cả trang bài hát chỉ dùng 3 file chung:
+   songs.html         - danh sách bài hát (tự dựng, KHÔNG cần sửa)
+   song-lesson.html   - trang học 1 bài (KHÔNG cần sửa)
+   songs-data.js      - dữ liệu mọi bài hát (CHỈ SỬA FILE NÀY)
+
+Các file song-an-hoa-kieu.html, song-hai-di.html... chỉ còn là trang tự chuyển
+hướng, bạn có thể xóa nếu muốn.
+
+CÁC BƯỚC:
+1. Chép file MP3 vào thư mục  audio/
+2. Chép ảnh bìa vào thư mục   images/
+3. Mở songs-data.js, copy nguyên 1 khối "4: { ... }," rồi dán xuống dưới,
+   đổi số 4 thành 5 (bài tiếp theo là 6, 7...) và sửa:
+      progressId : 1005 (= 1000 + số bài)
+      titleZh, titleVi, pinyin, artist, cover, audio
+      duration   : độ dài bài hát tính bằng giây (ví dụ 3:45 = 225)
+      lines      : lời bài hát, mỗi câu 1 dòng { t: giây-bắt-đầu, text: "lời" }
+      vocab      : nghĩa của từ khi bấm vào chữ (từ nào chưa có sẽ hiện "Chưa bổ sung nghĩa")
+4. Lưu file, mở songs.html - bài mới tự xuất hiện trong danh sách.
+
+CANH CHO CHỮ CHẠY KHỚP NHẠC:
+- Mở bài hát, bấm "⏱ Canh thời gian lời" > "Gõ nhịp".
+- Bài sẽ phát, bạn nghe và bấm phím Space đúng lúc mỗi câu bắt đầu hát.
+- Xong bấm "Dừng & lưu". Mốc được lưu trên máy bạn.
+- Muốn lưu vĩnh viễn vào file: bấm "Copy mốc thời gian", rồi dán dòng
+  times: [...]  vào khối của bài đó trong songs-data.js
+  (hoặc gửi cho Claude để chèn vào).
+- Chỉ lệch đều một chút: dùng các nút −0,1s / +0,1s.
+
+SỬA LỜI / SỬA NGHĨA:
+- Sai chữ trong lời: sửa "text" của dòng đó trong songs-data.js.
+- Sai nghĩa của từ: sửa trong phần vocab của bài đó.
+- Tách từ chưa đúng: thêm p: [2,1,2] vào dòng đó (các số là số chữ của từng từ,
+  tổng phải bằng số chữ của câu).
