@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>课本阅读</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@600;700&family=Nunito:wght@500;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .node-progress {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin-top: 7px;
+            padding: 4px 9px;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.78);
+            color: #777;
+            font-family: "Nunito", sans-serif;
+            font-size: 12px;
+            font-style: normal;
+            font-weight: 700;
+        }
+
+        .node-progress::before {
+            content: "";
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #d2d2d2;
+        }
+
+        .node-progress[data-status="learning"]::before {
+            background: #f3a847;
+        }
+
+        .node-progress[data-status="completed"]::before {
+            background: #63b87b;
+        }
+
+        .journey-header .journey-pinyin {
+            display: block;
+            margin: 5px 0 0;
+            color: #8c8c84;
+            font-family: "Nunito", sans-serif;
+            font-size: 12px;
+            font-style: italic;
+            font-weight: 700;
+            letter-spacing: 0.04em;
+            line-height: 1.35;
+        }
+
+        .journey-header .journey-title {
+            margin: 17px 0 0 !important;
+        }
+
+        .journey-header .journey-title+.journey-pinyin {
+            margin-top: 5px;
+            font-size: 14px;
+        }
+
+        .journey-header .journey-translation {
+            margin: 4px 0 0;
+            color: #6f8175;
+            font-family: "Nunito", sans-serif;
+            font-size: 13px;
+            font-weight: 700;
+            line-height: 1.35;
+        }
+
+        .journey-header .journey-sub {
+            margin: 17px auto 0 !important;
+            line-height: 1.55;
+        }
+
+        .gate-arch {
+            overflow: hidden;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+
+        .gate-arch .gate-leaf {
+            display: none;
+        }
+
+        .gate--ink .gate-arch {
+            background-image: url("images/hsk1-scholar-door.jpg");
+        }
+
+        .gate--tang .gate-arch {
+            background-image: url("images/hsk2-palace-door.jpg");
+        }
+
+        .gate--garden .gate-arch {
+            background-image: url("images/hsk3-garden-door.jpg");
+        }
+
+        .gate--deco .gate-arch {
+            background-image: url("images/hsk4-art-deco-door.jpg");
+        }
+
+        .gate--neon .gate-arch {
+            background-image: url("images/hsk5-modern-city-door.jpg");
+        }
+
+        .gate--future .gate-arch {
+            background-image: url("images/hsk6-future-portal.jpg");
+        }
+
+        /* HSK 6 giữ dáng cửa vòm như các level khác, không có khung vuông. */
+        .gate--future .gate-arch {
+            border: 0 !important;
+            border-radius: 50% 50% 0 0 / 30% 30% 0 0 !important;
+            box-shadow: none !important;
+        }
+
+        .gate-era-pinyin,
+        .gate-era-vietnamese {
+            display: block;
+            margin-top: 2px;
+            font-family: "Nunito", sans-serif;
+            font-size: 11px;
+            font-weight: 700;
+            line-height: 1.3;
+        }
+
+        .gate-era-pinyin {
+            color: #8c8c84;
+            font-style: italic;
+        }
+
+        .gate-era-vietnamese {
+            color: #66776b;
+        }
+
+        /* Mobile: 6 cửa xếp dọc, mỗi cửa vừa chiều ngang màn hình. */
+        @media (max-width: 700px) {
+            .gates-garden {
+                grid-template-columns: minmax(0, 1fr) !important;
+                justify-items: center;
+                gap: 38px !important;
+            }
+
+            .gate {
+                width: min(100%, 340px) !important;
+                margin: 0 auto;
+            }
+
+            .gate-arch {
+                width: 100% !important;
+                height: auto !important;
+                aspect-ratio: 2 / 3;
+            }
+        }
+    </style>
+</head>
+
+<body class="journey-body">
+    <main class="journey-container">
+        <a href="index.html" class="back-link">← Quay lại trang chủ</a>
+
+        <header class="journey-header">
+            <p class="journey-eyebrow">课本阅读 · 阅读花园</p>
+            <p class="journey-pinyin">Kèběn yuèdú · yuèdú huāyuán</p>
+            <p class="journey-translation">Giáo trình đọc · Vườn đọc</p>
+            <h1 class="journey-title">选择你的旅程</h1>
+            <p class="journey-pinyin">Xuǎnzé nǐ de lǚchéng</p>
+            <p class="journey-translation">Chọn hành trình của bạn</p>
+            <p class="journey-sub">Mỗi cánh cửa dẫn tới một chặng đường riêng — chọn cấp độ để bước vào.</p>
+        </header>
+
+        <!-- ===== GATES VIEW ===== -->
+        <section class="gates-garden" id="gatesView">
+            <button class="gate gate--ink" data-level="hsk1" aria-label="Mở cánh cửa HSK 1 — Cổ phong mực nước">
+                <span class="gate-arch">
+                    <span class="gate-leaf left"></span>
+                    <span class="gate-leaf right"></span>
+                </span>
+                <span class="gate-caption">
+                    <span class="gate-era">水墨古风</span>
+                    <span class="gate-era-pinyin">Shuǐmò gǔfēng</span>
+                    <span class="gate-era-vietnamese">Cổ phong mực nước</span>
+                    <span class="gate-plaque-row">
+                        <span class="gate-ornament">🖌️</span>
+                        <span class="gate-plaque">HSK 1</span>
+                    </span>
+                    <span class="gate-count">2 bài học</span>
+                </span>
+            </button>
+
+            <button class="gate gate--tang" data-level="hsk2" aria-label="Mở cánh cửa HSK 2 — Thịnh Đường">
+                <span class="gate-arch">
+                    <span class="gate-leaf left"></span>
+                    <span class="gate-leaf right"></span>
+                </span>
+                <span class="gate-caption">
+                    <span class="gate-era">盛唐华彩</span>
+                    <span class="gate-era-pinyin">Shèng Táng huácǎi</span>
+                    <span class="gate-era-vietnamese">Thịnh Đường rực sắc</span>
+                    <span class="gate-plaque-row">
+                        <span class="gate-ornament">🐉</span>
+                        <span class="gate-plaque">HSK 2</span>
+                    </span>
+                    <span class="gate-count">2 bài học</span>
+                </span>
+            </button>
+
+            <button class="gate gate--garden" data-level="hsk3" aria-label="Mở cánh cửa HSK 3 — Giang Nam nhã uyển">
+                <span class="gate-arch">
+                    <span class="gate-leaf left"></span>
+                    <span class="gate-leaf right"></span>
+                </span>
+                <span class="gate-caption">
+                    <span class="gate-era">江南雅苑</span>
+                    <span class="gate-era-pinyin">Jiāngnán yǎyuàn</span>
+                    <span class="gate-era-vietnamese">Giang Nam nhã uyển</span>
+                    <span class="gate-plaque-row">
+                        <span class="gate-ornament">🪷</span>
+                        <span class="gate-plaque">HSK 3</span>
+                    </span>
+                    <span class="gate-count">2 bài học</span>
+                </span>
+            </button>
+
+            <button class="gate gate--deco" data-level="hsk4" aria-label="Mở cánh cửa HSK 4 — Dân quốc tân thời">
+                <span class="gate-arch">
+                    <span class="gate-leaf left"></span>
+                    <span class="gate-leaf right"></span>
+                </span>
+                <span class="gate-caption">
+                    <span class="gate-era">民国摩登</span>
+                    <span class="gate-era-pinyin">Mínguó módēng</span>
+                    <span class="gate-era-vietnamese">Dân quốc tân thời</span>
+                    <span class="gate-plaque-row">
+                        <span class="gate-ornament">🎷</span>
+                        <span class="gate-plaque">HSK 4</span>
+                    </span>
+                    <span class="gate-count">4 bài học</span>
+                </span>
+            </button>
+
+            <button class="gate gate--neon" data-level="hsk5" aria-label="Mở cánh cửa HSK 5 — Đô thị nghê hồng">
+                <span class="gate-arch">
+                    <span class="gate-leaf left"></span>
+                    <span class="gate-leaf right"></span>
+                </span>
+                <span class="gate-caption">
+                    <span class="gate-era">都市霓虹</span>
+                    <span class="gate-era-pinyin">Dūshì níhóng</span>
+                    <span class="gate-era-vietnamese">Đô thị nghê hồng</span>
+                    <span class="gate-plaque-row">
+                        <span class="gate-ornament">🌆</span>
+                        <span class="gate-plaque">HSK 5</span>
+                    </span>
+                    <span class="gate-count">2 bài học</span>
+                </span>
+            </button>
+
+            <button class="gate gate--future" data-level="hsk6" aria-label="Mở cánh cửa HSK 6 — Tương lai huyền cảnh">
+                <span class="gate-arch">
+                    <span class="gate-leaf left"></span>
+                    <span class="gate-leaf right"></span>
+                </span>
+                <span class="gate-caption">
+                    <span class="gate-era">未来幻境</span>
+                    <span class="gate-era-pinyin">Wèilái huànjìng</span>
+                    <span class="gate-era-vietnamese">Tương lai huyền cảnh</span>
+                    <span class="gate-plaque-row">
+                        <span class="gate-ornament">🔮</span>
+                        <span class="gate-plaque">HSK 6</span>
+                    </span>
+                    <span class="gate-count">2 bài học</span>
+                </span>
+            </button>
+        </section>
+
+        <!-- ===== JOURNEY / PATH VIEW ===== -->
+        <section class="journey-path" id="journeyView" hidden>
+            <button class="path-back" id="pathBack">← Chọn cửa khác</button>
+            <h2 class="path-title" id="pathTitle">HSK 1</h2>
+            <div class="path-canvas" id="pathCanvas">
+                <svg class="path-line" id="pathSvg" viewBox="0 0 100 100" preserveAspectRatio="none">
+                    <path id="pathTrail" d="" fill="none" />
+                </svg>
+            </div>
+        </section>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabase.js"></script>
+    <script>
+        const levels = {
+            hsk1: {
+                title: "HSK 1", lessons: [
+                    { label: "Bài 1", title: "你好", href: "#" },
+                    { label: "Bài 2", title: "谢谢", href: "#" },
+                ]
+            },
+            hsk2: {
+                title: "HSK 2", lessons: [
+                    { label: "Bài 1", title: "我的家", href: "#" },
+                    { label: "Bài 2", title: "天气", href: "#" },
+                ]
+            },
+            hsk3: {
+                title: "HSK 3", lessons: [
+                    { label: "Bài 1", title: "我的家", href: "#" },
+                    { label: "Bài 2", title: "天气", href: "#" },
+                ]
+            },
+            hsk4: {
+                title: "HSK 4", lessons: [
+                    { number: 1, label: "Bài 1", title: "简单的爱情", href: "HSK4 - lesson 1.html" },
+                    { number: 2, label: "Bài 2", title: "真正的友谊", href: "HSK4 - lesson 2.html" },
+                    { number: 3, label: "Bài 3", title: "经理对我印象不错", href: "HSK4 - lesson 3.html" },
+                    { number: 4, label: "Bài 4", title: "不要太着急赚钱", href: "HSK4 - lesson 4.html" },
+                    { number: 5, label: "Bài 5", title: "只买对的，不买贵的", href: "HSK4 - lesson 5.html" },
+                    { number: 6, label: "Bài 6", title: "一分钱，一分货", href: "HSK4 - lesson 6.html" },
+                    { number: 7, label: "Bài 7", title: "最好的医生是自己", href: "HSK4 - lesson 7.html" },
+                    { number: 8, label: "Bài 8", title: "生活中不缺少美", href: "HSK4 - lesson 8.html" },
+                    { number: 9, label: "Bài 9", title: "阳光总在风雨后", href: "HSK4 - lesson 9.html" },
+                    { number: 10, label: "Bài 10", title: "幸福的标准", href: "HSK4 - lesson 10.html" },
+                    { number: 11, label: "Bài 11", title: "读书好，读好书，好读书", href: "HSK4 - lesson 11.html" },
+                    { number: 12, label: "Bài 12", title: "用心发现世界", href: "HSK4 - lesson 12.html" },
+                    { number: 13, label: "Bài 13", title: "喝着茶看京剧", href: "HSK4 - lesson 13.html" },
+                    { number: 14, label: "Bài 14", title: "保护地球母亲", href: "HSK4 - lesson 14.html" },
+                    { number: 15, label: "Bài 15", title: "教育孩子的艺术", href: "HSK4 - lesson 15.html" },
+                    { number: 16, label: "Bài 16", title: "生活可以更美好", href: "HSK4 - lesson 16.html" },
+                    { number: 17, label: "Bài 17", title: "人与自然", href: "HSK4 - lesson 17.html" },
+                    { number: 18, label: "Bài 18", title: "科技异世界", href: "HSK4 - lesson 18.html" },
+                    { number: 19, label: "Bài 19", title: "生活的味道", href: "HSK4 - lesson 19.html" },
+                    { number: 20, label: "Bài 20", title: "路上的风景", href: "HSK4 - lesson 20.html" },
+                ]
+            },
+            hsk5: {
+                title: "HSK 5", lessons: [
+                    { label: "Bài 1", title: "我的家", href: "#" },
+                    { label: "Bài 2", title: "天气", href: "#" },
+                ]
+            },
+            hsk6: {
+                title: "HSK 6", lessons: [
+                    { label: "Bài 1", title: "我的家", href: "#" },
+                    { label: "Bài 2", title: "天气", href: "#" },
+                ]
+            },
+        };
+
+        const gatesView = document.getElementById('gatesView');
+        const journeyView = document.getElementById('journeyView');
+        const pathTitle = document.getElementById('pathTitle');
+        const pathCanvas = document.getElementById('pathCanvas');
+        const pathSvg = document.getElementById('pathSvg');
+        const pathTrail = document.getElementById('pathTrail');
+        const pathBack = document.getElementById('pathBack');
+
+        const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+        function xPatternFor(i) {
+            const cycle = [20, 50, 80, 50];
+            return cycle[i % cycle.length];
+        }
+
+        function getNodePositions(count) {
+            const positions = [];
+            const topPad = 10, bottomPad = 10;
+            for (let i = 0; i < count; i++) {
+                const x = xPatternFor(i);
+                const y = count === 1 ? 50 : topPad + (i * (100 - topPad - bottomPad) / (count - 1));
+                positions.push({ x, y });
+            }
+            return positions;
+        }
+
+        function smoothPath(points) {
+            if (points.length < 2) return '';
+            let d = `M ${points[0].x} ${points[0].y}`;
+            for (let i = 0; i < points.length - 1; i++) {
+                const p0 = points[i - 1] || points[i];
+                const p1 = points[i];
+                const p2 = points[i + 1];
+                const p3 = points[i + 2] || p2;
+                const cp1x = p1.x + (p2.x - p0.x) / 6;
+                const cp1y = p1.y + (p2.y - p0.y) / 6;
+                const cp2x = p2.x - (p3.x - p1.x) / 6;
+                const cp2y = p2.y - (p3.y - p1.y) / 6;
+                d += ` C ${cp1x} ${cp1y}, ${cp2x} ${cp2y}, ${p2.x} ${p2.y}`;
+            }
+            return d;
+        }
+
+        function buildJourney(levelKey) {
+            const data = levels[levelKey];
+            if (!data) return;
+
+            pathTitle.textContent = data.title;
+
+            // clear old nodes
+            pathCanvas.querySelectorAll('.path-node').forEach(n => n.remove());
+
+            const count = data.lessons.length;
+            const canvasHeight = Math.max(360, count * 190);
+            pathCanvas.style.height = canvasHeight + 'px';
+
+            const positions = getNodePositions(count);
+            pathTrail.setAttribute('d', smoothPath(positions));
+
+            // draw-in animation for the trail
+            if (!reduceMotion) {
+                const length = pathTrail.getTotalLength();
+                pathTrail.style.strokeDasharray = length;
+                pathTrail.style.strokeDashoffset = length;
+                pathTrail.getBoundingClientRect(); // force reflow
+                pathTrail.style.transition = 'stroke-dashoffset 1.1s ease';
+                requestAnimationFrame(() => {
+                    pathTrail.style.strokeDashoffset = '0';
+                });
+            } else {
+                pathTrail.style.strokeDasharray = 'none';
+                pathTrail.style.strokeDashoffset = '0';
+            }
+
+            data.lessons.forEach((lesson, i) => {
+                const pos = positions[i];
+                const isLocked = lesson.href === '#';
+                const isLast = i === count - 1;
+
+                const node = document.createElement(isLocked ? 'div' : 'a');
+                node.className = 'path-node' + (isLocked ? ' locked' : '') + (isLast ? ' finish' : '');
+                node.style.left = pos.x + '%';
+                node.style.top = pos.y + '%';
+                if (!reduceMotion) {
+                    node.style.animationDelay = (i * 0.18 + 0.35) + 's';
+                } else {
+                    node.style.animation = 'none';
+                    node.style.opacity = '1';
+                }
+                if (!isLocked) node.href = lesson.href;
+                if (lesson.number) node.dataset.lessonNumber = lesson.number;
+
+                const progressHtml = lesson.number
+                    ? '<span class="node-progress" data-status="new">Chưa bắt đầu</span>'
+                    : '';
+
+                node.innerHTML = `
+                    <span class="node-stone">
+                        <span class="node-icon">${isLast ? '🏮' : (isLocked ? '🔒' : '📖')}</span>
+                        <span class="node-index">${lesson.label}</span>
+                    </span>
+                    <span class="node-caption">${lesson.title}${isLocked ? ' <em>· sắp ra mắt</em>' : ''}${progressHtml}</span>
+                `;
+
+                pathCanvas.appendChild(node);
+            });
+
+            refreshJourneyProgress(data.lessons);
+        }
+
+        async function refreshJourneyProgress(lessons) {
+            const lessonNumbers = lessons
+                .map(lesson => lesson.number)
+                .filter(Boolean);
+
+            if (!lessonNumbers.length || !window.LessonProgress) return;
+
+            const statuses = await window.LessonProgress
+                .loadLessonStatuses(lessonNumbers);
+
+            const labels = {
+                new: "Chưa bắt đầu",
+                learning: "Đang học",
+                completed: "Đã hoàn thành ✓"
+            };
+
+            lessonNumbers.forEach(number => {
+                const node = pathCanvas.querySelector(
+                    '[data-lesson-number="' + number + '"]'
+                );
+                const badge = node && node.querySelector('.node-progress');
+                if (!badge) return;
+
+                const status = statuses[number] || "new";
+                badge.dataset.status = status;
+                badge.textContent = labels[status];
+            });
+        }
+
+        document.querySelectorAll('.gate').forEach(gate => {
+            gate.addEventListener('click', () => {
+                if (gate.classList.contains('open')) return;
+                gate.classList.add('open');
+
+                const proceed = () => {
+                    gatesView.hidden = true;
+                    journeyView.hidden = false;
+                    journeyView.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' });
+                    buildJourney(gate.dataset.level);
+                };
+
+                if (reduceMotion) {
+                    proceed();
+                } else {
+                    setTimeout(proceed, 650);
+                }
+            });
+        });
+
+        pathBack.addEventListener('click', () => {
+            journeyView.hidden = true;
+            gatesView.hidden = false;
+            document.querySelectorAll('.gate.open').forEach(g => g.classList.remove('open'));
+            gatesView.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' });
+        });
+    </script>
+</body>
+
+</html>

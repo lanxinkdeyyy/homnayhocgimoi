@@ -8,7 +8,7 @@
 <meta name="viewport"
       content="width=device-width, initial-scale=1.0">
 
-<title>说话的艺术与学习方法 - Bài 12 · HSK 4</title>
+<title>Bài học · HSK</title>
 
 <style>
 
@@ -1541,6 +1541,196 @@ body {
 }
 
 
+/* ================================================= */
+/* ================ IN BÀI (PRINT) ================== */
+/* ================================================= */
+
+.print-fab-wrap {
+    position: fixed;
+    top: 18px;
+    right: 18px;
+    z-index: 3000;
+}
+
+.print-fab {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: #ffffff;
+    border: 1px solid #cfe3d5;
+    color: #3f6b4f;
+    font-size: 14px;
+    font-weight: 600;
+    padding: 10px 16px;
+    border-radius: 999px;
+    cursor: pointer;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.12);
+    transition: 0.2s;
+}
+
+.print-fab:hover {
+    background: #eef8f0;
+    border-color: #8fc7a5;
+}
+
+.print-menu {
+    display: none;
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    background: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.16);
+    min-width: 190px;
+    overflow: hidden;
+}
+
+.print-menu.open {
+    display: block;
+}
+
+.print-menu button {
+    display: block;
+    width: 100%;
+    text-align: left;
+    background: none;
+    border: none;
+    padding: 12px 16px;
+    font-size: 14px;
+    color: #333;
+    cursor: pointer;
+}
+
+.print-menu button:hover {
+    background: #f2f8f3;
+}
+
+.print-menu button + button {
+    border-top: 1px solid #eee;
+}
+
+/* Root chứa nội dung dùng để in, luôn ẩn cho tới khi bắt đầu in */
+#printRoot {
+    display: none;
+}
+
+body.app-printing > *:not(#printRoot) {
+    display: none !important;
+}
+
+body.app-printing #printRoot {
+    display: block !important;
+}
+
+.print-page {
+    width: 190mm;
+    min-height: 277mm;
+    margin: 0 auto 12px auto;
+    padding: 10mm;
+    box-sizing: border-box;
+    page-break-after: always;
+    break-after: page;
+    font-family: "KaiTi", "STKaiti", "KaiTi_GB2312", cursive, serif;
+}
+
+.print-page:last-child {
+    page-break-after: auto;
+    break-after: auto;
+}
+
+.print-page-heading {
+    color: #5b8f72;
+    font-size: 20pt;
+    font-weight: bold;
+    margin-bottom: 14mm;
+    font-family: "KaiTi", "STKaiti", "KaiTi_GB2312", cursive, serif;
+}
+
+.print-layout {
+    display: flex;
+    align-items: flex-start;
+    position: relative;
+}
+
+.print-main {
+    flex: 0 0 74%;
+    max-width: 74%;
+    min-width: 0;
+}
+
+.print-divider {
+    flex: 0 0 1px;
+    width: 1px;
+    align-self: stretch;
+    background: #e3e3e3;
+    margin: 0 14px;
+}
+
+.print-sidebar {
+    flex: 1;
+    min-width: 0;
+    position: relative;
+}
+
+.print-svg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    overflow: visible;
+}
+
+.print-page .reading-text {
+    font-size: 20pt;
+    line-height: 2.3;
+    font-family: "KaiTi", "STKaiti", "KaiTi_GB2312", cursive, serif;
+}
+
+/* Tập viết: chữ đen -> xám nhạt để tô đồ, bỏ hết highlight/gạch chân */
+.print-page.print-writing {
+    display: flex;
+    flex-direction: column;
+}
+
+.print-writing .reading-text,
+.print-writing .reading-text * {
+    color: #b9b9b9 !important;
+    background: none !important;
+    text-decoration: none !important;
+}
+
+.print-writing .print-lines {
+    flex: 1 1 auto;
+    margin-top: 12mm;
+    background-image: repeating-linear-gradient(
+        to bottom,
+        transparent,
+        transparent 11mm,
+        #cfcfcf 11mm,
+        #cfcfcf calc(11mm + 1px)
+    );
+}
+
+@media print {
+
+    @page {
+        size: A4;
+        margin: 10mm;
+    }
+
+    * {
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+
+    .print-fab-wrap {
+        display: none !important;
+    }
+
+}
+
+
 
 </style>
 
@@ -1548,6 +1738,18 @@ body {
 
 
 <body>
+
+<div class="print-fab-wrap" id="printFabWrap">
+    <button type="button" class="print-fab" id="printFabButton" onclick="togglePrintMenu(event)">
+        🖨️ In bài
+    </button>
+    <div class="print-menu" id="printMenu">
+        <button type="button" onclick="startPrintLesson('color')">🎨 In màu</button>
+        <button type="button" onclick="startPrintLesson('writing')">✍️ In tập viết</button>
+    </div>
+</div>
+
+<div id="printRoot"></div>
 
 
 <div class="lesson-page">
@@ -1560,8 +1762,8 @@ body {
 
 <div class="lesson-title">
 
-    <h1>说话的艺术与学习方法</h1>
-    <p>Bài 12 · HSK 4</p>
+    <h1 id="lessonTitle"></h1>
+    <p id="lessonSubtitle"></p>
 
 </div>
 
@@ -1626,73 +1828,7 @@ body {
 
 
 <!-- ================================================= -->
-<!-- ================= BÀI ĐỌC 1 + 2 ==================== -->
-
-<!-- ================================================= -->
-<!-- ================= BÀI ĐỌC 1 ==================== -->
-<!-- ================================================= -->
-
-<div class="reading-block">
-
-    <h3 class="reading-heading">
-        📖 课文 4
-    </h3>
-
-    <div class="audio-section">
-
-        <div class="vinyl" id="vinyl1"></div>
-
-        <button class="audio-button" id="audioButton1" onclick="toggleAudio('1')">
-            ▶ Phát bài nghe
-        </button>
-
-        <div class="audio-progress-wrap">
-            <span id="audioCurrentTime1">0:00</span>
-            <input type="range" id="audioProgress1" class="audio-progress" value="0" min="0" max="100" step="0.1">
-            <span id="audioDuration1">0:00</span>
-        </div>
-
-        <audio id="audio1" src="audio/HSK4 - quyển thượng - Bài 12.4.mp3"></audio>
-
-    </div>
-
-    <div class="reading-text" id="readingText1" data-raw-text="草绿了，那是生命的颜色；花开了，那是大自然的礼物。生活中不缺少美，缺少的是发现美的眼睛。只要有心，生活中的美到处都是。生活的态度要自己选择，因此，遇到烦恼时，你应该想一些办法让自己从不高兴的心情中走出来。窗外是什么样子，我们无法改变，但我们可以选择站在哪个窗户前。选择一个能够带给我们快乐的窗户，这样才能选对心情，选对生活的态度。"></div>
-
-</div>
-
-
-<!-- ================================================= -->
-<!-- ================= BÀI ĐỌC 2 ==================== -->
-<!-- ================================================= -->
-
-<div class="reading-block">
-
-    <h3 class="reading-heading">
-        📖 课文 5
-    </h3>
-
-    <div class="audio-section">
-
-        <div class="vinyl" id="vinyl2"></div>
-
-        <button class="audio-button" id="audioButton2" onclick="toggleAudio('2')">
-            ▶ Phát bài nghe
-        </button>
-
-        <div class="audio-progress-wrap">
-            <span id="audioCurrentTime2">0:00</span>
-            <input type="range" id="audioProgress2" class="audio-progress" value="0" min="0" max="100" step="0.1">
-            <span id="audioDuration2">0:00</span>
-        </div>
-
-        <audio id="audio2" src="audio/HSK4 - quyển thượng - Bài 12.5.mp3"></audio>
-
-    </div>
-
-    <div class="reading-text" id="readingText2" data-raw-text="科学研究证明，女孩子对衣服颜色的选择往往与她们的性格有关。喜欢穿白色衣服的女孩子性格比较阳光，生活态度积极向上是她们的共同特点；而喜欢穿红色衣服的女孩子性格比较浪漫。颜色也会影响人的心情，不同的颜色会给我们带来不同的感情变化。红色让人变得热情；黄色和白色让人心情愉快；黑色却容易让人感到伤心；人们在看到蓝色时会觉得很舒服，变得安静下来；绿色让我们的眼睛得到休息。"></div>
-
-</div>
-
+<div id="readingBlocks"></div>
 
 </div>
 <!-- END .reading-main -->
@@ -2165,14 +2301,7 @@ body {
 <div id="mobileAudioBar" class="mobile-audio-bar">
     <div class="mobile-audio-track">
         <div class="mobile-audio-top">
-            <div class="mobile-audio-lessons" aria-label="Chọn bài nghe">
-                <button id="mobileAudioLesson1" class="mobile-audio-lesson active" type="button" onclick="selectMobileAudio('1')">
-                    Bài 1
-                </button>
-                <button id="mobileAudioLesson2" class="mobile-audio-lesson" type="button" onclick="selectMobileAudio('2')">
-                    Bài 2
-                </button>
-            </div>
+            <div class="mobile-audio-lessons" id="mobileAudioLessons" aria-label="Chọn bài nghe"></div>
 
             <button
                 id="mobileAudioPlay"
@@ -2200,500 +2329,103 @@ body {
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="supabase.js?v=2"></script>
+<script src="lessons-data.js"></script>
 <script>
 
 /* ================================================= */
 /* ================= DỮ LIỆU ======================== */
 /* ================================================= */
 
-const vocabulary = {
+/* ================================================= */
+/* ============ NẠP BÀI HỌC TỪ lessons-data.js ===== */
+/* ================================================= */
 
-    "每个人": {
-    pinyin: "měi ge rén",
-    hanviet: "[Mỗi Cá Nhân]",
-    pos: "n",
-    meaning: "Mỗi người, mọi người",
-    exampleChinese: "每个人都需要休息。",
-    exampleVietnamese: "→ Mỗi người đều cần nghỉ ngơi.",
-    usage: "Dùng để nói về từng người trong một nhóm."
-},
+const LESSON_ID = Number(new URLSearchParams(location.search).get("id"));
+const LESSON = (window.LESSONS || {})[LESSON_ID];
 
-"希望": {
-    pinyin: "xīwàng",
-    hanviet: "[Hy Vọng]",
-    pos: "v",
-    meaning: "Hy vọng, mong muốn",
-    exampleChinese: "我希望明天是好天气。",
-    exampleVietnamese: "→ Tôi hy vọng ngày mai thời tiết đẹp.",
-    usage: "Thường dùng: 希望 + mệnh đề / 希望 + động từ."
-},
-
-"自己": {
-    pinyin: "zìjǐ",
-    hanviet: "[Tự Kỷ]",
-    pos: "pron",
-    meaning: "Bản thân, chính mình",
-    exampleChinese: "你要相信自己。",
-    exampleVietnamese: "→ Bạn phải tin vào bản thân mình.",
-    usage: "Đại từ phản thân, chỉ chính người được nhắc đến."
-},
-
-"健康": {
-    pinyin: "jiànkāng",
-    hanviet: "[Kiện Khang]",
-    pos: "n, a",
-    meaning: "Sức khỏe; khỏe mạnh",
-    exampleChinese: "健康比什么都重要。",
-    exampleVietnamese: "→ Sức khỏe quan trọng hơn tất cả mọi thứ.",
-    usage: "Có thể làm danh từ hoặc tính từ: 身体健康 (cơ thể khỏe mạnh)."
-},
-
-"那么": {
-    pinyin: "nàme",
-    hanviet: "[Na Ma]",
-    pos: "adv",
-    meaning: "Vậy thì; như vậy; thế thì",
-    exampleChinese: "那么，我们开始吧。",
-    exampleVietnamese: "→ Vậy thì, chúng ta bắt đầu nhé.",
-    usage: "Dùng để nối câu, chuyển sang kết quả hoặc câu hỏi tiếp theo."
-},
-
-"什么": {
-    pinyin: "shénme",
-    hanviet: "[Thập Ma]",
-    pos: "pron",
-    meaning: "Cái gì; gì",
-    exampleChinese: "你想吃什么？",
-    exampleVietnamese: "→ Bạn muốn ăn gì?",
-    usage: "Đại từ nghi vấn, dùng để hỏi sự vật, việc hoặc nội dung."
-},
-
-"才": {
-    pinyin: "cái",
-    hanviet: "[Tài]",
-    pos: "adv",
-    meaning: "Mới; mới là; thì mới",
-    exampleChinese: "努力学习才会进步。",
-    exampleVietnamese: "→ Chăm chỉ học thì mới tiến bộ.",
-    usage: "Trong bài, 才 nhấn mạnh điều kiện cần để có kết quả."
-},
-
-"过去": {
-    pinyin: "guòqù",
-    hanviet: "[Quá Khứ]",
-    pos: "n / v",
-    meaning: "Quá khứ; đi qua, trôi qua",
-    exampleChinese: "过去的事情就让它过去吧。",
-    exampleVietnamese: "→ Chuyện đã qua thì hãy để nó qua đi.",
-    usage: "Làm danh từ chỉ thời gian đã qua; cũng có thể là động từ 'đi qua'."
-},
-
-"人们": {
-    pinyin: "rénmen",
-    hanviet: "[Nhân Môn]",
-    pos: "n",
-    meaning: "Mọi người, con người",
-    exampleChinese: "现在人们很重视环境保护。",
-    exampleVietnamese: "→ Hiện nay mọi người rất coi trọng việc bảo vệ môi trường.",
-    usage: "Chỉ con người nói chung; không dùng cho một số lượng người xác định."
-},
-
-"认为": {
-    pinyin: "rènwéi",
-    hanviet: "[Nhận Vi]",
-    pos: "v",
-    meaning: "Cho rằng, cho là, cho rằng",
-    exampleChinese: "我认为这个办法很好。",
-    exampleVietnamese: "→ Tôi cho rằng cách này rất tốt.",
-    usage: "Thường dùng: 认为 + mệnh đề."
-},
-
-"指": {
-    pinyin: "zhǐ",
-    hanviet: "[Chỉ]",
-    pos: "v",
-    meaning: "Chỉ, đề cập đến, nói đến/ (n) ngón tay, chỉ số",
-    exampleChinese: "这里的“他”指谁？",
-    exampleVietnamese: "→ “Anh ấy” ở đây chỉ ai?",
-    usage: "Thường dùng để giải thích một từ hoặc khái niệm: A 指 B."
-},
-"认识": {
-    pinyin: "rènshi",
-    hanviet: "[Nhận Thức]",
-    pos: "v, n",
-    meaning: "(v) biết, quen / (n) sự nhận thức, hiểu biết",
-    exampleChinese: "这里的“他”指谁？",
-    usage: "认识 + người/ sự vật/ khái niệm/ sự thật, vấn đề."
-},
-"身体": {
-    pinyin: "shēntǐ",
-    hanviet: "[Thân Thể]",
-    pos: "n",
-    meaning: "Cơ thể, thân thể",
-    exampleChinese: "你要照顾好自己的身体。",
-    exampleVietnamese: "→ Bạn phải chăm sóc tốt cơ thể của mình.",
-    usage: "Thường kết hợp: 身体健康, 锻炼身体."
-},
-
-"生病": {
-    pinyin: "shēng bìng",
-    hanviet: "[Sinh Bệnh]",
-    pos: "v",
-    meaning: "Bị bệnh, ốm",
-    exampleChinese: "他昨天生病了，没去上班。",
-    exampleVietnamese: "→ Hôm qua anh ấy bị ốm nên không đi làm.",
-    usage: "Dùng với 了 khi nói một lần bị ốm cụ thể."
-},
-
-"但是": {
-    pinyin: "dànshì",
-    hanviet: "[Đãn Thị]",
-    pos: "conj",
-    meaning: "Nhưng, tuy nhiên",
-    exampleChinese: "他很累，但是还在学习。",
-    exampleVietnamese: "→ Anh ấy rất mệt nhưng vẫn đang học.",
-    usage: "Liên từ biểu thị sự chuyển ý hoặc đối lập."
-},
-
-"现在": {
-    pinyin: "xiànzài",
-    hanviet: "[Hiện Tại]",
-    pos: "n / adv",
-    meaning: "Hiện tại, bây giờ",
-    exampleChinese: "现在我明白了。",
-    exampleVietnamese: "→ Bây giờ tôi hiểu rồi.",
-    usage: "Dùng ở đầu câu hoặc trước động từ để chỉ thời điểm hiện tại."
-},
-
-"认识到": {
-    pinyin: "rènshi dào",
-    hanviet: "[Nhận Thức Đáo]",
-    pos: "v",
-    meaning: "Nhận thức được, nhận ra",
-    exampleChinese: "我终于认识到时间的重要性。",
-    exampleVietnamese: "→ Cuối cùng tôi cũng nhận ra tầm quan trọng của thời gian.",
-    usage: "认识到 + sự việc / ý nghĩa / vấn đề."
-},
-
-"精神": {
-    pinyin: "jīngshén",
-    hanviet: "[Tinh Thần]",
-    pos: "n",
-    meaning: "Tinh thần; tâm trạng",
-    exampleChinese: "她今天精神很好。",
-    exampleVietnamese: "→ Hôm nay tinh thần cô ấy rất tốt.",
-    usage: "Trong bài, 精神上的健康 là sức khỏe tinh thần."
-},
-
-"精神上": {
-    pinyin: "jīngshén shàng",
-    hanviet: "[Tinh Thần Thượng]",
-    pos: "n",
-    meaning: "Về mặt tinh thần",
-    exampleChinese: "他精神上压力很大。",
-    exampleVietnamese: "→ Về mặt tinh thần, anh ấy có áp lực rất lớn.",
-    usage: "Thường dùng sau một danh từ để nói về một phương diện nào đó."
-},
-
-"只有…才…": {
-    pinyin: "zhǐyǒu…cái…",
-    hanviet: "[Chỉ Hữu…Tài…]",
-    pos: "cấu trúc",
-    meaning: "Chỉ có… thì mới…",
-    exampleChinese: "只有认真练习，才会说好中文。",
-    exampleVietnamese: "→ Chỉ có luyện tập nghiêm túc thì mới nói tiếng Trung tốt.",
-    usage: "Nhấn mạnh điều kiện cần thiết để kết quả phía sau xảy ra."
-},
-
-"算": {
-    pinyin: "suàn",
-    hanviet: "[Toán]",
-    pos: "v",
-    meaning: "Tính là, được coi là",
-    exampleChinese: "这样算不算迟到？",
-    exampleVietnamese: "→ Như vậy có được tính là đi muộn không?",
-    usage: "Thường dùng: 算 + danh từ / 算是 + danh từ."
-},
-
-"真正": {
-    pinyin: "zhēnzhèng",
-    hanviet: "[Chân Chính]",
-    pos: "a / adv",
-    meaning: "Thật sự, thực sự, chân chính",
-    exampleChinese: "真正的朋友会帮助你。",
-    exampleVietnamese: "→ Người bạn thật sự sẽ giúp đỡ bạn.",
-    usage: "Thường đứng trước danh từ để nhấn mạnh tính xác thực."
-},
-
-"教授": {
-    pinyin: "jiàoshòu",
-    hanviet: "[Giáo Thụ]",
-    pos: "n",
-    meaning: "Giáo sư",
-    exampleChinese: "王教授正在给学生上课。",
-    exampleVietnamese: "→ Giáo sư Vương đang dạy học sinh.",
-    usage: "Cách gọi chức danh học thuật: 王教授."
-},
-
-"数字": {
-    pinyin: "shùzì",
-    hanviet: "[Số Tự]",
-    pos: "n",
-    meaning: "Con số, chữ số",
-    exampleChinese: "这个数字不太准确。",
-    exampleVietnamese: "→ Con số này không được chính xác lắm.",
-    usage: "Dùng cho số liệu, chữ số hoặc số lượng thể hiện bằng số."
-},
-
-"说明": {
-    pinyin: "shuōmíng",
-    hanviet: "[Thuyết Minh]",
-    pos: "v",
-    meaning: "Giải thích, chứng minh, cho thấy",
-    exampleChinese: "这个例子说明了问题。",
-    exampleVietnamese: "→ Ví dụ này đã cho thấy vấn đề.",
-    usage: "说明 + sự việc / nguyên nhân / ý nghĩa."
-},
-
-"多么": {
-    pinyin: "duōme",
-    hanviet: "[Đa Ma]",
-    pos: "adv",
-    meaning: "Biết bao, bao nhiêu, rất",
-    exampleChinese: "健康是多么重要啊！",
-    exampleVietnamese: "→ Sức khỏe quan trọng biết bao!",
-    usage: "Dùng trong câu cảm thán để nhấn mạnh mức độ."
-},
-
-"重要": {
-    pinyin: "zhòngyào",
-    hanviet: "[Trọng Yếu]",
-    pos: "a",
-    meaning: "Quan trọng",
-    exampleChinese: "这是一个很重要的决定。",
-    exampleVietnamese: "→ Đây là một quyết định rất quan trọng.",
-    usage: "Thường dùng: 对…很重要 / 重要的 + danh từ."
-},
-
-"要是": {
-    pinyin: "yàoshi",
-    hanviet: "[Yếu Thị]",
-    pos: "conj",
-    meaning: "Nếu, giả sử như",
-    exampleChinese: "要是明天下雨，我们就不去了。",
-    exampleVietnamese: "→ Nếu ngày mai mưa, chúng tôi sẽ không đi.",
-    usage: "Dùng để giả định điều kiện, gần nghĩa với 如果."
-},
-
-"其他": {
-    pinyin: "qítā",
-    hanviet: "[Kỳ Tha]",
-    pos: "pron",
-    meaning: "Khác, những cái khác",
-    exampleChinese: "其他问题以后再说。",
-    exampleVietnamese: "→ Những vấn đề khác để sau nói tiếp.",
-    usage: "Thường đứng trước danh từ: 其他人, 其他事情."
-},
-
-"后面": {
-    pinyin: "hòumian",
-    hanviet: "[Hậu Diện]",
-    pos: "n",
-    meaning: "Phía sau; phần sau",
-    exampleChinese: "答案在书的后面。",
-    exampleVietnamese: "→ Đáp án ở phía sau quyển sách.",
-    usage: "Có thể chỉ vị trí hoặc phần nội dung ở sau."
-},
-
-"如果": {
-    pinyin: "rúguǒ",
-    hanviet: "[Như Quả]",
-    pos: "conj",
-    meaning: "Nếu",
-    exampleChinese: "如果你有时间，就来找我吧。",
-    exampleVietnamese: "→ Nếu bạn có thời gian thì đến tìm tôi nhé.",
-    usage: "Dùng mở đầu mệnh đề điều kiện; thường đi với 就 ở vế sau."
-},
-
-"不管": {
-    pinyin: "bùguǎn",
-    hanviet: "[Bất Quản]",
-    pos: "conj",
-    meaning: "Bất kể, dù cho, không quan tâm",
-    exampleChinese: "不管多忙，我都会吃早餐。",
-    exampleVietnamese: "→ Dù bận thế nào, tôi cũng sẽ ăn sáng.",
-    usage: "Thường dùng với 都 / 也: 不管…都/也…"
-},
-
-"多少": {
-    pinyin: "duōshao",
-    hanviet: "[Đa Thiểu]",
-    pos: "pron",
-    meaning: "Bao nhiêu; một mức độ nào đó",
-    exampleChinese: "这里有多少人？",
-    exampleVietnamese: "→ Ở đây có bao nhiêu người?",
-    usage: "Dùng để hỏi số lượng; trong 不管有多少 là 'dù có bao nhiêu'."
-},
-
-"没用": {
-    pinyin: "méi yòng",
-    hanviet: "[Một Dụng]",
-    pos: "a",
-    meaning: "Vô dụng, không có tác dụng",
-    exampleChinese: "光着急是没用的。",
-    exampleVietnamese: "→ Chỉ lo lắng thôi thì không có tác dụng.",
-    usage: "Dùng để nói một việc, đồ vật hoặc cách làm không đem lại hiệu quả."
-},
-
-"所以": {
-    pinyin: "suǒyǐ",
-    hanviet: "[Sở Dĩ]",
-    pos: "conj",
-    meaning: "Cho nên, vì vậy",
-    exampleChinese: "今天下雨，所以我没出门。",
-    exampleVietnamese: "→ Hôm nay trời mưa, vì vậy tôi không ra ngoài.",
-    usage: "Dùng ở vế kết quả; vế trước thường nêu nguyên nhân."
-},
-
-"平时": {
-    pinyin: "píngshí",
-    hanviet: "[Bình Thời]",
-    pos: "n / adv",
-    meaning: "Bình thường, thường ngày",
-    exampleChinese: "我平时晚上十点睡觉。",
-    exampleVietnamese: "→ Bình thường tôi ngủ lúc 10 giờ tối.",
-    usage: "Dùng để nói thói quen hoặc tình trạng thường ngày."
-},
-
-"一定": {
-    pinyin: "yídìng",
-    hanviet: "[Nhất Định]",
-    pos: "adv",
-    meaning: "Nhất định, chắc chắn, phải",
-    exampleChinese: "你一定要注意安全。",
-    exampleVietnamese: "→ Bạn nhất định phải chú ý an toàn.",
-    usage: "Đặt trước động từ để nhấn mạnh yêu cầu hoặc sự chắc chắn."
-},
-
-"注意": {
-    pinyin: "zhùyì",
-    hanviet: "[Chú Ý]",
-    pos: "v",
-    meaning: "Chú ý, để ý",
-    exampleChinese: "请注意听老师说。",
-    exampleVietnamese: "→ Hãy chú ý nghe thầy giáo nói.",
-    usage: "Thường dùng: 注意 + động từ / danh từ; 注意安全."
-},
-
-"锻炼": {
-    pinyin: "duànliàn",
-    hanviet: "[Đoán Luyện]",
-    pos: "v",
-    meaning: "Rèn luyện, tập luyện",
-    exampleChinese: "为了健康，他每天锻炼身体。",
-    exampleVietnamese: "→ Vì sức khỏe, anh ấy tập luyện cơ thể mỗi ngày.",
-    usage: "Thường dùng: 锻炼身体; cũng có thể là rèn luyện năng lực."
-},
-
-"别": {
-    pinyin: "bié",
-    hanviet: "[Biệt]",
-    pos: "adv",
-    meaning: "Đừng, chớ",
-    exampleChinese: "别忘了带手机。",
-    exampleVietnamese: "→ Đừng quên mang điện thoại.",
-    usage: "Đặt trước động từ để tạo câu mệnh lệnh phủ định."
-},
-
-"等": {
-    pinyin: "děng",
-    hanviet: "[Đẳng]",
-    pos: "v",
-    meaning: "Đợi, chờ",
-    exampleChinese: "请你等我一下。",
-    exampleVietnamese: "→ Bạn hãy đợi tôi một lát.",
-    usage: "Thường dùng: 等 + người / sự việc; 等一下 là đợi một lát."
-},
-
-"出问题": {
-    pinyin: "chū wèntí",
-    hanviet: "[Xuất Vấn Đề]",
-    pos: "v",
-    meaning: "Xảy ra vấn đề, gặp trục trặc",
-    exampleChinese: "电脑出问题了，打不开。",
-    exampleVietnamese: "→ Máy tính xảy ra vấn đề rồi, không mở được.",
-    usage: "Dùng cho sức khỏe, máy móc, kế hoạch hoặc công việc gặp vấn đề."
-},
-
-"后悔": {
-    pinyin: "hòuhuǐ",
-    hanviet: "[Hậu Hối]",
-    pos: "v",
-    meaning: "Hối hận",
-    exampleChinese: "我后悔没有早点开始学习。",
-    exampleVietnamese: "→ Tôi hối hận vì đã không bắt đầu học sớm hơn.",
-    usage: "Thường dùng: 后悔 + động từ / 后悔做了某事."
+if (!LESSON) {
+    document.body.innerHTML =
+        '<div style="max-width:600px;margin:60px auto;font-family:Arial,sans-serif;text-align:center;line-height:1.8">' +
+        '<h2>Không tìm thấy bài học</h2>' +
+        '<p>Hãy mở bằng link dạng <code>lesson.html?id=9</code></p>' +
+        '<p><a href="reading.html">← Về danh sách bài</a></p></div>';
+    throw new Error("Lesson not found: " + LESSON_ID);
 }
-};
 
-/* Từ vựng Lesson 8 */
-Object.keys(vocabulary).forEach(function(word) { delete vocabulary[word]; });
-Object.assign(vocabulary, {
-    "草": {pinyin:"cǎo", hanviet:"[Thảo]", pos:"n", meaning:"Cỏ", exampleChinese:"草绿了。", exampleVietnamese:"→ Cỏ xanh rồi.", usage:"Danh từ chỉ cỏ."},
-    "生命": {pinyin:"shēngmìng", hanviet:"[Sinh Mệnh]", pos:"n", meaning:"Sinh mệnh, sự sống", exampleChinese:"生命很宝贵。", exampleVietnamese:"→ Sự sống rất quý giá.", usage:"Chỉ sự sống hoặc cuộc đời."},
-    "颜色": {pinyin:"yánsè", hanviet:"[Nhan Sắc]", pos:"n", meaning:"Màu sắc", exampleChinese:"我喜欢这个颜色。", exampleVietnamese:"→ Tôi thích màu này.", usage:"Dùng để nói về màu sắc."},
-    "花": {pinyin:"huā", hanviet:"[Hoa]", pos:"n", meaning:"Hoa", exampleChinese:"花开了。", exampleVietnamese:"→ Hoa nở rồi.", usage:"Danh từ chỉ hoa."},
-    "大自然": {pinyin:"dà zìrán", hanviet:"[Đại Tự Nhiên]", pos:"n", meaning:"Thiên nhiên", exampleChinese:"大自然很美。", exampleVietnamese:"→ Thiên nhiên rất đẹp.", usage:"Chỉ thế giới tự nhiên."},
-    "礼物": {pinyin:"lǐwù", hanviet:"[Lễ Vật]", pos:"n", meaning:"Quà tặng", exampleChinese:"这是送给你的礼物。", exampleVietnamese:"→ Đây là quà tặng cho bạn.", usage:"礼物 thường đi với 送、收到."},
-    "生活": {pinyin:"shēnghuó", hanviet:"[Sinh Hoạt]", pos:"n / v", meaning:"Cuộc sống; sinh hoạt", exampleChinese:"我的生活很简单。", exampleVietnamese:"→ Cuộc sống của tôi rất đơn giản.", usage:"Có thể là danh từ hoặc động từ."},
-    "缺少": {pinyin:"quēshǎo", hanviet:"[Khuyết Thiểu]", pos:"v", meaning:"Thiếu, thiếu hụt", exampleChinese:"这里缺少水。", exampleVietnamese:"→ Ở đây thiếu nước.", usage:"缺少 + danh từ."},
-    "发现": {pinyin:"fāxiàn", hanviet:"[Phát Hiện]", pos:"v", meaning:"Phát hiện, nhận ra", exampleChinese:"我发现了一个问题。", exampleVietnamese:"→ Tôi phát hiện một vấn đề.", usage:"发现 + sự vật / vấn đề."},
-    "眼睛": {pinyin:"yǎnjing", hanviet:"[Nhãn Tinh]", pos:"n", meaning:"Mắt", exampleChinese:"她的眼睛很漂亮。", exampleVietnamese:"→ Mắt cô ấy rất đẹp.", usage:"Danh từ chỉ mắt."},
-    "只要": {pinyin:"zhǐyào", hanviet:"[Chỉ Yếu]", pos:"conj", meaning:"Chỉ cần", exampleChinese:"只要努力，就会进步。", exampleVietnamese:"→ Chỉ cần cố gắng thì sẽ tiến bộ.", usage:"Thường dùng với 就 ở vế sau."},
-    "到处": {pinyin:"dàochù", hanviet:"[Đáo Xứ]", pos:"adv", meaning:"Khắp nơi, mọi nơi", exampleChinese:"这里到处都是花。", exampleVietnamese:"→ Ở đây đâu đâu cũng có hoa.", usage:"Đứng trước động từ hoặc 是."},
-    "态度": {pinyin:"tàidu", hanviet:"[Thái Độ]", pos:"n", meaning:"Thái độ", exampleChinese:"他的学习态度很好。", exampleVietnamese:"→ Thái độ học tập của anh ấy rất tốt.", usage:"Thường dùng: 对…的态度."},
-    "选择": {pinyin:"xuǎnzé", hanviet:"[Tuyển Trạch]", pos:"v / n", meaning:"Lựa chọn", exampleChinese:"你可以自己选择。", exampleVietnamese:"→ Bạn có thể tự lựa chọn.", usage:"选择 + danh từ / động từ."},
-    "因此": {pinyin:"yīncǐ", hanviet:"[Nhân Thử]", pos:"conj", meaning:"Vì vậy, do đó", exampleChinese:"他生病了，因此没来。", exampleVietnamese:"→ Anh ấy bị ốm, vì vậy không đến.", usage:"Dùng để nối nguyên nhân và kết quả."},
-    "遇到": {pinyin:"yùdào", hanviet:"[Ngộ Đáo]", pos:"v", meaning:"Gặp phải", exampleChinese:"遇到问题别着急。", exampleVietnamese:"→ Gặp vấn đề đừng vội.", usage:"遇到 + người / việc / khó khăn."},
-    "烦恼": {pinyin:"fánnǎo", hanviet:"[Phiền Não]", pos:"n / v", meaning:"Phiền não, buồn phiền", exampleChinese:"别为小事烦恼。", exampleVietnamese:"→ Đừng phiền não vì chuyện nhỏ.", usage:"Có thể là danh từ hoặc động từ."},
-    "应该": {pinyin:"yīnggāi", hanviet:"[Ưng Cai]", pos:"aux", meaning:"Nên, cần phải", exampleChinese:"你应该早点休息。", exampleVietnamese:"→ Bạn nên nghỉ sớm.", usage:"Đặt trước động từ để đưa lời khuyên."},
-    "办法": {pinyin:"bànfǎ", hanviet:"[Biện Pháp]", pos:"n", meaning:"Cách, biện pháp", exampleChinese:"我想到了一个办法。", exampleVietnamese:"→ Tôi nghĩ ra một cách.", usage:"想办法 = tìm cách."},
-    "心情": {pinyin:"xīnqíng", hanviet:"[Tâm Tình]", pos:"n", meaning:"Tâm trạng", exampleChinese:"我今天心情很好。", exampleVietnamese:"→ Hôm nay tâm trạng tôi rất tốt.", usage:"Thường dùng: 心情好 / 不好."},
-    "无法": {pinyin:"wúfǎ", hanviet:"[Vô Pháp]", pos:"v", meaning:"Không thể", exampleChinese:"我无法回答这个问题。", exampleVietnamese:"→ Tôi không thể trả lời câu hỏi này.", usage:"无法 + động từ."},
-    "改变": {pinyin:"gǎibiàn", hanviet:"[Cải Biến]", pos:"v", meaning:"Thay đổi", exampleChinese:"我们不能改变过去。", exampleVietnamese:"→ Chúng ta không thể thay đổi quá khứ.", usage:"改变 + sự vật / tình hình."},
-    "能够": {pinyin:"nénggòu", hanviet:"[Năng Cấu]", pos:"aux", meaning:"Có thể, có khả năng", exampleChinese:"我能够帮助你。", exampleVietnamese:"→ Tôi có thể giúp bạn.", usage:"Đặt trước động từ."},
-    "带给": {pinyin:"dài gěi", hanviet:"[Đới Cấp]", pos:"v", meaning:"Mang đến cho", exampleChinese:"音乐带给我快乐。", exampleVietnamese:"→ Âm nhạc mang đến cho tôi niềm vui.", usage:"带给 + người + điều gì."},
-    "快乐": {pinyin:"kuàilè", hanviet:"[Khoái Lạc]", pos:"a", meaning:"Vui vẻ, hạnh phúc", exampleChinese:"祝你快乐。", exampleVietnamese:"→ Chúc bạn vui vẻ.", usage:"Có thể làm tính từ hoặc danh từ."},
-    "科学": {pinyin:"kēxué", hanviet:"[Khoa Học]", pos:"n", meaning:"Khoa học", exampleChinese:"科学改变生活。", exampleVietnamese:"→ Khoa học thay đổi cuộc sống.", usage:"Danh từ chỉ khoa học."},
-    "研究": {pinyin:"yánjiū", hanviet:"[Nghiên Cứu]", pos:"v / n", meaning:"Nghiên cứu", exampleChinese:"他们正在研究这个问题。", exampleVietnamese:"→ Họ đang nghiên cứu vấn đề này.", usage:"研究 + vấn đề / lĩnh vực."},
-    "证明": {pinyin:"zhèngmíng", hanviet:"[Chứng Minh]", pos:"v", meaning:"Chứng minh", exampleChinese:"事实证明他是对的。", exampleVietnamese:"→ Sự thật chứng minh anh ấy đúng.", usage:"证明 + kết luận / sự việc."},
-    "女孩子": {pinyin:"nǚ háizi", hanviet:"[Nữ Hài Tử]", pos:"n", meaning:"Cô gái", exampleChinese:"那个女孩子很开朗。", exampleVietnamese:"→ Cô gái đó rất vui vẻ.", usage:"Cách nói thân mật về bé gái/cô gái."},
-    "衣服": {pinyin:"yīfu", hanviet:"[Y Phục]", pos:"n", meaning:"Quần áo", exampleChinese:"这件衣服很漂亮。", exampleVietnamese:"→ Bộ quần áo này rất đẹp.", usage:"Lượng từ thường dùng: 件."},
-    "往往": {pinyin:"wǎngwǎng", hanviet:"[Vãng Vãng]", pos:"adv", meaning:"Thường thường", exampleChinese:"他往往很早起床。", exampleVietnamese:"→ Anh ấy thường dậy rất sớm.", usage:"Chỉ tình huống thường xảy ra."},
-    "性格": {pinyin:"xìnggé", hanviet:"[Tính Cách]", pos:"n", meaning:"Tính cách", exampleChinese:"她的性格很开朗。", exampleVietnamese:"→ Tính cách cô ấy rất vui vẻ.", usage:"性格 + tính từ."},
-    "喜欢": {pinyin:"xǐhuan", hanviet:"[Hỉ Hoan]", pos:"v", meaning:"Thích", exampleChinese:"我喜欢蓝色。", exampleVietnamese:"→ Tôi thích màu xanh lam.", usage:"喜欢 + danh từ / động từ."},
-    "白色": {pinyin:"báisè", hanviet:"[Bạch Sắc]", pos:"n", meaning:"Màu trắng", exampleChinese:"我喜欢白色衣服。", exampleVietnamese:"→ Tôi thích quần áo màu trắng.", usage:"Tên một màu sắc."},
-    "阳光": {pinyin:"yángguāng", hanviet:"[Dương Quang]", pos:"n / a", meaning:"Ánh nắng; lạc quan", exampleChinese:"她是一个很阳光的人。", exampleVietnamese:"→ Cô ấy là người rất lạc quan.", usage:"Trong bài chỉ tính cách tích cực."},
-    "积极向上": {pinyin:"jījí xiàngshàng", hanviet:"[Tích Cực Hướng Thượng]", pos:"a", meaning:"Tích cực vươn lên", exampleChinese:"保持积极向上的态度。", exampleVietnamese:"→ Giữ thái độ tích cực vươn lên.", usage:"Cụm miêu tả thái độ sống."},
-    "特点": {pinyin:"tèdiǎn", hanviet:"[Đặc Điểm]", pos:"n", meaning:"Đặc điểm", exampleChinese:"这是它的特点。", exampleVietnamese:"→ Đây là đặc điểm của nó.", usage:"Dùng để nói điểm nổi bật."},
-    "红色": {pinyin:"hóngsè", hanviet:"[Hồng Sắc]", pos:"n", meaning:"Màu đỏ", exampleChinese:"红色让人热情。", exampleVietnamese:"→ Màu đỏ khiến người ta nhiệt tình.", usage:"Tên một màu sắc."},
-    "浪漫": {pinyin:"làngmàn", hanviet:"[Lãng Mạn]", pos:"a", meaning:"Lãng mạn", exampleChinese:"这是一个浪漫的故事。", exampleVietnamese:"→ Đây là một câu chuyện lãng mạn.", usage:"Dùng để miêu tả tính cách hoặc bầu không khí."},
-    "影响": {pinyin:"yǐngxiǎng", hanviet:"[Ảnh Hưởng]", pos:"v / n", meaning:"Ảnh hưởng", exampleChinese:"天气影响心情。", exampleVietnamese:"→ Thời tiết ảnh hưởng tâm trạng.", usage:"影响 + người / sự việc."},
-    "不同": {pinyin:"bùtóng", hanviet:"[Bất Đồng]", pos:"a", meaning:"Khác nhau", exampleChinese:"每个人的想法不同。", exampleVietnamese:"→ Suy nghĩ của mỗi người khác nhau.", usage:"不同的 + danh từ."},
-    "感情": {pinyin:"gǎnqíng", hanviet:"[Cảm Tình]", pos:"n", meaning:"Tình cảm, cảm xúc", exampleChinese:"颜色会影响人的感情。", exampleVietnamese:"→ Màu sắc có thể ảnh hưởng cảm xúc của con người.", usage:"Trong bài là thay đổi cảm xúc."},
-    "变化": {pinyin:"biànhuà", hanviet:"[Biến Hóa]", pos:"n / v", meaning:"Thay đổi, biến hóa", exampleChinese:"天气发生了变化。", exampleVietnamese:"→ Thời tiết đã có thay đổi.", usage:"发生变化 = xảy ra thay đổi."},
-    "热情": {pinyin:"rèqíng", hanviet:"[Nhiệt Tình]", pos:"a", meaning:"Nhiệt tình", exampleChinese:"他对人很热情。", exampleVietnamese:"→ Anh ấy rất nhiệt tình với mọi người.", usage:"热情地 + động từ / 很热情."},
-    "黄色": {pinyin:"huángsè", hanviet:"[Hoàng Sắc]", pos:"n", meaning:"Màu vàng", exampleChinese:"黄色让人心情愉快。", exampleVietnamese:"→ Màu vàng khiến người ta vui vẻ.", usage:"Tên một màu sắc."},
-    "愉快": {pinyin:"yúkuài", hanviet:"[Du Khoái]", pos:"a", meaning:"Vui vẻ, dễ chịu", exampleChinese:"祝你旅途愉快。", exampleVietnamese:"→ Chúc bạn chuyến đi vui vẻ.", usage:"Thường dùng: 心情愉快."},
-    "黑色": {pinyin:"hēisè", hanviet:"[Hắc Sắc]", pos:"n", meaning:"Màu đen", exampleChinese:"他穿黑色衣服。", exampleVietnamese:"→ Anh ấy mặc quần áo màu đen.", usage:"Tên một màu sắc."},
-    "伤心": {pinyin:"shāngxīn", hanviet:"[Thương Tâm]", pos:"a / v", meaning:"Buồn, đau lòng", exampleChinese:"别太伤心。", exampleVietnamese:"→ Đừng quá buồn.", usage:"Dùng để nói cảm xúc buồn."},
-    "蓝色": {pinyin:"lánsè", hanviet:"[Lam Sắc]", pos:"n", meaning:"Màu xanh lam", exampleChinese:"蓝色看起来很舒服。", exampleVietnamese:"→ Màu xanh lam trông rất dễ chịu.", usage:"Tên một màu sắc."},
-    "舒服": {pinyin:"shūfu", hanviet:"[Thư Phục]", pos:"a", meaning:"Thoải mái, dễ chịu", exampleChinese:"这个房间很舒服。", exampleVietnamese:"→ Căn phòng này rất dễ chịu.", usage:"Dùng cho cảm giác cơ thể hoặc tâm trạng."},
-    "安静": {pinyin:"ānjìng", hanviet:"[An Tĩnh]", pos:"a", meaning:"Yên tĩnh", exampleChinese:"请安静一下。", exampleVietnamese:"→ Hãy yên lặng một chút.", usage:"Có thể chỉ nơi chốn hoặc trạng thái."},
-    "绿色": {pinyin:"lǜsè", hanviet:"[Lục Sắc]", pos:"n", meaning:"Màu xanh lá", exampleChinese:"草是绿色的。", exampleVietnamese:"→ Cỏ có màu xanh lá.", usage:"Tên một màu sắc."},
-    "眼睛": {pinyin:"yǎnjing", hanviet:"[Nhãn Tinh]", pos:"n", meaning:"Mắt", exampleChinese:"让眼睛休息一下。", exampleVietnamese:"→ Hãy để mắt nghỉ một chút.", usage:"Danh từ chỉ mắt."},
-    "休息": {pinyin:"xiūxi", hanviet:"[Hưu Tức]", pos:"v", meaning:"Nghỉ ngơi", exampleChinese:"眼睛需要休息。", exampleVietnamese:"→ Mắt cần nghỉ ngơi.", usage:"休息一下 = nghỉ một chút."}
+const LESSON_LEVEL = LESSON.level || "HSK 4";
+const LESSON_BOOK = LESSON.book || "quyển thượng";
+
+const READINGS = LESSON.readings.map(function(r, i) {
+    const no = (r.no != null) ? r.no : (i + 1);
+    return {
+        id: String(i + 1),
+        heading: r.heading || ("📖 课文 " + no),
+        text: r.text,
+        audio: (r.audio === false) ? null :
+            (r.audio || ("audio/" + LESSON_LEVEL.replace(/\s+/g, "") + " - " + LESSON_BOOK +
+                " - Bài " + LESSON_ID + "." + no + ".mp3"))
+    };
 });
+
+(function buildLessonPage() {
+
+    document.title = LESSON.title + " - Bài " + LESSON_ID + " · " + LESSON_LEVEL;
+    document.getElementById("lessonTitle").textContent = LESSON.title;
+    document.getElementById("lessonSubtitle").textContent = "Bài " + LESSON_ID + " · " + LESSON_LEVEL;
+
+    const box = document.getElementById("readingBlocks");
+
+    READINGS.forEach(function(r) {
+
+        const audioHtml = !r.audio ? "" :
+            '<div class="audio-section">' +
+                '<div class="vinyl" id="vinyl' + r.id + '"></div>' +
+                '<button class="audio-button" id="audioButton' + r.id + '" onclick="toggleAudio(\'' + r.id + '\')">▶ Phát bài nghe</button>' +
+                '<div class="audio-progress-wrap">' +
+                    '<span id="audioCurrentTime' + r.id + '">0:00</span>' +
+                    '<input type="range" id="audioProgress' + r.id + '" class="audio-progress" value="0" min="0" max="100" step="0.1">' +
+                    '<span id="audioDuration' + r.id + '">0:00</span>' +
+                '</div>' +
+                '<audio id="audio' + r.id + '" preload="metadata"></audio>' +
+            '</div>';
+
+        const block = document.createElement("div");
+        block.className = "reading-block";
+        block.innerHTML =
+            '<h3 class="reading-heading"></h3>' + audioHtml +
+            '<div class="reading-text" id="readingText' + r.id + '"></div>';
+
+        block.querySelector(".reading-heading").textContent = r.heading;
+        block.querySelector(".reading-text").dataset.rawText = r.text;
+        if (r.audio) block.querySelector("audio").src = r.audio;
+
+        box.appendChild(block);
+    });
+
+    /* Thanh nghe audio trên mobile */
+    const mobileBox = document.getElementById("mobileAudioLessons");
+    const withAudio = READINGS.filter(function(r) { return r.audio; });
+
+    withAudio.forEach(function(r, i) {
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.id = "mobileAudioLesson" + r.id;
+        btn.dataset.audioId = r.id;
+        btn.className = "mobile-audio-lesson" + (i === 0 ? " active" : "");
+        btn.textContent = "Bài " + r.id;
+        btn.onclick = function() { selectMobileAudio(r.id); };
+        mobileBox.appendChild(btn);
+    });
+
+    if (!withAudio.length) {
+        document.getElementById("mobileAudioBar").style.display = "none";
+    }
+
+})();
+
+
+const vocabulary = {};
+
 
 /* ================================================= */
 /* ================= BIẾN ========================== */
@@ -2736,7 +2468,7 @@ let questionTimerInterval = null;
 /* ============== SUPABASE USER PROGRESS ============ */
 /* ================================================= */
 
-/* ===== ĐỒNG BỘ TIẾN ĐỘ BÀI 12 ===================== */
+/* ===== ĐỒNG BỘ TIẾN ĐỘ BÀI HỌC =================== */
 /* ================================================= */
 
 let lessonProgressSync = null;
@@ -2756,7 +2488,7 @@ function refreshLessonAfterCloudLoad() {
     applySavedPhraseMarks();
     renderPinnedSidebar();
 
-    if (localStorage.getItem("lesson12Completed") === "true") {
+    if (localStorage.getItem("lesson" + LESSON_ID + "Completed") === "true") {
         updateStatus("completed");
     } else if (getSavedWords().length > 0) {
         updateStatus("learning");
@@ -2766,7 +2498,7 @@ function refreshLessonAfterCloudLoad() {
 }
 
 function initSupabaseProgress() {
-    lessonProgressSync = window.LessonProgress.create(12, {
+    lessonProgressSync = window.LessonProgress.create(LESSON_ID, {
         onRemoteLoaded: refreshLessonAfterCloudLoad
     });
 }
@@ -2779,7 +2511,7 @@ function initSupabaseProgress() {
 function getSavedWords() {
 
     return JSON.parse(
-        localStorage.getItem("lesson12SavedWords")
+        localStorage.getItem("lesson" + LESSON_ID + "SavedWords")
     ) || [];
 
 }
@@ -2788,7 +2520,7 @@ function getSavedWords() {
 function setSavedWords(words) {
 
     localStorage.setItem(
-        "lesson12SavedWords",
+        "lesson" + LESSON_ID + "SavedWords",
         JSON.stringify(words)
     );
 
@@ -2800,7 +2532,7 @@ function setSavedWords(words) {
 function getSentences() {
 
     return JSON.parse(
-        localStorage.getItem("lesson12Sentences")
+        localStorage.getItem("lesson" + LESSON_ID + "Sentences")
     ) || {};
 
 }
@@ -2809,7 +2541,7 @@ function getSentences() {
 function setSentences(data) {
 
     localStorage.setItem(
-        "lesson12Sentences",
+        "lesson" + LESSON_ID + "Sentences",
         JSON.stringify(data)
     );
 
@@ -2825,7 +2557,7 @@ function setSentences(data) {
 function getHighlights() {
 
     return JSON.parse(
-        localStorage.getItem("lesson12Highlights")
+        localStorage.getItem("lesson" + LESSON_ID + "Highlights")
     ) || {};
 
 }
@@ -2834,7 +2566,7 @@ function getHighlights() {
 function setHighlights(data) {
 
     localStorage.setItem(
-        "lesson12Highlights",
+        "lesson" + LESSON_ID + "Highlights",
         JSON.stringify(data)
     );
 
@@ -2846,7 +2578,7 @@ function setHighlights(data) {
 function getUnderlines() {
 
     return JSON.parse(
-        localStorage.getItem("lesson12Underlines")
+        localStorage.getItem("lesson" + LESSON_ID + "Underlines")
     ) || {};
 
 }
@@ -2855,7 +2587,7 @@ function getUnderlines() {
 function setUnderlines(data) {
 
     localStorage.setItem(
-        "lesson12Underlines",
+        "lesson" + LESSON_ID + "Underlines",
         JSON.stringify(data)
     );
 
@@ -2870,7 +2602,7 @@ function setUnderlines(data) {
 function getPhraseMarks() {
 
     return JSON.parse(
-        localStorage.getItem("lesson12PhraseMarks")
+        localStorage.getItem("lesson" + LESSON_ID + "PhraseMarks")
     ) || {};
 
 }
@@ -2879,7 +2611,7 @@ function getPhraseMarks() {
 function setPhraseMarks(data) {
 
     localStorage.setItem(
-        "lesson12PhraseMarks",
+        "lesson" + LESSON_ID + "PhraseMarks",
         JSON.stringify(data)
     );
 
@@ -2902,7 +2634,7 @@ function phraseKey(startId, endId) {
 function getPinnedWords() {
 
     return JSON.parse(
-        localStorage.getItem("lesson12PinnedWords")
+        localStorage.getItem("lesson" + LESSON_ID + "PinnedWords")
     ) || [];
 
 }
@@ -2911,7 +2643,7 @@ function getPinnedWords() {
 function setPinnedWords(words) {
 
     localStorage.setItem(
-        "lesson12PinnedWords",
+        "lesson" + LESSON_ID + "PinnedWords",
         JSON.stringify(words)
     );
 
@@ -2922,7 +2654,7 @@ function setPinnedWords(words) {
 function getPinnedPositions() {
 
     return JSON.parse(
-        localStorage.getItem("lesson12PinnedPositions")
+        localStorage.getItem("lesson" + LESSON_ID + "PinnedPositions")
     ) || {};
 
 }
@@ -2931,7 +2663,7 @@ function getPinnedPositions() {
 function setPinnedPositions(data) {
 
     localStorage.setItem(
-        "lesson12PinnedPositions",
+        "lesson" + LESSON_ID + "PinnedPositions",
         JSON.stringify(data)
     );
 
@@ -2947,7 +2679,7 @@ function setPinnedPositions(data) {
 function getNotes() {
 
     return JSON.parse(
-        localStorage.getItem("lesson12Notes")
+        localStorage.getItem("lesson" + LESSON_ID + "Notes")
     ) || {};
 
 }
@@ -2956,7 +2688,7 @@ function getNotes() {
 function setNotes(data) {
 
     localStorage.setItem(
-        "lesson12Notes",
+        "lesson" + LESSON_ID + "Notes",
         JSON.stringify(data)
     );
 
@@ -4949,21 +4681,49 @@ function toggleAudio(id) {
 }
 
 
-setupAudioPlayer("1");
-setupAudioPlayer("2");
+READINGS.forEach(function(r) {
+    if (!r.audio) return;
+    setupAudioPlayer(r.id);
+
+    /* Chưa có file mp3 -> ẩn phần nghe của bài đọc đó (thêm file sau là tự chạy) */
+    document.getElementById("audio" + r.id).addEventListener("error", function() {
+        hideMissingAudio(r.id);
+    });
+});
+
+function hideMissingAudio(id) {
+
+    const audioEl = document.getElementById("audio" + id);
+    if (audioEl && audioEl.closest(".audio-section")) {
+        audioEl.closest(".audio-section").style.display = "none";
+    }
+
+    const btn = document.getElementById("mobileAudioLesson" + id);
+    if (btn) btn.style.display = "none";
+
+    const stillOk = Array.prototype.filter.call(
+        document.querySelectorAll(".mobile-audio-lesson"),
+        function(b) { return b.style.display !== "none"; }
+    );
+
+    if (!stillOk.length) {
+        const bar = document.getElementById("mobileAudioBar");
+        if (bar) bar.style.display = "none";
+    } else if (mobileAudioId === id) {
+        selectMobileAudio(stillOk[0].dataset.audioId);
+    }
+}
 
 
 /* ================================================= */
 /* ============== MOBILE AUDIO CONTROL ============== */
 /* ================================================= */
 
-let mobileAudioId = "1";
+let mobileAudioId = (READINGS.filter(function(r) { return r.audio; })[0] || { id: "1" }).id;
 
 function getMobileAudioElements() {
     return {
         bar: document.getElementById("mobileAudioBar"),
-        lesson12: document.getElementById("mobileAudioLesson1"),
-        lesson12: document.getElementById("mobileAudioLesson2"),
         play: document.getElementById("mobileAudioPlay"),
         progress: document.getElementById("mobileAudioProgress"),
         time: document.getElementById("mobileAudioTime")
@@ -4979,8 +4739,9 @@ function syncMobileAudioUI() {
     const audioEl = player.audioEl;
     const duration = isNaN(audioEl.duration) ? 0 : audioEl.duration;
 
-    ui.lesson12.classList.toggle("active", mobileAudioId === "1");
-    ui.lesson12.classList.toggle("active", mobileAudioId === "2");
+    document.querySelectorAll(".mobile-audio-lesson").forEach(function(btn) {
+        btn.classList.toggle("active", btn.dataset.audioId === mobileAudioId);
+    });
     ui.progress.max = duration || 100;
     ui.progress.value = audioEl.currentTime || 0;
     ui.time.textContent =
@@ -5153,6 +4914,7 @@ function showStudyWord() {
     ).textContent =
         data.exampleChinese;
 
+
     document.getElementById(
         "studyExamplePinyin"
     ).textContent =
@@ -5306,11 +5068,11 @@ function repeatStudy() {
 
 
     localStorage.removeItem(
-        "lesson12Sentences"
+        "lesson" + LESSON_ID + "Sentences"
     );
 
     localStorage.removeItem(
-        "lesson12Notes"
+        "lesson" + LESSON_ID + "Notes"
     );
 
     queueProgressSync();
@@ -6044,7 +5806,7 @@ function finishSentenceGame() {
 
 
     localStorage.setItem(
-        "lesson12Completed",
+        "lesson" + LESSON_ID + "Completed",
         "true"
     );
 
@@ -6097,7 +5859,7 @@ function backToReviewMenu() {
 
 
 /* ================================================= */
-/* ========== LESSON 8 WORD RENDERER =============== */
+/* ========== WORD RENDERER ======================== */
 /* ================================================= */
 
 function renderLessonWords() {
@@ -6155,7 +5917,7 @@ function ensureLessonVocabulary() {
                     pinyin: "—",
                     hanviet: "—",
                     pos: "词语 / từ trong bài",
-                    meaning: "Từ trong bài đọc 8",
+                    meaning: "Từ trong bài đọc",
                     exampleChinese: word,
                     exampleVietnamese: "",
                     usage: "Từ này chưa được bổ sung thông tin từ vựng."
@@ -6168,21 +5930,22 @@ function ensureLessonVocabulary() {
 /* ================= LOAD =========================== */
 /* ================================================= */
 
-document.getElementById("readingText1").dataset.rawText = "如果你想做什么事情，那就勇敢地去做，不要担心结果，不要考虑会不会失败。要是太看重结果，失败就会给人们带来很多烦恼。我们应该把注意力放在做事情的过程中，这样你会在做的过程中发现解决问题的快乐，这是其他任何东西都给不了的。即使最后失败了也没有关系，因为至少你已经努力过，而且我们还可以从失败中总结出有用的经验，有了这些积累，成功自然离我们越来越近。";
-document.getElementById("readingText2").dataset.rawText = "每一个人都希望成功，可是很多时候，在成功之前会遇到很多困难。有些人遇到困难就放弃，而有些人遇到困难却想办法解决它。对困难的态度不同，结果也是不一样的。爱迪生就是在找了上千种材料后，才找到了能点亮电灯的材料。取得成功的人往往都经历过许多失败，他们和普通人的区别就是他们都坚持了下来。所以就算只有1%的希望，我们也要做出100%的努力。困难只是暂时的，“阳光总在风雨后”，只有我们勇敢地面对困难，才能有希望取得成功。";
+/* Nạp từ vựng của bài từ lessons-data.js
+   Dòng: [汉字, pinyin, hán việt, loại từ, nghĩa, { ex, py, vi, use }?] */
+LESSON.vocab.forEach(function(x) {
+    const extra = x[5] || {};
+    vocabulary[x[0]] = {
+        pinyin: x[1],
+        hanviet: x[2] || "—",
+        pos: x[3],
+        meaning: x[4],
+        exampleChinese: extra.ex || x[0],
+        examplePinyin: extra.py || "",
+        exampleVietnamese: extra.vi || "",
+        usage: extra.use || ("Từ vựng trong Lesson " + LESSON_ID + ".")
+    };
+});
 
-Object.keys(vocabulary).forEach(function(word) { delete vocabulary[word]; });
-[["勇敢","yǒnggǎn","[Dũng Cảm]","a","Dũng cảm"],["担心","dānxīn","[Đam Tâm]","v","Lo lắng"],["结果","jiéguǒ","[Kết Quả]","n","Kết quả"],["考虑","kǎolǜ","[Khảo Lự]","v","Cân nhắc"],["失败","shībài","[Thất Bại]","v / n","Thất bại"],["看重","kànzhòng","[Khán Trọng]","v","Coi trọng"],["烦恼","fánnǎo","[Phiền Não]","n","Phiền não"],["注意力","zhùyìlì","[Chú Ý Lực]","n","Sự chú ý"],["过程","guòchéng","[Quá Trình]","n","Quá trình"],["解决","jiějué","[Giải Quyết]","v","Giải quyết"],["即使","jíshǐ","[Tức Sử]","conj","Cho dù"],["至少","zhìshǎo","[Chí Thiểu]","adv","Ít nhất"],["努力","nǔlì","[Nỗ Lực]","v / n","Nỗ lực"],["总结","zǒngjié","[Tổng Kết]","v","Tổng kết"],["经验","jīngyàn","[Kinh Nghiệm]","n","Kinh nghiệm"],["积累","jīlěi","[Tích Lũy]","v / n","Tích lũy"],["成功","chénggōng","[Thành Công]","v / n","Thành công"],["越来越","yuèláiyuè","[Việt Lai Việt]","adv","Càng ngày càng"],["困难","kùnnan","[Khốn Nan]","n / a","Khó khăn"],["放弃","fàngqì","[Phóng Khí]","v","Từ bỏ"],["态度","tàidu","[Thái Độ]","n","Thái độ"],["爱迪生","Àidíshēng","[Ái Địch Sinh]","n","Edison"],["材料","cáiliào","[Tài Liệu]","n","Vật liệu"],["点亮","diǎnliàng","[Điểm Lượng]","v","Thắp sáng"],["经历","jīnglì","[Kinh Lịch]","v","Trải qua"],["区别","qūbié","[Khu Biệt]","n","Sự khác biệt"],["坚持","jiānchí","[Kiên Trì]","v","Kiên trì"],["暂时","zànshí","adv","Tạm thời"],["面对","miànduì","[Diện Đối]","v","Đối mặt"]].forEach(function(x){vocabulary[x[0]]={pinyin:x[1],hanviet:x[2]||"—",pos:x[3],meaning:x[4],exampleChinese:x[0],exampleVietnamese:"",usage:"Từ vựng trong Lesson 9."};});
-
-document.getElementById("readingText1").dataset.rawText = "根据调查，阅读能力好的人，不但容易找到工作，而且工资也比较高。怎么才能有效提高自己的阅读能力呢？做读书笔记就是其中一种好方法。读书笔记有很多种，最简单的就是把自己喜欢或者觉得有用的词语和句子记下来。另外，在看完一篇文章或一本书之后，还可以把它的主要内容和自己的想法写下来。然而，你不能完全相信书本上的内容，要有自己的看法和判断。坚持做读书笔记，对提高阅读能力有很大帮助。";
-document.getElementById("readingText2").dataset.rawText = "读书好，读好书，好读书。虽然这句话只用了三个相同的汉字，但是不同的顺序却表示了不同的意思。首先，读书好说的是读书有很多好处；其次，每个人的时间都是有限的，不可能把世界上每一本书都读完，所以要读好的书；最后，好读书就是要养成阅读的习惯，使读书真正成为自己的兴趣爱好。阅读有许多好处，它能丰富你的知识，让你找到解决问题的办法；同时，它还会丰富你的情感，使你的生活更精彩。所以，让阅读成为你的习惯吧！";
-Object.keys(vocabulary).forEach(function(w){delete vocabulary[w];});
-[["根据","gēnjù","[Căn Cứ]","prep / v","Căn cứ; theo","根据调查，我们发现了问题。","Gēnjù diàochá, wǒmen fāxiàn le wèntí.","根据 + danh từ, nêu căn cứ."],["调查","diàochá","[Điều Tra]","v / n","Điều tra, khảo sát","公司正在调查这个问题。","Gōngsī zhèngzài diàochá zhège wèntí.","调查 + vấn đề/đối tượng."],["阅读能力","yuèdú nénglì","[Duyệt Độc Năng Lực]","n","Năng lực đọc hiểu","他的阅读能力很强。","Tā de yuèdú nénglì hěn qiáng.","Chỉ khả năng đọc hiểu."],["不但…而且…","bùdàn…érqiě…","[Bất Đãn…Nhi Thả…]","cấu trúc","Không những… mà còn…","她不但会说中文，而且会说英语。","Tā bùdàn huì shuō Zhōngwén, érqiě huì shuō Yīngyǔ.","Liên kết hai ý tăng tiến."],["提高","tígāo","[Đề Cao]","v","Nâng cao","多练习能提高水平。","Duō liànxí néng tígāo shuǐpíng.","提高 + năng lực/trình độ."],["读书笔记","dúshū bǐjì","[Độc Thư Bút Ký]","n","Ghi chép khi đọc sách","我每天写读书笔记。","Wǒ měitiān xiě dúshū bǐjì.","做/写读书笔记."],["主要内容","zhǔyào nèiróng","[Chủ Yếu Nội Dung]","n","Nội dung chính","请说说文章的主要内容。","Qǐng shuōshuo wénzhāng de zhǔyào nèiróng.","主要 + danh từ."],["看法","kànfa","[Khán Pháp]","n","Quan điểm","我有不同的看法。","Wǒ yǒu bùtóng de kànfa.","对…有看法."],["判断","pànduàn","[Phán Đoán]","v / n","Phán đoán","你要自己判断。","Nǐ yào zìjǐ pànduàn.","自己判断 / 作出判断."],["坚持","jiānchí","[Kiên Trì]","v","Kiên trì","请坚持每天阅读。","Qǐng jiānchí měitiān yuèdú.","坚持 + động từ."],["虽然…但是…","suīrán…dànshì…","[Tuy Nhiên…Đãn Thị…]","cấu trúc","Tuy… nhưng…","虽然很忙，但是他还在学习。","Suīrán hěn máng, dànshì tā hái zài xuéxí.","Biểu thị chuyển ý."],["顺序","shùnxù","[Thuận Tự]","n","Thứ tự","请按顺序回答问题。","Qǐng àn shùnxù huídá wèntí.","按顺序 = theo thứ tự."],["首先","shǒuxiān","[Thủ Tiên]","adv","Trước hết","首先，我们看看原因。","Shǒuxiān, wǒmen kànkan yuányīn.","Đi với 其次、最后."],["其次","qícì","[Kỳ Thứ]","adv","Thứ hai","其次，要注意安全。","Qícì, yào zhùyì ānquán.","Liệt kê ý thứ hai."],["有限","yǒuxiàn","[Hữu Hạn]","a","Có hạn","时间是有限的。","Shíjiān shì yǒuxiàn de.","有限的 + danh từ."],["养成","yǎngchéng","[Dưỡng Thành]","v","Hình thành","要养成好习惯。","Yào yǎngchéng hǎo xíguàn.","养成 + thói quen."],["兴趣爱好","xìngqù àihào","[Hứng Thú Ái Hảo]","n","Sở thích","阅读是我的兴趣爱好。","Yuèdú shì wǒ de xìngqù àihào.","Sở thích cá nhân."],["丰富","fēngfù","[Phong Phú]","v / a","Làm phong phú","旅行能丰富生活。","Lǚxíng néng fēngfù shēnghuó.","丰富 + kiến thức/cuộc sống."],["精彩","jīngcǎi","[Tinh Thái]","a","Đặc sắc","比赛非常精彩。","Bǐsài fēicháng jīngcǎi.","很/非常精彩."]].forEach(function(x){vocabulary[x[0]]={pinyin:x[1],hanviet:x[2],pos:x[3],meaning:x[4],exampleChinese:x[5],examplePinyin:x[6],exampleVietnamese:"→ "+x[4],usage:x[7]};});
-
-document.getElementById("readingText1").dataset.rawText = "人人都会使用语言，但是怎么用语言把话说好却是一门艺术。看一个人怎么说话，往往可以比较准确地判断出他是一个什么样的人。有的人心里怎么想，嘴上就怎么说，即使是别人的缺点，他也会直接说出来，这样的人虽然很诚实，但是可能会引起别人的误会；有的人虽然也看到了别人的缺点，但却不会直接指出来，而是通过别的方法来提醒，让他认识到自己的缺点，这样的人会让人觉得更友好。";
-document.getElementById("readingText2").dataset.rawText = "无论做什么事情，都要注意方法，学习尤其是这样。使用正确的方法，我们做起事来能事半功倍，也就是说，能节约时间，用较少的力气，取得更好的效果。相反，如果方法不对，可能花五倍甚至十倍的时间都不能完成任务，结果变成了事倍功半。有一点需要提醒大家，别人的方法也许很有效，但是并不一定适合自己。因此，我们应该在听取别人意见的同时，仔细考虑一下，再根据不同的情况选择不同的方法，这样才能达到最好的效果。";
-Object.keys(vocabulary).forEach(function(w){delete vocabulary[w];});
-[["使用","shǐyòng","[Sử Dụng]","v","Sử dụng","请正确使用这个方法。","Qǐng zhèngquè shǐyòng zhège fāngfǎ.","使用 + công cụ/phương pháp."],["语言","yǔyán","[Ngữ Ngôn]","n","Ngôn ngữ","语言是交流的工具。","Yǔyán shì jiāoliú de gōngjù.","Chỉ ngôn ngữ nói hoặc viết."],["艺术","yìshù","[Nghệ Thuật]","n","Nghệ thuật","说话也是一门艺术。","Shuōhuà yě shì yì mén yìshù.","一门艺术 = một loại nghệ thuật."],["往往","wǎngwǎng","[Vãng Vãng]","adv","Thường thường","他往往很早起床。","Tā wǎngwǎng hěn zǎo qǐchuáng.","Chỉ việc thường xảy ra."],["准确","zhǔnquè","[Chuẩn Xác]","a","Chính xác","这个答案很准确。","Zhège dá'àn hěn zhǔnquè.","准确地 + động từ."],["判断","pànduàn","[Phán Đoán]","v / n","Phán đoán","你要自己判断。","Nǐ yào zìjǐ pànduàn.","判断 + sự việc."],["缺点","quēdiǎn","[Khuyết Điểm]","n","Khuyết điểm","每个人都有缺点。","Měi ge rén dōu yǒu quēdiǎn.","Ưu điểm/khuyết điểm: 优点/缺点."],["直接","zhíjiē","[Trực Tiếp]","adv / a","Trực tiếp","请直接告诉我。","Qǐng zhíjiē gàosu wǒ.","直接 + động từ."],["诚实","chéngshí","[Thành Thực]","a","Thành thật","他是个诚实的人。","Tā shì ge chéngshí de rén.","诚实的 + danh từ."],["引起","yǐnqǐ","[Dẫn Khởi]","v","Gây ra","这件事引起了误会。","Zhè jiàn shì yǐnqǐ le wùhuì.","引起 + kết quả/phản ứng."],["误会","wùhuì","[Ngộ Hội]","n / v","Hiểu lầm","请别误会我的意思。","Qǐng bié wùhuì wǒ de yìsi.","产生误会 / 误会某人."],["指出","zhǐchū","[Chỉ Xuất]","v","Chỉ ra","老师指出了我的问题。","Lǎoshī zhǐchū le wǒ de wèntí.","指出 + vấn đề/lỗi."],["通过","tōngguò","[Thông Qua]","prep / v","Thông qua","我们通过练习提高水平。","Wǒmen tōngguò liànxí tígāo shuǐpíng.","通过 + cách thức."],["提醒","tíxǐng","[Đề Tỉnh]","v","Nhắc nhở","请提醒我明天开会。","Qǐng tíxǐng wǒ míngtiān kāihuì.","提醒 + người + việc."],["友好","yǒuhǎo","[Hữu Hảo]","a","Thân thiện","大家对我很友好。","Dàjiā duì wǒ hěn yǒuhǎo.","对…友好."],["无论","wúlùn","[Vô Luận]","conj","Bất luận","无论多忙，我都学习。","Wúlùn duō máng, wǒ dōu xuéxí.","无论…都…"],["尤其","yóuqí","[Vưu Kỳ]","adv","Đặc biệt là","我尤其喜欢中文。","Wǒ yóuqí xǐhuan Zhōngwén.","尤其 + động từ/tính từ."],["正确","zhèngquè","[Chính Xác]","a","Đúng đắn","这是正确的方法。","Zhè shì zhèngquè de fāngfǎ.","正确的 + danh từ."],["事半功倍","shìbàn gōngbèi","[Sự Bán Công Bội]","thành ngữ","Ít công nhiều hiệu quả","用对方法能事半功倍。","Yòng duì fāngfǎ néng shìbàn gōngbèi.","Dùng khi hiệu quả cao."],["节约","jiéyuē","[Tiết Ước]","v","Tiết kiệm","我们要节约时间。","Wǒmen yào jiéyuē shíjiān.","节约 + thời gian/tài nguyên."],["取得","qǔdé","[Thủ Đắc]","v","Đạt được","他取得了好成绩。","Tā qǔdé le hǎo chéngjì.","取得 + thành tích/kết quả."],["效果","xiàoguǒ","[Hiệu Quả]","n","Hiệu quả","这个办法效果很好。","Zhège bànfǎ xiàoguǒ hěn hǎo.","效果好/不好."],["相反","xiāngfǎn","[Tương Phản]","adv","Ngược lại","相反，他不喜欢。","Xiāngfǎn, tā bù xǐhuan.","Dùng để nêu ý trái ngược."],["事倍功半","shìbèi gōngbàn","[Sự Bội Công Bán]","thành ngữ","Nhiều công ít hiệu quả","方法不对会事倍功半。","Fāngfǎ bú duì huì shìbèi gōngbàn.","Trái nghĩa với 事半功倍."],["有效","yǒuxiào","[Hữu Hiệu]","a","Có hiệu quả","这个方法很有效。","Zhège fāngfǎ hěn yǒuxiào.","有效的 + danh từ."],["适合","shìhé","[Thích Hợp]","v","Phù hợp","这份工作很适合你。","Zhè fèn gōngzuò hěn shìhé nǐ.","适合 + người/hoàn cảnh."],["听取","tīngqǔ","[Thính Thủ]","v","Lắng nghe, tiếp thu","我们应该听取意见。","Wǒmen yīnggāi tīngqǔ yìjiàn.","听取 + 意见/建议."],["仔细","zǐxì","[Tử Tế]","adv / a","Cẩn thận, kỹ lưỡng","请仔细考虑一下。","Qǐng zǐxì kǎolǜ yíxià.","仔细 + động từ."],["根据","gēnjù","[Căn Cứ]","prep / v","Căn cứ, theo","根据情况选择方法。","Gēnjù qíngkuàng xuǎnzé fāngfǎ.","根据 + danh từ."],["达到","dádào","[Đạt Đáo]","v","Đạt tới","我们达到了目标。","Wǒmen dádào le mùbiāo.","达到 + mục tiêu/tiêu chuẩn."]].forEach(function(x){vocabulary[x[0]]={pinyin:x[1],hanviet:x[2],pos:x[3],meaning:x[4],exampleChinese:x[5],examplePinyin:x[6],exampleVietnamese:"→ "+x[4],usage:x[7]};});
 renderLessonWords();
 ensureLessonVocabulary();
 
@@ -6195,7 +5958,7 @@ currentUnderline = getUnderlines();
 document
     .querySelectorAll("#reading .reading-main .word")
     .forEach(function(el, index) {
-        el.dataset.wordId = "lesson12-word-" + (index + 1);
+        el.dataset.wordId = "lesson" + LESSON_ID + "-word-" + (index + 1);
     });
 
 updateSavedList();
@@ -6209,7 +5972,7 @@ renderPinnedSidebar();
 
 if (
     localStorage.getItem(
-        "lesson12Completed"
+        "lesson" + LESSON_ID + "Completed"
     ) === "true"
 ) {
 
@@ -6227,7 +5990,266 @@ if (
 
 }
 
+/* ================================================= */
+/* ================ IN BÀI (PRINT) ================== */
+/* ================================================= */
+/* Đặt TRƯỚC initSupabaseProgress() để 2 sự kiện dưới đây
+   luôn được đăng ký, kể cả khi initSupabaseProgress() bị
+   lỗi (ví dụ thiếu supabase.js / không có mạng). */
+
+function togglePrintMenu(event) {
+
+    if (event) event.stopPropagation();
+
+    const menu = document.getElementById("printMenu");
+    if (!menu) return;
+
+    menu.classList.toggle("open");
+
+}
+
+document.addEventListener("click", function(event) {
+
+    const wrap = document.getElementById("printFabWrap");
+    if (!wrap) return;
+
+    if (!wrap.contains(event.target)) {
+        const menu = document.getElementById("printMenu");
+        if (menu) menu.classList.remove("open");
+    }
+
+});
+
+window.addEventListener("afterprint", cleanupPrintRoot);
+
 initSupabaseProgress();
+
+function cleanupPrintRoot() {
+
+    document.body.classList.remove("app-printing");
+
+    const root = document.getElementById("printRoot");
+    if (root) root.innerHTML = "";
+
+}
+
+function startPrintLesson(mode) {
+
+    const menu = document.getElementById("printMenu");
+    if (menu) menu.classList.remove("open");
+
+    /* Dọn sạch phòng khi lần in trước bị lỗi chưa dọn xong */
+    cleanupPrintRoot();
+
+    const root = document.getElementById("printRoot");
+    if (!root) return;
+
+    const blocks = document.querySelectorAll("#reading .reading-block");
+
+    if (!blocks.length) {
+        alert("Không tìm thấy bài đọc để in.");
+        return;
+    }
+
+    const colorPages = [];
+
+    blocks.forEach(function(block) {
+
+        const headingEl = block.querySelector(".reading-heading");
+        const textEl = block.querySelector(".reading-text");
+        if (!textEl) return;
+
+        const heading = headingEl ? headingEl.textContent.trim() : "";
+        const clonedText = textEl.cloneNode(true);
+        clonedText.removeAttribute("id");
+
+        const page = document.createElement("div");
+        page.className = "print-page" + (mode === "writing" ? " print-writing" : "");
+
+        const headingDiv = document.createElement("div");
+        headingDiv.className = "print-page-heading";
+        headingDiv.textContent = heading;
+        page.appendChild(headingDiv);
+
+        if (mode === "writing") {
+
+            page.appendChild(clonedText);
+
+            const lines = document.createElement("div");
+            lines.className = "print-lines";
+            page.appendChild(lines);
+
+        } else {
+
+            const layout = document.createElement("div");
+            layout.className = "print-layout";
+
+            const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+            svg.setAttribute("class", "print-svg");
+            layout.appendChild(svg);
+
+            const main = document.createElement("div");
+            main.className = "print-main";
+            main.appendChild(clonedText);
+            layout.appendChild(main);
+
+            const divider = document.createElement("div");
+            divider.className = "print-divider";
+            layout.appendChild(divider);
+
+            const sidebar = document.createElement("div");
+            sidebar.className = "print-sidebar";
+            layout.appendChild(sidebar);
+
+            page.appendChild(layout);
+
+            colorPages.push({
+                clonedText: clonedText,
+                svg: svg,
+                sidebar: sidebar,
+                layout: layout
+            });
+
+        }
+
+        root.appendChild(page);
+
+    });
+
+    document.body.classList.add("app-printing");
+
+    requestAnimationFrame(function() {
+        requestAnimationFrame(function() {
+
+            if (mode === "color") {
+                colorPages.forEach(renderPrintNotesAndConnectors);
+            }
+
+            window.print();
+
+        });
+    });
+
+}
+
+function renderPrintNotesAndConnectors(entry) {
+
+    const pinned = getPinnedWords();
+    if (!pinned.length) return;
+
+    const positions = getPinnedPositions();
+
+    /* Tìm các .word bên trong bản sao (clone) của đúng đoạn văn này */
+    const entries = [];
+
+    entry.clonedText.querySelectorAll(".word").forEach(function(el) {
+        entries.push({
+            el: el,
+            word: el.dataset.word,
+            id: el.dataset.wordId
+        });
+    });
+
+    const items = pinned.map(function(word) {
+
+        const wantedId = positions[word];
+
+        let source = wantedId
+            ? entries.find(function(e) { return e.id === wantedId; })
+            : null;
+
+        if (!source) {
+            source = entries.find(function(e) { return e.word === word; });
+        }
+
+        if (!source) return null;
+
+        const data = vocabulary[word];
+        if (!data) return null;
+
+        return { word: word, source: source, data: data };
+
+    }).filter(Boolean);
+
+    if (!items.length) return;
+
+    /* Sắp xếp theo thứ tự xuất hiện trong đoạn văn: trên -> dưới, trái -> phải */
+    items.sort(function(a, b) {
+        const ra = a.source.el.getBoundingClientRect();
+        const rb = b.source.el.getBoundingClientRect();
+        if (Math.abs(ra.top - rb.top) > 5) return ra.top - rb.top;
+        return ra.left - rb.left;
+    });
+
+    const layoutRect = entry.layout.getBoundingClientRect();
+    const sidebarRect = entry.sidebar.getBoundingClientRect();
+    const sidebarLeftRelative = sidebarRect.left - layoutRect.left;
+
+    entry.svg.setAttribute("width", layoutRect.width);
+    entry.svg.setAttribute("height", layoutRect.height);
+    entry.svg.setAttribute("viewBox", "0 0 " + layoutRect.width + " " + layoutRect.height);
+
+    const svgNS = "http://www.w3.org/2000/svg";
+    const MIN_GAP = 48; /* px giữa 2 ghi chú liên tiếp, tránh đè lên nhau */
+
+    let lastY = -Infinity;
+
+    items.forEach(function(item) {
+
+        const rect = item.source.el.getBoundingClientRect();
+        const sourceX = rect.right - layoutRect.left;
+        const sourceY = rect.top + rect.height / 2 - layoutRect.top;
+
+        let cardY = sourceY;
+        if (cardY < lastY + MIN_GAP) {
+            cardY = lastY + MIN_GAP;
+        }
+        lastY = cardY;
+
+        /* --- Thẻ ghi chú --- */
+        const card = document.createElement("div");
+        card.className = "pin-card";
+        card.style.position = "absolute";
+        card.style.left = "0";
+        card.style.right = "0";
+        card.style.top = cardY + "px";
+        card.style.marginBottom = "0";
+        card.style.transform = "translateY(-50%)";
+
+        const posShort = shortPOS(item.data.pos);
+        const meaningShort = shortMeaning(item.data.meaning);
+
+        card.innerHTML =
+            '<span class="pin-pinyin">/' + item.data.pinyin + '/</span> ' +
+            '<span class="pin-pos">(' + posShort + ')</span> ' +
+            '<span class="pin-meaning">' + meaningShort + '</span>';
+
+        entry.sidebar.appendChild(card);
+
+        /* --- Đường nét đứt nối từ chữ sang ghi chú --- */
+        const path = document.createElementNS(svgNS, "path");
+        const midX = (sourceX + sidebarLeftRelative) / 2;
+
+        path.setAttribute(
+            "d",
+            "M " + sourceX + " " + sourceY +
+            " C " + midX + " " + sourceY + ", " +
+            midX + " " + cardY + ", " +
+            sidebarLeftRelative + " " + cardY
+        );
+        path.setAttribute("fill", "none");
+        path.setAttribute("stroke", "#b7c9bb");
+        path.setAttribute("stroke-width", "1.4");
+        path.setAttribute("stroke-dasharray", "4 4");
+
+        entry.svg.appendChild(path);
+
+    });
+
+    /* Đảm bảo cột ghi chú đủ cao để chứa hết thẻ cuối cùng */
+    entry.sidebar.style.minHeight = (lastY + 40) + "px";
+
+}
 
 </script>
 
