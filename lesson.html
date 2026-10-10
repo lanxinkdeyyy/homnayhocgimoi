@@ -264,6 +264,31 @@ body {
 
 .reading-block {
     margin-bottom: 40px;
+    position: relative;
+}
+
+.reading-print-btn {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background: #fff;
+    border: 1px solid #cfe3d5;
+    color: #3f6b4f;
+    font-size: 13px;
+    font-weight: 600;
+    padding: 6px 12px;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.reading-print-btn:hover {
+    background: #eef8f0;
+    border-color: #8fc7a5;
+}
+
+.reading-block .reading-heading {
+    padding-right: 150px;
 }
 
 .reading-heading {
@@ -276,6 +301,7 @@ body {
     font-size: 24px;
     line-height: 2.4;
     text-align: left;
+    white-space: pre-line;
 }
 
 .word {
@@ -1700,6 +1726,43 @@ body.app-printing #printRoot {
     text-decoration: none !important;
 }
 
+/* Tập viết: giữ đúng cỡ chữ/giao diện như lúc học, nền trắng hoàn toàn */
+body.app-printing {
+    background: #ffffff !important;
+}
+
+.print-page.print-writing {
+    background: #ffffff !important;
+    font-family: Arial, sans-serif;
+}
+
+.print-page.print-writing .print-page-heading {
+    font-family: Arial, sans-serif;
+    font-size: 20px;
+}
+
+.print-page.print-writing .reading-text {
+    /* === CHỈNH CỠ CHỮ / FONT BẢN IN TẬP TÔ Ở ĐÂY === */
+    font-family: "KaiTi", "KaiTi_GB2312", "STKaiti", "Kaiti SC", "楷体", "AR PL UKai CN", serif;
+    font-size: 20px;          /* to hơn: 22px, nhỏ hơn: 18px */
+    line-height: 2.7;         /* khoảng cách giữa các dòng, chừa chỗ cho tay tô */
+    letter-spacing: 0.12em;   /* khoảng cách giữa các chữ */
+    font-weight: normal;
+}
+
+.print-page.print-writing .reading-text .word {
+    padding: 0;
+    border-radius: 0;
+}
+
+.print-writing .print-layout {
+    min-height: 235mm;
+}
+
+.print-writing .print-divider {
+    background: #cfcfcf;
+}
+
 .print-writing .print-lines {
     flex: 1 1 auto;
     margin-top: 12mm;
@@ -1724,8 +1787,12 @@ body.app-printing #printRoot {
         print-color-adjust: exact !important;
     }
 
-    .print-fab-wrap {
+    .print-fab-wrap, .reading-print-btn {
         display: none !important;
+    }
+
+    html, body.app-printing {
+        background: #ffffff !important;
     }
 
 }
@@ -1740,13 +1807,9 @@ body.app-printing #printRoot {
 <body>
 
 <div class="print-fab-wrap" id="printFabWrap">
-    <button type="button" class="print-fab" id="printFabButton" onclick="togglePrintMenu(event)">
-        🖨️ In bài
+    <button type="button" class="print-fab" id="printFabButton" onclick="startPrintLesson('writing')">
+        ✍️ In tập viết
     </button>
-    <div class="print-menu" id="printMenu">
-        <button type="button" onclick="startPrintLesson('color')">🎨 In màu</button>
-        <button type="button" onclick="startPrintLesson('writing')">✍️ In tập viết</button>
-    </div>
 </div>
 
 <div id="printRoot"></div>
@@ -6033,7 +6096,7 @@ function cleanupPrintRoot() {
 
 }
 
-function startPrintLesson(mode) {
+function startPrintLesson(mode, onlyBlock) {
 
     const menu = document.getElementById("printMenu");
     if (menu) menu.classList.remove("open");
@@ -6044,7 +6107,7 @@ function startPrintLesson(mode) {
     const root = document.getElementById("printRoot");
     if (!root) return;
 
-    const blocks = document.querySelectorAll("#reading .reading-block");
+    const blocks = onlyBlock ? [onlyBlock] : document.querySelectorAll("#reading .reading-block");
 
     if (!blocks.length) {
         alert("Không tìm thấy bài đọc để in.");
@@ -6073,11 +6136,32 @@ function startPrintLesson(mode) {
 
         if (mode === "writing") {
 
-            page.appendChild(clonedText);
+            /* Chia 3/4 : 1/4 giống bản màu, cột phải để trống cho người học ghi chú */
+            const wLayout = document.createElement("div");
+            wLayout.className = "print-layout";
 
-            const lines = document.createElement("div");
-            lines.className = "print-lines";
-            page.appendChild(lines);
+            const wMain = document.createElement("div");
+            wMain.className = "print-main";
+            wMain.appendChild(clonedText);
+            wLayout.appendChild(wMain);
+
+            const wDivider = document.createElement("div");
+            wDivider.className = "print-divider";
+            wLayout.appendChild(wDivider);
+
+            const wSidebar = document.createElement("div");
+            wSidebar.className = "print-sidebar";
+            wLayout.appendChild(wSidebar);
+
+            page.appendChild(wLayout);
+
+            colorPages.push({
+                clonedText: clonedText,
+                svg: document.createElementNS("http://www.w3.org/2000/svg", "svg"),
+                sidebar: wSidebar,
+                layout: wLayout,
+                noLines: true
+            });
 
         } else {
 
@@ -6121,9 +6205,7 @@ function startPrintLesson(mode) {
     requestAnimationFrame(function() {
         requestAnimationFrame(function() {
 
-            if (mode === "color") {
-                colorPages.forEach(renderPrintNotesAndConnectors);
-            }
+            colorPages.forEach(renderPrintNotesAndConnectors);
 
             window.print();
 
@@ -6242,7 +6324,7 @@ function renderPrintNotesAndConnectors(entry) {
         path.setAttribute("stroke-width", "1.4");
         path.setAttribute("stroke-dasharray", "4 4");
 
-        entry.svg.appendChild(path);
+        if (!entry.noLines) entry.svg.appendChild(path);
 
     });
 

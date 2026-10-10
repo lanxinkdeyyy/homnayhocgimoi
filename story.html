@@ -1,31 +1,102 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
+
 <head>
     <meta charset="UTF-8">
-    <title>课本阅读</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>文化故事 · Story</title>
     <link rel="stylesheet" href="style.css">
+    <style>
+        /* Ảnh bìa hình VUÔNG (thay cho đĩa tròn của trang bài hát) */
+        .story-list .song-card { grid-template-columns: 124px minmax(0, 1fr) 50px; }
+        .story-list .song-card-disc {
+            flex: 0 0 112px;
+            width: 112px;
+            height: 112px;
+            border-radius: 18px;
+        }
+        .story-list .song-card-disc img { object-position: center; }
+        .story-list .song-card-info strong { font-size: 23px; line-height: 1.4; }
+        .story-list .song-card-info > span {
+            font-family: Georgia, "Times New Roman", serif;
+            font-style: italic;
+            font-size: 15px;
+        }
+        .story-list .song-card-info small { color: #7b987f; font-weight: 700; letter-spacing: .04em; }
+        @media (max-width: 760px) {
+            .story-list .song-card { grid-template-columns: 84px minmax(0, 1fr) 40px; }
+            .story-list .song-card-disc { flex-basis: 80px; width: 80px; height: 80px; border-radius: 14px; }
+            .story-list .song-card-info strong { font-size: 17px; }
+            .story-list .song-card-info > span { font-size: 13px; }
+        }
+    </style>
 </head>
-<body>
-    <main class="container">
+
+<body class="songs-page">
+    <main class="songs-container">
         <a href="index.html" class="back-link">← Quay lại</a>
-        <h1>课本阅读</h1>
-        <p>Chọn level để bắt đầu</p>
 
-        <div class="hsk-level">
-            <h2>HSK 1</h2>
-            <ul class="lesson-list">
-                <li><a href="#">📖 Bài 1: 你好</a></li>
-                <li><a href="#">📖 Bài 2: 谢谢</a></li>
-            </ul>
-        </div>
+        <header class="songs-header">
+            <p class="songs-eyebrow">文化 · Culture &amp; Story</p>
+            <h1>文化故事</h1>
+            <p>Chọn một bài để bắt đầu đọc — tiếng Trung và tiếng Anh, bấm vào từ để xem nghĩa.</p>
+        </header>
 
-        <div class="hsk-level">
-            <h2>HSK 2</h2>
-            <ul class="lesson-list">
-                <li><a href="#">📖 Bài 1: 我的家</a></li>
-                <li><a href="#">📖 Bài 2: 天气</a></li>
-            </ul>
-        </div>
+        <section class="song-grid story-list" id="storyGrid" aria-label="Danh sách bài Story"></section>
     </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabase.js"></script>
+    <script src="story-data.js"></script>
+    <script>
+        /* Mỗi bài = 1 thẻ. Ảnh: images/HSK4.<số>-story.svg
+           (hoặc đặt  image: "..." trong story-data.js để đổi ảnh). */
+        (function () {
+            const grid = document.getElementById("storyGrid");
+            const nums = Object.keys(window.STORIES || {}).map(Number)
+                .sort(function (a, b) { return a - b; });
+
+            nums.forEach(function (n) {
+                const s = window.STORIES[n];
+                const img = s.image || ("images/HSK4." + n + "-story.svg");
+                const a = document.createElement("a");
+                a.className = "song-card";
+                a.href = "story-lesson.html?id=" + n;
+                a.dataset.progressId = String(100 + n);
+                a.innerHTML =
+                    '<span class="song-card-disc"><img alt=""></span>' +
+                    '<span class="song-card-info">' +
+                        '<strong></strong><span></span><small></small>' +
+                        '<em class="song-status" data-status="new">Chưa bắt đầu</em>' +
+                    '</span>' +
+                    '<span class="song-card-play">▶</span>';
+                const im = a.querySelector("img");
+                im.src = img;
+                im.alt = "Ảnh minh họa " + s.titleZh;
+                a.querySelector("strong").textContent = s.titleZh;
+                a.querySelector(".song-card-info > span").textContent = s.titleEn;
+                a.querySelector("small").textContent = "HSK4." + n + " · 文化 CULTURE";
+                grid.appendChild(a);
+            });
+
+            async function loadStatus() {
+                if (!window.LessonProgress) return;
+                const cards = Array.from(grid.querySelectorAll(".song-card[data-progress-id]"));
+                const ids = cards.map(function (c) { return Number(c.dataset.progressId); });
+                if (!ids.length) return;
+                let statuses = {};
+                try { statuses = await window.LessonProgress.loadLessonStatuses(ids); } catch (e) { return; }
+                const labels = { new: "Chưa bắt đầu", learning: "Đang học", completed: "Đã hoàn thành ✓" };
+                cards.forEach(function (c) {
+                    const st = statuses[Number(c.dataset.progressId)] || "new";
+                    const b = c.querySelector(".song-status");
+                    b.dataset.status = st;
+                    b.textContent = labels[st];
+                });
+            }
+            loadStatus();
+        })();
+    </script>
 </body>
+
 </html>
