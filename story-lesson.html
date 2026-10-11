@@ -1849,6 +1849,45 @@ body.app-printing {
     letter-spacing: 0.02em;
 }
 
+
+/* ================================================= */
+/* ====== MÁY TÍNH: MỞ RỘNG KHUNG, CHỮ TO HƠN ====== */
+/* ================================================= */
+@media (min-width: 1000px) {
+    .lesson-page {
+        width: 94%;
+        max-width: 1560px;
+    }
+
+    .content-card {
+        padding: 36px 44px;
+    }
+
+    .reading-text {
+        font-size: 30px;
+        line-height: 2.3;
+    }
+
+    .reading-text[data-lang="en"] {
+        font-size: 24px;
+        line-height: 2.1;
+    }
+
+    .reading-main {
+        flex: 0 0 76%;
+        max-width: 76%;
+    }
+
+    .reading-divider {
+        margin: 0 28px;
+    }
+}
+
+@media (min-width: 1500px) {
+    .reading-text {
+        font-size: 32px;
+    }
+}
 </style>
 
 </head>
