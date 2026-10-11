@@ -110,22 +110,24 @@ var THEME = {
     2: { sky: ["#ffd9a0", "#ffb36b"], ground: ["#c9d48a", "#9bb65a"], mount: ["#9a6a9a", "#b9829a", "#d9a199"], path: "#f2d899", pathE: "#d4b266", sun: "#fff0b3" },
     3: { sky: ["#cfe8ef", "#eaf4ee"], ground: ["#a9d08a", "#7fb86a"], mount: ["#8fb5a8", "#a9c9b7", "#c6dccb"], path: "#e9e4d6", pathE: "#cfc8b4", sun: "#fffbe0" },
     4: { sky: ["#f2d6a2", "#d9a77c"], ground: ["#8fa874", "#6c8a58"], mount: ["#9b7e6a", "#b69685", "#cfb09b"], path: "#d7c8a6", pathE: "#b8a883", sun: "#fff1c9" },
-    5: { sky: ["#0a0c2b", "#3a1259"], ground: ["#161a3a", "#0c0f26"], mount: ["#171c4a", "#232a66", "#2f3a86"], path: "#1d2350", pathE: "#2ee6ff", sun: "#f6e9ff" },
-    6: { sky: ["#150a3a", "#5b2fb0"], ground: ["#3a2a7a", "#241556"], mount: ["#3b2a86", "#5a40b0", "#7f64d6"], path: "#6a55c8", pathE: "#b9a2ff", sun: "#ffe9ff" }
+    5: { sky: ["#3b5a9a", "#ffbe85"], ground: ["#6a6f7c", "#454955"], mount: ["#5c6a98", "#7a82ab", "#9a98b8"], path: "#b9bcc6", pathE: "#8d909c", sun: "#ffe7b8" },
+    6: { sky: ["#01020a", "#0b1030"], ground: ["#a2a5ae", "#6b6e78"], mount: ["#53565f", "#6c6f79", "#868993"], path: "#b4b7c0", pathE: "#8a8d97", sun: "#cfe6ff" }
 };
 
 function drawSky(era, t) {
     var th = THEME[era];
     ctx.fillStyle = lg(0, 0, 0, HZ + 40, [[0, th.sky[0]], [1, th.sky[1]]]); ctx.fillRect(0, 0, W, HZ + 60);
-    if (era === 5 || era === 6) {
-        for (var i = 0; i < 70; i++) { var tw = 0.5 + 0.5 * Math.sin(t / 700 + i); ctx.fillStyle = "rgba(255,255,255," + (0.25 + 0.5 * tw) + ")"; ctx.fillRect(rnd(i) * W, rnd(i + 99) * 200, 2, 2); }
+    if (era === 6) {
+        for (var i = 0; i < 90; i++) { var tw = 0.5 + 0.5 * Math.sin(t / 700 + i); ctx.fillStyle = "rgba(255,255,255," + (0.25 + 0.5 * tw) + ")"; ctx.fillRect(rnd(i) * W, rnd(i + 99) * 200, 2, 2); }
     }
     /* mặt trời / trăng */
     var sx = era === 2 ? 760 : era === 4 ? 300 : 820, sy = era === 2 ? 150 : 90;
-    glow(era === 5 || era === 6 ? "#c79bff" : "#fff2b0", 60, function() { ell(sx, sy, 38, 38, th.sun); });
+    if (era === 6) { earthDraw(t); }
+    else if (era === 5) { glow("#ffcf8a", 90, function() { ell(sx - 120, HZ - 40, 46, 46, th.sun); }); }
+    else glow("#fff2b0", 60, function() { ell(sx, sy, 38, 38, th.sun); });
     if (era === 1) { ell(sx, sy, 38, 38, th.sun); ctx.globalAlpha = 0.25; ell(sx, sy, 56, 56, th.sun); ctx.globalAlpha = 1; }
     /* mây */
-    if (era !== 5) for (var k = 0; k < 4; k++) {
+    if (era !== 6) for (var k = 0; k < 4; k++) {
         var cx = ((t / (30 + k * 12) + k * 260) % (W + 300)) - 150, cy = 40 + k * 38;
         ctx.globalAlpha = era === 6 ? 0.25 : era === 1 ? 0.6 : 0.8;
         ell(cx, cy, 60, 14, "#fff"); ell(cx - 30, cy + 4, 36, 10, "#fff"); ell(cx + 34, cy + 5, 38, 10, "#fff");
@@ -133,19 +135,23 @@ function drawSky(era, t) {
     }
 }
 
+
+function earthDraw(t) {
+    var ex = 150, ey = 78, r = 40;
+    glow("#6fb0ff", 40, function() { ell(ex, ey, r, r, "#2f6fd6"); });
+    ctx.save(); ctx.beginPath(); ctx.arc(ex, ey, r, 0, Math.PI * 2); ctx.clip();
+    ell(ex - 14, ey - 8, 20, 12, "#4aa86a"); ell(ex + 16, ey + 12, 16, 10, "#4aa86a"); ell(ex + 8, ey - 22, 12, 6, "#58b878");
+    ctx.globalAlpha = 0.55; var o = (t / 900) % 60; ell(ex - 30 + o, ey - 14, 22, 5, "#fff"); ell(ex - 10 + o * 0.5, ey + 18, 26, 5, "#fff"); ctx.globalAlpha = 1;
+    ctx.fillStyle = lg(ex - r, ey, ex + r, ey, [[0, "rgba(0,0,0,0)"], [0.6, "rgba(0,0,10,.1)"], [1, "rgba(0,0,20,.6)"]]); ctx.fillRect(ex - r, ey - r, r * 2, r * 2);
+    ctx.restore();
+    ctx.strokeStyle = "rgba(160,210,255,.5)"; ctx.lineWidth = 2; ctx.beginPath(); ctx.arc(ex, ey, r + 1, 0, Math.PI * 2); ctx.stroke();
+    var m = (t / 2600) % 4;                                              /* sao băng thi thoảng */
+    if (m < 0.5) { var mx = 800 - m * 700, my = 40 + m * 280; ctx.strokeStyle = "rgba(255,255,255," + (1 - m * 2) + ")"; ctx.lineWidth = 2; ctx.beginPath(); ctx.moveTo(mx, my); ctx.lineTo(mx + 60, my - 30); ctx.stroke(); }
+}
+
 function mountains(era, t) {
     var th = THEME[era], m = th.mount, i;
-    if (era === 5) {                                           /* đường chân trời thành phố */
-        for (var layer = 0; layer < 3; layer++) {
-            for (i = 0; i < 26; i++) {
-                var bw = 28 + rnd(i + layer * 31) * 34, bh = 40 + rnd(i * 3 + layer) * (110 - layer * 22), bx = i * 42 - 10 + layer * 14;
-                rect(bx, HZ + 10 - bh + layer * 4, bw, bh, m[layer]);
-                for (var wy = 0; wy < bh - 6; wy += 10) for (var wx = 4; wx < bw - 4; wx += 8)
-                    if (rnd(i * 17 + wy + wx + layer) > 0.62) { ctx.fillStyle = rnd(wy + i) > 0.5 ? "rgba(46,230,255,.8)" : "rgba(255,61,242,.75)"; ctx.fillRect(bx + wx, HZ + 14 - bh + wy + layer * 4, 3, 5); }
-            }
-        }
-        return;
-    }
+    if (era === 5) { cityModern(t); return; }
     if (era === 4) { cityRepublic(t); return; }
     for (var L = 0; L < 3; L++) {
         ctx.beginPath(); ctx.moveTo(0, HZ + 20);
@@ -158,13 +164,6 @@ function mountains(era, t) {
         ctx.fillStyle = m[2 - L]; ctx.fill();
         if (era === 1) {                                         /* sương mù thủy mặc */
             ctx.fillStyle = lg(0, HZ - 80 - L * 30, 0, HZ + 10 - L * 8, [[0, "rgba(244,239,226,0)"], [1, "rgba(244,239,226,.8)"]]); ctx.fillRect(0, HZ - 90 - L * 30, W, 100);
-        }
-    }
-    if (era === 6) {                                           /* đảo bay */
-        for (i = 0; i < 3; i++) {
-            var fy = 70 + i * 40 + Math.sin(t / 900 + i) * 6, fx = 140 + i * 330;
-            glow("#a98bff", 24, function() { poly([[fx - 50, fy], [fx + 50, fy], [fx + 22, fy + 26], [fx, fy + 44], [fx - 22, fy + 26]], "#6f55c9"); });
-            ell(fx, fy, 50, 9, "#8ee6a8");
         }
     }
 }
@@ -272,8 +271,271 @@ function groundRepublic(t) {
     }
 }
 
+
+/* ===================================================================
+   CẢNH NỀN MỚI CHO TỪNG THỜI (đều vẽ gốc, chỉ lấy không khí chung)
+   1 làng núi thủy mặc · 2 Trường An mẫu đơn · 3 thủy trấn Giang Nam
+   5 đô thị hiện đại lúc hoàng hôn · 6 căn cứ trên Mặt Trăng
+   =================================================================== */
+function person(x, y, col, t, ph, opt) {
+    var sw = Math.sin(t / 110 + ph) * 2;
+    shadow(x, y + 22, 16);
+    if (opt && opt.long) { poly([[x - 5, y - 4], [x + 5, y - 4], [x + 9, y + 22], [x - 9, y + 22]], col); }
+    else { rrect(x - 5, y - 4, 10, 14, 3, col); rect(x - 4 + sw, y + 10, 3, 9, "#2a1a10"); rect(x + 1 - sw, y + 10, 3, 9, "#2a1a10"); }
+    ell(x, y - 9, 5, 5, "#f1cfa8"); ell(x, y - 12, 5.5, 3.6, "#241810");
+    if (opt && opt.bun) ell(x, y - 17, 3, 3, "#241810");
+    if (opt && opt.bag) { rect(x + 5, y + 2, 6, 7, opt.bag); }
+}
+function cloudWisp(x, y, w, a) { ctx.globalAlpha = a; ell(x, y, w, w * 0.16, "#fff"); ell(x + w * 0.4, y - 3, w * 0.6, w * 0.12, "#fff"); ctx.globalAlpha = 1; }
+
+/* ---------- THỜI 1: làng núi thủy mặc ---------- */
+function inkFront(t) {
+    var i, b = HZ + 10;
+    /* thác nước + sương */
+    for (i = 0; i < 5; i++) { var o = (t / 40 + i * 14) % 70; ctx.fillStyle = "rgba(255,255,255,.55)"; ctx.fillRect(730 + i * 3.5, HZ - 98 + o * 1.6, 2.4, 22); }
+    ctx.fillStyle = "rgba(230,236,232,.55)"; ctx.fillRect(728, HZ - 100, 20, 108); cloudWisp(738, HZ + 8, 44, 0.7);
+    /* thông trên sườn */
+    [[60, 4], [96, 10], [430, 2], [470, 8], [640, 6], [800, 4], [900, 10]].forEach(function(q) { var x = q[0], y = HZ + q[1]; rect(x - 1.5, y - 16, 3, 20, "#4a4f4c"); for (var j = 0; j < 4; j++) poly([[x - 13 + j * 2, y - 8 - j * 9], [x, y - 22 - j * 9], [x + 13 - j * 2, y - 8 - j * 9]], "rgba(58,72,66,.85)"); });
+    /* nhà tranh bên bờ + khói */
+    [[190, 1], [275, -2], [860, 2]].forEach(function(c, ci) {
+        var x = c[0], y = b + c[1];
+        rect(x - 22, y - 24, 44, 24, "#e8dfc8"); rect(x - 22, y - 24, 44, 3, "#cfc4a8"); rect(x - 5, y - 16, 10, 16, "#4a3a2a");
+        poly([[x - 34, y - 22], [x, y - 52], [x + 34, y - 22]], "#7a6a52"); ctx.strokeStyle = "rgba(60,45,30,.5)"; ctx.lineWidth = 1;
+        for (var k = 0; k < 6; k++) { ctx.beginPath(); ctx.moveTo(x - 30 + k * 6, y - 23 - k * 1.5); ctx.lineTo(x - 2 + k * 3, y - 49 + k); ctx.stroke(); }
+        for (var q2 = 0; q2 < 5; q2++) { var ph = (t / 70 + q2 * 16 + ci * 20) % 80, al = 0.5 - ph / 170; if (al > 0) ell(x + 14 + ph * 0.4, y - 56 - ph, 5 + ph / 12, 4 + ph / 16, "rgba(120,120,120," + al + ")"); }
+    });
+    /* cầu đá vòm */
+    ctx.fillStyle = "#b9b3a2"; ctx.beginPath(); ctx.moveTo(512, b + 22); ctx.quadraticCurveTo(560, b - 30, 608, b + 22); ctx.lineTo(608, b + 26); ctx.quadraticCurveTo(560, b - 20, 512, b + 26); ctx.closePath(); ctx.fill();
+    ctx.beginPath(); ctx.arc(560, b + 24, 24, Math.PI, 0); ctx.strokeStyle = "#8f8a7c"; ctx.lineWidth = 6; ctx.stroke(); ell(560, b + 22, 20, 8, "rgba(90,110,110,.45)");
+    /* thuyền chài chậm rãi */
+    var bx = 300 + ((t / 50) % 420); shadow(bx, b + 46, 70);
+    poly([[bx - 36, b + 36], [bx + 40, b + 36], [bx + 28, b + 46], [bx - 28, b + 46]], "#4a3f36"); rect(bx - 2, b + 6, 2, 30, "#4a3f36"); poly([[bx, b + 8], [bx + 22, b + 28], [bx, b + 30]], "#e8dfc8");
+    ell(bx - 18, b + 28, 5, 5, "#f1cfa8"); poly([[bx - 28, b + 24], [bx - 8, b + 24], [bx - 18, b + 14]], "#6a5a42"); rect(bx - 22, b + 32, 8, 5, "#6a7a6a");
+    ctx.strokeStyle = "rgba(255,255,255,.5)"; ctx.lineWidth = 1.4; ctx.beginPath(); ctx.moveTo(bx - 44, b + 47); ctx.lineTo(bx - 70, b + 49); ctx.moveTo(bx + 44, b + 47); ctx.lineTo(bx + 62, b + 49); ctx.stroke();
+    /* trúc hai bên */
+    [[24, 5], [58, 2], [946, 5], [978, 3]].forEach(function(q, qi) {
+        var x = q[0], sw = Math.sin(t / 700 + qi) * 3;
+        for (var j = 0; j < 3; j++) {
+            var xx = x + j * 9, top = HZ - 150 + j * 18 + q[1];
+            ctx.strokeStyle = "rgba(72,104,82,.9)"; ctx.lineWidth = 4; ctx.beginPath(); ctx.moveTo(xx, HZ + 80); ctx.quadraticCurveTo(xx + sw * 0.5, HZ - 30, xx + sw, top); ctx.stroke();
+            for (var nd = 0; nd < 6; nd++) { var ny = HZ + 70 - nd * 38; rect(xx - 3 + sw * (HZ + 80 - ny) / 230, ny, 6, 2, "#3f5a46"); }
+            for (var lf = 0; lf < 5; lf++) { poly([[xx + sw, top + lf * 14], [xx + sw + 22, top + lf * 14 - 5], [xx + sw + 4, top + lf * 14 + 6]], "rgba(86,128,98,.85)"); poly([[xx + sw, top + lf * 14 + 4], [xx + sw - 22, top + lf * 14 - 1], [xx + sw - 4, top + lf * 14 + 10]], "rgba(86,128,98,.85)"); }
+        }
+    });
+    /* sương trên mặt hồ */
+    ctx.fillStyle = lg(0, HZ + 6, 0, HZ + 50, [[0, "rgba(244,239,226,.55)"], [1, "rgba(244,239,226,0)"]]); ctx.fillRect(0, HZ + 6, W, 44);
+    /* hạc bay */
+    for (i = 0; i < 3; i++) { var cx = ((t / 70 + i * 120) % (W + 120)) - 60, cy = 70 + i * 26 + Math.sin(t / 700 + i) * 5, fl = Math.sin(t / 220 + i) * 6; ctx.strokeStyle = "#fff"; ctx.lineWidth = 3; ctx.beginPath(); ctx.moveTo(cx - 14, cy - fl); ctx.quadraticCurveTo(cx, cy - 6, cx + 14, cy - fl); ctx.stroke(); ctx.fillStyle = "#2a2a2a"; ctx.fillRect(cx - 16, cy - fl - 1, 3, 2); ctx.fillRect(cx + 13, cy - fl - 1, 3, 2); ell(cx, cy, 6, 3, "#fff"); rect(cx + 6, cy - 3, 8, 1.6, "#fff"); }
+}
+function deerDraw(t) {
+    var x = 300 + ((Math.sin(t / 5200) + 1) / 2) * 150, y = 506, dir = Math.cos(t / 5200) >= 0 ? 1 : -1, st = Math.sin(t / 160) * 3;
+    ctx.save(); ctx.translate(x, y); ctx.scale(dir, 1);
+    shadow(0, 10, 44);
+    [[-12, 1], [-6, -1], [8, -1], [14, 1]].forEach(function(l) { ctx.fillStyle = "#8a5a34"; ctx.fillRect(l[0], 0, 3, 16 + l[1] * st * 0.2); });
+    ell(0, -2, 20, 10, "#c98b52"); ell(-2, 2, 14, 6, "#e8c9a0");
+    [[-8, -6], [0, -9], [8, -5], [-4, 0]].forEach(function(d) { ell(d[0], d[1], 1.8, 1.8, "#f8e8cc"); });
+    poly([[14, -6], [22, -22], [27, -20], [21, -4]], "#c98b52"); ell(26, -22, 7, 5, "#c98b52"); ell(30, -21, 2, 2, "#2a1a10"); ell(24, -28, 3, 5, "#b87942");
+    ctx.strokeStyle = "#6a4a2a"; ctx.lineWidth = 1.6; ctx.beginPath(); ctx.moveTo(25, -30); ctx.lineTo(23, -38); ctx.lineTo(27, -41); ctx.moveTo(23, -37); ctx.lineTo(19, -40); ctx.stroke();
+    ctx.strokeStyle = "#b0302a"; ctx.lineWidth = 2; ctx.beginPath(); ctx.moveTo(17, -9); ctx.lineTo(21, -6); ctx.stroke();
+    glow("#ffd25a", 6, function() { ell(19, -3 + Math.sin(t / 130) * 1, 2.6, 2.6, "#ffd25a"); });
+    ctx.restore();
+}
+
+/* ---------- THỜI 2: Trường An + vườn mẫu đơn ---------- */
+var PEONY = null;
+function tangFront(t) {
+    var i, b = HZ + 8;
+    /* tường thành + cổng lâu */
+    rect(0, b - 34, W, 36, "#d2a064"); rect(0, b - 34, W, 4, "#e8c58a");
+    for (i = 0; i < W; i += 20) rect(i + 3, b - 42, 12, 10, "#d2a064");
+    for (i = 0; i < W; i += 36) { ctx.fillStyle = "rgba(90,50,20,.12)"; ctx.fillRect(i, b - 30, 1, 30); }
+    [170, 830].forEach(function(gx, gi) {
+        rect(gx - 50, b - 88, 100, 90, "#c0301f"); rect(gx - 50, b - 88, 100, 8, "#8a1f14");
+        ctx.beginPath(); ctx.moveTo(gx - 20, b + 2); ctx.lineTo(gx - 20, b - 34); ctx.arc(gx, b - 34, 20, Math.PI, 0); ctx.lineTo(gx + 20, b + 2); ctx.closePath(); ctx.fillStyle = "#2a1208"; ctx.fill();
+        for (var r = 0; r < 3; r++) for (var c = 0; c < 8; c++) ell(gx - 42 + c * 12, b - 78 + r * 12, 1.6, 1.6, "#ffd25a");
+        chRoof(gx, b - 88, 84, 26, 20, "#e8b04a", "#b9751b", "#ffd25a");
+        rect(gx - 32, b - 122, 64, 34, "#c0301f"); window2(gx - 14, b - 116, 28, 22, "#3a1a10", "#ffd25a");
+        chRoof(gx, b - 122, 56, 22, 16, "#e8b04a", "#b9751b", "#ffd25a");
+        var f = Math.sin(t / 260 + gi) * 5; rect(gx - 1, b - 170, 2, 30, "#6b4a2a"); ctx.fillStyle = "#ffd25a"; ctx.beginPath(); ctx.moveTo(gx + 1, b - 170); ctx.lineTo(gx + 26 + f, b - 163); ctx.lineTo(gx + 1, b - 156); ctx.fill();
+        lantern(gx - 40, b - 60, 6, "#ff4a3a", t, gi); lantern(gx + 40, b - 60, 6, "#ff4a3a", t, gi + 2);
+    });
+    /* đại nhạn tháp */
+    var px = 330;
+    for (i = 0; i < 6; i++) { var tw = 56 - i * 6, ty = b - 20 - i * 24; rect(px - tw / 2, ty - 22, tw, 22, i % 2 ? "#d9c7a0" : "#cfbb92"); poly([[px - tw / 2 - 5, ty - 22], [px, ty - 30], [px + tw / 2 + 5, ty - 22]], "#8a6a46"); rect(px - 4, ty - 17, 8, 12, "#4a3320"); }
+    poly([[px - 7, b - 20 - 6 * 24 - 8], [px, b - 20 - 6 * 24 - 38], [px + 7, b - 20 - 6 * 24 - 8]], "#e8b04a");
+    /* biển mẫu đơn: cánh đồng hoa */
+    if (!PEONY) { PEONY = []; for (var k = 0; k < 120; k++) PEONY.push({ x: rnd(k) * W, y: HZ + 24 + rnd(k + 70) * (H - HZ - 30), c: Math.floor(rnd(k + 9) * 6), r: rnd(k + 33) }); PEONY.sort(function(a, c) { return a.y - c.y; }); }
+    var cols = ["#ff7aa8", "#e0457b", "#ffb3c9", "#b84cc7", "#fff0f4", "#ff9a5a"];
+    PEONY.forEach(function(q, qi) {
+        var sc = 0.45 + (q.y - HZ) / 320, sw = Math.sin(t / 600 + qi) * 1.6;
+        ell(q.x, q.y, 24 * sc, 9 * sc, "rgba(40,70,30,.3)"); ell(q.x, q.y - 6 * sc, 20 * sc, 12 * sc, "#4f9a52"); ell(q.x - 8 * sc, q.y - 10 * sc, 11 * sc, 8 * sc, "#6bb86a");
+        for (var j = 0; j < 3; j++) {
+            var bx = q.x + (j - 1) * 11 * sc + sw, by = q.y - 16 * sc - (j % 2) * 7 * sc, rr = 9 * sc, cc = cols[(q.c + j) % 6];
+            ell(bx, by, rr, rr * 0.85, cc); ell(bx - rr * 0.3, by - rr * 0.2, rr * 0.6, rr * 0.5, "rgba(255,255,255,.28)"); ell(bx + rr * 0.15, by + rr * 0.1, rr * 0.4, rr * 0.35, "rgba(150,30,70,.25)"); ell(bx, by, rr * 0.16, rr * 0.16, "#ffd25a");
+        }
+    });
+    /* thiếu nữ Hán phục dạo vườn */
+    [["#e0457b", 0, 1], ["#4aa8c8", 330, -1], ["#f0a830", 640, 1]].forEach(function(l, li) {
+        var lx = ((t / (46 + li * 8) + l[1]) % (W + 80)) - 40; if (l[2] < 0) lx = W - lx;
+        var ly = 392 + li * 38;
+        person(lx, ly, l[0], t, li, { long: true, bun: true });
+        rect(lx - 7, ly + 2, 14, 3, "#ffd25a"); ctx.strokeStyle = "rgba(255,255,255,.85)"; ctx.lineWidth = 2; ctx.beginPath(); ctx.moveTo(lx + 5, ly + 1); ctx.quadraticCurveTo(lx + 22 + Math.sin(t / 180 + li) * 4, ly + 6, lx + 16, ly + 20); ctx.stroke();
+        if (li === 1) { ctx.beginPath(); ctx.arc(lx - 10, ly - 22, 16, Math.PI, 0); ctx.fillStyle = "#fff0b0"; ctx.fill(); ctx.strokeStyle = "#c0301f"; ctx.lineWidth = 2; ctx.stroke(); ctx.beginPath(); ctx.moveTo(lx - 10, ly - 22); ctx.lineTo(lx - 6, ly + 6); ctx.stroke(); }
+    });
+    /* dải dây đèn lồng */
+    ctx.strokeStyle = "rgba(90,40,20,.6)"; ctx.lineWidth = 1.5; ctx.beginPath(); ctx.moveTo(240, b - 6); ctx.quadraticCurveTo(500, b + 30, 760, b - 6); ctx.stroke();
+    for (i = 0; i < 9; i++) { var u = (i + 1) / 10; lantern(240 + 520 * u, b - 6 + Math.sin(u * Math.PI) * 26 + 8, 6, i % 2 ? "#ff4a3a" : "#ffb52e", t, i); }
+}
+
+/* ---------- THỜI 3: thủy trấn Giang Nam ---------- */
+function jiangnanFront(t) {
+    var i, b = HZ + 8;
+    /* dãy nhà tường trắng ngói đen, đầu hồi mã đầu */
+    var x = -12, n = 0;
+    while (x < W + 10) {
+        var bw = 74 + Math.floor(rnd(n + 11) * 3) * 14, bh = 46 + Math.floor(rnd(n * 3 + 2) * 3) * 14;
+        if (x > 570 && x < 720) { x += bw + 2; n++; continue; }
+        rect(x, b - bh, bw, bh, "#f4f2ea"); rect(x + bw - 6, b - bh, 6, bh, "rgba(0,0,0,.08)");
+        [[x, 1], [x + bw, -1]].forEach(function(e) { var sx = e[0], d = e[1]; poly([[sx, b - bh], [sx + d * 0, b - bh - 18], [sx + d * 10, b - bh - 18], [sx + d * 10, b - bh - 10], [sx + d * 20, b - bh - 10], [sx + d * 20, b - bh - 2], [sx + d * 30, b - bh - 2], [sx + d * 30, b - bh]], "#2f3238"); });
+        poly([[x - 3, b - bh], [x + bw / 2, b - bh - 22], [x + bw + 3, b - bh]], "#343840"); rect(x - 3, b - bh - 2, bw + 6, 4, "#26292e");
+        for (var w2 = x + 12; w2 < x + bw - 22; w2 += 30) { rect(w2, b - bh + 12, 16, 20, "#6b4a2a"); ctx.strokeStyle = "#3a2a1a"; ctx.lineWidth = 1; ctx.strokeRect(w2, b - bh + 12, 16, 20); ctx.beginPath(); ctx.moveTo(w2 + 8, b - bh + 12); ctx.lineTo(w2 + 8, b - bh + 32); ctx.moveTo(w2, b - bh + 22); ctx.lineTo(w2 + 16, b - bh + 22); ctx.stroke(); }
+        rect(x + bw / 2 - 6, b - 22, 12, 22, "#5a3a1e");
+        if (n % 2 === 0) lantern(x + 12, b - bh + 40, 5, "#e63946", t, n);
+        ctx.fillStyle = "rgba(40,70,80,.18)"; ctx.fillRect(x, b - 3, bw, 3);
+        x += bw + 2; n++;
+    }
+    /* khách điếm hai tầng, cờ hiệu, đèn lồng */
+    var ix = 645;
+    rect(ix - 66, b - 98, 132, 98, "#f1ead8"); rect(ix - 66, b - 98, 132, 5, "#dcd2b8");
+    poly([[ix - 80, b - 96], [ix - 48, b - 126], [ix + 48, b - 126], [ix + 80, b - 96]], "#2f3238"); rect(ix - 62, b - 54, 124, 5, "#5a3a1e");
+    for (i = 0; i < 6; i++) rect(ix - 60 + i * 24, b - 54, 2.5, 20, "#5a3a1e");
+    rect(ix - 62, b - 38, 124, 3, "#5a3a1e");
+    for (i = 0; i < 3; i++) { window2(ix - 54 + i * 40, b - 90, 24, 26, "#ffdc9a", "#5a3a1e"); }
+    rect(ix - 14, b - 34, 28, 34, "#4a2a14"); rect(ix - 6, b - 34, 12, 34, "rgba(255,200,120,.35)");
+    for (i = 0; i < 5; i++) lantern(ix - 56 + i * 28, b - 60 + (i % 2) * 4, 6, "#e63946", t, i);
+    var f = Math.sin(t / 400) * 3; rect(ix + 72, b - 150, 2, 90, "#5a3a1e"); ctx.fillStyle = "#f0b830"; ctx.beginPath(); ctx.moveTo(ix + 74, b - 148); ctx.lineTo(ix + 104 + f, b - 146); ctx.lineTo(ix + 104 + f, b - 94); ctx.lineTo(ix + 74, b - 96); ctx.fill();
+    text("客", ix + 90 + f * 0.5, b - 130, 17, "#7a1a10"); text("栈", ix + 90 + f * 0.5, b - 108, 17, "#7a1a10");
+    /* cầu đá vòm bắc qua kênh */
+    var bxx = 330;
+    ctx.fillStyle = "#d4cdb8"; ctx.beginPath(); ctx.moveTo(bxx - 84, b + 18); ctx.quadraticCurveTo(bxx, b - 30, bxx + 84, b + 18); ctx.lineTo(bxx + 84, b + 32); ctx.lineTo(bxx - 84, b + 32); ctx.closePath(); ctx.fill();
+    ctx.strokeStyle = "#a69f8a"; ctx.lineWidth = 3; ctx.beginPath(); ctx.moveTo(bxx - 84, b + 16); ctx.quadraticCurveTo(bxx, b - 34, bxx + 84, b + 16); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(bxx - 40, b + 32); ctx.quadraticCurveTo(bxx, b - 6, bxx + 40, b + 32); ctx.closePath(); ctx.fillStyle = "#4f7a84"; ctx.fill();
+    /* liễu rủ */
+    [70, 250, 470, 905].forEach(function(lx, li) {
+        rect(lx - 3, b - 40, 6, 46, "#5a4a36"); ell(lx, b - 52, 30, 18, "#86bf6e");
+        for (var j = 0; j < 14; j++) { var sx = lx - 28 + j * 4.3, sw = Math.sin(t / 650 + j + li) * 4; ctx.strokeStyle = j % 2 ? "#79b062" : "#8ccb74"; ctx.lineWidth = 1.6; ctx.beginPath(); ctx.moveTo(sx, b - 50); ctx.quadraticCurveTo(sx + sw, b - 26, sx + sw * 1.5, b - 4 + (j % 3) * 8); ctx.stroke(); }
+    });
+    /* thuyền ô bồng + người chèo */
+    [[0, 52, 1], [260, 24, -1]].forEach(function(bt, bi) {
+        var tx = ((t / (36 + bi * 10) + bt[0]) % (W + 160)) - 80; if (bt[2] < 0) tx = W - tx; var ty = b + 18 + bt[1];
+        shadow(tx, ty + 8, 90);
+        poly([[tx - 44, ty - 4], [tx + 46, ty - 4], [tx + 34, ty + 8], [tx - 34, ty + 8]], "#3a2a1e");
+        ctx.beginPath(); ctx.ellipse(tx - 4, ty - 4, 24, 14, 0, Math.PI, 0); ctx.fillStyle = "#2a2a2c"; ctx.fill(); ctx.strokeStyle = "rgba(255,255,255,.12)"; ctx.lineWidth = 1; for (var k = -3; k <= 3; k++) { ctx.beginPath(); ctx.moveTo(tx - 4 + k * 6, ty - 17); ctx.lineTo(tx - 4 + k * 7, ty - 4); ctx.stroke(); }
+        rrect(tx + 28, ty - 22, 7, 15, 3, "#4a6a8a"); ell(tx + 31, ty - 26, 4.5, 4.5, "#f1cfa8"); poly([[tx + 25, ty - 28], [tx + 31, ty - 36], [tx + 37, ty - 28]], "#c8b078");
+        ctx.strokeStyle = "#5a3a1e"; ctx.lineWidth = 2; ctx.beginPath(); ctx.moveTo(tx + 33, ty - 16); ctx.lineTo(tx + 56, ty + 12 + Math.sin(t / 260 + bi) * 3); ctx.stroke();
+        glow("#ffd98a", 10, function() { ell(tx - 30, ty - 8, 3, 3, "#ffe9a8"); });
+        ctx.strokeStyle = "rgba(255,255,255,.55)"; ctx.lineWidth = 1.3; ctx.beginPath(); ctx.moveTo(tx - 50, ty + 9); ctx.lineTo(tx - 76, ty + 10); ctx.moveTo(tx + 52, ty + 9); ctx.lineTo(tx + 70, ty + 10); ctx.stroke();
+    });
+    /* mưa phùn nhẹ */
+    ctx.strokeStyle = "rgba(200,225,235,.35)"; ctx.lineWidth = 1;
+    for (i = 0; i < 40; i++) { var rx = (rnd(i) * W + t / 14) % W, ry = ((t / 5 + rnd(i + 3) * 500) % 520); ctx.beginPath(); ctx.moveTo(rx, ry); ctx.lineTo(rx - 3, ry + 10); ctx.stroke(); }
+}
+
+/* ---------- THỜI 5: đô thị hiện đại lúc hoàng hôn ---------- */
+function glassTower(x, w, h, base, c, seed, t) {
+    ctx.fillStyle = lg(x, base - h, x + w, base, [[0, c[0]], [1, c[1]]]); ctx.fillRect(x, base - h, w, h);
+    rect(x, base - h, w * 0.18, h, "rgba(255,255,255,.1)"); rect(x + w - 3, base - h, 3, h, "rgba(0,0,0,.18)");
+    for (var wy = base - h + 8; wy < base - 6; wy += 9) for (var wx = x + 4; wx < x + w - 4; wx += 7) {
+        var r = rnd(seed + wx * 0.31 + wy * 0.17); if (r > 0.55) { ctx.fillStyle = r > 0.9 && Math.floor(t / 1100 + wx) % 2 ? "rgba(255,255,230,.95)" : "rgba(255,206,120,.82)"; ctx.fillRect(wx, wy, 3.5, 5); }
+    }
+}
+function cityModern(t) {
+    var base = HZ + 4, i;
+    /* lớp xa mờ */
+    ctx.globalAlpha = 0.45;
+    for (i = 0; i < 26; i++) { var w = 22 + rnd(i * 5) * 24, h = 50 + rnd(i + 5) * 110; rect(i * 40 - 8, base - h, w, h, i % 2 ? "#6f7aa6" : "#7d84ad"); }
+    ctx.globalAlpha = 1;
+    /* tháp truyền hình (có khối cầu) + tháp vương miện + tháp vát */
+    var tx = 250; rect(tx - 5, base - 330, 10, 330, "#8d96b8"); glow("#ffb36b", 14, function() { ell(tx, base - 220, 20, 20, "#c9a58c"); ell(tx, base - 290, 12, 12, "#c9a58c"); }); rect(tx - 1, base - 380, 2, 50, "#8d96b8");
+    if (Math.floor(t / 600) % 2) ell(tx, base - 382, 3, 3, "#ff5a4a");
+    glassTower(380, 70, 230, base, ["#8fb4d8", "#4a6a96"], 3, t); poly([[380, base - 230], [415, base - 262], [450, base - 230]], "#7a9ac0"); rect(414, base - 292, 2, 30, "#7a9ac0");
+    glassTower(130, 64, 190, base, ["#a0bcd8", "#56709a"], 7, t); rect(124, base - 194, 76, 6, "#cfd8e8");
+    glassTower(540, 58, 280, base, ["#b0c2dc", "#5a6f98"], 11, t); poly([[540, base - 280], [598, base - 280], [570, base - 316]], "#9fb2d0"); if (Math.floor(t / 700) % 2) ell(570, base - 320, 3, 3, "#ff5a4a");
+    glassTower(660, 80, 205, base, ["#9ab0d4", "#4a5f8c"], 17, t); rect(660, base - 214, 80, 9, "#c4d0e6");
+    glassTower(780, 62, 250, base, ["#a8bcd8", "#52688f"], 23, t); rect(796, base - 270, 30, 20, "#8fa4c6"); rect(808, base - 292, 6, 22, "#8fa4c6");
+    glassTower(880, 90, 170, base, ["#9eb4d6", "#4d6290"], 29, t); glassTower(30, 76, 150, base, ["#9eb4d6", "#4d6290"], 31, t);
+    /* mây hoàng hôn đậm */
+    cloudWisp(520, 120, 120, 0.35); cloudWisp(150, 90, 90, 0.3);
+}
+function car(x, y, col, dir, t) {
+    var hx = dir > 0 ? x + 24 : x - 24;
+    shadow(x, y + 9, 54);
+    rrect(x - 24, y - 8, 48, 14, 5, col); rrect(x - 13, y - 17, 26, 11, 4, "rgba(30,40,60,.85)"); ell(x - 14, y + 7, 5, 5, "#1a1a1a"); ell(x + 14, y + 7, 5, 5, "#1a1a1a");
+    glow("#fff0b0", 12, function() { ell(hx, y - 1, 3, 3, "#fff6c8"); }); ell(dir > 0 ? x - 24 : x + 24, y - 1, 2.5, 2.5, "#ff3a2a");
+}
+function groundModern(t) {
+    var i;
+    ctx.fillStyle = lg(0, HZ, 0, H, [[0, "#6a6f7c"], [0.2, "#8a8d96"], [1, "#a8a59c"]]); ctx.fillRect(0, HZ, W, H - HZ);
+    /* sông + phản chiếu ánh đèn */
+    ctx.fillStyle = lg(0, HZ, 0, HZ + 30, [[0, "#ffb27a"], [1, "#4a68a0"]]); ctx.fillRect(0, HZ, W, 30);
+    for (i = 0; i < 46; i++) { var rx = rnd(i) * W, rl = 4 + rnd(i + 4) * 20; ctx.fillStyle = "rgba(255,220,150," + (0.2 + 0.3 * Math.sin(t / 400 + i)) + ")"; ctx.fillRect(rx, HZ + 2 + rnd(i + 8) * 24, 2 + rnd(i + 12) * 10, 1.5); ctx.fillRect(rx, HZ + 2, 1.5, rl * 0.5); }
+    var bx = ((t / 30) % (W + 200)) - 100; rrect(bx, HZ + 12, 60, 8, 3, "#e8e6f0"); rect(bx + 30, HZ + 6, 20, 7, "#3a4a6a"); glow("#ffe9a8", 8, function() { ell(bx + 4, HZ + 14, 2, 2, "#ffe9a8"); });
+    rect(0, HZ + 30, W, 5, "#d2cdbd"); rect(0, HZ + 35, W, 3, "#6a6a70");
+    for (i = 0; i < 14; i++) { var x = i * 74 + 30; ell(x, HZ + 30, 12, 9, "#3f7a4a"); ell(x - 4, HZ + 26, 8, 7, "#58a05f"); rect(x - 1.5, HZ + 30, 3, 8, "#4a3a2a"); }
+    /* đại lộ */
+    rect(0, HZ + 38, W, 44, "#3b3d46"); rect(0, HZ + 60, W, 2, "rgba(255,230,150,.6)");
+    for (i = 0; i < W; i += 44) { rect(i, HZ + 49, 24, 2, "rgba(255,255,255,.35)"); rect(i, HZ + 71, 24, 2, "rgba(255,255,255,.35)"); }
+    for (i = 0; i < 4; i++) { var cx = ((t / (22 + i * 5) + i * 270) % (W + 160)) - 80, d = i % 2 ? -1 : 1; if (d < 0) cx = W - cx; car(cx, d > 0 ? HZ + 70 : HZ + 48, ["#e8e8ee", "#c0392b", "#2f5fa0", "#f0b830"][i], d, t); }
+    for (i = 0; i < 7; i++) rect(150 + i * 80, HZ + 38, 30, 44, i % 2 ? "rgba(255,255,255,.0)" : "rgba(255,255,255,.0)");
+    rect(0, HZ + 82, W, 6, "#cfc9b8"); rect(0, HZ + 88, W, 2, "#85807a");
+    /* quảng trường lát đá */
+    for (i = 0; i < 12; i++) { var yy = HZ + 94 + i * i * 2.2; ctx.strokeStyle = "rgba(80,76,70,.16)"; ctx.lineWidth = 1.2; ctx.beginPath(); ctx.moveTo(0, yy); ctx.lineTo(W, yy); ctx.stroke(); }
+    for (i = -12; i <= 12; i++) { ctx.strokeStyle = "rgba(80,76,70,.12)"; ctx.beginPath(); ctx.moveTo(500 + i * 18, HZ + 92); ctx.lineTo(500 + i * 120, H); ctx.stroke(); }
+    [[70, 400], [930, 400], [60, 520], [940, 520]].forEach(function(c, ci) { ell(c[0], c[1] + 10, 54, 14, "rgba(40,40,40,.18)"); rect(c[0] - 1.5, c[1] - 34, 3, 44, "#4a4a4a"); ctx.beginPath(); ctx.arc(c[0], c[1] - 34, 34, Math.PI, 0); ctx.closePath(); ctx.fillStyle = ci % 2 ? "#e8e3d3" : "#c0392b"; ctx.fill(); for (var k = -2; k <= 2; k += 2) { ctx.strokeStyle = "rgba(255,255,255,.35)"; ctx.beginPath(); ctx.moveTo(c[0], c[1] - 34); ctx.lineTo(c[0] + k * 14, c[1] - 34); ctx.stroke(); } ell(c[0] + 16, c[1] + 2, 8, 3, "#5a4a3a"); });
+    [150, 350, 650, 850].forEach(function(lx, li) { rect(lx - 1.5, HZ + 96, 3, 56, "#2f2f35"); glow("#ffd98a", 20 + 4 * Math.sin(t / 300 + li), function() { ell(lx, HZ + 94, 6, 6, "#ffe6a0"); }); });
+    [["#d8506a", 0, 1], ["#3a6a9a", 280, -1], ["#6a4a9a", 520, 1], ["#2a8a6a", 760, -1]].forEach(function(l, li) {
+        var lx = ((t / (50 + li * 7) + l[1]) % (W + 80)) - 40; if (l[2] < 0) lx = W - lx;
+        person(lx, 360 + (li % 2) * 40, l[0], t, li, { bag: "#e8a0a8" });
+    });
+}
+
+/* ---------- THỜI 6: căn cứ Mặt Trăng ---------- */
+var CRATERS = null;
+function groundMoon(t) {
+    var i;
+    ctx.fillStyle = lg(0, HZ, 0, H, [[0, "#b4b7c0"], [1, "#6b6e78"]]); ctx.fillRect(0, HZ, W, H - HZ);
+    if (!CRATERS) { CRATERS = []; for (var k = 0; k < 18; k++) CRATERS.push({ x: rnd(k * 3) * W, y: HZ + 14 + rnd(k * 3 + 1) * (H - HZ - 20), r: 16 + rnd(k * 3 + 2) * 46 }); CRATERS.sort(function(a, b) { return a.y - b.y; }); }
+    CRATERS.forEach(function(c) {
+        var sc = 0.4 + (c.y - HZ) / 300, rx = c.r * sc, ry = rx * 0.32;
+        ell(c.x, c.y, rx, ry, "#7d808a"); ell(c.x + rx * 0.08, c.y + ry * 0.14, rx * 0.86, ry * 0.82, "#656873");
+        ctx.strokeStyle = "rgba(230,232,240,.55)"; ctx.lineWidth = 2; ctx.beginPath(); ctx.ellipse(c.x, c.y, rx, ry, 0, Math.PI * 1.05, Math.PI * 1.95); ctx.stroke();
+    });
+    for (i = 0; i < 70; i++) { ctx.fillStyle = "rgba(60,62,72,.35)"; ctx.fillRect(rnd(i + 200) * W, HZ + 12 + rnd(i + 300) * (H - HZ - 14), 2 + rnd(i) * 3, 1.6); }
+    /* các công trình nền: tên lửa, dải pin mặt trời, ăng-ten, đĩa radar */
+    var b = HZ + 12;
+    rect(868, b - 118, 18, 100, "#eef0f6"); poly([[868, b - 118], [877, b - 148], [886, b - 118]], "#c8402e"); poly([[868, b - 40], [852, b - 14], [868, b - 18]], "#c8402e"); poly([[886, b - 40], [902, b - 14], [886, b - 18]], "#c8402e"); ell(877, b - 92, 5, 5, "#4a7ac0"); rect(868, b - 60, 18, 3, "#c8402e"); rect(864, b - 18, 26, 6, "#5a5d68");
+    for (i = 0; i < 4; i++) { poly([[300 + i * 52, b - 8], [340 + i * 52, b - 8], [346 + i * 52, b - 40], [306 + i * 52, b - 40]], "#2f5fb0"); ctx.strokeStyle = "rgba(255,255,255,.4)"; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(320 + i * 52, b - 8); ctx.lineTo(326 + i * 52, b - 40); ctx.moveTo(303 + i * 52, b - 24); ctx.lineTo(343 + i * 52, b - 24); ctx.stroke(); rect(318 + i * 52, b - 8, 3, 8, "#aaa"); }
+    var da = Math.sin(t / 1200) * 0.4; rect(656, b - 40, 4, 40, "#c8ccd8"); ctx.save(); ctx.translate(658, b - 44); ctx.rotate(-0.5 + da); ctx.beginPath(); ctx.ellipse(0, 0, 26, 8, 0, 0, Math.PI * 2); ctx.fillStyle = "#e4e7ef"; ctx.fill(); rect(-1, -2, 2, -14, "#c8ccd8"); ctx.restore();
+    /* mô-đun căn cứ + mái vòm */
+    ctx.beginPath(); ctx.arc(130, b, 70, Math.PI, 0); ctx.closePath(); ctx.fillStyle = "rgba(180,220,255,.28)"; ctx.fill(); ctx.strokeStyle = "rgba(230,242,255,.85)"; ctx.lineWidth = 3; ctx.stroke();
+    ctx.strokeStyle = "rgba(230,242,255,.4)"; ctx.lineWidth = 1.2; for (i = 1; i < 5; i++) { ctx.beginPath(); ctx.moveTo(130 - 70 + i * 28, b); ctx.quadraticCurveTo(130, b - 100, 130 - 70 + i * 28, b); ctx.stroke(); }
+    rect(88, b - 30, 84, 30, "#e4e7ef"); rect(88, b - 30, 84, 4, "#c8cbd6"); for (i = 0; i < 4; i++) glow("#ffe6a0", 6, function() { rect(96 + i * 20, b - 22, 12, 9, "#ffe6a0"); }); rect(122, b - 12, 16, 12, "#4a4d58");
+    rect(210, b - 26, 54, 26, "#d8dbe6"); rect(210, b - 26, 54, 4, "#b8bbc8"); for (i = 0; i < 3; i++) rect(218 + i * 16, b - 18, 10, 8, "#5a8ad0"); rect(262, b - 14, 24, 4, "#9a9da8");
+    rect(188, b - 70, 2.5, 70, "#c8ccd8"); if (Math.floor(t / 500) % 2) glow("#ff5a4a", 10, function() { ell(189, b - 72, 3, 3, "#ff5a4a"); });
+    var wf = Math.sin(t / 500) * 3; rect(500, b - 52, 2, 52, "#c8ccd8"); poly([[502, b - 52], [534 + wf, b - 48], [534 + wf, b - 30], [502, b - 34]], "#f4f5fa"); poly([[502, b - 52], [510, b - 50], [510, b - 33], [502, b - 34]], "#c8402e");
+    /* vệt chân + xe tự hành 6 bánh */
+    for (i = 0; i < 12; i++) { var fx = 470 + i * 6 - (i % 2) * 8, fy = 546 - i * 14; ell(fx, fy, 3, 1.6, "rgba(50,52,62,.55)"); }
+    var rx = 120 + ((t / 38) % 780), ry = HZ + 78;
+    ell(rx - 40, ry + 12, 40, 4, "rgba(220,222,230,.15)"); shadow(rx, ry + 14, 70);
+    rect(rx - 24, ry - 10, 48, 16, "#e8ebf2"); rect(rx - 24, ry - 10, 48, 3, "#bcc0cc"); rect(rx + 8, ry - 22, 18, 12, "#2f3a52"); rect(rx - 16, ry - 18, 20, 2, "#2f5fb0"); poly([[rx - 18, ry - 18], [rx + 2, ry - 18], [rx + 6, ry - 28], [rx - 14, ry - 28]], "#2f5fb0"); rect(rx + 20, ry - 34, 1.6, 12, "#c8ccd8");
+    for (i = 0; i < 3; i++) { ell(rx - 16 + i * 16, ry + 8, 7, 7, "#2a2c36"); ell(rx - 16 + i * 16, ry + 8, 3, 3, "#8a8d98"); }
+    glow("#ffe6a0", 10, function() { ell(rx + 26, ry - 4, 2.5, 2.5, "#fff0b0"); });
+}
+
 function ground(era, t) {
     if (era === 4) { groundRepublic(t); return; }
+    if (era === 5) { groundModern(t); return; }
+    if (era === 6) { groundMoon(t); return; }
     var th = THEME[era];
     ctx.fillStyle = lg(0, HZ, 0, H, [[0, th.ground[0]], [1, th.ground[1]]]); ctx.fillRect(0, HZ, W, H - HZ);
     var i;
@@ -300,6 +562,7 @@ function ground(era, t) {
         ctx.fillStyle = era === 4 ? "rgba(70,90,50,.35)" : "rgba(60,100,40,.28)";
         ctx.fillRect(gx, gy, 3, 6); ctx.fillRect(gx + 4, gy + 2, 2, 5);
     }
+    if (era === 1) inkFront(t); else if (era === 2) tangFront(t); else if (era === 3) jiangnanFront(t);
 }
 
 function pathway(era) {
@@ -307,8 +570,7 @@ function pathway(era) {
     ctx.beginPath();
     ctx.moveTo(470, 545); ctx.bezierCurveTo(420, 470, 560, 430, 490, 350);
     ctx.lineTo(515, 350); ctx.bezierCurveTo(600, 430, 470, 470, 540, 545); ctx.closePath();
-    if (era === 5 || era === 6) { glow(th.pathE, 18, function() { ctx.fillStyle = th.path; ctx.fill(); }); ctx.strokeStyle = th.pathE; ctx.lineWidth = 2; ctx.stroke(); }
-    else { ctx.fillStyle = th.path; ctx.fill(); ctx.strokeStyle = th.pathE; ctx.lineWidth = 3; ctx.stroke(); }
+    ctx.fillStyle = th.path; ctx.fill(); ctx.strokeStyle = th.pathE; ctx.lineWidth = 3; ctx.stroke();
     /* nhánh sang trái / phải */
     [[490, 400, 250, 440, 330, 360], [510, 400, 760, 440, 700, 360]].forEach(function(p, idx) {
         ctx.beginPath(); ctx.moveTo(p[0], p[1]); ctx.quadraticCurveTo(p[2], p[3] - 24, idx ? 760 : 240, 470); ctx.lineTo(idx ? 760 : 240, 484); ctx.quadraticCurveTo(p[2], p[3] + 4, p[0], p[1] + 26); ctx.closePath();
@@ -540,7 +802,7 @@ function neonTower(x, y, w, h, c1, c2, t, seed, crystal) {
     }
 }
 function nLibrary(era, x, y, l, t) {
-    var c1 = era === 5 ? "#2ee6ff" : "#c9a8ff", c2 = era === 5 ? "#ff3df2" : "#7ff5c8", s = 1 + l * 0.07;
+    var c1 = era === 5 ? "#8fd8ff" : "#cfe0ff", c2 = era === 5 ? "#ffb36b" : "#9ff0ff", s = 1 + l * 0.07;
     neonTower(x, y, 80 * s, 120 * s, c1, c2, t, 11, era === 6);
     glow(c1, 14, function() { ctx.strokeStyle = c1; ctx.lineWidth = 3; rrect(x - 22, y - 58, 44, 30, 4, null, c1); ctx.beginPath(); ctx.moveTo(x, y - 58); ctx.lineTo(x, y - 28); ctx.stroke(); });
     text("書", x, y - 140 * s + 10, 20, c2);
@@ -548,17 +810,17 @@ function nLibrary(era, x, y, l, t) {
     if (l >= 3) { glow(c1, 18, function() { ell(x + 10, y - 148 * s, 6, 6, c1); }); }
 }
 function nHall(era, x, y, l, t) {
-    var c1 = era === 5 ? "#2ee6ff" : "#c9a8ff", c2 = era === 5 ? "#ff3df2" : "#ffd0ff", s = 1 + l * 0.1;
+    var c1 = era === 5 ? "#8fd8ff" : "#cfe0ff", c2 = era === 5 ? "#ffb36b" : "#f0f6ff", s = 1 + l * 0.1;
     neonTower(x - 52, y, 80 * s, 150 * s, c1, c2, t, 3, era === 6);
     neonTower(x + 44, y, 90 * s, 190 * s, c2, c1, t, 21, era === 6);
     glow(c1, 20, function() { ctx.strokeStyle = c1; ctx.lineWidth = 4; ctx.beginPath(); ctx.ellipse(x + 44 + 11, y - 190 * s - 14, 70, 14, 0, 0, Math.PI * 2); ctx.stroke(); });
     glow(c2, 16, function() { rect(x + 44 + 8, y - 190 * s - 70, 3, 56, c2); ell(x + 44 + 9, y - 190 * s - 74, 5, 5, c2); });
     if (l >= 2) glow(c1, 22, function() { ctx.strokeStyle = c2; ctx.lineWidth = 3; ctx.beginPath(); ctx.moveTo(x - 20, y - 110 * s); ctx.lineTo(x + 20, y - 130 * s); ctx.stroke(); });
     if (l >= 3) for (var i = 0; i < 3; i++) glow(c1, 12, function() { var a = t / 600 + i * 2.1; ell(x + 40 + Math.cos(a) * 90, y - 230 * s + Math.sin(a) * 14, 4, 4, c1); });
-    text(era === 5 ? "霓虹" : "星", x - 12, y - 100 * s, 16, "#fff");
+    text(era === 5 ? "摩天" : "星", x - 12, y - 100 * s, 16, "#fff");
 }
 function nPavilion(era, x, y, l, t) {
-    var c1 = era === 5 ? "#ff3df2" : "#7ff5c8", c2 = era === 5 ? "#2ee6ff" : "#c9a8ff", s = 1 + l * 0.09;
+    var c1 = era === 5 ? "#ffb36b" : "#9ff0ff", c2 = era === 5 ? "#8fd8ff" : "#cfe0ff", s = 1 + l * 0.09;
     shadow(x, y + 6, 130);
     glow(c2, 12, function() { ctx.fillStyle = "#1a1f44"; ctx.beginPath(); ctx.arc(x, y - 40 * s, 46 * s, Math.PI, 0); ctx.lineTo(x + 46 * s, y); ctx.lineTo(x - 46 * s, y); ctx.closePath(); ctx.fill(); ctx.strokeStyle = c2; ctx.lineWidth = 3; ctx.stroke(); });
     glow(c1, 14, function() { ctx.strokeStyle = c1; ctx.lineWidth = 3; ctx.beginPath(); ctx.arc(x, y - 40 * s, 30 * s, Math.PI, 0); ctx.stroke(); rect(x - 14, y - 30, 28, 30, "#0a0e22"); ctx.strokeStyle = c1; ctx.strokeRect(x - 14, y - 30, 28, 30); });
@@ -567,32 +829,32 @@ function nPavilion(era, x, y, l, t) {
     if (l >= 3) { glow(c2, 16, function() { rect(x - 2, y - 40 * s - 90, 4, 44, c2); }); }
 }
 function nGate(era, x, y, l, t) {
-    var c1 = era === 5 ? "#2ee6ff" : "#c9a8ff", c2 = era === 5 ? "#ff3df2" : "#7ff5c8", s = 1 + l * 0.06, w = 170 * s, h = 120 * s;
+    var c1 = era === 5 ? "#8fd8ff" : "#cfe0ff", c2 = era === 5 ? "#ffb36b" : "#9ff0ff", s = 1 + l * 0.06, w = 170 * s, h = 120 * s;
     shadow(x, y + 5, w + 40);
     ctx.fillStyle = "#10162f"; ctx.fillRect(x - w / 2, y - h, 28, h); ctx.fillRect(x + w / 2 - 28, y - h, 28, h);
     glow(c1, 16, function() { ctx.strokeStyle = c1; ctx.lineWidth = 3; ctx.beginPath(); ctx.moveTo(x - w / 2 + 28, y); ctx.lineTo(x - w / 2 + 28, y - h * 0.7); ctx.arc(x, y - h * 0.7, w / 2 - 28, Math.PI, 0); ctx.lineTo(x + w / 2 - 28, y); ctx.stroke(); ctx.strokeRect(x - w / 2, y - h, 28, h); ctx.strokeRect(x + w / 2 - 28, y - h, 28, h); });
     glow(c2, 24, function() { ctx.strokeStyle = c2; ctx.lineWidth = 2; for (var i = 0; i < 3; i++) { ctx.beginPath(); ctx.arc(x, y - h * 0.7, (w / 2 - 36) - i * 10, Math.PI, 0); ctx.stroke(); } });
     var swirl = (t / 500) % (Math.PI * 2);
     if (era === 6) { glow("#ffe9ff", 24, function() { ctx.fillStyle = "rgba(210,190,255,.35)"; ctx.beginPath(); ctx.arc(x, y - h * 0.7, w / 2 - 40, Math.PI, 0); ctx.lineTo(x + w / 2 - 40, y); ctx.lineTo(x - w / 2 + 40, y); ctx.fill(); ctx.strokeStyle = "rgba(255,255,255,.7)"; ctx.beginPath(); ctx.ellipse(x, y - h * 0.4, 30, 8, swirl, 0, Math.PI * 2); ctx.stroke(); }); }
-    text(era === 5 ? "夜" : "門", x, y - h * 0.9, 20, c2);
+    text(era === 5 ? "城" : "門", x, y - h * 0.9, 20, c2);
     if (l >= 2) { glow(c2, 20, function() { rect(x - w / 2 + 12, y - h - 18, 4, 18, c2); rect(x + w / 2 - 16, y - h - 18, 4, 18, c2); }); }
     if (l >= 3) { glow(c1, 20, function() { ell(x - w / 2 + 14, y - h - 24, 5, 5, c1); ell(x + w / 2 - 14, y - h - 24, 5, 5, c1); }); }
 }
 function nMarket(era, x, y, l, t) {
-    var c1 = era === 5 ? "#ff3df2" : "#7ff5c8", c2 = era === 5 ? "#2ee6ff" : "#ffd0ff", n = 2 + (l >= 3 ? 1 : 0), i;
+    var c1 = era === 5 ? "#ffb36b" : "#9ff0ff", c2 = era === 5 ? "#8fd8ff" : "#f0f6ff", n = 2 + (l >= 3 ? 1 : 0), i;
     shadow(x, y + 5, 170);
     for (i = 0; i < n; i++) {
         var sx = x - (n - 1) * 34 + i * 68;
         rrect(sx - 28, y - 30, 56, 30, 3, "#161b3e");
         poly([[sx - 34, y - 52], [sx + 34, y - 52], [sx + 28, y - 36], [sx - 28, y - 36]], i % 2 ? c1 : c2);
         glow(i % 2 ? c1 : c2, 12, function() { ctx.strokeStyle = i % 2 ? c1 : c2; ctx.lineWidth = 2; ctx.strokeRect(sx - 28, y - 30, 56, 30); });
-        ell(sx - 12, y - 38, 6, 5, "#ffd25a"); ell(sx + 6, y - 38, 6, 5, "#7ff5c8"); ell(sx + 20, y - 38, 5, 5, "#ff9ac1");
+        ell(sx - 12, y - 38, 6, 5, "#ffd25a"); ell(sx + 6, y - 38, 6, 5, "#9ff0ff"); ell(sx + 20, y - 38, 5, 5, "#ff9ac1");
     }
-    glow(c1, 16, function() { rrect(x - 28, y - 92, 56, 22, 3, "#10162f", c1); }); text(era === 5 ? "夜市" : "市", x, y - 81, 14, c2);
+    glow(c1, 16, function() { rrect(x - 28, y - 92, 56, 22, 3, "#10162f", c1); }); text(era === 5 ? "商街" : "市", x, y - 81, 14, c2);
     if (l >= 2) { glow(c2, 14, function() { ctx.strokeStyle = c2; ctx.lineWidth = 2; ctx.beginPath(); ctx.moveTo(x - 80, y - 60); ctx.quadraticCurveTo(x, y - 40, x + 80, y - 60); ctx.stroke(); }); }
 }
 function nGarden(era, x, y, l, t) {
-    var c1 = era === 5 ? "#7ff5c8" : "#ffd0ff", i;
+    var c1 = era === 5 ? "#9ff0ff" : "#f0f6ff", i;
     shadow(x, y + 6, 190);
     glow(c1, 16, function() { ctx.fillStyle = "#10162f"; ctx.fillRect(x - 84, y - 24, 168, 24); ctx.strokeStyle = c1; ctx.lineWidth = 2; ctx.strokeRect(x - 84, y - 24, 168, 24); });
     for (i = 0; i < 4 + l * 2; i++) {
@@ -613,6 +875,11 @@ function walker(era, t) {
     var p = (t / 38) % 360, x = p < 180 ? 330 + p * 1.5 : 600 - (p - 180) * 1.5, dir = p < 180 ? 1 : -1;
     var y = 462 + Math.sin(t / 130) * 2, c = [["#7a6a5a", "#c4382c"], ["#c0301f", "#ffd25a"], ["#4e8c64", "#f7f5ee"], ["#2e6b4f", "#d4a93f"], ["#2ee6ff", "#ff3df2"], ["#c9a8ff", "#ffffff"]][era - 1];
     shadow(x, y + 24, 22);
+    if (era === 6) {
+        rrect(x - 11, y - 8, 7, 18, 3, "#cfd3de"); rrect(x - 8, y - 6, 16, 26, 6, "#f4f6fa"); rect(x - 8, y + 4, 16, 3, "#c8402e");
+        ell(x, y - 14, 10, 10, "#f4f6fa"); ell(x + dir * 2, y - 14, 7, 6, "#35507e"); ell(x + dir * 4, y - 16, 2, 2, "rgba(255,255,255,.6)");
+        ctx.fillStyle = "#cfd3de"; ctx.fillRect(x - 6 + Math.sin(t / 110) * 2, y + 20, 5, 6); ctx.fillRect(x + 1 - Math.sin(t / 110) * 2, y + 20, 5, 6); return;
+    }
     ctx.fillStyle = c[0]; rrect(x - 8, y - 6, 16, 26, 6, c[0]);
     ell(x, y - 14, 8, 8, "#f1cfa8"); ell(x, y - 19, 8, 5, "#2a1a10");
     ctx.fillStyle = c[1]; ctx.fillRect(x - 8, y + 4, 16, 3);
@@ -623,9 +890,11 @@ function critters(era, t) {
     var i;
     for (i = 0; i < 5; i++) {
         var bx = ((t / (30 + i * 9) + i * 210) % (W + 80)) - 40, by = 110 + i * 22 + Math.sin(t / 400 + i) * 12;
-        if (era === 5 || era === 6) { glow(era === 5 ? "#ff3df2" : "#ffd0ff", 10, function() { ell(bx, by, 4, 3, era === 5 ? "#ff3df2" : "#ffd0ff"); }); }
+        if (era === 6) { }
         else { ctx.fillStyle = era === 1 ? "#4a4a4a" : "#fff"; var fl = Math.sin(t / 90 + i) * 3; ctx.beginPath(); ctx.moveTo(bx, by); ctx.lineTo(bx - 7, by - 4 + fl); ctx.lineTo(bx - 3, by + 1); ctx.lineTo(bx + 7, by - 4 - fl); ctx.lineTo(bx + 3, by + 1); ctx.fill(); }
     }
+    if (era === 1) deerDraw(t);
+    if (era === 6) { for (i = 0; i < 18; i++) { var dx = (rnd(i + 40) * W + Math.sin(t / 2000 + i) * 20) % W, dy = ((H - ((t / 40 + rnd(i + 60) * 600) % 380)) % H); ctx.fillStyle = "rgba(220,225,235,.35)"; ctx.fillRect(dx, dy, 2, 2); } }
     if (era <= 4) {                                           /* hoa/cánh lá rơi */
         for (i = 0; i < 12; i++) { var px = (rnd(i) * W + t / 24 + i * 40) % W, py = ((t / 22 + rnd(i + 5) * 500) % 420) + 20; ctx.fillStyle = era === 2 ? "rgba(255,184,76,.8)" : era === 3 ? "rgba(255,190,210,.8)" : era === 4 ? "rgba(214,150,60,.8)" : "rgba(80,80,80,.35)"; ell(px, py, 3, 1.8, ctx.fillStyle); }
     }
@@ -640,7 +909,7 @@ function selection(id, t) {
 
 /* ---------- ô trống (chưa xây) ---------- */
 function drawPlot(era, id, t) {
-    var s = SLOTS[id], neon = era >= 5;
+    var s = SLOTS[id], neon = era === 6;
     ctx.save(); ctx.globalAlpha = 0.9;
     ell(s.x, s.y - 4, s.w * 0.4, 16, neon ? "rgba(255,255,255,.07)" : "rgba(120,90,50,.45)");
     ctx.setLineDash([8, 6]); ctx.strokeStyle = neon ? "#2ee6ff" : "#7a5a30"; ctx.lineWidth = 3; ctx.beginPath(); ctx.ellipse(s.x, s.y - 4, s.w * 0.4, 16, 0, 0, Math.PI * 2); ctx.stroke(); ctx.setLineDash([]);
@@ -672,7 +941,7 @@ function draw(c, era, levels, selected, t) {
     critters(era, t);
     /* vignette nhẹ */
     var v = ctx.createRadialGradient(W / 2, H / 2, H * 0.4, W / 2, H / 2, H * 0.9);
-    v.addColorStop(0, "rgba(0,0,0,0)"); v.addColorStop(1, era >= 5 ? "rgba(0,0,10,.35)" : "rgba(40,30,10,.18)");
+    v.addColorStop(0, "rgba(0,0,0,0)"); v.addColorStop(1, era === 6 ? "rgba(0,0,10,.4)" : "rgba(40,30,10,.18)");
     ctx.fillStyle = v; ctx.fillRect(0, 0, W, H);
 }
 
