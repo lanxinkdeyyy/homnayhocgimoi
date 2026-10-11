@@ -146,18 +146,7 @@ function mountains(era, t) {
         }
         return;
     }
-    if (era === 4) {                                           /* bến Thượng Hải xa xa */
-        ctx.globalAlpha = 0.7;
-        for (i = 0; i < 18; i++) {
-            var w = 30 + rnd(i) * 30, h = 50 + rnd(i + 7) * 90, x = i * 58 - 20;
-            rect(x, HZ + 12 - h, w, h, m[i % 3]);
-            if (i % 4 === 0) { poly([[x + 4, HZ + 12 - h], [x + w / 2, HZ + 12 - h - 28], [x + w - 4, HZ + 12 - h]], m[(i + 1) % 3]); }
-            if (i % 5 === 2) { ell(x + w / 2, HZ + 12 - h, w / 2, 10, m[(i + 1) % 3]); }
-        }
-        ctx.globalAlpha = 1;
-        rect(0, HZ + 6, W, 10, "rgba(255,230,190,.35)");
-        return;
-    }
+    if (era === 4) { cityRepublic(t); return; }
     for (var L = 0; L < 3; L++) {
         ctx.beginPath(); ctx.moveTo(0, HZ + 20);
         for (var x2 = 0; x2 <= W; x2 += 20) {
@@ -180,7 +169,111 @@ function mountains(era, t) {
     }
 }
 
+
+/* ===================================================================
+   THỜI DÂN QUỐC — phố thị thập niên 1920–30: dãy nhà phố, tháp đồng hồ,
+   ống khói, cột điện, xe điện, xe kéo (vẽ riêng, không theo tác phẩm nào)
+   =================================================================== */
+var SHOPS = ["#b5654a", "#e6d5b1", "#6f9a82", "#8497ae", "#d19b52", "#c9826a"];
+var SHOP_SIGN = ["茶", "酒", "布", "药", "書", "旅", "糕", "鐘"];
+function cityRepublic(t) {
+    var base = HZ, i;
+    /* trời hoàng hôn: tia nắng + khinh khí cầu */
+    ctx.save(); ctx.globalAlpha = 0.16;
+    for (i = 0; i < 7; i++) { ctx.fillStyle = "#fff1c9"; ctx.beginPath(); ctx.moveTo(300, 90); ctx.lineTo(300 + (i - 3) * 190 - 40, base); ctx.lineTo(300 + (i - 3) * 190 + 40, base); ctx.closePath(); ctx.fill(); }
+    ctx.restore();
+    var zx = ((t / 60) % (W + 300)) - 150, zy = 60 + Math.sin(t / 1200) * 4;
+    ell(zx, zy, 46, 14, "#cfc0a8"); ell(zx, zy - 3, 40, 8, "rgba(255,255,255,.35)"); rect(zx - 8, zy + 11, 16, 6, "#6b5a48"); poly([[zx + 40, zy], [zx + 56, zy - 8], [zx + 56, zy + 8]], "#b89f84");
+    /* lớp xa: nhà cao tầng art-deco */
+    ctx.globalAlpha = 0.55;
+    for (i = 0; i < 24; i++) {
+        var w = 26 + rnd(i * 3) * 26, h = 90 + rnd(i + 9) * 130, x = i * 44 - 10, c = i % 2 ? "#9a8f9c" : "#8a8296";
+        rect(x, base - h, w, h, c);
+        if (i % 3 === 0) poly([[x + 2, base - h], [x + w / 2, base - h - 30], [x + w - 2, base - h]], "#7d7488");
+        if (i % 4 === 1) { rect(x + w / 2 - 1, base - h - 40, 2, 40, "#7d7488"); rect(x + 3, base - h, w - 6, 5, "#a89fb0"); }
+        for (var wy = base - h + 10; wy < base - 8; wy += 14) rect(x + 5, wy, 3, 6, "rgba(255,226,150,.55)"), rect(x + w - 9, wy, 3, 6, "rgba(255,226,150,.55)");
+    }
+    ctx.globalAlpha = 1;
+    /* tháp đồng hồ + nhà thờ làm điểm nhấn */
+    rect(120, base - 190, 44, 190, "#c9b99a"); rect(116, base - 196, 52, 10, "#8f7c5c"); poly([[116, base - 196], [142, base - 238], [168, base - 196]], "#6a4a3a");
+    ell(142, base - 160, 15, 15, "#f6efdc"); ctx.strokeStyle = "#3a2a1a"; ctx.lineWidth = 2; ctx.beginPath(); ctx.arc(142, base - 160, 15, 0, Math.PI * 2); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(142, base - 160); ctx.lineTo(142 + Math.cos(t / 3000) * 9, base - 160 + Math.sin(t / 3000) * 9); ctx.moveTo(142, base - 160); ctx.lineTo(142, base - 172); ctx.stroke();
+    rect(840, base - 150, 60, 150, "#d8c8aa"); poly([[836, base - 150], [870, base - 232], [904, base - 150]], "#7a5340"); rect(868, base - 258, 4, 28, "#4a3a2a"); rect(861, base - 248, 18, 4, "#4a3a2a");
+    ctx.beginPath(); ctx.arc(870, base - 108, 14, Math.PI, 0); ctx.lineTo(884, base - 80); ctx.lineTo(856, base - 80); ctx.closePath(); ctx.fillStyle = "#3a5a8a"; ctx.fill();
+    /* dãy nhà phố thương mại */
+    var x2 = -14, n = 0;
+    while (x2 < W + 20) {
+        var bw = 70 + Math.floor(rnd(n + 3) * 3) * 12, bh = 72 + Math.floor(rnd(n * 5 + 1) * 4) * 18, col = SHOPS[n % SHOPS.length];
+        if ((x2 > 100 && x2 < 175) || (x2 > 810 && x2 < 910)) { x2 += bw + 4; n++; continue; }
+        rect(x2, base - bh, bw, bh, col); rect(x2, base - bh, bw, 6, "rgba(255,255,255,.28)"); rect(x2 + bw - 5, base - bh, 5, bh, "rgba(0,0,0,.14)");
+        if (n % 3 === 0) { poly([[x2 - 4, base - bh], [x2 + bw / 2, base - bh - 20], [x2 + bw + 4, base - bh]], "#5a4034"); } else { rect(x2 - 3, base - bh - 6, bw + 6, 8, "#4a3a30"); for (var b2 = 0; b2 < bw; b2 += 10) rect(x2 + b2, base - bh - 10, 5, 5, "#4a3a30"); }
+        var fl = Math.floor((bh - 30) / 28);
+        for (var f = 0; f < fl; f++) for (var wx = x2 + 9; wx < x2 + bw - 16; wx += 24) {
+            var wy = base - bh + 12 + f * 28, lit = rnd(wx * 0.37 + f + n) > 0.4, flick = lit && rnd(Math.floor(t / 900) + wx) > 0.93 ? 0.5 : 1;
+            ctx.beginPath(); ctx.moveTo(wx, wy + 16); ctx.lineTo(wx, wy + 6); ctx.arc(wx + 6, wy + 6, 6, Math.PI, 0); ctx.lineTo(wx + 12, wy + 16); ctx.closePath();
+            ctx.fillStyle = lit ? "rgba(255,214,120," + flick + ")" : "#2f3e50"; ctx.fill(); ctx.strokeStyle = "#f1e6cf"; ctx.lineWidth = 1.6; ctx.stroke();
+            if (f % 2 === 1) rect(wx - 2, wy + 16, 16, 3, "#3a3a3a");
+        }
+        var aw = n % 2 ? "#2e6b4f" : "#c0392b";
+        for (var k2 = 0; k2 < bw; k2 += 12) poly([[x2 + k2, base - 30], [x2 + k2 + 12, base - 30], [x2 + k2 + 14, base - 18], [x2 + k2 - 2, base - 18]], (k2 / 12) % 2 ? "#fff" : aw);
+        rect(x2 + 6, base - 18, bw - 12, 18, "#26180e");
+        if (n % 2 === 0) { rrect(x2 + bw - 18, base - bh + 8, 14, 52, 2, "#e8dcc0"); text(SHOP_SIGN[n % SHOP_SIGN.length], x2 + bw - 11, base - bh + 24, 13, "#b3362c"); }
+        x2 += bw + 4; n++;
+    }
+    /* ống khói + khói bay */
+    [[250, 150], [520, 168], [700, 140]].forEach(function(c, ci) {
+        rect(c[0], c[1], 12, base - c[1], "#6a5648"); rect(c[0] - 2, c[1], 16, 5, "#4a3a30");
+        for (var q = 0; q < 6; q++) { var ph = ((t / 55 + q * 18 + ci * 30) % 110), a = 0.5 - ph / 230; if (a > 0) ell(c[0] + 6 + ph * 0.5 + Math.sin(ph / 13 + ci) * 4, c[1] - ph, 7 + ph / 9, 5 + ph / 12, "rgba(90,80,78," + a + ")"); }
+    });
+    rect(0, base - 4, W, 8, "rgba(255,230,190,.25)");
+}
+/* mặt đường thời Dân Quốc + phương tiện */
+function groundRepublic(t) {
+    var i;
+    ctx.fillStyle = lg(0, HZ, 0, H, [[0, "#8d8577"], [0.2, "#a79e8b"], [1, "#c2b79f"]]); ctx.fillRect(0, HZ, W, H - HZ);
+    rect(0, HZ, W, 9, "#d4cbb8"); rect(0, HZ + 9, W, 3, "#6f685c");                       /* vỉa hè */
+    for (i = 0; i < W; i += 36) rect(i, HZ + 1, 1, 8, "rgba(0,0,0,.12)");
+    rect(0, HZ + 12, W, 42, "#6e6a66");                                                    /* lòng đường */
+    for (i = 0; i < W; i += 40) { rect(i, HZ + 33, 22, 2, "rgba(255,240,200,.45)"); }
+    ctx.fillStyle = "#4a4640"; ctx.fillRect(0, HZ + 22, W, 2); ctx.fillRect(0, HZ + 28, W, 2);   /* ray xe điện */
+    for (i = 0; i < W; i += 14) rect(i, HZ + 20, 3, 12, "rgba(40,35,30,.5)");
+    rect(0, HZ + 54, W, 5, "#dcd3bf"); rect(0, HZ + 59, W, 2, "#8f8575");                 /* lề đường */
+    /* quảng trường lát đá + cỏ viền */
+    for (i = 0; i < 12; i++) { var yy = HZ + 62 + i * i * 2.3; ctx.strokeStyle = "rgba(90,78,58,.18)"; ctx.lineWidth = 1.3; ctx.beginPath(); ctx.moveTo(0, yy); ctx.lineTo(W, yy); ctx.stroke(); }
+    for (i = -12; i <= 12; i++) { ctx.strokeStyle = "rgba(90,78,58,.14)"; ctx.beginPath(); ctx.moveTo(500 + i * 18, HZ + 60); ctx.lineTo(500 + i * 120, H); ctx.stroke(); }
+    [[40, 420], [960, 420], [60, 530], [940, 530]].forEach(function(c) { ell(c[0], c[1], 70, 20, "rgba(86,120,70,.55)"); ell(c[0], c[1] - 2, 56, 14, "rgba(120,160,90,.6)"); });
+    /* cột điện + dây điện võng */
+    var poles = [60, 330, 640, 930];
+    poles.forEach(function(px) { rect(px - 2, HZ - 96, 4, 154, "#3a2f26"); rect(px - 16, HZ - 88, 32, 3, "#3a2f26"); rect(px - 11, HZ - 74, 22, 3, "#3a2f26"); ell(px - 14, HZ - 88, 2, 2, "#d9d4c4"); ell(px + 14, HZ - 88, 2, 2, "#d9d4c4"); });
+    ctx.strokeStyle = "rgba(30,25,20,.65)"; ctx.lineWidth = 1.2;
+    for (var pi = 0; pi < poles.length - 1; pi++) [[-14, -88], [14, -88], [-9, -74], [9, -74]].forEach(function(o) {
+        ctx.beginPath(); ctx.moveTo(poles[pi] + o[0], HZ + o[1]); ctx.quadraticCurveTo((poles[pi] + poles[pi + 1]) / 2 + o[0], HZ + o[1] + 22, poles[pi + 1] + o[0], HZ + o[1]); ctx.stroke();
+    });
+    /* đèn đường gas */
+    [150, 480, 790].forEach(function(lx, li) { rect(lx - 1.5, HZ - 30, 3, 40, "#2a2a2a"); glow("#ffd98a", 16 + 4 * Math.sin(t / 300 + li), function() { rrect(lx - 5, HZ - 42, 10, 13, 3, "#ffe9a8"); }); });
+    /* xe điện chạy ngang */
+    var tx = ((t / 14) % (W + 420)) - 280;
+    shadow(tx + 100, HZ + 40, 200);
+    rrect(tx, HZ - 6, 200, 40, 5, "#b5372c"); rect(tx, HZ + 8, 200, 6, "#f1e3c2"); rect(tx, HZ + 26, 200, 4, "#4a1a14");
+    for (i = 0; i < 6; i++) { rect(tx + 10 + i * 30, HZ + 2, 22, 14, "#ffe2a0"); rect(tx + 10 + i * 30, HZ + 2, 22, 14, "rgba(255,255,255,.08)"); if (i % 2) { ell(tx + 21 + i * 30, HZ + 8, 4, 4, "#2a1a10"); } }
+    ell(tx + 30, HZ + 36, 8, 4, "#222"); ell(tx + 170, HZ + 36, 8, 4, "#222");
+    ctx.strokeStyle = "#2a2a2a"; ctx.lineWidth = 2; ctx.beginPath(); ctx.moveTo(tx + 100, HZ - 6); ctx.lineTo(tx + 118, HZ - 50); ctx.stroke();
+    ctx.strokeStyle = "rgba(30,25,20,.7)"; ctx.lineWidth = 1.3; ctx.beginPath(); ctx.moveTo(0, HZ - 50); ctx.lineTo(W, HZ - 50); ctx.stroke();
+    /* xe kéo + người đi bộ trên vỉa hè */
+    var rx = W - (((t / 22) + 400) % (W + 200)) + 20;
+    rect(rx - 4, HZ + 46, 40, 2, "#2a2a2a"); ell(rx + 2, HZ + 46, 7, 7, "#3a3a3a"); ell(rx + 32, HZ + 46, 7, 7, "#3a3a3a");
+    ctx.beginPath(); ctx.arc(rx + 17, HZ + 34, 14, Math.PI, 0); ctx.closePath(); ctx.fillStyle = "#2a3a4a"; ctx.fill(); rect(rx + 3, HZ + 34, 28, 8, "#a33"); rect(rx + 36, HZ + 30, 22, 2, "#2a1a10");
+    ell(rx + 58, HZ + 24, 4, 4, "#f1cfa8"); rect(rx + 55, HZ + 28, 7, 14, "#7a5a40"); rect(rx + 54 + Math.sin(t / 90) * 2, HZ + 41, 3, 6, "#222"); rect(rx + 59 - Math.sin(t / 90) * 2, HZ + 41, 3, 6, "#222");
+    for (i = 0; i < 5; i++) {
+        var gx = ((t / (40 + i * 6) + i * 210) % (W + 60)) - 30, dir = i % 2 ? 1 : -1; gx = dir > 0 ? gx : W - gx;
+        var cl = ["#4a5a7a", "#8a4a3a", "#3a6a5a", "#6a4a7a", "#7a6a3a"][i];
+        ell(gx, HZ + 4, 4, 4, "#f1cfa8"); rrect(gx - 5, HZ + 7, 10, 14, 3, cl); rect(gx - 4 + Math.sin(t / 100 + i) * 2, HZ + 20, 3, 5, "#2a1a10"); rect(gx + 1 - Math.sin(t / 100 + i) * 2, HZ + 20, 3, 5, "#2a1a10");
+        if (i % 2) { ctx.strokeStyle = "#5a3a1a"; ctx.lineWidth = 1.5; ctx.beginPath(); ctx.arc(gx + 3, HZ + 4, 10, Math.PI, 0); ctx.stroke(); }
+    }
+}
+
 function ground(era, t) {
+    if (era === 4) { groundRepublic(t); return; }
     var th = THEME[era];
     ctx.fillStyle = lg(0, HZ, 0, H, [[0, th.ground[0]], [1, th.ground[1]]]); ctx.fillRect(0, HZ, W, H - HZ);
     var i;
@@ -595,8 +688,8 @@ function drawThumb(c, era, id, level, t) {
     c.translate(-s.x, -(s.y + 18));
     ctx = c;
     drawSky(era, t); mountains(era, t); ground(era, t);
-    if (level <= 0) drawPlot(era, id, t);
-    else if (era <= 3) BUILD[era][id](era, s.x, s.y, level, t);
+    if (level <= 0) level = 1;
+    if (era <= 3) BUILD[era][id](era, s.x, s.y, level, t);
     else if (era === 4) ({ palace: dqHall, library: dqLibrary, garden: dqGarden, market: dqMarket, pavilion: dqPavilion, gate: dqGate })[id](s.x, s.y, level, t);
     else ({ palace: nHall, library: nLibrary, garden: nGarden, market: nMarket, pavilion: nPavilion, gate: nGate })[id](era, s.x, s.y, level, t);
     c.restore();
