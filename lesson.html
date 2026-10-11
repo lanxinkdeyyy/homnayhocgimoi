@@ -1198,6 +1198,40 @@ body {
 }
 
 
+
+/* ================= BÀI TẬP ================= */
+.ex-intro { color:#6b7d70; margin:0 0 14px; }
+.ex-score { position:sticky; top:8px; z-index:5; display:inline-block; margin-bottom:14px; padding:8px 16px; border-radius:999px; background:#e6f1e8; color:#2f6b45; font-weight:700; box-shadow:0 4px 14px rgba(60,90,70,.12); }
+.ex-part { margin:26px 0 8px; }
+.ex-part h3 { margin:0 0 4px; font-size:19px; }
+.ex-part .ex-sub { margin:0 0 12px; color:#7a8a7e; font-size:14px; }
+.ex-q { padding:16px; margin:12px 0; border-radius:16px; background:#f6faf6; border:1px solid #e0ebe1; text-align:left; }
+.ex-q .ex-qtext { font-family:"HanKai",Arial,sans-serif; font-size:26px; line-height:1.6; margin-bottom:10px; }
+.ex-no { font-size:14px; color:#7a8a7e; font-family:Arial,sans-serif; margin-right:6px; }
+.ex-opts { display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:8px; }
+.ex-opt { padding:10px 12px; border:1.5px solid #cfdcd1; border-radius:12px; background:#fff; cursor:pointer; text-align:left; font-family:"HanKai",Arial,sans-serif; font-size:22px; color:#2c3a30; }
+.ex-opt:hover { border-color:#6f987b; }
+.ex-opt.right { background:#dcf1e1; border-color:#3f9a5c; }
+.ex-opt.wrong { background:#f8dede; border-color:#c75a5a; }
+.ex-opt:disabled { cursor:default; }
+.ex-exp { margin-top:10px; padding:10px 12px; border-radius:10px; background:#fff; border-left:4px solid #6f987b; font-size:16px; color:#44564a; display:none; }
+.ex-exp.show { display:block; }
+.ex-zone { min-height:54px; padding:8px; margin:8px 0; border:2px dashed #b9cdbd; border-radius:12px; display:flex; flex-wrap:wrap; gap:8px; background:#fff; }
+.ex-chip { padding:8px 14px; border-radius:999px; border:1.5px solid #9bb8a3; background:#fff; cursor:pointer; font-family:"HanKai",Arial,sans-serif; font-size:24px; }
+.ex-chip.used { opacity:.25; pointer-events:none; }
+.ex-zone .ex-chip { background:#eaf4ec; }
+.ex-btn { padding:9px 18px; border:0; border-radius:999px; background:#71947b; color:#fff; font-weight:700; cursor:pointer; margin:6px 8px 0 0; }
+.ex-btn.light { background:#e5efe6; color:#55705e; }
+.ex-passage { padding:16px; border-radius:14px; background:#fffdf5; border:1px solid #eee3c3; font-family:"HanKai",Arial,sans-serif; font-size:26px; line-height:1.9; text-align:left; }
+.ex-vi { margin-top:8px; color:#5b6d60; font-size:16px; display:none; }
+.ex-vi.show { display:block; }
+.ex-write textarea { width:100%; min-height:64px; padding:10px 12px; border:1.5px solid #cfdcd1; border-radius:12px; font-family:"HanKai",Arial,sans-serif; font-size:22px; box-sizing:border-box; }
+.ex-model { margin-top:10px; padding:10px 12px; background:#fff; border-radius:10px; border-left:4px solid #e0a64f; display:none; text-align:left; }
+.ex-model.show { display:block; }
+.ex-model .zh { font-family:"HanKai",Arial,sans-serif; font-size:26px; }
+.ex-reset { margin-top:22px; padding:9px 18px; border:1px solid #cfdcd1; border-radius:999px; background:#fff; color:#6b7d70; cursor:pointer; }
+@media (min-width:1000px){ .ex-q .ex-qtext{font-size:30px} .ex-opt{font-size:26px} .ex-passage{font-size:30px} .ex-chip{font-size:28px} .ex-model .zh{font-size:30px} }
+
 /* ================================================= */
 /* ================= GHI CHÚ ======================= */
 /* ================================================= */
@@ -1947,6 +1981,12 @@ body.app-printing {
         🧠 Ôn tập
     </button>
 
+    <button
+        class="tab-button"
+        onclick="openTab('exercise', this)">
+        ✏️ Bài tập
+    </button>
+
 </div>
 
 
@@ -2390,6 +2430,25 @@ body.app-printing {
 
 </section>
 
+
+<!-- ================================================= -->
+<!-- ================= BÀI TẬP ======================= -->
+<!-- ================================================= -->
+
+<section
+    id="exercise"
+    class="tab-content">
+
+    <div class="content-card">
+        <h2>✏️ Bài tập</h2>
+        <p class="ex-intro">Luyện đọc – viết theo dạng đề HSK4 với từ vựng của bài này. Bấm đáp án để xem đúng/sai ngay.</p>
+        <div id="exScore" class="ex-score"></div>
+        <div id="exBody"></div>
+        <button type="button" id="exReset" class="ex-reset">↺ Làm lại từ đầu</button>
+    </div>
+
+</section>
+
 </div>
 
 
@@ -2467,6 +2526,7 @@ body.app-printing {
 <script src="supabase.js?v=2"></script>
 <script src="lessons-data.js"></script>
 <script src="examples-data.js"></script>
+<script src="exercises-data.js"></script>
 <script>
 
 /* ================================================= */
@@ -4552,6 +4612,212 @@ function applySavedPhraseMarks() {
 /* ================= TAB ============================ */
 /* ================================================= */
 
+
+/* ================================================= */
+/* ================= BÀI TẬP ======================== */
+/* ================================================= */
+
+let exState = null;
+
+function exKey() { return "lesson" + LESSON_ID + "ExerciseBest"; }
+
+function exEl(tag, cls, txt) {
+    const e = document.createElement(tag);
+    if (cls) e.className = cls;
+    if (txt !== undefined) e.textContent = txt;
+    return e;
+}
+
+function exShuffle(arr) {
+    const a = arr.slice();
+    for (let i = a.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        const t = a[i]; a[i] = a[j]; a[j] = t;
+    }
+    return a;
+}
+
+function exUpdateScore() {
+    const el = document.getElementById("exScore");
+    let best = 0;
+    try { best = parseInt(localStorage.getItem(exKey()) || "0", 10) || 0; } catch (e) {}
+    if (exState.score > best) {
+        best = exState.score;
+        try { localStorage.setItem(exKey(), String(best)); } catch (e) {}
+    }
+    el.textContent = "Đúng " + exState.score + " / " + exState.total + " · Điểm cao nhất: " + best + " / " + exState.total;
+}
+
+function exChoice(q, no, onResult) {
+    const wrap = exEl("div", "ex-q");
+    const t = exEl("div", "ex-qtext");
+    t.appendChild(exEl("span", "ex-no", no + "."));
+    t.appendChild(document.createTextNode(q.q));
+    wrap.appendChild(t);
+    const opts = exEl("div", "ex-opts");
+    const exp = exEl("div", "ex-exp", "💡 " + (q.exp || ""));
+    const labels = ["A", "B", "C", "D"];
+    const btns = [];
+    q.opts.forEach(function(o, idx) {
+        const b = exEl("button", "ex-opt", labels[idx] + ". " + o);
+        b.type = "button";
+        b.addEventListener("click", function() {
+            btns.forEach(function(x) { x.disabled = true; });
+            if (idx === q.a) { b.classList.add("right"); onResult(true); }
+            else { b.classList.add("wrong"); btns[q.a].classList.add("right"); onResult(false); }
+            exp.classList.add("show");
+        });
+        btns.push(b);
+        opts.appendChild(b);
+    });
+    wrap.appendChild(opts);
+    wrap.appendChild(exp);
+    return wrap;
+}
+
+function exOrder(q, no) {
+    const wrap = exEl("div", "ex-q");
+    const t = exEl("div", "ex-qtext");
+    t.appendChild(exEl("span", "ex-no", no + "."));
+    t.appendChild(document.createTextNode("Sắp xếp thành câu hoàn chỉnh"));
+    wrap.appendChild(t);
+    wrap.appendChild(exEl("div", "ex-vi show", "(" + q.vi + ")"));
+    const zone = exEl("div", "ex-zone");
+    const pool = exEl("div", "ex-zone");
+    pool.style.borderStyle = "solid";
+    pool.style.borderColor = "#e0ebe1";
+    const picked = [];
+    const chips = exShuffle(q.chunks.map(function(c, i) { return { c: c, i: i }; }));
+    let done = false;
+    const exp = exEl("div", "ex-exp");
+
+    function renderZone() {
+        zone.textContent = "";
+        picked.forEach(function(p, pos) {
+            const ch = exEl("span", "ex-chip", p.c);
+            ch.addEventListener("click", function() {
+                if (done) return;
+                picked.splice(pos, 1);
+                p.btn.classList.remove("used");
+                renderZone();
+            });
+            zone.appendChild(ch);
+        });
+    }
+    chips.forEach(function(p) {
+        const b = exEl("span", "ex-chip", p.c);
+        p.btn = b;
+        b.addEventListener("click", function() {
+            if (done) return;
+            picked.push(p);
+            b.classList.add("used");
+            renderZone();
+        });
+        pool.appendChild(b);
+    });
+    wrap.appendChild(zone);
+    wrap.appendChild(pool);
+    const check = exEl("button", "ex-btn", "Kiểm tra");
+    check.type = "button";
+    const clear = exEl("button", "ex-btn light", "Xếp lại");
+    clear.type = "button";
+    clear.addEventListener("click", function() {
+        if (done) return;
+        picked.length = 0;
+        chips.forEach(function(p) { p.btn.classList.remove("used"); });
+        renderZone();
+    });
+    check.addEventListener("click", function() {
+        if (done || picked.length !== chips.length) return;
+        done = true;
+        const ok = picked.every(function(p, pos) { return p.i === pos; });
+        zone.style.borderColor = ok ? "#3f9a5c" : "#c75a5a";
+        zone.style.background = ok ? "#dcf1e1" : "#fbe9e9";
+        exp.textContent = (ok ? "✅ Chính xác: " : "❌ Đáp án đúng: ") + q.chunks.join("");
+        exp.classList.add("show");
+        exState.finish(ok);
+    });
+    wrap.appendChild(check);
+    wrap.appendChild(clear);
+    wrap.appendChild(exp);
+    return wrap;
+}
+
+function renderExercise() {
+    const data = (window.EXERCISES || {})[LESSON_ID];
+    const body = document.getElementById("exBody");
+    body.textContent = "";
+    if (!data) {
+        body.appendChild(exEl("p", "ex-intro", "Bài này chưa có bài tập."));
+        document.getElementById("exScore").textContent = "";
+        return;
+    }
+    exState = {
+        score: 0,
+        total: data.fill.length + data.order.length + data.read.qs.length,
+        finish: function(ok) { if (ok) exState.score++; exUpdateScore(); }
+    };
+    let n = 1;
+
+    let part = exEl("div", "ex-part");
+    part.appendChild(exEl("h3", "", "一、选词填空 · Chọn từ điền vào chỗ trống"));
+    part.appendChild(exEl("p", "ex-sub", "Chọn đáp án đúng nhất cho chỗ trống."));
+    body.appendChild(part);
+    data.fill.forEach(function(q) { body.appendChild(exChoice(q, n++, exState.finish)); });
+
+    part = exEl("div", "ex-part");
+    part.appendChild(exEl("h3", "", "二、排序 · Sắp xếp thành câu"));
+    part.appendChild(exEl("p", "ex-sub", "Bấm lần lượt các cụm từ để ghép thành câu đúng; bấm vào cụm đã chọn để bỏ ra."));
+    body.appendChild(part);
+    data.order.forEach(function(q) { body.appendChild(exOrder(q, n++)); });
+
+    part = exEl("div", "ex-part");
+    part.appendChild(exEl("h3", "", "三、阅读 · Đọc hiểu"));
+    part.appendChild(exEl("p", "ex-sub", "Đọc đoạn văn rồi trả lời câu hỏi."));
+    body.appendChild(part);
+    const pass = exEl("div", "ex-passage", data.read.text);
+    body.appendChild(pass);
+    const vi = exEl("div", "ex-vi", data.read.vi);
+    const tg = exEl("button", "ex-btn light", "Xem bản dịch");
+    tg.type = "button";
+    tg.addEventListener("click", function() { vi.classList.toggle("show"); });
+    body.appendChild(tg);
+    body.appendChild(vi);
+    data.read.qs.forEach(function(q) { body.appendChild(exChoice(q, n++, exState.finish)); });
+
+    part = exEl("div", "ex-part");
+    part.appendChild(exEl("h3", "", "四、写作 · Dùng từ cho sẵn đặt câu"));
+    part.appendChild(exEl("p", "ex-sub", "Tự viết câu rồi bấm xem câu mẫu để đối chiếu (phần này không tính điểm)."));
+    body.appendChild(part);
+    data.write.forEach(function(w, idx) {
+        const wrap = exEl("div", "ex-q ex-write");
+        const t = exEl("div", "ex-qtext");
+        t.appendChild(exEl("span", "ex-no", (idx + 1) + "."));
+        t.appendChild(document.createTextNode(w.word));
+        wrap.appendChild(t);
+        wrap.appendChild(exEl("div", "ex-vi show", "Gợi ý: " + w.hint));
+        const ta = document.createElement("textarea");
+        ta.placeholder = "Viết câu của bạn…";
+        wrap.appendChild(ta);
+        const m = exEl("div", "ex-model");
+        m.appendChild(exEl("div", "zh", w.model));
+        m.appendChild(exEl("div", "", w.py));
+        m.appendChild(exEl("div", "", "→ " + w.vi));
+        const b = exEl("button", "ex-btn light", "Xem câu mẫu");
+        b.type = "button";
+        b.addEventListener("click", function() { m.classList.toggle("show"); });
+        wrap.appendChild(b);
+        wrap.appendChild(m);
+        body.appendChild(wrap);
+    });
+    exUpdateScore();
+}
+
+document.addEventListener("DOMContentLoaded", function() {
+    const r = document.getElementById("exReset");
+    if (r) r.addEventListener("click", function() { renderExercise(); window.scrollTo(0, 0); });
+});
+
 function openTab(tabName, button) {
 
     document
@@ -4590,6 +4856,12 @@ function openTab(tabName, button) {
     if (tabName === "study") {
 
         prepareStudy();
+
+    }
+
+    if (tabName === "exercise") {
+
+        renderExercise();
 
     }
 
