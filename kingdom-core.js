@@ -25,8 +25,8 @@
     var MAX_LEVEL = 3;
 
     var TITLES = [
-        [0, "Dân thường"], [3, "Trưởng làng"], [6, "Thành chủ"],
-        [10, "Quận công"], [15, "Hoàng tử"], [18, "Vua Hán tự"]
+        [0, "Dân thường"], [3, "Trưởng làng"], [8, "Thành chủ"],
+        [16, "Quận công"], [28, "Hoàng tử"], [44, "Vua Hán tự"], [72, "Đại đế Hán tự"]
     ];
 
     var REWARD = { word: 50, exFirst: 20, exRepeat: 2, exRepeatMax: 10, lesson: 500, rowBonus: 30 };
@@ -61,10 +61,20 @@
             var raw = localStorage.getItem(STORE_KEY);
             if (raw) {
                 var s = JSON.parse(raw);
-                if (s && s.ledger) { s.b = s.b || {}; s.cap = s.cap || {}; s.days = s.days || {}; return s; }
+                if (s && s.ledger) { s.b = s.b || {}; s.cap = s.cap || {}; s.days = s.days || {}; return migrate(s); }
             }
         } catch (e) {}
         return emptyState();
+    }
+    /* b dạng cũ {palace:1,...} (chỉ HSK4) -> b = {"4": {palace:1,...}} */
+    function migrate(s) {
+        var flat = false, k;
+        for (k in s.b) if (typeof s.b[k] === "number") flat = true;
+        if (flat) {
+            var old = s.b; s.b = { "4": {} };
+            for (k in old) if (typeof old[k] === "number") s.b["4"][k] = old[k];
+        }
+        return s;
     }
     function save() {
         try { localStorage.setItem(STORE_KEY, JSON.stringify(state)); } catch (e) {}
@@ -73,12 +83,37 @@
     function emit(ev) {
         listeners.forEach(function(fn) { try { fn(ev || {}); } catch (e) {} });
     }
-    function level(id) { return Math.min(MAX_LEVEL, state.b[id] || 0); }
+    var ERAS = [
+        { n: 1, hsk: "HSK 1", name: "Thời Làng quê",     cost: 1.0 },
+        { n: 2, hsk: "HSK 2", name: "Thời Thị trấn",     cost: 1.25 },
+        { n: 3, hsk: "HSK 3", name: "Thời Thành quách",  cost: 1.5 },
+        { n: 4, hsk: "HSK 4", name: "Thời Hoàng cung",   cost: 1.0 },
+        { n: 5, hsk: "HSK 5", name: "Thời Thịnh vượng",  cost: 1.75 },
+        { n: 6, hsk: "HSK 6", name: "Thời Huyền thoại",  cost: 2.0 }
+    ];
+    /* Tên công trình của từng thời đại (cùng 6 vai trò) */
+    var NAMES = {
+        1: { palace: "Nhà trưởng làng", library: "Chòi sách",       garden: "Vườn rau",       market: "Quán chợ",    pavilion: "Giếng làng",       gate: "Cổng làng" },
+        2: { palace: "Tòa thị chính",   library: "Thư quán",        garden: "Vườn hoa",       market: "Chợ phố",     pavilion: "Đài phun nước",    gate: "Cổng phố" },
+        3: { palace: "Phủ thành chủ",   library: "Tàng thư các",    garden: "Vườn thành",     market: "Chợ thành",   pavilion: "Tháp canh",        gate: "Cổng thành" },
+        4: { palace: "Cung điện",       library: "Thư viện hoàng gia", garden: "Vườn ngự uyển", market: "Chợ hoàng gia", pavilion: "Đình nghỉ mát", gate: "Cổng thành" },
+        5: { palace: "Cung hải thương", library: "Đại thư viện",    garden: "Vườn thượng uyển", market: "Chợ cảng",  pavilion: "Đài thiên văn",    gate: "Cổng cảng" },
+        6: { palace: "Thiên cung",      library: "Tàng kinh các",   garden: "Vườn tiên",      market: "Chợ mây",     pavilion: "Bảo tháp",         gate: "Cổng trời" }
+    };
+    function eraObj(era) { return ERAS[(era || 4) - 1]; }
+    function levelAt(era, id) { var e = state.b[String(era)]; return e ? Math.min(MAX_LEVEL, e[id] || 0) : 0; }
+    /* cấp dùng cho hiệu ứng = cấp cao nhất ở bất kỳ thời đại nào */
+    function level(id) {
+        var m = 0;
+        for (var e = 1; e <= 6; e++) m = Math.max(m, levelAt(e, id));
+        return m;
+    }
+    function costAt(era, id, l) { return Math.round(BUILDINGS[id].costs[l] * eraObj(era).cost); }
 
     function spent() {
         var t = 0;
-        ORDER.forEach(function(id) {
-            for (var i = 0; i < level(id); i++) t += BUILDINGS[id].costs[i] * 10;
+        for (var e = 1; e <= 6; e++) ORDER.forEach(function(id) {
+            for (var i = 0; i < levelAt(e, id); i++) t += costAt(e, id, i) * 10;
         });
         return t;
     }
@@ -91,7 +126,7 @@
 
     function prestige() {
         var t = 0;
-        ORDER.forEach(function(id) { t += level(id); });
+        for (var e = 1; e <= 6; e++) ORDER.forEach(function(id) { t += levelAt(e, id); });
         return t;
     }
     function title() {
@@ -206,29 +241,28 @@
     }
 
     /* ---------- mua / nâng cấp ---------- */
-    function nextCost(id) {
-        var l = level(id);
+    function nextCost(era, id) {
+        var l = levelAt(era, id);
         if (l >= MAX_LEVEL) return null;
-        return BUILDINGS[id].costs[l];
+        return costAt(era, id, l);
     }
-    function maxAllowed(id) {
-        if (id === "palace") return MAX_LEVEL;
-        return Math.min(MAX_LEVEL, level("palace") + 1);
-    }
-    function canBuy(id) {
-        var c = nextCost(id);
+    function canBuy(era, id) {
+        var l = levelAt(era, id);
+        var c = nextCost(era, id);
         if (c === null) return { ok: false, why: "Đã đạt cấp tối đa" };
-        if (level(id) >= maxAllowed(id)) return { ok: false, why: "Cần nâng cấp Cung điện trước" };
-        if (id !== "palace" && level("palace") < 1) return { ok: false, why: "Hãy xây Cung điện trước" };
+        if (id !== "palace" && levelAt(era, "palace") < 1) return { ok: false, why: "Hãy xây " + NAMES[era].palace + " trước" };
+        if (id !== "palace" && l >= levelAt(era, "palace") + 1) return { ok: false, why: "Cần nâng cấp " + NAMES[era].palace + " trước" };
         if (gold10() < c * 10) return { ok: false, why: "Chưa đủ vàng" };
         return { ok: true, why: "" };
     }
-    function buy(id) {
-        var chk = canBuy(id);
+    function buy(era, id) {
+        var chk = canBuy(era, id);
         if (!chk.ok) return chk;
-        state.b[id] = level(id) + 1;
+        var key = String(era);
+        state.b[key] = state.b[key] || {};
+        state.b[key][id] = levelAt(era, id) + 1;
         save();
-        emit({ type: "buy", id: id });
+        emit({ type: "buy", id: id, era: era });
         return { ok: true };
     }
 
@@ -298,7 +332,11 @@
     function mergeInto(dst, src) {
         var k;
         for (k in (src.ledger || {})) if (!(k in dst.ledger) || src.ledger[k] > dst.ledger[k]) dst.ledger[k] = src.ledger[k];
-        for (k in (src.b || {})) if ((src.b[k] || 0) > (dst.b[k] || 0)) dst.b[k] = src.b[k];
+        var sb = migrate({ b: JSON.parse(JSON.stringify(src.b || {})) }).b;
+        for (k in sb) {
+            dst.b[k] = dst.b[k] || {};
+            for (var id in sb[k]) if ((sb[k][id] || 0) > (dst.b[k][id] || 0)) dst.b[k][id] = sb[k][id];
+        }
         for (k in (src.cap || {})) if ((src.cap[k] || 0) > (dst.cap[k] || 0)) dst.cap[k] = src.cap[k];
         for (k in (src.days || {})) dst.days[k] = 1;
     }
@@ -351,13 +389,18 @@
         });
     }
 
+    /* Gọi kiểu cũ (id) = thời đại 4; kiểu mới (era, id) */
+    function compat(fn) {
+        return function(a, b) { return typeof a === "string" ? fn(4, a) : fn(a, b); };
+    }
+
     /* ---------- khởi tạo ---------- */
     state = load();
     window.Kingdom = {
         BUILDINGS: BUILDINGS, ORDER: ORDER, MAX_LEVEL: MAX_LEVEL,
         hash: hash,
         award: award,
-        buy: buy, canBuy: canBuy, nextCost: nextCost, level: level,
+        buy: compat(buy), canBuy: compat(canBuy), nextCost: compat(nextCost), level: level, levelAt: levelAt, ERAS: ERAS, NAMES: NAMES,
         gold10: gold10, gold: function() { return gold10() / 10; }, fmt: fmt,
         prestige: prestige, title: title,
         dailyCap10: dailyCap10, capUsed10: capUsed10,
