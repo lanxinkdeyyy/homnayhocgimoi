@@ -9,6 +9,7 @@
 <script src="supabase.js"></script>
 <script src="kingdom-core.js"></script>
 <script src="kingdom-art.js"></script>
+<script src="bgm.js"></script>
 <style>
 :root { --ink:#3b2a1a; --paper:#fff7e0; --gold:#e0a526; --green:#4f8a52; --line:#d9b86c; }
 * { box-sizing: border-box; }
@@ -145,7 +146,7 @@ function buildEras() {
     d.style.cursor = "pointer";
     d.textContent = e.hsk + " · " + e.zh;
     var sm = document.createElement("small"); sm.textContent = e.name; d.appendChild(sm);
-    d.addEventListener("click", function() { era = e.n; try { localStorage.setItem("kingdomEra", String(era)); } catch (x) {} buildEras(); refresh(); });
+    d.addEventListener("click", function() { era = e.n; try { localStorage.setItem("kingdomEra", String(era)); } catch (x) {} buildEras(); refresh(); music(); });
     box.appendChild(d);
   });
   document.getElementById("eraLine").textContent = eraInfo().hsk + " · " + eraInfo().zh + " — " + eraInfo().name;
@@ -167,6 +168,7 @@ function buildGarden() {
   }
 }
 
+function music() { if (window.BGM) BGM.play("era" + era); }
 function refresh() {
   document.getElementById("goldVal").textContent = K.fmt(Math.max(0, K.gold10()));
   document.getElementById("titleVal").textContent = K.title();
@@ -194,9 +196,10 @@ cv.addEventListener("click", function(ev) {
 K.onChange(function() { refresh(); });
 buildEras();
 refresh();
+music();
 render();
 K.initSync();
-window.__setEra = function(n) { era = n; buildEras(); refresh(); };
+window.__setEra = function(n) { era = n; buildEras(); refresh(); music(); };
 })();
 </script>
 </body>

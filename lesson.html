@@ -2546,6 +2546,7 @@ body.app-printing {
 <script src="examples-data.js"></script>
 <script src="exercises-data.js"></script>
 <script src="kingdom-core.js"></script>
+<script src="bgm.js"></script>
 <script>
 
 /* ================================================= */
@@ -4976,6 +4977,7 @@ function openTab(tabName, button) {
     }
 
     document.body.classList.toggle("hide-reading-ui", tabName !== "reading");
+    if (window.BGM) BGM.play(tabName === "reading" ? "off" : "study");
 
 
     if (tabName === "reading") {
