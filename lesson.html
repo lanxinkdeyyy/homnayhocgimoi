@@ -4659,7 +4659,7 @@ function exShuffle(arr) {
 
 function exUpdateScore() {
     const el = document.getElementById("exScore");
-    let txt = "Đúng " + exState.score + " / " + exState.done + " câu đã làm · Tổng " + exState.total + " câu";
+    let txt = "Đúng " + exState.score + " / " + exState.done + " câu đã làm · Đang hiện " + exState.shown + " / " + exState.total + " câu";
     if (exState.full) {
         let best = 0;
         try { best = parseInt(localStorage.getItem(exKey()) || "0", 10) || 0; } catch (e) {}
@@ -4859,7 +4859,7 @@ function renderExercise(mode) {
         readQs = readQs.filter(function(it) { return prev.some(function(p) { return p.kind === "read" && p.q.q === it.q.q; }); });
     }
     exWrong = [];
-    exState = { score: 0, done: 0, full: full, total: vocabItems.length + orderItems.length + readQs.length };
+    exState = { score: 0, done: 0, full: full, total: vocabItems.length + orderItems.length + readQs.length, shown: orderItems.length + readQs.length };
     let n = 1;
 
     if (vocabItems.length) {
@@ -4871,7 +4871,8 @@ function renderExercise(mode) {
         more.type = "button";
         const showMore = function() {
             const end = Math.min(vocabItems.length, shown + 10);
-            for (; shown < end; shown++) list.appendChild(exChoice(vocabItems[shown].q, n++, vocabItems[shown]));
+            for (; shown < end; shown++) { list.appendChild(exChoice(vocabItems[shown].q, n++, vocabItems[shown])); exState.shown++; }
+            exUpdateScore();
             if (shown >= vocabItems.length) more.style.display = "none";
             else more.textContent = "Xem thêm 10 câu (còn " + (vocabItems.length - shown) + ")";
         };
