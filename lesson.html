@@ -2545,6 +2545,7 @@ body.app-printing {
 <script src="lessons-data.js"></script>
 <script src="examples-data.js"></script>
 <script src="exercises-data.js"></script>
+<script src="kingdom-core.js"></script>
 <script>
 
 /* ================================================= */
@@ -4677,6 +4678,11 @@ function exUpdateScore() {
 }
 
 function exRecord(item, ok) {
+    if (window.Kingdom) {
+        const qq = item.q;
+        const ident = qq.q || (qq.chunks ? qq.chunks.join("") : "");
+        Kingdom.award("exercise", LESSON_ID + "|" + item.kind + "|" + Kingdom.hash(ident), ok);
+    }
     exState.done++;
     if (ok) exState.score++;
     else exWrong.push(item);
@@ -5554,6 +5560,10 @@ function completeStudyWord() {
 
     setSentences(sentences);
 
+    if (window.Kingdom) {
+        Kingdom.award("word", LESSON_ID + "|" + word);
+    }
+
 
     studyIndex++;
 
@@ -6337,6 +6347,10 @@ function finishSentenceGame() {
         "lesson" + LESSON_ID + "Completed",
         "true"
     );
+
+    if (window.Kingdom) {
+        Kingdom.award("lesson", String(LESSON_ID));
+    }
 
     queueProgressSync();
 
