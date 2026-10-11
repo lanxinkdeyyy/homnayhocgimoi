@@ -84,21 +84,21 @@
         listeners.forEach(function(fn) { try { fn(ev || {}); } catch (e) {} });
     }
     var ERAS = [
-        { n: 1, hsk: "HSK 1", name: "Thời Làng quê",     cost: 1.0 },
-        { n: 2, hsk: "HSK 2", name: "Thời Thị trấn",     cost: 1.25 },
-        { n: 3, hsk: "HSK 3", name: "Thời Thành quách",  cost: 1.5 },
-        { n: 4, hsk: "HSK 4", name: "Thời Hoàng cung",   cost: 1.0 },
-        { n: 5, hsk: "HSK 5", name: "Thời Thịnh vượng",  cost: 1.75 },
-        { n: 6, hsk: "HSK 6", name: "Thời Huyền thoại",  cost: 2.0 }
+        { n: 1, hsk: "HSK 1", zh: "水墨古风", name: "Cổ phong mực nước",   cost: 1.0 },
+        { n: 2, hsk: "HSK 2", zh: "盛唐华彩", name: "Thịnh Đường rực sắc", cost: 1.25 },
+        { n: 3, hsk: "HSK 3", zh: "江南雅苑", name: "Giang Nam nhã uyển",  cost: 1.5 },
+        { n: 4, hsk: "HSK 4", zh: "民国摩登", name: "Dân quốc tân thời",   cost: 1.0 },
+        { n: 5, hsk: "HSK 5", zh: "都市霓虹", name: "Đô thị nghê hồng",    cost: 1.75 },
+        { n: 6, hsk: "HSK 6", zh: "未来幻境", name: "Tương lai huyền cảnh", cost: 2.0 }
     ];
     /* Tên công trình của từng thời đại (cùng 6 vai trò) */
     var NAMES = {
-        1: { palace: "Nhà trưởng làng", library: "Chòi sách",       garden: "Vườn rau",       market: "Quán chợ",    pavilion: "Giếng làng",       gate: "Cổng làng" },
-        2: { palace: "Tòa thị chính",   library: "Thư quán",        garden: "Vườn hoa",       market: "Chợ phố",     pavilion: "Đài phun nước",    gate: "Cổng phố" },
-        3: { palace: "Phủ thành chủ",   library: "Tàng thư các",    garden: "Vườn thành",     market: "Chợ thành",   pavilion: "Tháp canh",        gate: "Cổng thành" },
-        4: { palace: "Cung điện",       library: "Thư viện hoàng gia", garden: "Vườn ngự uyển", market: "Chợ hoàng gia", pavilion: "Đình nghỉ mát", gate: "Cổng thành" },
-        5: { palace: "Cung hải thương", library: "Đại thư viện",    garden: "Vườn thượng uyển", market: "Chợ cảng",  pavilion: "Đài thiên văn",    gate: "Cổng cảng" },
-        6: { palace: "Thiên cung",      library: "Tàng kinh các",   garden: "Vườn tiên",      market: "Chợ mây",     pavilion: "Bảo tháp",         gate: "Cổng trời" }
+        1: { palace: "Thảo đường",           library: "Thư trai",            garden: "Vườn trúc – tùng",   market: "Chợ làng bên suối", pavilion: "Đình ngắm núi",     gate: "Cổng trúc" },
+        2: { palace: "Cung điện Đại Minh",   library: "Quốc Tử Giám",        garden: "Vườn mẫu đơn",       market: "Tây Thị Trường An", pavilion: "Tháp Đại Nhạn",     gate: "Cổng Chu Tước" },
+        3: { palace: "Viên lâm Giang Nam",   library: "Thư phòng ven hồ",    garden: "Hồ sen & liễu",      market: "Chợ nước",          pavilion: "Đình hoa sen",      gate: "Cổng trăng" },
+        4: { palace: "Dinh thự Thượng Hải",  library: "Tòa soạn – Thư xã",   garden: "Công viên Tây dương", market: "Phố sườn xám",     pavilion: "Vũ trường Art Deco", gate: "Cổng Thạch Khố Môn" },
+        5: { palace: "Tòa tháp neon",        library: "Thư viện kính số",    garden: "Vườn trên mái",      market: "Chợ đêm neon",      pavilion: "Trạm tàu từ",       gate: "Cổng thành phố" },
+        6: { palace: "Tháp pha lê",          library: "Kho tri thức bay",    garden: "Vườn phát sáng",     market: "Chợ ảo ảnh",        pavilion: "Đài thiên văn",     gate: "Cổng dịch chuyển" }
     };
     function eraObj(era) { return ERAS[(era || 4) - 1]; }
     function levelAt(era, id) { var e = state.b[String(era)]; return e ? Math.min(MAX_LEVEL, e[id] || 0) : 0; }
