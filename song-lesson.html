@@ -40,6 +40,40 @@
         .lyric-line.tap-target { outline: 2px dashed #71947b; outline-offset: -2px; }
         .song-lyrics-scroll { scroll-behavior: auto; }
 
+        /* ===== Máy tính: 3 cột kiểu Spotify — đĩa | lời | ghi chú (5 : 5 : 3) ===== */
+        @media (min-width: 1000px) {
+            .song-study-container { width: min(1760px, 96%); padding-top: 28px; padding-bottom: 40px; }
+            .song-study-header { margin: 6px 0 14px; }
+            .song-study-header h1 { font-size: 30px; margin: 2px 0; }
+            .song-study-header p { margin: 0; }
+            .back-link { display: inline-block; }
+            .song-study-layout {
+                grid-template-columns: minmax(0, 5fr) minmax(0, 5fr) minmax(0, 3fr);
+                grid-template-areas: "player lyrics notes" "saved lyrics notes";
+                grid-template-rows: auto 1fr;
+                gap: 22px;
+                align-items: start;
+            }
+            .song-main-panel { display: contents; }
+            .song-layout-divider { display: none; }
+            .song-player-card { grid-area: player; position: sticky; top: 14px; margin: 0;
+                display: flex; flex-direction: column; align-items: center; text-align: center;
+                gap: 20px; padding: 24px 24px 22px; }
+            .song-record { flex: 0 0 auto; width: min(300px, 70%); height: auto; aspect-ratio: 1 / 1; }
+            .song-player-info { width: 100%; }
+            .song-player-info h2 { font-size: 24px; }
+            .song-player-info > p { margin-bottom: 16px; font-size: 14px; }
+            .song-controls { flex-wrap: wrap; justify-content: center; }
+            .song-play-button { width: 52px; height: 52px; font-size: 20px; }
+            .song-time { font-size: 13px; }
+            .song-progress { flex: 1 0 100%; order: 3; }
+            .song-saved-card { grid-area: saved; margin: 0; }
+            .song-lyrics-card { grid-area: lyrics; align-self: stretch; padding: 26px 24px; }
+            .song-lyrics-scroll { height: calc(100vh - 340px); min-height: 360px; padding: calc(50vh - 210px) 14px; }
+            .lyric-line { font-size: 24px; }
+            .song-note-sidebar { grid-area: notes; min-height: 0; align-self: stretch; padding-top: 6px; }
+        }
+
     </style>
 </head>
 
