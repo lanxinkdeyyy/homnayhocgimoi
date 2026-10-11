@@ -373,7 +373,7 @@
         }).then(function(res) {
             if (res === null || res === undefined) return;
             if (res.error) {
-                setSync("Chưa đồng bộ được: " + (res.error.message || "") + " (đã chạy file kingdom-supabase.sql chưa?)");
+                setSync(/kingdom_state|schema cache|does not exist/i.test(res.error.message || "") ? "Chưa đồng bộ — Supabase chưa có bảng lưu game. Cần chạy file kingdom-supabase.sql 1 lần trong Supabase → SQL Editor (game vẫn chạy bình thường trên máy này)." : "Chưa đồng bộ được: " + (res.error.message || ""));
                 syncUser = null;
                 return;
             }

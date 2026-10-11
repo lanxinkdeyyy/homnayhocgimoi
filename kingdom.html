@@ -28,7 +28,17 @@ canvas { display:block; width:100%; height:auto; cursor:pointer; }
 .era { flex:0 0 auto; padding:8px 12px; border-radius:10px; border:3px solid var(--line); background:var(--paper); font-weight:700; font-size:13px; white-space:nowrap; }
 .era.on { background:#ffe79a; border-color:var(--gold); }
 .era small{display:block;font-weight:400;font-size:11px;color:#7a6a4a}
-.grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(300px,1fr)); gap:12px; }
+.layout { display:grid; grid-template-columns:3fr 1fr; gap:16px; align-items:start; }
+.main { min-width:0; }
+.side { position:sticky; top:8px; display:flex; flex-direction:column; gap:10px; max-height:calc(100vh - 16px); overflow-y:auto; padding:2px 4px 6px 2px; }
+.side h2 { margin:0; font-size:15px; color:#5b6d4c; }
+.grid { display:flex; flex-direction:column; gap:10px; }
+.card { position:relative; }
+.card .thumb { position:absolute; top:8px; right:8px; width:84px; height:68px; border-radius:10px; border:2px solid var(--line); background:#cfe; }
+.card h3 { padding-right:94px; font-size:15px; }
+.card p { font-size:12.5px; }
+.card .pips { font-size:15px; letter-spacing:1px; padding-right:92px; }
+.card .pips small{font-size:11px}
 .card { background:var(--paper); border:3px solid var(--line); border-radius:12px; padding:12px; box-shadow:0 4px 0 #b9964a; }
 .card.sel { border-color:#d2691e; box-shadow:0 4px 0 #a2501a; }
 .card h3 { margin:0 0 4px; font-size:18px; }
@@ -42,7 +52,7 @@ button.claim { background:#e8a21a; color:#fff; border:0; border-bottom:4px solid
 .note { margin:8px 0; font-size:13px; color:#7a5a1a; background:#fff3c8; border:2px dashed #d9b86c; border-radius:10px; padding:8px 12px; }
 .sync { margin-top:12px; font-size:13px; color:#5a6a4a; }
 .msg { min-height:22px; margin:8px 0; font-weight:700; color:#8a4b00; }
-@media (max-width:600px){ h1{font-size:24px} .grid{grid-template-columns:1fr} }
+@media (max-width:820px){ .layout{grid-template-columns:1fr} .side{position:static;max-height:none;overflow:visible} h1{font-size:24px} }
 </style>
 </head>
 <body id="kingdomPage">
@@ -58,6 +68,7 @@ button.claim { background:#e8a21a; color:#fff; border:0; border-bottom:4px solid
     <div class="chip" id="streakChip">🔥 <span id="streakVal">0</span> ngày<small>Chuỗi ngày học</small></div>
   </div>
 
+  <div class="layout"><div class="main">
   <div class="scene"><canvas id="scene" width="1000" height="560"></canvas></div>
   <div class="msg" id="msg"></div>
 
@@ -65,7 +76,6 @@ button.claim { background:#e8a21a; color:#fff; border:0; border-bottom:4px solid
   <div class="note">🪙 Hiện vàng chỉ kiếm được từ nội dung <b>HSK 4</b>; vàng dùng chung để xây ở cả 6 thời đại (thời đại càng cao, giá xây càng đắt).</div>
 
   <div id="gardenBox"></div>
-  <div class="grid" id="cards"></div>
 
   <div class="how">
     <h3>Cách kiếm vàng</h3>
@@ -77,6 +87,9 @@ button.claim { background:#e8a21a; color:#fff; border:0; border-bottom:4px solid
     • Trần vàng từ học và bài tập: <b>150 vàng/ngày</b> (chợ hoàng gia nâng thêm). Quá trần vẫn học được, chỉ không nhận thêm vàng.
   </div>
   <div class="sync" id="sync"></div>
+  </div>
+  <aside class="side"><h2>🏗️ Công trình</h2><div class="grid" id="cards"></div></aside>
+  </div>
 </div>
 
 <script>
@@ -105,7 +118,9 @@ function buildCards() {
     var card = document.createElement("div");
     card.className = "card" + (id === selected ? " sel" : "");
     card.dataset.id = id;
-    var h = document.createElement("h3"); h.textContent = b.icon + " " + nm; card.appendChild(h);
+    var th = document.createElement("canvas"); th.className = "thumb"; th.width = 168; th.height = 136; card.appendChild(th);
+    try { A.drawThumb(th.getContext("2d"), era, id, l, 0); } catch (x) {}
+    var h = document.createElement("h3"); h.textContent = nm; card.appendChild(h);
     var pp = document.createElement("div"); pp.className = "pips"; pp.textContent = pips(l) + (l === 0 ? "  (chưa xây)" : "  Cấp " + l); card.appendChild(pp);
     var d = document.createElement("p"); d.textContent = b.desc; card.appendChild(d);
     var btn = document.createElement("button"); btn.className = "buy"; btn.type = "button";

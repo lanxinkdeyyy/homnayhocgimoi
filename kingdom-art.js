@@ -583,5 +583,24 @@ function draw(c, era, levels, selected, t) {
     ctx.fillStyle = v; ctx.fillRect(0, 0, W, H);
 }
 
-window.KingdomArt = { W: W, H: H, SLOTS: SLOTS, ORDER: DRAW_ORDER, draw: draw };
+/* Ảnh nhỏ của một công trình (để hiện ở thẻ) */
+function drawThumb(c, era, id, level, t) {
+    var s = SLOTS[id], cw = c.canvas.width, ch = c.canvas.height;
+    var rw = s.w + 40, rh = s.h + 70, k = Math.min(cw / rw, ch / rh);
+    var save = c;
+    c.save();
+    c.beginPath(); c.rect(0, 0, cw, ch); c.clip();
+    c.translate(cw / 2, ch - 8);
+    c.scale(k, k);
+    c.translate(-s.x, -(s.y + 18));
+    ctx = c;
+    drawSky(era, t); mountains(era, t); ground(era, t);
+    if (level <= 0) drawPlot(era, id, t);
+    else if (era <= 3) BUILD[era][id](era, s.x, s.y, level, t);
+    else if (era === 4) ({ palace: dqHall, library: dqLibrary, garden: dqGarden, market: dqMarket, pavilion: dqPavilion, gate: dqGate })[id](s.x, s.y, level, t);
+    else ({ palace: nHall, library: nLibrary, garden: nGarden, market: nMarket, pavilion: nPavilion, gate: nGate })[id](era, s.x, s.y, level, t);
+    c.restore();
+}
+
+window.KingdomArt = { W: W, H: H, SLOTS: SLOTS, ORDER: DRAW_ORDER, draw: draw, drawThumb: drawThumb };
 })();
