@@ -1150,8 +1150,51 @@ body {
     margin-top: 0;
 }
 
-.example-box p {
+.meaning-en {
+    font-size: 20px;
+    color: #4a5568;
+    margin: -6px 0 15px;
+}
+
+.example-box .ex-item {
+    padding: 14px 0 16px;
+    border-bottom: 1px dashed #b9cdbd;
+}
+
+.example-box .ex-item:last-child {
+    border-bottom: 0;
+}
+
+.example-box .ex-use {
+    font-size: 15px;
+    font-weight: 700;
+    color: #2f6b45;
+    margin-bottom: 6px;
+}
+
+.example-box .ex-zh {
     font-family: "HanKai", Arial, sans-serif;
+    font-size: 40px;
+    line-height: 1.4;
+    margin: 4px 0;
+}
+
+.example-box .ex-py {
+    font-size: 22px;
+    color: #555;
+    margin: 2px 0;
+}
+
+.example-box .ex-vi {
+    font-size: 22px;
+    margin: 4px 0;
+}
+
+.example-box .ex-en {
+    font-size: 20px;
+    color: #4a5568;
+    font-style: italic;
+    margin: 2px 0;
 }
 
 
@@ -2133,6 +2176,11 @@ body.app-printing {
     class="meaning">
 </div>
 
+<div
+    id="studyMeaningEn"
+    class="meaning-en">
+</div>
+
 
 <div class="example-box">
 
@@ -2140,17 +2188,7 @@ body.app-printing {
         📌 Ví dụ & cách dùng
     </h3>
 
-    <p id="studyExampleChinese">
-    </p>
-
-    <p id="studyExamplePinyin">
-    </p>
-
-    <p id="studyExampleVietnamese">
-    </p>
-
-    <p id="studyUsage">
-    </p>
+    <div id="studyExamples"></div>
 
 </div>
 
@@ -2428,6 +2466,7 @@ body.app-printing {
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="supabase.js?v=2"></script>
 <script src="lessons-data.js"></script>
+<script src="examples-data.js"></script>
 <script>
 
 /* ================================================= */
@@ -4959,6 +4998,37 @@ function prepareStudy() {
 }
 
 
+function renderStudyExamples(data) {
+    const box = document.getElementById("studyExamples");
+    box.innerHTML = "";
+    const mk = function(tag, cls, txt) {
+        const e = document.createElement(tag);
+        if (cls) e.className = cls;
+        e.textContent = txt;
+        return e;
+    };
+    let list = data.exs;
+    if (!list || !list.length) {
+        list = [{
+            use: data.usage,
+            ex: data.exampleChinese,
+            py: data.examplePinyin,
+            vi: data.exampleVietnamese,
+            en: ""
+        }];
+    }
+    list.forEach(function(x, i) {
+        const d = document.createElement("div");
+        d.className = "ex-item";
+        d.appendChild(mk("div", "ex-use", (i + 1) + ". " + (x.use || "")));
+        d.appendChild(mk("div", "ex-zh", x.ex || ""));
+        if (x.py) d.appendChild(mk("div", "ex-py", x.py));
+        if (x.vi) d.appendChild(mk("div", "ex-vi", "→ " + x.vi));
+        if (x.en) d.appendChild(mk("div", "ex-en", "🇬🇧 " + x.en));
+        box.appendChild(d);
+    });
+}
+
 function showStudyWord() {
 
     const word =
@@ -5007,28 +5077,10 @@ function showStudyWord() {
         data.meaning;
 
 
-    document.getElementById(
-        "studyExampleChinese"
-    ).textContent =
-        data.exampleChinese;
+    document.getElementById("studyMeaningEn").textContent =
+        data.en ? "🇬🇧 " + data.en : "";
 
-
-    document.getElementById(
-        "studyExamplePinyin"
-    ).textContent =
-        data.examplePinyin || "";
-
-
-    document.getElementById(
-        "studyExampleVietnamese"
-    ).textContent =
-        data.exampleVietnamese;
-
-
-    document.getElementById(
-        "studyUsage"
-    ).textContent =
-        data.usage;
+    renderStudyExamples(data);
 
 
     /* ================= GHI CHÚ ================= */
@@ -6040,7 +6092,9 @@ LESSON.vocab.forEach(function(x) {
         exampleChinese: extra.ex || x[0],
         examplePinyin: extra.py || "",
         exampleVietnamese: extra.vi || "",
-        usage: extra.use || ("Từ vựng trong Lesson " + LESSON_ID + ".")
+        usage: extra.use || ("Từ vựng trong Lesson " + LESSON_ID + "."),
+        en: ((window.VOCAB_EXAMPLES || {})[x[0]] || {}).en || "",
+        exs: ((window.VOCAB_EXAMPLES || {})[x[0]] || {}).exs || null
     };
 });
 
