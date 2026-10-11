@@ -1,0 +1,18 @@
+/* =====================================================================
+   kaiti.css — font KaiTi (楷体) cho TOÀN BỘ chữ Hán trong dự án.
+   - "HanKai" chỉ áp dụng cho chữ Hán / dấu câu Trung (unicode-range),
+     chữ Việt, Anh, pinyin vẫn giữ font cũ.
+   - Máy nào không có KaiTi thì tự dùng font mặc định, không bị lỗi.
+   - Phần IN BÀI (.print-page) có font riêng nên KHÔNG đụng tới.
+   Muốn đổi font chữ Hán cho cả dự án: chỉ cần sửa danh sách local() dưới đây.
+   ===================================================================== */
+@font-face {
+    font-family: "HanKai";
+    src: local("KaiTi"), local("KaiTi_GB2312"), local("楷体"), local("楷体_GB2312"),
+         local("STKaiti"), local("Kaiti SC"), local("Kaiti TC"),
+         local("BiauKai"), local("DFKai-SB"), local("AR PL UKai CN");
+    unicode-range:
+        U+2E80-2FDF, U+3000-303F, U+31C0-31EF, U+3400-4DBF, U+4E00-9FFF,
+        U+F900-FAFF, U+FE30-FE4F, U+FF00-FFEF, U+2018-201F, U+2026, U+2014,
+        U+20000-2FA1F;
+}

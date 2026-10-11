@@ -5,7 +5,7 @@
 }
 
 body {
-    font-family: Arial, "Microsoft YaHei", sans-serif;
+    font-family: "HanKai", Arial, "Microsoft YaHei", sans-serif;
     background: #f3f8f1;
     color: #4d4642;
 }
@@ -216,7 +216,7 @@ h1 {
 }
 
 .journey-eyebrow {
-    font-family: 'Nunito', Arial, sans-serif;
+    font-family: "HanKai", 'Nunito', Arial, sans-serif;
     font-size: 13px;
     font-weight: 700;
     letter-spacing: 3px;
@@ -226,7 +226,7 @@ h1 {
 }
 
 .journey-title {
-    font-family: 'Noto Serif SC', serif;
+    font-family: "HanKai", 'Noto Serif SC', serif;
     font-size: 44px;
     font-weight: 700;
     color: var(--jg-jade-deep);
@@ -234,7 +234,7 @@ h1 {
 }
 
 .journey-sub {
-    font-family: 'Nunito', Arial, sans-serif;
+    font-family: "HanKai", 'Nunito', Arial, sans-serif;
     font-size: 16px;
     color: var(--jg-ink-soft);
     max-width: 480px;
@@ -299,7 +299,7 @@ h1 {
 }
 
 .gate-era {
-    font-family: 'Noto Serif SC', serif;
+    font-family: "HanKai", 'Noto Serif SC', serif;
     font-size: 12px;
     font-weight: 600;
     letter-spacing: 1px;
@@ -318,7 +318,7 @@ h1 {
 }
 
 .gate-plaque {
-    font-family: 'Noto Serif SC', serif;
+    font-family: "HanKai", 'Noto Serif SC', serif;
     font-size: 21px;
     font-weight: 700;
     color: #111111;
@@ -326,7 +326,7 @@ h1 {
 }
 
 .gate-count {
-    font-family: 'Nunito', Arial, sans-serif;
+    font-family: "HanKai", 'Nunito', Arial, sans-serif;
     font-size: 12px;
     color: #333333;
     letter-spacing: 0.3px;
@@ -393,7 +393,7 @@ h1 {
     margin-bottom: 20px;
     background: none;
     border: none;
-    font-family: 'Nunito', Arial, sans-serif;
+    font-family: "HanKai", 'Nunito', Arial, sans-serif;
     font-size: 15px;
     font-weight: 700;
     color: var(--jg-jade-deep);
@@ -406,7 +406,7 @@ h1 {
 }
 
 .path-title {
-    font-family: 'Noto Serif SC', serif;
+    font-family: "HanKai", 'Noto Serif SC', serif;
     font-size: 32px;
     color: var(--jg-jade-deep);
     text-align: center;
@@ -474,7 +474,7 @@ h1 {
 }
 
 .node-index {
-    font-family: 'Nunito', Arial, sans-serif;
+    font-family: "HanKai", 'Nunito', Arial, sans-serif;
     font-size: 10px;
     font-weight: 700;
     color: var(--jg-jade-deep);
@@ -482,7 +482,7 @@ h1 {
 }
 
 .node-caption {
-    font-family: 'Noto Serif SC', serif;
+    font-family: "HanKai", 'Noto Serif SC', serif;
     font-size: 14px;
     color: var(--jg-ink);
     text-align: center;
@@ -490,7 +490,7 @@ h1 {
 }
 
 .node-caption em {
-    font-family: 'Nunito', Arial, sans-serif;
+    font-family: "HanKai", 'Nunito', Arial, sans-serif;
     font-style: normal;
     font-size: 11px;
     color: var(--jg-ink-soft);
@@ -728,7 +728,7 @@ h1 {
     border-color: #ceddce;
     background: linear-gradient(135deg, #f6dbc2, #bdd9c5);
     color: white;
-    font-family: "Microsoft YaHei", sans-serif;
+    font-family: "HanKai", "Microsoft YaHei", sans-serif;
     font-size: 34px;
     font-weight: 700;
 }
