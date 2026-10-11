@@ -297,6 +297,7 @@
     <script src="supabase.js"></script>
     <script src="lessons-data.js"></script>
     <script src="lessons-data-hsk3.js"></script>
+    <script src="lessons-data-hsk2.js"></script>
     <script>
         const levels = {
             hsk1: {
@@ -306,15 +307,19 @@
                 ]
             },
             hsk2: {
-                title: "HSK 2", lessons: [
-                    { label: "Bài 1", title: "我的家", href: "#" },
-                    { label: "Bài 2", title: "天气", href: "#" },
-                ]
+                title: "HSK 2",
+                lessons: Object.keys(window.LESSONS || {})
+                    .map(Number).filter(function (n) { return n > 400; })
+                    .sort(function (a, b) { return a - b; })
+                    .map(function (n) {
+                        const L = window.LESSONS[n];
+                        return { number: n, label: "Bài " + (n - 400), title: L.listTitle || L.title, href: "lesson.html?id=" + n };
+                    })
             },
             hsk3: {
                 title: "HSK 3",
                 lessons: Object.keys(window.LESSONS || {})
-                    .map(Number).filter(function (n) { return n > 300; })
+                    .map(Number).filter(function (n) { return n > 300 && n < 400; })
                     .sort(function (a, b) { return a - b; })
                     .map(function (n) {
                         const L = window.LESSONS[n];
@@ -355,6 +360,8 @@
         (function () {
             const c = document.querySelector('[data-level="hsk4"] .gate-count');
             if (c) c.textContent = levels.hsk4.lessons.length + " bài học";
+            const c2 = document.querySelector('[data-level="hsk2"] .gate-count');
+            if (c2 && levels.hsk2.lessons.length) c2.textContent = levels.hsk2.lessons.length + " bài học";
             const c3 = document.querySelector('[data-level="hsk3"] .gate-count');
             if (c3 && levels.hsk3.lessons.length) c3.textContent = levels.hsk3.lessons.length + " bài học";
         })();
