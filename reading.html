@@ -296,6 +296,7 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="supabase.js"></script>
     <script src="lessons-data.js"></script>
+    <script src="lessons-data-hsk3.js"></script>
     <script>
         const levels = {
             hsk1: {
@@ -311,16 +312,20 @@
                 ]
             },
             hsk3: {
-                title: "HSK 3", lessons: [
-                    { label: "Bài 1", title: "我的家", href: "#" },
-                    { label: "Bài 2", title: "天气", href: "#" },
-                ]
+                title: "HSK 3",
+                lessons: Object.keys(window.LESSONS || {})
+                    .map(Number).filter(function (n) { return n > 300; })
+                    .sort(function (a, b) { return a - b; })
+                    .map(function (n) {
+                        const L = window.LESSONS[n];
+                        return { number: n, label: "Bài " + (n - 300), title: L.listTitle || L.title, href: "lesson.html?id=" + n };
+                    })
             },
             hsk4: {
                 title: "HSK 4",
                 /* Tự lấy từ lessons-data.js: thêm bài mới ở đó là danh sách này tự có */
                 lessons: Object.keys(window.LESSONS || {})
-                    .map(Number)
+                    .map(Number).filter(function (n) { return n < 300; })
                     .sort(function (a, b) { return a - b; })
                     .map(function (n) {
                         const L = window.LESSONS[n];
@@ -350,6 +355,8 @@
         (function () {
             const c = document.querySelector('[data-level="hsk4"] .gate-count');
             if (c) c.textContent = levels.hsk4.lessons.length + " bài học";
+            const c3 = document.querySelector('[data-level="hsk3"] .gate-count');
+            if (c3 && levels.hsk3.lessons.length) c3.textContent = levels.hsk3.lessons.length + " bài học";
         })();
 
         const gatesView = document.getElementById('gatesView');

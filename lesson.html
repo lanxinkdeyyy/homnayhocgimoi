@@ -2543,7 +2543,9 @@ body.app-printing {
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="supabase.js?v=2"></script>
 <script src="lessons-data.js"></script>
+<script src="lessons-data-hsk3.js"></script>
 <script src="examples-data.js"></script>
+<script src="examples-data-hsk3.js"></script>
 <script src="exercises-data.js"></script>
 <script src="kingdom-core.js"></script>
 <script src="bgm.js"></script>
@@ -2586,9 +2588,10 @@ const READINGS = LESSON.readings.map(function(r, i) {
 
 (function buildLessonPage() {
 
-    document.title = LESSON.title + " - Bài " + LESSON_ID + " · " + LESSON_LEVEL;
+    const LESSON_NO = LESSON.lessonNo || LESSON_ID;
+    document.title = LESSON.title + " - Bài " + LESSON_NO + " · " + LESSON_LEVEL;
     document.getElementById("lessonTitle").textContent = LESSON.title;
-    document.getElementById("lessonSubtitle").textContent = "Bài " + LESSON_ID + " · " + LESSON_LEVEL;
+    document.getElementById("lessonSubtitle").textContent = "Bài " + LESSON_NO + " · " + LESSON_LEVEL;
 
     const box = document.getElementById("readingBlocks");
 
